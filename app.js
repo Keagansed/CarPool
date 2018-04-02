@@ -10,6 +10,7 @@ let signUpRouter = require('./routes/api/signup.js');
 let signInRouter = require('./routes/api/signin.js');
 let verifyRouter = require('./routes/api/verify.js');
 let logoutRouter = require('./routes/api/logout.js');
+let getProfileRouter = require('./routes/api/getProfile.js');
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/account/signup', signUpRouter)
 app.use('/api/account/signin', signInRouter)
 app.use('/api/account/verify', verifyRouter)
 app.use('/api/account/logout', logoutRouter)
+app.use('/api/account/getProfile', getProfileRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
