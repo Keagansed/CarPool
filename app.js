@@ -11,6 +11,8 @@ let signInRouter = require('./routes/api/signin.js');
 let verifyRouter = require('./routes/api/verify.js');
 let logoutRouter = require('./routes/api/logout.js');
 let getProfileRouter = require('./routes/api/getProfile.js');
+let uploadRouter = require('./routes/api/uploadFile.js');
+let getImageRouter = require('./routes/api/getImage.js');
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use('/api/account/signin', signInRouter)
 app.use('/api/account/verify', verifyRouter)
 app.use('/api/account/logout', logoutRouter)
 app.use('/api/account/getProfile', getProfileRouter)
+app.use('/api/account/uploadFile', uploadRouter)
+app.use('/api/account/getImage', getImageRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

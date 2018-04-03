@@ -34,7 +34,7 @@ class Login extends Component {
   }
 
   render() {
-    const user = "Leonardo";  // change to dynamic later
+    const user = "leo";  // change to dynamic later
     if(!this.state.token){
         return(
             <div className="container">

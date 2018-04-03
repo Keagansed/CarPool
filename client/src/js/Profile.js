@@ -23,7 +23,7 @@ class Profile extends Component {
 		{
 			const userName = jsonPro.firstName;
 			const name = jsonPro.firstName + " " + jsonPro.lastName;
-			const profilePic = "";
+			const profilePic = "./api/account/getImage?filename=" + jsonPro.profilePic;
 			const secLvl = 1;
 			const email = jsonPro.email;
 			const idNum = jsonPro.id;
@@ -33,15 +33,21 @@ class Profile extends Component {
 					<div className="Profile">
 						<h1>{userName}</h1>
 						<div className="row">
-							<div className="col-md-3">
-								<img scr={profilePic} className="profilePic" alt="Profile Pic" />
+							<div className="col-md-5">
+								<img src={profilePic} className="profilePic" alt="Profile Pic" />
+								<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
+									<input type="file" name="file" id="file" required />
+									<label htmlFor="file">choose file</label>
+									<input type="submit" value="submit" />
+								</form>
 							</div>
-							<div className="col-md-9">
+							<div className="col-md-7">
 								<h3>{name}</h3>
 								<h4>Level {secLvl}</h4>
 								<h4>email: {email}</h4>
 								<h4>ID number: {idNum}</h4>
 							</div>
+							<button id="logOutSubmit">logout</button>
 						</div>
 					</div>
 				</div>
