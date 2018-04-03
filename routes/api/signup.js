@@ -45,6 +45,11 @@ router.post('/',(req,res,next)=>{
 			success:false,
 			message:"Error: ID cannot be blank!"
 		});
+	}else if(id.length != 13){
+		return res.send({ 
+			success:false,
+			message:"Error: ID invalid!"
+		});
 	}
 	if(!password){
 		return res.send({ 
@@ -101,12 +106,12 @@ router.post('/',(req,res,next)=>{
 				if(err){
 					return res.send({
 						success:false,
-						message:"Error: Sever eror"
+						message:"Error: Server error"
 					});
 				}
 				return res.send({
 					success:true,
-					message:"Signed up"
+					message:"Success: Signed up"
 				});
 			});
 		}

@@ -6,7 +6,8 @@ import {
 
 $(document).ready(()=>{
 
-    $(document).on("click","#signUpSubmit",()=>{
+    $(document).on("submit","#signUpSubmit",(event)=>{
+        event.preventDefault();
         fetch('/api/account/signup',{
             method:'POST',
             headers:{
@@ -26,11 +27,14 @@ $(document).ready(()=>{
             console.log('json',json); //========== Probably remove ===============
             if(json.success){
                 alert("Successfully signed up!!");
+            }else{
+                alert(json.message);
             }
         })
     });
 
-     $(document).on("click","#signInSubmit",()=>{
+     $(document).on("submit","#signInSubmit",(event)=>{
+        event.preventDefault();
         fetch('/api/account/signin',{
             method:'POST',
             headers:{
@@ -44,9 +48,15 @@ $(document).ready(()=>{
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            console.log('json',json); //========== Probably remove ===============
-            setInStorage('sessionKey',{token:json.token});
-            window.location.reload();
+            if(json.success)
+            {
+                console.log('json',json); //========== Probably remove ===============
+                setInStorage('sessionKey',{token:json.token});
+                window.location.reload();
+            }else{
+                alert(json.message);
+            }
+            
         }) 
     });
 
