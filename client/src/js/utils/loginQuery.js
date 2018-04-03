@@ -46,7 +46,7 @@ $(document).ready(()=>{
         .then(json=>{
             console.log('json',json); //========== Probably remove ===============
             setInStorage('sessionKey',{token:json.token});
-            window.location.reload();
+            //window.location.reload();
         }) 
     });
 
