@@ -6,6 +6,8 @@ const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 
+const User = require('../../models/User.js');
+
 var router = express.Router(); 
 
 // Mongo URI
@@ -46,6 +48,11 @@ const upload = multer({ storage });
 
 router.post('/', upload.single('file'), (req, res, next) => {
    //~ res.json({ file: req.file });
+	const query = {'id': req.body.id};
+	User.findOneAndUpdate(query, {$set:{profilePic: req.file.filename}}, {upsert:true}, function(err, doc){
+		if (err) 
+			return res.send(500, { error: err });
+	});
 	res.redirect('/');
 });
 

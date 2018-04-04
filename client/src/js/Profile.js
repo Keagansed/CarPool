@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../css/App.css';
+import "./utils/fileQuery.js";
 
 class Profile extends Component {
 	constructor()
@@ -36,9 +37,10 @@ class Profile extends Component {
 							<div className="col-md-5">
 								<img src={profilePic} className="profilePic" alt="Profile Pic" />
 								<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
-									<input type="file" name="file" id="file" required />
+									<input type="text" name="id" defaultValue={idNum}/>
+									<input type="file" name="file" id="file" />
 									<label htmlFor="file">choose file</label>
-									<input type="submit" value="submit" />
+									<input type="submit" value="submit" id="upProPic" />
 								</form>
 							</div>
 							<div className="col-md-7">
