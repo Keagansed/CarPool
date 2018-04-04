@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import '../css/App.css';
-import "./utils/fileQuery.js";
+import '../../css/App.css';
+import "../utils/fileQuery.js";
 
 class Profile extends Component {
 	constructor()
