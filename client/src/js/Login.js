@@ -34,7 +34,6 @@ class Login extends Component {
   }
 
   render() {
-    const user = "leo";  // change to dynamic later
     if(!this.state.token){
         return(
             <div className="container">
@@ -89,7 +88,7 @@ class Login extends Component {
                 //~ <h3>Account</h3>
                 //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
             //~ </div>
-	    <Profile user={user} />
+	    <Profile _id={this.state.token} />
         ); 
     }
   }
