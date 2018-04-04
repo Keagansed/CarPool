@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { getFromStorage } from './utils/localStorage.js'
 import "./utils/loginQuery.js";
+import Profile from "./Profile.js"
 
 
 class Login extends Component {
@@ -33,6 +34,7 @@ class Login extends Component {
   }
 
   render() {
+    const user = "leo";  // change to dynamic later
     if(!this.state.token){
         return(
             <div className="container">
@@ -83,10 +85,11 @@ class Login extends Component {
         );
     }else{
        return(
-            <div className="container">
-                <h3>Account</h3>
-                <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
-            </div>
+            //~ <div className="container">
+                //~ <h3>Account</h3>
+                //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
+            //~ </div>
+	    <Profile user={user} />
         ); 
     }
   }
