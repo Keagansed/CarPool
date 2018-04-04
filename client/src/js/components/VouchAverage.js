@@ -14,7 +14,7 @@ class VouchAverage extends Component {
   }
 
   componentDidMount(){
-      const idFor = 2;
+      const idFor = this.props._id;
       fetch('/api/account/getVouches?idFor='+idFor)
        .then(res => res.json())
        .then(vouches => this.setState({vouches}));
@@ -30,13 +30,22 @@ class VouchAverage extends Component {
     {
       if(x)
       {
-        console.log(this.state.vouches[x].rating);
         reviews++;
         total += this.state.vouches[x].rating;
       }
     }
 
-    var average = total/reviews;
+    var average;
+
+    if (total!==0 && reviews!==0) 
+    {
+      average = total/reviews;
+    }
+    else
+    {
+      average = 0;
+    }
+    
 
     average = Math.round( average * 10 ) / 10;
 
@@ -52,16 +61,16 @@ class VouchAverage extends Component {
     for(i = 0; i < n; i = i + 1) {
       // For each element, push a React element into the array
       starElements.push(
-        <button type="button" className="btn btn-warning btn-sm star-btn" aria-label="Left Align">
-          <i class="fa fa-star" aria-hidden="true"></i>
+        <button key={Math.random()} type="button" className="btn btn-warning btn-sm star-btn" aria-label="Left Align">
+          <i key={Math.random()} className="fa fa-star" aria-hidden="true"></i>
         </button>
       );
     }
     for(i = 0; i < 5-n; i = i + 1) {
       // For each element, push a React element into the array
       starElements.push(
-        <button type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
-          <i class="fa fa-star" aria-hidden="true"></i>
+        <button key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+          <i key={Math.random()} className="fa fa-star" aria-hidden="true"></i>
         </button>
       );
     }
@@ -73,7 +82,7 @@ class VouchAverage extends Component {
     return (
       <div>
             <div className="container-fluid">
-              <div className="col-sm-5 rating-breakdown">
+              <div key={+new Date()} className="rating-breakdown">
               <h4 className="review-info">Average rating</h4>
                   <h1>{this.averageRating()}<small>/ 5</small></h1>
                   {this.printStars()}

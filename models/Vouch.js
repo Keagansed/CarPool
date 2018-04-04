@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 
 var VouchSchema = new mongoose.Schema({
 	idBy:{
-		type:Number,
+		type:String,
 		required:true
 	},
 	idFor:{
-		type:Number,
+		type:String,
 		required:true
 	},
 	rating:{

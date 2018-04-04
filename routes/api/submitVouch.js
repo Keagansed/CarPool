@@ -71,7 +71,7 @@ router.post('/',(req,res,next)=>{
 		if(err){
 			return res.send({
 				success:false,
-				message:"Error: Sever error"
+				message:"Error: Sever error"+err
 			});
 		}
 		return res.send({
