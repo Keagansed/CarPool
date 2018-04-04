@@ -48,7 +48,6 @@ $(document).ready(()=>{
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-<<<<<<< HEAD
             if(json.success)
             {
                 console.log('json',json); //========== Probably remove ===============
@@ -57,12 +56,9 @@ $(document).ready(()=>{
             }else{
                 alert(json.message);
             }
-            
-=======
             console.log('json',json); //========== Probably remove ===============
             setInStorage('sessionKey',{token:json.token});
-            //window.location.reload();
->>>>>>> vouching
+            window.location.reload();
         }) 
     });
 
