@@ -13,7 +13,7 @@ class Profile extends Component {
 	
 	componentDidMount()
 	{
-		fetch('/api/account/getProfile?user=' + this.props.user)
+		fetch('/api/account/getProfile?_id=' + this.props._id)
 		.then(res => res.json())
 		.then(json => this.setState({user: json}));
 	}
@@ -37,7 +37,7 @@ class Profile extends Component {
 							<div className="col-md-5">
 								<img src={profilePic} className="profilePic" alt="Profile Pic" />
 								<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
-									<input type="text" name="id" defaultValue={idNum}/>
+									<input type="hidden" id="userId" name="id" defaultValue={this.props._id}/>
 									<input type="file" name="file" id="file" />
 									<label htmlFor="file">choose file</label>
 									<input type="submit" value="submit" id="upProPic" />
