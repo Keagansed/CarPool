@@ -11,9 +11,6 @@ import VouchTally from './components/VouchTally';
 import "./utils/vouchQuery.js";
 
 class Vouching extends Component {
-  constructor(props){
-    super(props);
-  }
 
   componentDidMount(){
 
@@ -45,20 +42,38 @@ class Vouching extends Component {
               </div>
             </div>
 
-            <div className="modal fade" id="vouchModal">
+            <div className="modal fade" id="vouchModal" >
             <div className="modal-dialog">
-              <div className="modal-content" >
+              <div className="modal-content" style={{backgroundColor: "#9c9c9c"}}>
                 <form id="vouchSubmit">
                           <div className="form-group">
-                              <label htmlFor ="rating">Rating</label>
-                              <input type="text" className="form-control" id="rating" placeholder="Rating [1-5]"/>
+                              <label>Rating</label>
+                              <div>
+                                <button id="star1" key={Math.random()} type="button" className="btn btn-warning btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star2" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star3" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star4" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star5" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                              
+
                           </div>
                           <div className="form-group">
-                              <label htmlFor="title">Last Name</label>
+                              <label htmlFor="title">Title</label>
                               <input type="text" className="form-control" id="title" placeholder="Title"/>
                           </div>
                           <div className="form-group">
-                              <label htmlFor="review">Email address</label>
+                              <label htmlFor="review">Review</label>
                               <input type="text" className="form-control" id="review" placeholder="Review"/>
                           </div>
                           <button type="submit" className="btn btn-primary" >Submit</button>

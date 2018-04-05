@@ -27,7 +27,7 @@ class VouchList extends Component {
 
   getDate(dat)
   {
-    var dateObj = new Date();
+    var dateObj = new Date(dat);
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
@@ -85,7 +85,7 @@ class VouchList extends Component {
               <div key={Math.random()} className="row review voucher-info" styles={{margin: 0}}>
                     <div className="col-4">
                         <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" alt="Profile pic" className="img-rounded"></img>
-                        <div><a href="#"><span className='review-info'>{this.getUsername(vouch.idBy)}</span></a></div>
+                        <div><a href="."><span className='review-info'>{this.getUsername(vouch.idBy)}</span></a></div>
                         <div className='review-info'> {this.getDate(vouch.date)} <br/></div>
                         {this.printStars(vouch.rating)}
                     </div>
