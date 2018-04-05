@@ -6,10 +6,10 @@ const User = require('../../models/User.js');
 router.get('/',(req,res,next)=>
 {
 	const { query } = req;
-	const { user } = query;
+	const { _id } = query;
 
 	User.find({
-		firstName:user,
+		_id:_id,
 	},(err,data) =>{
 		res.json(data);
 	});

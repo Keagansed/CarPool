@@ -8,7 +8,7 @@ $(document).ready(function(){
 			headers:{
 				'Content-Type':'application/json'
 			},
-			body: {id: 9999}
+			body: {id: document.getElementById('userId').val}
 		})
 		//~ .then(res=>res.json())
 		//~ .catch(error => console.error('Error:', error))

@@ -48,7 +48,7 @@ const upload = multer({ storage });
 
 router.post('/', upload.single('file'), (req, res, next) => {
    //~ res.json({ file: req.file });
-	const query = {'id': req.body.id};
+	const query = {'_id': req.body.id};
 	User.findOneAndUpdate(query, {$set:{profilePic: req.file.filename}}, {upsert:true}, function(err, doc){
 		if (err) 
 			return res.send(500, { error: err });
