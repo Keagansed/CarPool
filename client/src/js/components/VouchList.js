@@ -10,25 +10,42 @@ class VouchList extends Component {
   constructor(props){
     super(props);
 
-    this.state ={vouches: []};
+    this.state ={vouches: [], user:[]};
   }
 
   componentDidMount(){
-      const idFor = 2;
+    const idFor = this.props._id;
       fetch('/api/account/getVouches?idFor='+idFor)
        .then(res => res.json())
        .then(vouches => this.setState({vouches}));
+
+      fetch('/api/account/getAllUsers')
+      .then(res => res.json())
+      .then(json => this.setState({user: json}));
+         
   }
 
   getDate(dat)
   {
-    var dateObj = new Date();
+    var dateObj = new Date(dat);
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
     var newdate = day + "/" + month + "/" + year;
     return newdate
+  }
+
+  getUsername(_id)
+  {
+   for (var x in this.state.user)
+   {
+    if(this.state.user[x]._id === _id)
+    {
+      return this.state.user[x].firstName;
+    }
+   }
+
   }
 
   printStars(numStars)
@@ -40,16 +57,16 @@ class VouchList extends Component {
     for(i = 0; i < n; i = i + 1) {
       // For each element, push a React element into the array
       starElements.push(
-        <button type="button" className="btn btn-warning btn-sm star-btn" aria-label="Left Align">
-          <i class="fa fa-star" aria-hidden="true"></i>
+        <button key={Math.random()} type="button" className="btn btn-warning btn-sm star-btn" aria-label="Left Align">
+          <i className="fa fa-star" aria-hidden="true"></i>
         </button>
       );
     }
     for(i = 0; i < 5-n; i = i + 1) {
       // For each element, push a React element into the array
       starElements.push(
-        <button type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
-          <i class="fa fa-star" aria-hidden="true"></i>
+        <button key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+          <i className="fa fa-star" aria-hidden="true"></i>
         </button>
       );
     }
@@ -58,16 +75,17 @@ class VouchList extends Component {
   }
 
 
+
+
   render() {
     return (
       <div>
             <div className="container-fluid">
             {this.state.vouches.map(vouch =>
-              // <li key={vouch.idFor}>{vouch.idBy}</li>
-              <div key={vouch.idBy} className="row review voucher-info" styles={{margin: 0}}>
+              <div key={Math.random()} className="row review voucher-info" styles={{margin: 0}}>
                     <div className="col-4">
-                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" className="img-rounded"></img>
-                        <div><a href="#"><span className='review-info'>{vouch.idBy}</span></a></div>
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" alt="Profile pic" className="img-rounded"></img>
+                        <div><a href="."><span className='review-info'>{this.getUsername(vouch.idBy)}</span></a></div>
                         <div className='review-info'> {this.getDate(vouch.date)} <br/></div>
                         {this.printStars(vouch.rating)}
                     </div>
