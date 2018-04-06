@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import Vouching from './js/Vouching';
+import Vouching from './js/components/Vouching';
+import Login from './js/components/Login';
 
 import registerServiceWorker from './js/registerServiceWorker';
 
-ReactDOM.render(<Vouching />, document.getElementById('root'));
+ReactDOM.render(<Login />, document.getElementById('root'));
 registerServiceWorker();

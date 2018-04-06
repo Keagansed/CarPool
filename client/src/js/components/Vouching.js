@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'bootstrap/dist/js/bootstrap.min.js'; 
 
-import '../css/Vouch.css';
+import '../../css/components/Vouch.css';
 
-import VouchList from './components/VouchList';
-import VouchAverage from './components/VouchAverage';
-import VouchTally from './components/VouchTally';
-import "./utils/vouchQuery.js";
+import VouchList from './VouchList';
+import VouchAverage from './VouchAverage';
+import VouchTally from './VouchTally';
+import "../utils/vouchQuery.js";
 
 class Vouching extends Component {
 

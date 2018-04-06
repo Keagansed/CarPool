@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../../css/Vouch.css'
+import '../../css/components/Vouch.css'
 
 import 'font-awesome/css/font-awesome.min.css';
 
