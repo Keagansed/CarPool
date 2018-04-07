@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-6 col-md-offset-3"
+    >
+      <h3>
+        Sign Up
+      </h3>
+       
+      <hr />
+      <form
+        id="signUpSubmit"
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signUpfname"
+          >
+            First Name
+          </label>
+          <input
+            className="form-control"
+            id="signUpfname"
+            placeholder="Enter first name"
+            type="text"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signUplname"
+          >
+            Last Name
+          </label>
+          <input
+            className="form-control"
+            id="signUplname"
+            placeholder="Enter last name"
+            type="text"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signUpemail"
+          >
+            Email address
+          </label>
+          <input
+            className="form-control"
+            id="signUpemail"
+            placeholder="Enter email"
+            type="email"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signUpid"
+          >
+            ID
+          </label>
+          <input
+            className="form-control"
+            id="signUpid"
+            placeholder="Enter ID"
+            type="text"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signUppass"
+          >
+            Password
+          </label>
+          <input
+            className="form-control"
+            id="signUppass"
+            placeholder="Enter password"
+            type="password"
+          />
+        </div>
+        <button
+          className="btn btn-primary"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <div
+      className="col-md-6 col-md-offset-3"
+    >
+      <h3>
+        Sign In
+      </h3>
+      <hr />
+      <form
+        id="signInSubmit"
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signInemail"
+          >
+            Email address
+          </label>
+          <input
+            className="form-control"
+            id="signInemail"
+            placeholder="Enter email"
+            type="email"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            htmlFor="signInpass"
+          >
+            Password
+          </label>
+          <input
+            className="form-control"
+            id="signInpass"
+            placeholder="Enter password"
+            type="password"
+          />
+        </div>
+        <button
+          className="btn btn-primary"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

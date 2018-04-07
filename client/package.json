@@ -49,7 +49,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "react-test-renderer": "^16.3.1"
   },
   "scripts": {
     "start": "concurrently \"node scripts/start.js\" \"node ../bin/www\"",
