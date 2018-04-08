@@ -18,7 +18,7 @@ class VouchAverage extends Component {
   }
 
   componentDidMount(){
-      const idFor = 2;
+      const idFor = this.props._id;
       fetch('/api/account/getVouches?idFor='+idFor)
        .then(res => res.json())
        .then(vouches => this.setState({vouches}));
@@ -32,7 +32,7 @@ class VouchAverage extends Component {
     {
       if(x)
       {
-        if(this.state.vouches[x].rating==num)
+        if(this.state.vouches[x].rating===num)
         {
           count++;
         }
@@ -51,7 +51,7 @@ class VouchAverage extends Component {
       if(x)
       {
         tot++;
-        if(this.state.vouches[x].rating==num)
+        if(this.state.vouches[x].rating===num)
         {
           count++;
         }
@@ -71,7 +71,7 @@ class VouchAverage extends Component {
     return (
       <div>
             <div className="container-fluid">
-              <div className="col-sm-5 rating-breakdown">
+              <div className="rating-breakdown" style={{display:"block"}}>
 
                 <div className="pull-left">
                   <div className="pull-left" style={{width:"50px", lineHeight:1}}>
