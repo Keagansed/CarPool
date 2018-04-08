@@ -4,7 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { getFromStorage } from '../utils/localStorage.js'
 import "../utils/loginQuery.js";
+<<<<<<< HEAD:client/src/js/components/Login.js
 import Profile from "./Profile.js"
+=======
+>>>>>>> Login/Register:client/src/js/components/Login.js
 
 
 class Login extends Component {

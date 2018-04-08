@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+<<<<<<< HEAD
 // import App from './js/App';
 import Login from './js/components/Login';
 import VouchList from './js/components/VouchList';
@@ -12,4 +13,12 @@ import Vouching from './js/components/Vouching';
 import registerServiceWorker from './js/registerServiceWorker';
 
 ReactDOM.render(<Vouching />, document.getElementById('root'));
+=======
+import App from './js/App';
+//import Login from './js/components/Login';
+
+import registerServiceWorker from './js/registerServiceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+>>>>>>> Login/Register
 registerServiceWorker();
