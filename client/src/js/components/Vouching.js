@@ -9,9 +9,9 @@ import VouchAverage from './VouchAverage';
 import VouchTally from './VouchTally';
 
 class Vouching extends Component {
-  constructor(props){
-    super(props);
-  }
+  // constructor(props){
+  //   super(props);
+  // }
 
   componentDidMount(){
 
