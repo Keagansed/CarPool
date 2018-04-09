@@ -4,10 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { getFromStorage } from '../utils/localStorage.js'
 import "../utils/loginQuery.js";
-// <<<<<<< HEAD:client/src/js/components/Login.js
 import Profile from "./Profile.js"
-// =======
-// >>>>>>> Login/Register:client/src/js/components/Login.js
 
 
 class Login extends Component {
@@ -91,8 +88,8 @@ class Login extends Component {
                 //~ <h3>Account</h3>
                 //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
             //~ </div>
-	         <Profile _id={this.state.token} />
-      ); 
+	    <Profile _id={this.state.token} />
+        ); 
     }
   }
 }
