@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import '../../css/App.css';
 import "../utils/fileQuery.js";
+import Vouching from './Vouching.js';
+import Background from './Background.js';
 
 class Profile extends Component {
 	constructor()
 	{
 		super();
 		this.state = {
-			user:""
+			user:"",
+			tab:Vouching
 		};
 	}
 	
@@ -16,6 +19,16 @@ class Profile extends Component {
 		fetch('/api/account/getProfile?_id=' + this.props._id)
 		.then(res => res.json())
 		.then(json => this.setState({user: json}));
+	}
+	
+	showRatings()
+	{
+		this.setState({tab: Vouching});
+	}
+	
+	showBackInfo()
+	{
+		this.setState({tab: Background});
 	}
 	
 	render() {
@@ -50,6 +63,13 @@ class Profile extends Component {
 								<h4>ID number: {idNum}</h4>
 							</div>
 							<button id="logOutSubmit">logout</button>
+							<div>
+								<ul className="nav nav-tabs">
+									<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
+									<li><button onClick={this.showBackInfo.bind(this)}>Background stuff</button></li>
+								</ul>
+								<this.state.tab _id={this.props._id} />
+							</div>
 						</div>
 					</div>
 				</div>

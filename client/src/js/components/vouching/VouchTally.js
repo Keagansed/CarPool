@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../../css/components/Vouch.css'
+//~ import '../../css/components/Vouch.css'
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -32,7 +32,7 @@ class VouchAverage extends Component {
     {
       if(x)
       {
-        if(this.state.vouches[x].rating==num)
+        if(this.state.vouches[x].rating===num)
         {
           count++;
         }
@@ -51,7 +51,7 @@ class VouchAverage extends Component {
       if(x)
       {
         tot++;
-        if(this.state.vouches[x].rating==num)
+        if(this.state.vouches[x].rating===num)
         {
           count++;
         }

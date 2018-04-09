@@ -4,14 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '../../css/components/Vouch.css';
 
-import VouchList from './VouchList';
-import VouchAverage from './VouchAverage';
-import VouchTally from './VouchTally';
+import VouchList from './vouching/VouchList';
+import VouchAverage from './vouching/VouchAverage';
+import VouchTally from './vouching/VouchTally';
 
 class Vouching extends Component {
-  constructor(props){
-    super(props);
-  }
+  //~ constructor(props){
+    //~ super(props);
+  //~ }
 
   componentDidMount(){
 

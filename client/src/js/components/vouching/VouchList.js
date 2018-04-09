@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../../css/components/Vouch.css'
+//~ import '../../css/components/Vouch.css'
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -66,8 +66,8 @@ class VouchList extends Component {
               // <li key={vouch.idFor}>{vouch.idBy}</li>
               <div key={vouch.idBy} className="row review voucher-info" styles={{margin: 0}}>
                     <div className="col-4">
-                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" className="img-rounded"></img>
-                        <div><a href="#"><span className='review-info'>{vouch.idBy}</span></a></div>
+                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" className="img-rounded" alt="" ></img>
+                        <div><a href="/"><span className='review-info'>{vouch.idBy}</span></a></div>
                         <div className='review-info'> {this.getDate(vouch.date)} <br/></div>
                         {this.printStars(vouch.rating)}
                     </div>
