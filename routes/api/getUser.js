@@ -15,21 +15,15 @@ router.post('/', (req,res,next) => {
 		});
 	}
 
-	name = name.toLowerCase();
-	name = name.charAt(0).toUpperCase() + name.slice(1);
-
 	if (name.indexOf(' ') != -1){			
 		var arr = name.split(' ');
-		let firstName = arr[0];
-		let lastName = arr[1];
-
-		lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+		let firstName = new RegExp(arr[0], "i");
+		let lastName = new RegExp(arr[1], "i");
 
 		User.find({
 			firstName:firstName,
 			lastName:lastName
 		},(err, users) => {
-			/*console.log("Users: " + users);*/
 
 			if(err){
 				return res.send({ 
@@ -48,8 +42,10 @@ router.post('/', (req,res,next) => {
 
 	}else{
 
+		let regex = new RegExp(name, "i");
+
 		User.find({
-			firstName:name
+			firstName:regex
 		},(err, users) => {
 			if(err){
 				return res.send({ 
