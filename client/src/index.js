@@ -12,11 +12,8 @@ import Vouching from './js/components/Vouching';
 import registerServiceWorker from './js/registerServiceWorker';
 
 ReactDOM.render(<Vouching />, document.getElementById('root'));
-<<<<<<< HEAD
 
 
 // ReactDOM.render(<Login />, document.getElementById('root'));
 
-=======
->>>>>>> vouching
 registerServiceWorker();
