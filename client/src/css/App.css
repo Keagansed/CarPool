@@ -133,10 +133,148 @@ body {
     border-radius: 10px;
     background-color: #F5F5F5;
 }
+
+.center-text{
+    text-align: center;
+}
 /*-----------------------------------------------------*/
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
+
+.search_center_container {
+    width: 60%;
+    min-width: 250px;
+    height: 80%;
+    text-align: center;
+}
+
+.panel > .list-group .list-group-item:first-child {
+    border-top: 1px solid rgb(204, 204, 204);
+}
+
+@media (max-width: 767px) {
+    .visible-md {
+        display: inline-block !important;
+    }
+
+    .block {
+        display: block !important;
+        width: 100%;
+        height: 1px !important;
+    }
+}
+
+#back-to-bootsnipp {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+}
+
+
+.c-search > .form-control {
+    border-radius: 0px;
+    border-width: 0px;
+    border-bottom-width: 1px;
+    font-size: 1.3em;
+    padding: 12px 12px;
+    height: 44px;
+    outline: none !important;
+}
+
+    .c-search > .form-control:focus {
+        outline: 0px !important;
+        -webkit-appearance: none;
+        box-shadow: none;
+    }
+
+.c-search > .input-group-btn .btn {
+    border-radius: 0px;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    height: 44px;
+}
+
+.c-list {
+    padding: 0px;
+    min-height: 44px;
+}
+
+.title {
+    display: inline-block;
+    font-size: 1.7em;
+    font-weight: bold;
+    padding: 5px 15px;
+}
+
+.profilePic {
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+}
+
+.userName {
+    padding-left: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 5px 15px;
+}
+
+    ul.c-controls {
+        list-style: none;
+        margin: 0px;
+        min-height: 44px;
+    }
+
+        ul.c-controls li {
+            margin-top: 8px;
+            float: left;
+        }
+
+            ul.c-controls li a {
+                font-size: 1.7em;
+                padding: 11px 10px 6px;
+            }
+
+                ul.c-controls li a i {
+                    min-width: 24px;
+                    text-align: center;
+                }
+
+                ul.c-controls li a:hover {
+                    background-color: rgba(51, 51, 51, 0.2);
+                }
+
+.c-toggle {
+    font-size: 1.7em;
+}
+
+.name {
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+.c-info {
+    padding: 5px 10px;
+    font-size: 1.25em;
+}
 .App {
     text-align: center;
 }
+
+.searchItem{
+    background-color: rgba(0, 150, 200, 0.5);
+    margin-bottom: 5%;
+    border-radius: 5px;
+    padding: 1%;
+    max-height: 100px;
+}
+
+
+/*-----------------------------------------------------*/
+
 
 /*<<<<<<< HEAD*/
 .App-logo {

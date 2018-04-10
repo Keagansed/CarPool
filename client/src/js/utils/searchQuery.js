@@ -28,9 +28,9 @@ $(document).ready(()=>{
 
                 profilePic = "./api/account/getImage?filename=" + json[i].profilePic;
 
-                html += "<li className=\"list-group-item\"><div className=\"col-xs-4\">";
-                html += "<img src=\"" + profilePic + "\" className=\"img-responsive img-circle\" alt=\"Profile Pic\" /> ";
-                html += "<span className=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
+                html += "<div class=\"row searchItem\">";
+                html += "<img src=\"" + profilePic + "\" class=\"col-md-3 col-4 profilePic\" alt=\"Profile Pic\" /> ";
+                html += "<div class=\"name col-md-4 col-8 offset-md-2 offset-sm-0\">" + json[i].firstName +" " + json[i].lastName + "</div></div>"; 
 
 
                 /*html += "<li className=\"list-group-item\"><div className=\"col-xs-4\">";
