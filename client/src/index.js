@@ -14,6 +14,6 @@ import registerServiceWorker from './js/registerServiceWorker';
 // ReactDOM.render(<Vouching />, document.getElementById('root'));
 
 
-ReactDOM.render(<Login />, document.getElementById('root'));
+ReactDOM.render(<Vouching />, document.getElementById('root'));
 
 registerServiceWorker();
