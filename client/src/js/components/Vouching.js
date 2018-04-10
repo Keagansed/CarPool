@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-
-import '../../css/components/Vouch.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import '../../css/App.css';
 
 import VouchList from './VouchList';
 import VouchAverage from './VouchAverage';
 import VouchTally from './VouchTally';
+import "../utils/vouchQuery.js";
 
 class Vouching extends Component {
-  constructor(props){
-    super(props);
-  }
 
   componentDidMount(){
 
@@ -19,10 +17,60 @@ class Vouching extends Component {
 
   render() {
     return (
-      <div>
-            <VouchAverage/>
-            <VouchTally />
-            <VouchList/>
+        <div className="center_container vouching_center_container">
+            <div className="row">
+                <div className="col-md-5 bubble no-padding-margin">
+                        <VouchAverage _id="5ac0b4c25a00385a1f7b6d99"/>
+                        <VouchTally _id="5ac0b4c25a00385a1f7b6d99" />
+                        <button id="addReview" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#vouchModal">Vouch</button>
+                </div>
+
+                <div className="col-sm-5 offset-md-2 bubble">
+                    <div className="info-div">
+                        <VouchList _id="5ac0b4c25a00385a1f7b6d99" />
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id="vouchModal" >
+                <div className="modal-dialog">
+                    <div className="modal-content bubble-more-visible">
+                <form id="vouchSubmit">
+                          <div className="form-group">
+                              <label>Rating</label>
+                              <div>
+                                <button id="star1" key={Math.random()} type="button" className="btn btn-warning btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star2" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star3" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star4" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                                <button id="star5" key={Math.random()} type="button" className="btn btn-default btn-sm star-btn" aria-label="Left Align">
+                                  <i className="fa fa-star" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                              
+
+                          </div>
+                          <div className="form-group">
+                              <label htmlFor="title">Title</label>
+                              <input type="text" className="form-control" id="title" placeholder="Title"/>
+                          </div>
+                          <div className="form-group">
+                              <label htmlFor="review">Review</label>
+                              <input type="text" className="form-control" id="review" placeholder="Review"/>
+                          </div>
+                          <button type="submit" className="btn btn-secondary" >Submit</button>
+                        </form>
+              </div>
+            </div>
+          </div>
 
       </div>
     );

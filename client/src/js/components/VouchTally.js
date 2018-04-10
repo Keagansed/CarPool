@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../../css/components/Vouch.css'
+import '../../css/App.css';
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -70,86 +70,82 @@ class VouchAverage extends Component {
 
     return (
       <div>
-            <div className="container-fluid">
-              <div className="rating-breakdown" style={{display:"block"}}>
+            <div className="container">
+                <div className="rating-breakdown">
+                    <div className="row margin-top">
+                        <div className="col-md-1 col-2 no-padding-margin">
+                            <div>5<i className="fa fa-star" aria-hidden="true"></i></div>
+                        </div>
+                        <div className="col-md-10 col-8 no-padding-margin">
+                            <div className="progress">
+                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.fivePerc + "%" }}>
+                                    <span className="sr-only">80% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div className="pull-left">
-                  <div className="pull-left" style={{width:"50px", lineHeight:1}}>
-                      <div style={{height:"9px", margin:"5px", fontSize: "20px"}}>5<i className="fa fa-star" aria-hidden="true"></i></div>
-                  </div>
-                  <div className="pull-left" style={{width:"130px"}}>
-                      <div className="progress" style={{height:"12px", margin:"8px"}}>
-                          <div className="progress-bar bg-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{width: this.fivePerc+"%"}}>
-                              <span className="sr-only">80% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </div>
+                        <div className="col-md-1 col-2 no-padding-margin">{this.countNum(5)}</div>
+                    </div>
 
-                  <div className="pull-right" style={{marginLeft:"5px", fontSize: "20px"}}>{this.countNum(5)}</div>
-                </div>
+                    <div className="row margin-top">
+                        <div className="col-md-1 col-2 no-padding-margin">
+                            <div>4<i className="fa fa-star" aria-hidden="true"></i></div>
+                        </div>
+                        <div className="col-md-10 col-8 no-padding-margin">
+                            <div className="progress">
+                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.fourPerc + "%" }}>
+                                    <span className="sr-only">80% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div className="pull-left">
-                  <div className="pull-left" style={{width:"50px", lineHeight:1}}>
-                      <div style={{height:"9px", margin:"5px", fontSize: "20px"}}>4<i className="fa fa-star" aria-hidden="true"></i></div>
-                  </div>
-                  <div className="pull-left" style={{width:"130px"}}>
-                      <div className="progress" style={{height:"12px", margin:"8px"}}>
-                          <div className="progress-bar" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{width: this.fourPerc+"%"}}>
-                              <span className="sr-only">80% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </div>
+                        <div className="col-md-1 col-2 no-padding-margin">{this.countNum(4)}</div>
+                    </div>
 
-                  <div className="pull-right" style={{marginLeft:"5px", fontSize: "20px"}}>{this.countNum(4)}</div>
-                </div>
+                    <div className="row margin-top">
+                        <div className="col-md-1 col-2 no-padding-margin">
+                            <div>3<i className="fa fa-star" aria-hidden="true"></i></div>
+                        </div>
+                        <div className="col-md-10 col-8 no-padding-margin">
+                            <div className="progress">
+                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.threePerc + "%" }}>
+                                    <span className="sr-only">80% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div className="pull-left">
-                  <div className="pull-left" style={{width:"50px", lineHeight:1}}>
-                      <div style={{height:"9px", margin:"5px", fontSize: "20px"}}>3<i className="fa fa-star" aria-hidden="true"></i></div>
-                  </div>
-                  <div className="pull-left" style={{width:"130px"}}>
-                      <div className="progress" style={{height:"12px", margin:"8px"}}>
-                          <div className="progress-bar bg-info" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{width: this.threePerc+"%"}}>
-                              <span className="sr-only">80% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </div>
+                        <div className="col-md-1 col-2 no-padding-margin">{this.countNum(3)}</div>
+                    </div>
 
-                  <div className="pull-right" style={{marginLeft:"5px", fontSize: "20px"}}>{this.countNum(3)}</div>
-                </div>
+                    <div className="row margin-top">
+                        <div className="col-md-1 col-2 no-padding-margin">
+                            <div>2<i className="fa fa-star" aria-hidden="true"></i></div>
+                        </div>
+                        <div className="col-md-10 col-8 no-padding-margin">
+                            <div className="progress">
+                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.twoPerc + "%" }}>
+                                    <span className="sr-only">80% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div className="pull-left">
-                  <div className="pull-left" style={{width:"50px", lineHeight:1}}>
-                      <div style={{height:"9px", margin:"5px", fontSize: "20px"}}>2<i className="fa fa-star" aria-hidden="true"></i></div>
-                  </div>
-                  <div className="pull-left" style={{width:"130px"}}>
-                      <div className="progress" style={{height:"12px", margin:"8px"}}>
-                          <div className="progress-bar bg-warning" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{width: this.twoPerc+"%"}}>
-                              <span className="sr-only">80% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </div>
+                        <div className="col-md-1 col-2 no-padding-margin">{this.countNum(2)}</div>
+                    </div>
 
-                  <div className="pull-right" style={{marginLeft:"5px", fontSize: "20px"}}>{this.countNum(2)}</div>
-                </div>
+                    <div className="row margin-top">
+                        <div className="col-md-1 col-2 no-padding-margin">
+                            <div>1<i className="fa fa-star" aria-hidden="true"></i></div>
+                        </div>
+                        <div className="col-md-10 col-8 no-padding-margin">
+                            <div className="progress">
+                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.threePerc + "%" }}>
+                                    <span className="sr-only">80% Complete (danger)</span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div className="pull-left">
-                  <div className="pull-left" style={{width:"50px", lineHeight:1}}>
-                      <div style={{height:"9px", margin:"5px", fontSize: "20px"}}>1<i className="fa fa-star" aria-hidden="true"></i></div>
-                  </div>
-                  <div className="pull-left" style={{width:"130px"}}>
-                      <div className="progress" style={{height:"12px", margin:"8px"}}>
-                          <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{width: this.onePerc+"%"}}>
-                              <span className="sr-only">80% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </div>
-
-                  <div className="pull-right" style={{marginLeft:"5px", fontSize: "20px"}}>{this.countNum(1)}</div>
-                </div>
-
-
-
+                        <div className="col-md-1 col-2 no-padding-margin">{this.countNum(1)}</div>
+                    </div>
                 </div>
               </div>
       </div>

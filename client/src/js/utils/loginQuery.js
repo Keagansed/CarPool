@@ -56,7 +56,6 @@ $(document).ready(()=>{
             }else{
                 alert(json.message);
             }
-            
             console.log('json',json); //========== Probably remove ===============
             setInStorage('sessionKey',{token:json.token});
             window.location.reload();
