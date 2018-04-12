@@ -11,13 +11,12 @@ class Search extends Component {
 		return(
 
             <div className="center_container search_center_container">
-				<br />
-				<div className="bubble">
+				{/* <div className="bubble"> */}
                     <div className="row no-padding-margin">
 			            <div className="col-md-8 offset-md-2">
 			            	<form id="searchUsers">
 				                <div className="row">
-				                    <div className="col-md-8 col-8 no-padding-margin">
+				                    <div className="col-md-12 col-12 no-padding-margin">
 				                        <div className="input-group c-search">
 				                            <input type="text" className="form-control" id="user-search" autoComplete="off" placeholder="Search"/>
 				                        </div>
@@ -25,7 +24,7 @@ class Search extends Component {
 				                   {/* <div className="col-md-2">
 				                    	<button type="submit" className="btn btn-info" >Search</button>								
 				                    </div>*/}
-				                </div> <br />
+				                </div>
 				            </form>
 			                
 			                <ul className="list-group" id="user-list">			{/*results injected into this class*/}
@@ -33,7 +32,7 @@ class Search extends Component {
 			                </ul>
 			            </div>
 			        </div>
-				</div>
+				{/* </div> */}
 			</div>
 		);
 	}
