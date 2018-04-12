@@ -16,7 +16,11 @@ let getProfileRouter = require('./routes/api/getProfile.js');
 let uploadRouter = require('./routes/api/uploadFile.js');
 let getImageRouter = require('./routes/api/getImage.js');
 let getAllUsersRouter = require('./routes/api/getAllUsers.js');
+<<<<<<< HEAD
 let updateProfileRouter = require('./routes/api/updateProfile.js');
+=======
+let getUserRouter = require('./routes/api/getUser.js');
+>>>>>>> styling_A
 
 var app = express();
 
@@ -45,7 +49,11 @@ app.use('/api/account/getProfile', getProfileRouter)
 app.use('/api/account/uploadFile', uploadRouter)
 app.use('/api/account/getImage', getImageRouter)
 app.use('/api/account/getAllUsers', getAllUsersRouter)
+<<<<<<< HEAD
 app.use('/api/account/updateProfile', updateProfileRouter)
+=======
+app.use('/api/account/getUser', getUserRouter)
+>>>>>>> styling_A
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

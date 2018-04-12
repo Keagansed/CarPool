@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
+
 import "../utils/fileQuery.js";
 import { disableEditBut } from "../utils/editProfile.js";
 import VouchAverage from "./vouching/VouchAverage"
@@ -13,7 +16,7 @@ class ProfileRating extends Component
 	{
 		return(
 			<div>
-				<div>
+				<div className="profile_rating">
 					< VouchAverage _id={this.props._id}/>
 				</div>
 				{/* <div>
@@ -82,8 +85,10 @@ class Profile extends Component {
 			const secLvl = 1;
 			const email = jsonPro.email;
 			const idNum = jsonPro.id;
+
 			if (this.state.editMode)
 		       {
+
 				return (
 					<div className="container">
 						<div className="Profile">
@@ -127,34 +132,72 @@ class Profile extends Component {
 			}
 			else
 			{
+// <<<<<<< profile
+				// return (
+				// 	<div className="container">
+				// 		<div className="Profile">
+				// 			<h1>{userName}</h1>
+				// 			<div className="row">
+				// 				<div className="col-md-5">
+				// 					<img src={profilePic} className="profilePic" alt="Profile Pic" />
+				// 				</div>
+				// 				<div className="col-md-7">
+				// 					<h3>{name}</h3>
+				// 					<h4>email: {email}</h4>
+				// 					<h4>ID number: {idNum}</h4>
+				// 					<h4>Level {secLvl}</h4>
+				// 				</div>
+				// 				<button id="logOutSubmit">logout</button>
+				// 				<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
+				// 				<div>
+				// 					<ul className="nav nav-tabs">
+				// 						<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
+				// 						<li><button onClick={this.showBackInfo.bind(this)}>Background stuff</button></li>
+				// 						<li><button onClick={this.showSearch.bind(this)}>search</button></li>
+				// 					</ul>
+				// 					<this.state.tab _id={this.props._id} />
+				// 				</div>
+				// 			</div>
+				// 		</div>
+
+				// 	</div>
+				// );
+// <<<<<<< profile
+// >>>>>>> styling_A 
 				return (
-					<div className="container">
-						<div className="Profile">
-							<h1>{userName}</h1>
-							<div className="row">
-								<div className="col-md-5">
-									<img src={profilePic} className="profilePic" alt="Profile Pic" />
+					<div className="center_container profile_center_container bubble">
+							<div className="row full_row">
+								<div className="col-md-7 col-xs-7 img-wrap">
+									<img src={profilePic} id="profilePic" alt="Profile Pic" />
 								</div>
-								<div className="col-md-7">
-									<h3>{name}</h3>
-									<h4>email: {email}</h4>
-									<h4>ID number: {idNum}</h4>
-									<h4>Level {secLvl}</h4>
-								</div>
-								<button id="logOutSubmit">logout</button>
-								<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
-								<div>
-									<ul className="nav nav-tabs">
-										<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
-										<li><button onClick={this.showBackInfo.bind(this)}>Background stuff</button></li>
-										<li><button onClick={this.showSearch.bind(this)}>search</button></li>
-									</ul>
-									<this.state.tab _id={this.props._id} />
+								<div className="col-md-5 col-xs-5 profileUserDetails">
+									<h3 className="profileUserName">{name}</h3>
+									<ProfileRating _id={this.props._id}/>
+									<div className="row profileSpecificDetails">
+										<div className="col-md-4">
+											Email
+											<h6 className="profileValue">{email}</h6>
+										</div>
+										<div className="col-md-4">
+											ID
+											<h6 className="profileValue">{idNum}</h6>
+										</div>
+										<div className="col-md-4">
+										Security
+											<h6 className="profileValue">Level {secLvl}</h6>
+										</div>
+									</div>
+									<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
+										<input type="hidden" id="userId" name="id" defaultValue={this.props._id} />
+										<input type="file" name="file" id="file"/>
+										<input type="submit" value="submit" id="upProPic" className="btn btn-secondary"/>
+									</form>
+									<button id="logOutSubmit" className="btn btn-primary">logout</button>
 								</div>
 							</div>
-						</div>
-					</div>
+					</div> 
 				);
+// >>>>>>> styling_A
 			}
 		}
 		else

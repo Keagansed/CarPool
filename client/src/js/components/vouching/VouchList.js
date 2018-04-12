@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-//~ import '../../css/components/Vouch.css'
+import '../../../css/App.css';
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -82,17 +82,21 @@ class VouchList extends Component {
       <div>
             <div className="container-fluid">
             {this.state.vouches.map(vouch =>
-              <div key={Math.random()} className="row review voucher-info" styles={{margin: 0}}>
-                    <div className="col-4">
-                        <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" className="img-rounded" alt="" ></img>
-                        <div><a href="/"><span className='review-info'>{vouch.idBy}</span></a></div>
-                        <div className='review-info'> {this.getDate(vouch.date)} <br/></div>
-                        {this.printStars(vouch.rating)}
-                    </div>
-                    <div className="col-8">
-                        <h4 className='review-info'><strong>{vouch.reviewTitle}</strong><span className="glyphicon glyphicon-star" aria-hidden="true"></span></h4>
-                        <div>{vouch.reviewBody}</div>
-                    </div>
+                    <div key={Math.random()} className="row margin-bottom review voucher-info">
+                        <div className="row col-md-12 small-margin-bottom">
+                            {this.printStars(vouch.rating)}
+                        </div>
+                        <div className="row col-md-12">
+                            <div className="col-4">
+                                <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" alt="Profile pic" className="img-rounded"></img>
+                                <div><a href="."><span className='review-info'>{this.getUsername(vouch.idBy)}</span></a></div>
+                                <div className='review-info'> {this.getDate(vouch.date)} <br /></div>
+                            </div>
+                            <div className="col-8">
+                                <h4 className='review-info'><strong>{vouch.reviewTitle}</strong><span className="glyphicon glyphicon-star" aria-hidden="true"></span></h4>
+                                <div>{vouch.reviewBody}</div>
+                            </div>
+                        </div>
               </div>
             )}
             </div>
