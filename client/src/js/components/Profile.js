@@ -167,9 +167,11 @@ class Profile extends Component {
 												<h6 className="profileValue">Level {secLvl}</h6>
 											</div>
 										</div>
+
 										<button id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary">edit profile</button>
+
 										<div onClick={this.goVouch.bind(this)}>
-											<div className="profile_rating">
+											<div className="profile-vouch">
 												< VouchAverage _id={this.state._id}/>
 											</div>
 										</div>
