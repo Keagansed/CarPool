@@ -21,6 +21,8 @@ $(document).ready(()=>{
 				lastName:$("#upLName").val(),
 				email:$("#upEmail").val(),
 				id:$("#upId").val(),
+				pass:$("#upPass").val(),
+				newPass:$("#upPassChange").val(),
 				_id:$("#userId").val()
 			})
 		})
@@ -29,6 +31,7 @@ $(document).ready(()=>{
 		.then(json=>{
 			if(json.success){
 				alert("Successfully updated!");
+				window.location.reload();
 			}else{
 				alert(json.message);
 			}

@@ -12,16 +12,22 @@ class Profile extends Component {
 		super();
 		this.state = {
 			user:"",
+			_id:"",
 			tab:Vouching,
 			editMode: false
 		};
 	}
 	
-	componentDidMount()
+	componentDidMount()//every load
 	{
-		fetch('/api/account/getProfile?_id=' + this.props._id)
+		fetch('/api/account/getProfile?_id=' + this.state._id)
 		.then(res => res.json())
 		.then(json => this.setState({user: json}));
+	}
+	
+	componentWillMount()// once
+	{
+		this.setState({_id:this.props._id});
 	}
 	
 	showRatings()
@@ -51,7 +57,7 @@ class Profile extends Component {
 		const jsonPro = this.state.user[0];
 		if (jsonPro)
 		{
-			fetch('/api/account/verify?token='+this.props._id)
+			fetch('/api/account/verify?token='+this.state._id)
 		       .then(res => res.json())
 		       .then(json => {
 				if(!json.success){
@@ -86,12 +92,16 @@ class Profile extends Component {
 										last name: <input id="upLName" type="text" defaultValue={jsonPro.lastName}/><br/>
 										email: <input id="upEmail" type="email" defaultValue={email}/><br/>
 										ID number: <input id="upId" type="text" defaultValue={idNum}/><br/>
+										Current password: <input id="upPass" type="password"/><br/>
+										New password: <input id="upPassChange" type="password" placeholder="leave blank for no change"/><br/>
 										<input type="submit" value="update"/>
 										<h4>Level {secLvl}</h4>
 									</form>
 								</div>
-								<button id="logOutSubmit">logout</button>
-								<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
+								<div>
+									<button id="logOutSubmit">logout</button>
+									<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
+								</div>
 								<div>
 									<ul className="nav nav-tabs">
 										<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
@@ -121,15 +131,17 @@ class Profile extends Component {
 									<h4>ID number: {idNum}</h4>
 									<h4>Level {secLvl}</h4>
 								</div>
-								<button id="logOutSubmit">logout</button>
-								<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
+								<div>
+									<button id="logOutSubmit">logout</button>
+									<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
+								</div>
 								<div>
 									<ul className="nav nav-tabs">
 										<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
 										<li><button onClick={this.showBackInfo.bind(this)}>Background stuff</button></li>
 										<li><button onClick={this.showSearch.bind(this)}>search</button></li>
 									</ul>
-									<this.state.tab _id={this.props._id} />
+									<this.state.tab _id={this.state._id} />
 								</div>
 							</div>
 						</div>
