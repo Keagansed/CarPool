@@ -17,7 +17,6 @@ $(document).ready(()=>{
         .catch(error => console.error('Error:', error))
         .then(json=>{
 
-            console.log("json",json);     //should probably remove//
             if (json.length > 0){
 
               let profilePic; 
