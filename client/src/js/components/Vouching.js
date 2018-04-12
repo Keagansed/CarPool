@@ -10,9 +10,9 @@ import VouchTally from './vouching/VouchTally';
 import "../utils/vouchQuery.js";
 
 class Vouching extends Component {
-  //~ constructor(props){
-    //~ super(props);
-  //~ }
+  // constructor(props){
+  //   super(props);
+  // }
 
   componentDidMount(){
 
@@ -23,19 +23,19 @@ class Vouching extends Component {
         <div className="center_container vouching_center_container">
             <div className="row">
                 <div className="col-md-5 bubble no-padding-margin">
-                        <VouchAverage _id="5ac0b4c25a00385a1f7b6d99"/>
-                        <VouchTally _id="5ac0b4c25a00385a1f7b6d99" />
+                        <VouchAverage _id={this.props._id}/>
+                        <VouchTally _id={this.props._id} />
                         <button id="addReview" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#vouchModal">Vouch</button>
                 </div>
 
                 <div className="col-sm-5 offset-md-2 bubble">
                     <div className="info-div">
-                        <VouchList _id="5ac0b4c25a00385a1f7b6d99" />
+                        <VouchList _id={this.props._id} />
                     </div>
                 </div>
             </div>
 
-            <div className="modal fade" id="vouchModal" >
+            <div className="modal fade" id="vouchModal" data-id={this.props._id}>
                 <div className="modal-dialog">
                     <div className="modal-content bubble-more-visible">
                 <form id="vouchSubmit">

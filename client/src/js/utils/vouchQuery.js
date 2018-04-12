@@ -1,18 +1,22 @@
 import $ from 'jquery';
+import { 
+  getFromStorage
+  } from './localStorage.js'
 
 $(document).ready(()=>{
     var stars = 1;
 
     $(document).on("submit","#vouchSubmit",(event)=>{
         event.preventDefault();
+        const obj = getFromStorage('sessionKey');
         fetch('/api/account/submitVouch',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                idBy:"5ac0b4c25a00385a1f7b6d99",
-                idFor:"5ac0b4c25a00385a1f7b6d99",
+                idBy:obj.token,
+                idFor:$("#vouchModal").attr("data-id"),
                 rating:stars,
                 date:new Date(),
                 reviewTitle:$("#title").val(),
