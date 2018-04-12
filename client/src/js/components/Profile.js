@@ -10,22 +10,19 @@ import VouchAverage from "./vouching/VouchAverage"
 import Background from './Background.js';
 import Search from './Search.js';
 
-class ProfileRating extends Component
-{
-	render()
-	{
-		return(
-			<div>
-				<div className="profile_rating">
-					< VouchAverage _id={this.props._id}/>
-				</div>
-				{/* <div>
-					< VouchTally/>
-				</div>	 */}
-			</div>
-		);
-	}
-}
+//~ class ProfileRating extends Component
+//~ {
+	//~ goVouch(){
+		//~ this.props.history.push('/vouch/' + this.props._id);
+	//~ }
+	
+	//~ render()
+	//~ {
+		//~ return(
+			
+		//~ );
+	//~ }
+//~ }
 
 class Profile extends Component {
 	constructor()
@@ -33,10 +30,14 @@ class Profile extends Component {
 		super();
 		this.state = {
 			user:"",
-			tab:ProfileRating,
+			//~ tab:Vouching,
 			_id:"",
 			editMode: false
 		};
+	}
+	
+	goVouch(){
+		this.props.history.push('/vouching/' + this.state._id);
 	}
 	
 	componentDidMount()//every load
@@ -48,12 +49,13 @@ class Profile extends Component {
 	
 	componentWillMount()// once
 	{
-		this.setState({_id:this.props._id});
+		const { match: {params}} = this.props;
+		this.setState({_id:params._id});
 	}
 	
 	showRatings()
 	{
-		this.setState({tab: ProfileRating});
+		//~ this.setState({tab: Vouching});
 	}
 	
 	showBackInfo()
@@ -87,7 +89,7 @@ class Profile extends Component {
 		       });
 			const userName = jsonPro.firstName;
 			const name = jsonPro.firstName + " " + jsonPro.lastName;
-			const profilePic = "./api/account/getImage?filename=" + jsonPro.profilePic;
+			const profilePic = "../api/account/getImage?filename=" + jsonPro.profilePic;
 			const secLvl = 1;
 			const email = jsonPro.email;
 			const idNum = jsonPro.id;
@@ -187,7 +189,11 @@ class Profile extends Component {
 										</div>
 										<div className="col-md-5 col-xs-5 profileUserDetails">
 											<h3 className="profileUserName">{name}</h3>
-											<ProfileRating _id={this.props._id}/>
+											<div onClick={this.goVouch.bind(this)}>
+												<div className="profile_rating">
+													< VouchAverage _id={this.state._id}/>
+												</div>
+											</div>
 											<div className="row profileSpecificDetails">
 												<div className="col-md-4">
 													Email
