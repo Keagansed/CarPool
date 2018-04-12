@@ -43,6 +43,8 @@ body {
 #profilePic {
     width: 100%;
     height: 100%;
+    max-height: 400px;
+    max-width: 300px;
     border-radius: 25px;
     cursor: pointer;
 }
@@ -223,9 +225,9 @@ body {
 }
 
 .profilePic {
-    width: 75px;
-    height: 75px;
-    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
 }
 
 .userName {
@@ -290,6 +292,10 @@ ul {
 {
     background-color: rgb(207, 207, 207);
     cursor: pointer;
+}
+
+input.shorten{
+	max-width:100%;
 }
 
 /*-----------------------------------------------------*/

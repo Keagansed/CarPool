@@ -10,20 +10,6 @@ import VouchAverage from "./vouching/VouchAverage"
 import Background from './Background.js';
 import Search from './Search.js';
 
-//~ class ProfileRating extends Component
-//~ {
-	//~ goVouch(){
-		//~ this.props.history.push('/vouch/' + this.props._id);
-	//~ }
-	
-	//~ render()
-	//~ {
-		//~ return(
-			
-		//~ );
-	//~ }
-//~ }
-
 class Profile extends Component {
 	constructor()
 	{
@@ -87,7 +73,7 @@ class Profile extends Component {
 					disableEditBut();
 				}
 		       });
-			const userName = jsonPro.firstName;
+			//~ const userName = jsonPro.firstName;
 			const name = jsonPro.firstName + " " + jsonPro.lastName;
 			const profilePic = "../api/account/getImage?filename=" + jsonPro.profilePic;
 			const secLvl = 1;
@@ -98,84 +84,62 @@ class Profile extends Component {
 		       {
 
 				return (
-					<div className="container">
-						<div className="Profile">
-							<h1>{userName}</h1>
-							<div className="row">
-								<div className="col-md-5">
-									<img src={profilePic} className="profilePic" alt="Profile Pic" />
-									<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
-										<input type="hidden" id="userId" name="id" defaultValue={this.props._id}/>
-										<input type="file" name="file" id="file" />
-										<label htmlFor="file">choose file</label>
-										<input type="submit" value="update" id="upProPic" />
-									</form>
-								</div>
-								<div className="col-md-7">
-									<form method="POST" action="/api/account/updateProfile" id="upProInfo">
-										first name: <input id="upFName" type="text" defaultValue={jsonPro.firstName}/><br/>
-										last name: <input id="upLName" type="text" defaultValue={jsonPro.lastName}/><br/>
-										email: <input id="upEmail" type="email" defaultValue={email}/><br/>
-										ID number: <input id="upId" type="text" defaultValue={idNum}/><br/>
-										Current password: <input id="upPass" type="password"/><br/>
-										New password: <input id="upPassChange" type="password" placeholder="leave blank for no change"/><br/>
-										<input type="submit" value="update"/>
-										<h4>Level {secLvl}</h4>
-									</form>
-								</div>
-								<div>
-									<button id="logOutSubmit">logout</button>
-									<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
-								</div>
-								<div>
-									<ul className="nav nav-tabs">
-										<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
-										<li><button onClick={this.showBackInfo.bind(this)}>Background stuff</button></li>
-										<li><button onClick={this.showSearch.bind(this)}>search</button></li>
-									</ul>
-									<div>
-										<this.state.tab _id={this.props._id} />
+					<div>
+						<div>
+							<div>
+								<Search />
+							</div>
+							<div className="center_container profile_center_container bubble">
+								<div className="row full_row">
+									<div className="col-md-7 col-sm-12 img-wrap">
+										<img src={profilePic} id="profilePic" className="profilePic" alt="Profile Pic" />
+										<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
+											<input type="hidden" id="userId" name="id" defaultValue={this.state._id} />
+											<input type="file" name="file" id="file"/>
+											<input type="submit" value="submit" id="upProPic" className="btn btn-secondary"/>
+										</form>
+									</div>
+									<div className="col-md-5 col-sm-7 profileUserDetails">
+										<form method="POST" action="/api/account/updateProfile" id="upProInfo">
+											first name: <input className="shorten" id="upFName" type="text" defaultValue={jsonPro.firstName}/><br/>
+											last name: <input className="shorten" id="upLName" type="text" defaultValue={jsonPro.lastName}/><br/>
+											<div className="row profileSpecificDetails">
+												<div className="col-md-12">
+													Email:
+													<input className="shorten" id="upEmail" type="email" defaultValue={email}/>
+												</div>
+												<div className="col-md-12">
+													ID:
+													<input className="shorten" id="upId" type="text" defaultValue={idNum}/>
+												</div>
+												<div className="col-md-12">
+													Current password: 
+													<input className="shorten" id="upPass" type="password"/>
+												</div>
+												<div className="col-md-12">
+													New password: 
+													<input className="shorten" id="upPassChange" type="password" placeholder="leave blank for no change"/>
+												</div>
+												<div className="col-md-12">
+												Security:
+													<h6 className="profileValue">Level {secLvl}</h6>
+												</div>
+											</div>
+											<input className="btn btn-primary" type="submit" value="update"/>
+										</form>
+										<button id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary">stop editiing</button>
+										<div>
+											<button id="logOutSubmit" className="btn btn-primary">logout</button>
+										</div>
 									</div>
 								</div>
-							</div>
+							</div> 
 						</div>
 					</div>
 				);
 			}
 			else
 			{
-// <<<<<<< profile
-				// return (
-				// 	<div className="container">
-				// 		<div className="Profile">
-				// 			<h1>{userName}</h1>
-				// 			<div className="row">
-				// 				<div className="col-md-5">
-				// 					<img src={profilePic} className="profilePic" alt="Profile Pic" />
-				// 				</div>
-				// 				<div className="col-md-7">
-				// 					<h3>{name}</h3>
-				// 					<h4>email: {email}</h4>
-				// 					<h4>ID number: {idNum}</h4>
-				// 					<h4>Level {secLvl}</h4>
-				// 				</div>
-				// 				<button id="logOutSubmit">logout</button>
-				// 				<button id="startEdit" onClick={this.toggleEditMode.bind(this)}>Edit</button>
-				// 				<div>
-				// 					<ul className="nav nav-tabs">
-				// 						<li><button onClick={this.showRatings.bind(this)}>Ratings </button></li>
-				// 						<li><button onClick={this.showBackInfo.bind(this)}>Background stuff</button></li>
-				// 						<li><button onClick={this.showSearch.bind(this)}>search</button></li>
-				// 					</ul>
-				// 					<this.state.tab _id={this.props._id} />
-				// 				</div>
-				// 			</div>
-				// 		</div>
-
-				// 	</div>
-				// );
-// <<<<<<< profile
-// >>>>>>> styling_A 
 				return (
 					<div>
 						<div>
@@ -183,44 +147,41 @@ class Profile extends Component {
 						</div>
 						<div>
 							<div className="center_container profile_center_container bubble">
-									<div className="row full_row">
-										<div className="col-md-7 col-xs-7 img-wrap">
-											<img src={profilePic} id="profilePic" alt="Profile Pic" />
+								<div className="row full_row">
+									<div className="col-md-7 col-sm-12 img-wrap">
+										<img src={profilePic} className="profilePic" alt="Profile Pic" />
+									</div>
+									<div className="col-md-5 col-sm-7 profileUserDetails">
+										<h3 className="profileUserName">{name}</h3>
+										<div className="row profileSpecificDetails">
+											<div className="col-md-5 col-sm-6 col-sx-12">
+												Email:
+												<h6 className="profileValue">{email}</h6>
+											</div>
+											<div className="col-md-5 col-sm-6 col-sx-12">
+												ID:
+												<h6 className="profileValue">{idNum}</h6>
+											</div>
+											<div className="col-md-5 col-sm-6 col-sx-12">
+											Security:
+												<h6 className="profileValue">Level {secLvl}</h6>
+											</div>
 										</div>
-										<div className="col-md-5 col-xs-5 profileUserDetails">
-											<h3 className="profileUserName">{name}</h3>
-											<div onClick={this.goVouch.bind(this)}>
-												<div className="profile_rating">
-													< VouchAverage _id={this.state._id}/>
-												</div>
+										<button id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary">edit profile</button>
+										<div onClick={this.goVouch.bind(this)}>
+											<div className="profile_rating">
+												< VouchAverage _id={this.state._id}/>
 											</div>
-											<div className="row profileSpecificDetails">
-												<div className="col-md-4">
-													Email
-													<h6 className="profileValue">{email}</h6>
-												</div>
-												<div className="col-md-4">
-													ID
-													<h6 className="profileValue">{idNum}</h6>
-												</div>
-												<div className="col-md-4">
-												Security
-													<h6 className="profileValue">Level {secLvl}</h6>
-												</div>
-											</div>
-											<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
-												<input type="hidden" id="userId" name="id" defaultValue={this.props._id} />
-												<input type="file" name="file" id="file"/>
-												<input type="submit" value="submit" id="upProPic" className="btn btn-secondary"/>
-											</form>
+										</div>
+										<div>
 											<button id="logOutSubmit" className="btn btn-primary">logout</button>
 										</div>
 									</div>
+								</div>
 							</div> 
 						</div>
 					</div>
 				);
-// >>>>>>> styling_A
 			}
 		}
 		else
