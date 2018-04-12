@@ -10,10 +10,13 @@ router.post('/',(req,res,next)=>{
 		firstName,
 		lastName,
 		id,
-		//~ password,
+		newPass,
 		_id
 	} = body;
-	let { email } = body;
+	let { 
+		email,
+		pass 
+		} = body;
 
 	//error check data
 	//====== Use return res.send to stop if err occurs
@@ -46,72 +49,100 @@ router.post('/',(req,res,next)=>{
 			message:"Error: ID invalid!"
 		});
 	}
-	//~ if(!password){
-		//~ return res.send({ 
-			//~ success:false,
-			//~ message:"Error: Password cannot be blank!"
-		//~ });
-	//~ }
-
-	email = email.toLowerCase();
-	//check id
+	if(!pass){
+		return res.send({ 
+			success:false,
+			message:"Error: Password cannot be blank!"
+		});
+	}
+	
+	//check password
 	User.find({
-		id:id
-	},(err,previousUsers) =>{
-		//verify
+		_id:_id
+	},(err, user) => {
 		if(err){
 			return res.send({
 				success:false,
 				message:"Error:Server error"
 			});
-		}
-		else if((previousUsers.length>0) && (previousUsers[0]._id != _id)){
+		}else if (!user[0].validPassword(pass)){
 			return res.send({
 				success:false,
-				message:"Error:Account already exists"
+				message:"Error:incorrect password"
 			});
-		}
-	});
-	//check email
-	User.find({
-		email:email
-	},(err,previousUsers) =>{
-		//verify
-		if(err){
-			return res.send({
-				success:false,
-				message:"Error:Server error"
-			});
-		}
-		else if((previousUsers.length>0) && (previousUsers[0]._id != _id)){
-			return res.send({
-				success:false,
-				message:"Error: Email already exists"
-			});
-		}
-		else{
-			//update user
-			User.findOneAndUpdate(
-				{"_id": _id}, 
-				{$set:{
-					"firstName" : firstName,
-					"lastName" : lastName,
-					"email" : email,
-					"id" : id,
-					//~ "password" : password
-					}
-				},
-				{upsert: true},
-				function(err){
-					if (err)
-						return res.send(500, {error: err});
-					else
-						return res.send({success:true});
+		}else{
+			//set new password
+			if (newPass)
+				pass = newPass;
+			const genHash = new User();
+			pass = genHash.generateHash(pass);
+			email = email.toLowerCase();
+			//check id
+			User.find({
+				id:id
+			},(err,previousUsers) =>{
+				//verify
+				if(err){
+					return res.send({
+						success:false,
+						message:"Error:Server error"
+					});
 				}
-			);
+				else if((previousUsers.length>0) && (previousUsers[0]._id != _id)){
+					return res.send({
+						success:false,
+						message:"Error:Account already exists"
+					});
+				}
+				else
+				{
+					//check email
+					User.find({
+						email:email
+					},(err,previousUsers) =>{
+						//verify
+						if(err){
+							return res.send({
+								success:false,
+								message:"Error:Server error"
+							});
+						}
+						else if((previousUsers.length>0) && (previousUsers[0]._id != _id)){
+							return res.send({
+								success:false,
+								message:"Error: Email already exists"
+							});
+						}
+						else{
+							//update user
+							User.findOneAndUpdate(
+								{"_id": _id}, 
+								{$set:{
+									"firstName" : firstName,
+									"lastName" : lastName,
+									"email" : email,
+									"id" : id,
+									"password" : pass
+									}
+								},
+								{upsert: true},
+								function(err){
+									if (err)
+										return res.send({
+											success:false,
+											message:"Error did not update"
+										});
+									else
+										return res.send({success:true});
+								}
+							);
+						}
+					});
+
+				}
+			});
 		}
 	});
-
 	
 
 });

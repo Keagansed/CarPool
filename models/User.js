@@ -31,7 +31,7 @@ var UserSchema = new mongoose.Schema({
 	profilePic:
 	{
 		type:String,
-		default:'2ebe81b4ec27ce503a7f3353424bfb90.jpg',
+		default:'default.jpg',
 		required:false
 	}
 });
