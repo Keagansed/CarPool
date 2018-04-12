@@ -72,7 +72,7 @@ $(document).ready(()=>{
            .then(res => res.json())
            .then(json => {
                 console.log('json',json); //========== Probably remove ===============
-                window.location.reload();
+                window.location = window.location.herf + "./../../";
            });
         }
 
