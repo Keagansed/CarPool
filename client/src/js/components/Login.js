@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
 import { getFromStorage } from '../utils/localStorage.js'
 import "../utils/loginQuery.js";
-import Profile from "./Profile.js"
+//~ import Profile from "./Profile.js"
 
 
 class Login extends Component {
@@ -89,7 +90,7 @@ class Login extends Component {
                 //~ <h3>Account</h3>
                 //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
             //~ </div>
-	    <Profile _id={this.state.token} />
+	    <Redirect to={"/profile/" + this.state.token} />
         ); 
     }
   }

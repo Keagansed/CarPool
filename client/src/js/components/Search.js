@@ -5,7 +5,10 @@ import "../utils/searchQuery.js";
 import '../../css/App.css';
 
 class Search extends Component {
-
+	goPro(){
+		alert("fuckyeah");
+	}
+	
 	render(){
 		
 		return(

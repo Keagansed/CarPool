@@ -1,7 +1,10 @@
 import $ from 'jquery';
 
 $(document).ready(()=>{
-
+	$(document).on("click", ".name",function(e){
+		window.location = window.location.href + "./../" + $(this).attr("data-id");
+	});
+	
      $(document).on("input cut","#searchUsers",(event) => {
         event.preventDefault();
         fetch('/api/account/getUser',{
@@ -24,7 +27,7 @@ $(document).ready(()=>{
               var html = "";
               for (i = 0; i < json.length; ++i) {
 
-                profilePic = "./api/account/getImage?filename=" + json[i].profilePic;
+                profilePic = "../api/account/getImage?filename=" + json[i].profilePic;
 
                 // html += "<div class=\"row searchItem\">";
                 // html += "<img src=\"" + profilePic + "\" class=\"col-md-3 col-4 profilePic\" alt=\"Profile Pic\" /> ";
@@ -32,7 +35,7 @@ $(document).ready(()=>{
 
                 html += "<li class=\"list-group-item\"><div class=\"col-xs-4\">";
                 html += "<img src=\"" + profilePic + "\" class=\"img-responsive img-circle\" alt=\"Profile Pic\" /> ";
-                html += "<span class=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
+                html += "<span class=\"name\" data-id=\"" + json[i]._id + "\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
 
               }
 
