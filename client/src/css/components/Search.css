@@ -66,8 +66,16 @@ img{
 li{
   border: 1px solid lightgray;
   background-color: #eff2f2;
-  font-size: 18px;
-  height: 76px;
+  font-size: 14pt;
+  height: 100px;
+}
+
+#noUser{
+  font-size: 14pt;
+  border: 1px solid lightgray;
+  background-color: rgb(239, 242, 242);
+  border-radius: 4pt;
+  padding: 3pt;
 }
 
 .userName{

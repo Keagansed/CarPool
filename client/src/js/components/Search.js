@@ -17,23 +17,19 @@ class Search extends Component {
 			            <div className="panel panel-default">
 			            	<form id="searchUsers">
 				                <div className="row">
-				                    <div className="col-md-10">
+				                    <div className="col-md-12">
 				                        <div className="input-group c-search">
-				                            <input type="text" className="form-control" id="user-search"/>
+				                            <input type="text" className="form-control" id="user-search" autocomplete="off" placeholder="Search"/>
 				                        </div>
 				                    </div>
-				                    <div className="col-md-2">
+				                   {/* <div className="col-md-2">
 				                    	<button type="submit" className="btn btn-info" >Search</button>								
-				                    </div>
+				                    </div>*/}
 				                </div> <br />
 				            </form>
 			                
-			                <ul className="list-group" id="user-list">			{/*results get added to this list*/}
-			                    {/*<li className="list-group-item">
-			                        <div className="col-md-8">
-			                           <span className="name"></span><br/>
-			                        </div>
-			                    </li>*/}
+			                <ul className="list-group" id="user-list">			{/*results injected into this class*/}
+			                    
 			                </ul>
 			            </div>
 			        </div>

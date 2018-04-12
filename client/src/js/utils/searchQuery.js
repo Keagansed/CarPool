@@ -2,9 +2,8 @@ import $ from 'jquery';
 
 $(document).ready(()=>{
 
-     $(document).on("submit","#searchUsers",(event) => {
+     $(document).on("input cut","#searchUsers",(event) => {
         event.preventDefault();
-        /*alert("Searching");*/
         fetch('/api/account/getUser',{
             method:'POST',
             headers:{
@@ -28,27 +27,21 @@ $(document).ready(()=>{
 
                 profilePic = "./api/account/getImage?filename=" + json[i].profilePic;
 
-                html += "<li className=\"list-group-item\"><div className=\"col-xs-4\">";
-                html += "<img src=\"" + profilePic + "\" className=\"img-responsive img-circle\" alt=\"Profile Pic\" /> ";
-                html += "<span className=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
+                html += "<li class=\"list-group-item\"><div class=\"col-xs-4\">";
+                html += "<img src=\"" + profilePic + "\" class=\"img-responsive img-circle\" alt=\"Profile Pic\" /> ";
+                html += "<span class=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
 
-
-                /*html += "<li className=\"list-group-item\"><div className=\"col-xs-4\">";
-                html += "<img src=\"" + profilePic + "\" className=\"img-responsive img-circle\" alt=\"Profile Pic\" /></div>";
-                html += "<div className=\"col-sx-8\"><span className=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>";*/
               }
 
               $('#user-list').html(html);
             }else{
-              $('#user-list').html("");
+            	if ($("#user-search").val() === ""){
+            		$('#user-list').html("");
+            	}else{
+              		$('#user-list').html("<div id=\"noUser\">No Such User</div>");
+              	}
             }
         });
-
-      /*fetch('/api/account/getUser?name='+ $("#user-search").val())
-       .then(res => res.json())
-       .then(json => {
-            $('#user-list').append("Hello World");
-       });*/
     });
 });
 
