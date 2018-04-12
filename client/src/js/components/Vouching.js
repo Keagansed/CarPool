@@ -10,12 +10,15 @@ import VouchTally from './vouching/VouchTally';
 import "../utils/vouchQuery.js";
 
 class Vouching extends Component {
-  // constructor(props){
-  //   super(props);
-  // }
+	constructor(props){
+		super(props);
+		this.state = {
+			_id: ""
+		}
+	}
 
-  componentDidMount(){
-
+  componentWillMount(){
+	this.setState({_id: this.props.match.params._id});
   }
 
   render() {
@@ -23,14 +26,14 @@ class Vouching extends Component {
         <div className="center_container vouching_center_container">
             <div className="row">
                 <div className="col-md-5 bubble no-padding-margin">
-                        <VouchAverage _id={this.props._id}/>
-                        <VouchTally _id={this.props._id} />
+                        <VouchAverage _id={this.state._id}/>
+                        <VouchTally _id={this.state._id} />
                         <button id="addReview" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#vouchModal">Vouch</button>
                 </div>
 
                 <div className="col-sm-5 offset-md-2 bubble">
                     <div className="info-div">
-                        <VouchList _id={this.props._id} />
+                        <VouchList _id={this.state._id} />
                     </div>
                 </div>
             </div>
