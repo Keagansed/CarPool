@@ -38,7 +38,7 @@ class Vouching extends Component {
                 </div>
             </div>
 
-            <div className="modal fade" id="vouchModal" data-id={this.props._id}>
+            <div className="modal fade" id="vouchModal" data-id={this.state._id}>
                 <div className="modal-dialog">
                     <div className="modal-content bubble-more-visible">
                 <form id="vouchSubmit">
