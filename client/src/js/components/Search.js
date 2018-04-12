@@ -19,7 +19,7 @@ class Search extends Component {
 				                <div className="row">
 				                    <div className="col-md-8 col-8 no-padding-margin">
 				                        <div className="input-group c-search">
-				                            <input type="text" className="form-control" id="user-search" autocomplete="off" placeholder="Search"/>
+				                            <input type="text" className="form-control" id="user-search" autoComplete="off" placeholder="Search"/>
 				                        </div>
 				                    </div>
 				                   {/* <div className="col-md-2">
