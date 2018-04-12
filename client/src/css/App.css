@@ -145,6 +145,17 @@ body {
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
+.search-container
+{
+    margin: 10px
+}
+
+#user-list
+{
+   width: 100%;
+   padding: 0;
+}
+
 .search_center_container {
     width: 60%;
     min-width: 250px;
@@ -269,13 +280,17 @@ ul {
 }
 
 .searchItem{
-    background-color: rgba(0, 150, 200, 0.5);
-    margin-bottom: 5%;
-    border-radius: 5px;
-    padding: 1%;
     max-height: 100px;
+    opacity: 1;
+    padding: 10px;
+    background-color: white;
 }
 
+.searchItem:hover
+{
+    background-color: rgb(207, 207, 207);
+    cursor: pointer;
+}
 
 /*-----------------------------------------------------*/
 
