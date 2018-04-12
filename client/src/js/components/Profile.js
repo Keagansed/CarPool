@@ -189,7 +189,7 @@ class Profile extends Component {
 										</div>
 										<div className="col-md-5 col-xs-5 profileUserDetails">
 											<h3 className="profileUserName">{name}</h3>
-											<div onClick={this.goVouch.bind(this)}>
+											<div onClick={this.goVouch.bind(this)} className="profile-vouch">
 												<div className="profile_rating">
 													< VouchAverage _id={this.state._id}/>
 												</div>

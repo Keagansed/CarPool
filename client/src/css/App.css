@@ -145,6 +145,18 @@ body {
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
 
+.profile-vouch
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.profile-vouch:hover
+{
+    background-color: rgba(155, 155, 155, 0.404);
+    cursor: pointer;
+}
+
 .search-container
 {
     margin: 10px
