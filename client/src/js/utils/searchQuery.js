@@ -26,13 +26,14 @@ $(document).ready(()=>{
 
                 profilePic = "./api/account/getImage?filename=" + json[i].profilePic;
 
-                // html += "<div class=\"row searchItem\">";
+                html += "<div class=\"row searchItem\">";
                 // html += "<img src=\"" + profilePic + "\" class=\"col-md-3 col-4 profilePic\" alt=\"Profile Pic\" /> ";
+                html += "<div class=\"name \">" + json[i].firstName +" " + json[i].lastName + "</div></div>";
                 // html += "<div class=\"name col-md-4 col-8 offset-md-2 offset-sm-0\">" + json[i].firstName +" " + json[i].lastName + "</div></div>"; 
 
-                html += "<li class=\"list-group-item\"><div class=\"col-xs-4\">";
-                html += "<img src=\"" + profilePic + "\" class=\"img-responsive img-circle\" alt=\"Profile Pic\" /> ";
-                html += "<span class=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
+                // html += "<li class=\"list-group-item row searchItem\"><div class=\"col-xs-4\">";
+                // html += "<img src=\"" + profilePic + "\" class=\"col-md-3 col-4 profilePic\" alt=\"Profile Pic\" /> ";
+                // html += "<span class=\"name\">" + json[i].firstName +" " + json[i].lastName + "</span><br/></div></li>"; 
 
               }
 

@@ -12,8 +12,8 @@ class Search extends Component {
 
             <div className="center_container search_center_container">
 				{/* <div className="bubble"> */}
-                    <div className="row no-padding-margin">
-			            <div className="col-md-8 offset-md-2">
+                    <div className="row no-padding-margin search-container">
+			            <div className="col-md-8 offset-md-2 no-padding">
 			            	<form id="searchUsers">
 				                <div className="row">
 				                    <div className="col-md-12 col-12 no-padding-margin">
@@ -26,10 +26,9 @@ class Search extends Component {
 				                    </div>*/}
 				                </div>
 				            </form>
-			                
-			                <ul className="list-group" id="user-list">			{/*results injected into this class*/}
+							<ul className="" id="user-list">			{/*results injected into this class*/}
 			                    
-			                </ul>
+							</ul>			                		                
 			            </div>
 			        </div>
 				{/* </div> */}
