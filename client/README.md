@@ -1,1 +1,0 @@
-To start the server and the client open your terminal in the client folder and run the command: "npm start".
