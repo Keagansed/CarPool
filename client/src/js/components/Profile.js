@@ -9,11 +9,13 @@ import VouchAverage from "./vouching/VouchAverage"
 // import VouchTally from "./vouching/VouchTally"
 import Background from './Background.js';
 import Search from './Search.js';
+import { logOutSubmitFunc,test } from "../utils/loginQuery.js";
 
 class Profile extends Component {
 	constructor()
 	{
 		super();
+		//========= Properties ===========
 		this.state = {
 			user:"",
 			//~ tab:Vouching,
@@ -21,7 +23,8 @@ class Profile extends Component {
 			editMode: false
 		};
 	}
-	
+
+
 	goVouch(){
 		this.props.history.push('/vouching/' + this.state._id);
 	}
@@ -129,7 +132,7 @@ class Profile extends Component {
 										</form>
 										<button id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary">stop editiing</button>
 										<div>
-											<button id="logOutSubmit" className="btn btn-primary">logout</button>
+											<button  className="btn btn-primary" onClick={logOutSubmitFunc}>logout</button>
 										</div>
 									</div>
 								</div>
@@ -176,7 +179,7 @@ class Profile extends Component {
 											</div>
 										</div>
 										<div>
-											<button id="logOutSubmit" className="btn btn-primary">logout</button>
+											<button className="btn btn-primary" onClick={logOutSubmitFunc}>logout</button>
 										</div>
 									</div>
 								</div>

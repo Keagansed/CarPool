@@ -5,19 +5,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
 import { getFromStorage } from '../utils/localStorage.js'
-import "../utils/loginQuery.js";
-//~ import Profile from "./Profile.js"
-
+import { signUpSubmitFunc, signInSubmitFunc } from "../utils/loginQuery.js";
 
 class Login extends Component {
   constructor(props){
     super(props);
-
+    //========= Properties ===========
     this.state ={
       token:'',
     };
   }
 
+    //========= Render Component ===========
   componentDidMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
@@ -42,7 +41,7 @@ class Login extends Component {
                 <div className="row">
                     <div className="col-md-5 col-sm-12 bubble">
                         <h3>Sign In</h3><hr/>
-                        <form id="signInSubmit">
+                        <form id="signInSubmit" >
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
 	                            <input type="email" className="form-control" id="signInemail" placeholder="Enter email"/>
@@ -51,7 +50,7 @@ class Login extends Component {
 	                            <label htmlFor="signInpass">Password</label>
 	                            <input type="password" className="form-control" id="signInpass" placeholder="Enter password"/>
 	                        </div>
-	                        <button type="submit" className="btn btn-primary" >Submit</button>
+	                        <button type="submit" className="btn btn-primary" onClick={signInSubmitFunc}>Submit</button>
                         </form>
                     </div>
                     <div className="col-md-2"></div>
@@ -78,7 +77,7 @@ class Login extends Component {
                                 <label htmlFor="signUppass">Password</label>
                                 <input type="password" className="form-control" id="signUppass" placeholder="Enter password" />
                             </div>
-                            <button type="submit" className="btn btn-primary" >Submit</button>
+                            <button type="submit" className="btn btn-primary" onClick={signUpSubmitFunc}>Submit</button>
                         </form>
                     </div>
                 </div>
