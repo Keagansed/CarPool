@@ -53,10 +53,11 @@
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
-    "react-test-renderer": "^16.3.1"
+    "react-test-renderer": "^16.3.1",
+    "nodemon": "^1.17.3"
   },
   "scripts": {
-    "start": "concurrently \"node scripts/start.js\" \"node ../bin/www\"",
+    "start": "concurrently \"node scripts/start.js\" \"nodemon ../bin/www\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
