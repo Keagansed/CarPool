@@ -8,6 +8,8 @@ import VouchList from './vouching/VouchList';
 import VouchAverage from './vouching/VouchAverage';
 import VouchTally from './vouching/VouchTally';
 
+import { submitVouch } from '../utils/vouchQuery'
+
 import {
     getFromStorage
 } from '../utils/localStorage.js'
@@ -84,34 +86,7 @@ class Vouching extends Component {
 
     submitVouch()
     {
-        const obj = getFromStorage('sessionKey');
-        if(obj.token != document.getElementById("vouchModal").getAttribute("data-id"))
-        {
-            fetch('/api/account/submitVouch',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    idBy:obj.token,
-                    idFor:document.getElementById("vouchModal").getAttribute("data-id"),
-                    rating:this.rating,
-                    date:new Date(),
-                    reviewTitle:document.getElementById("title").value,
-                    reviewBody:document.getElementById("review").value
-                })
-            })
-                .then(res=>res.json())
-                .catch(error => console.error('Error:', error))
-                .then(json=>{
-                    console.log('json',json); //========== Probably remove ===============
-                });
-            window.location.reload();
-        }
-        else
-        {
-            window.alert("You may not vouch for yourself");
-        }
+        submitVouch(this.rating);
     }
 
   componentWillMount(){
