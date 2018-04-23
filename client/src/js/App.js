@@ -10,14 +10,6 @@ import Vouching from './components/Vouching';
 
 class App extends Component {
 
-  // render() {
-  //   return (
-  //     <div className="App">
-  //       < Login/>
-  //     </div>
-  //   );
-  // }
-
   render(){
 		return(
 			<BrowserRouter>

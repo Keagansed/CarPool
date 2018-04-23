@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
@@ -176,7 +177,9 @@ class Profile extends Component {
 											</div>
 										</div>
 										<div>
-											<button id="logOutSubmit" className="btn btn-primary">logout</button>
+											<Redirect to={"/"}>
+												<button id="logOutSubmit" className="btn btn-primary">logout</button>
+											</Redirect>
 										</div>
 									</div>
 								</div>
@@ -187,7 +190,11 @@ class Profile extends Component {
 			}
 		}
 		else
-			return (<h1>Profile not found</h1>);
+			return (
+				<div>
+
+				</div>
+				);
 	}
 }
 
