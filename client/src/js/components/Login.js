@@ -86,10 +86,6 @@ class Login extends Component {
         );
     }else{
        return(
-            //~ <div className="container">
-                //~ <h3>Account</h3>
-                //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
-            //~ </div>
 	    <Redirect to={"/profile/" + this.state.token} />
         ); 
     }

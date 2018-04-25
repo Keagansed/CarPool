@@ -75,7 +75,6 @@ $(document).ready(()=>{
                 window.location = window.location.herf + "./../../";
            });
         }
-
     });
 
 });
