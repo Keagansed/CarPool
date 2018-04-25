@@ -17,7 +17,7 @@ class Login extends Component {
   }
 
     //========= Render Component ===========
-  componentDidMount(){
+  componentWillMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
       //verify token

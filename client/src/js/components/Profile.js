@@ -9,7 +9,7 @@ import VouchAverage from "./vouching/VouchAverage"
 // import VouchTally from "./vouching/VouchTally"
 import Background from './Background.js';
 import Search from './Search.js';
-import { logOutSubmitFunc,test } from "../utils/loginQuery.js";
+import { logOutSubmitFunc } from "../utils/loginQuery.js";
 
 class Profile extends Component {
 	constructor()
