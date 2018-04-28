@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import { setInStorage, getFromStorage } from './localStorage.js'
 
-export const test=()=> {
-	alert("fuckyouplzwork");
+export const test=(data)=> {
+	alert(data);
 }
 
 export const signUpSubmitFunc = (event)=>{
@@ -49,7 +49,7 @@ export const signInSubmitFunc = (event)=>{
     .then(json=>{
         if(json.success)
         {
-            console.log('json',json); //========== Probably remove ===============
+            // console.log('json',json); //========== Probably remove ===============
             setInStorage('sessionKey',{token:json.token});
             window.location.reload();
         }else{

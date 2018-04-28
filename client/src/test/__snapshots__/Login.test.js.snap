@@ -49,6 +49,7 @@ exports[`renders correctly 1`] = `
         </div>
         <button
           className="btn btn-primary"
+          onClick={[Function]}
           type="submit"
         >
           Submit
@@ -146,6 +147,7 @@ exports[`renders correctly 1`] = `
         </div>
         <button
           className="btn btn-primary"
+          onClick={[Function]}
           type="submit"
         >
           Submit

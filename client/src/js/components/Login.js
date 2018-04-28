@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
 import { getFromStorage } from '../utils/localStorage.js'
-import { signUpSubmitFunc, signInSubmitFunc } from "../utils/loginQuery.js";
+import { signUpSubmitFunc, signInSubmitFunc,test } from "../utils/loginQuery.js";
 
 class Login extends Component {
   constructor(props){
@@ -13,7 +13,23 @@ class Login extends Component {
     //========= Properties ===========
     this.state ={
       token:'',
+      email:'',
+      fname:'',
+      lname:'',
+      id:'',
+      pass:'',
     };
+
+    this.changeEmail = this.changeEmail.bind(this);
+    this.signInFunc = this.signInFunc.bind(this);
+  }
+
+  changeEmail(event){
+    this.setState({email:event.target.value});
+  }
+
+  signInFunc(){
+    test(this.state.email);
   }
 
     //========= Render Component ===========
@@ -44,13 +60,13 @@ class Login extends Component {
                         <form id="signInSubmit" >
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
-	                            <input type="email" className="form-control" id="signInemail" placeholder="Enter email"/>
+	                            <input type="email" className="form-control" value={this.state.email} onChange={this.changeEmail} placeholder="Enter email"/>
 	                        </div>
 	                        <div className="form-group">
 	                            <label htmlFor="signInpass">Password</label>
 	                            <input type="password" className="form-control" id="signInpass" placeholder="Enter password"/>
 	                        </div>
-	                        <button type="submit" className="btn btn-primary" onClick={signInSubmitFunc}>Submit</button>
+	                        <button type="submit" className="btn btn-primary" onClick={this.signInFunc}>Submit</button>
                         </form>
                     </div>
                     <div className="col-md-2"></div>
@@ -77,7 +93,7 @@ class Login extends Component {
                                 <label htmlFor="signUppass">Password</label>
                                 <input type="password" className="form-control" id="signUppass" placeholder="Enter password" />
                             </div>
-                            <button type="submit" className="btn btn-primary" onClick={signUpSubmitFunc}>Submit</button>
+                            <button type="submit" className="btn btn-primary" >Submit</button>
                         </form>
                     </div>
                 </div>
@@ -85,11 +101,7 @@ class Login extends Component {
         );
     }else{
        return(
-            //~ <div className="container">
-                //~ <h3>Account</h3>
-                //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
-            //~ </div>
-	    <Redirect to={"/profile/" + this.state.token} />
+	       <Redirect to={"/profile/" + this.state.token} />
         ); 
     }
   }
