@@ -1,23 +1,21 @@
-import $ from 'jquery';
 import { setInStorage, getFromStorage } from './localStorage.js'
 
 export const test=(data)=> {
 	alert(data);
 }
 
-export const signUpSubmitFunc = (event)=>{
-	event.preventDefault();
+export const signUpSubmitFunc = (fname,lname,email,id,pass)=>{
     fetch('/api/account/signup',{
         method:'POST',
         headers:{
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-            firstName:$("#signUpfname").val(),
-            lastName:$("#signUplname").val(),
-            email:$("#signUpemail").val(),
-            id:$("#signUpid").val(),
-            password:$("#signUppass").val()
+            firstName:fname,
+            lastName:lname,
+            email:email,
+            id:id,
+            password:pass
         })
     })
     .then(res=>res.json())
@@ -32,16 +30,15 @@ export const signUpSubmitFunc = (event)=>{
     })
 }
 
-export const signInSubmitFunc = (event)=>{
-	event.preventDefault();
+export const signInSubmitFunc = (email,pass)=>{
     fetch('/api/account/signin',{
         method:'POST',
         headers:{
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-            email:$("#signInemail").val(),
-            password:$("#signInpass").val()
+            email:email,
+            password:pass
         })
     })
     .then(res=>res.json())
@@ -57,7 +54,7 @@ export const signInSubmitFunc = (event)=>{
         }
         // console.log('json',json); //========== Probably remove ===============
         setInStorage('sessionKey',{token:json.token});
-        window.location.reload();
+        // window.location.reload();
     }) 
 }
 

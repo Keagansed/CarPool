@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
 import { getFromStorage } from '../utils/localStorage.js'
-import { signUpSubmitFunc, signInSubmitFunc,test } from "../utils/loginQuery.js";
+import { signUpSubmitFunc, signInSubmitFunc } from "../utils/loginQuery.js";
 
 class Login extends Component {
   constructor(props){
@@ -20,19 +20,41 @@ class Login extends Component {
       pass:'',
     };
 
-    this.changeEmail = this.changeEmail.bind(this);
-    this.signInFunc = this.signInFunc.bind(this);
   }
-
-  changeEmail(event){
+  //========= Capture form input ===========
+  changeEmail = (event)=>{
     this.setState({email:event.target.value});
   }
-
-  signInFunc(){
-    test(this.state.email);
+  changefName = (event)=>{
+    this.setState({fname:event.target.value});
+  }
+  changelName = (event)=>{
+    this.setState({lname:event.target.value});
+  }
+  changeID = (event)=>{
+    this.setState({id:event.target.value});
+  }
+  changePass = (event)=>{
+    this.setState({pass:event.target.value});
+  }
+  //========= Call external functions ===========
+  signInFunc = (event)=>{
+    event.preventDefault();
+    signInSubmitFunc(this.state.email, this.state.pass);
   }
 
-    //========= Render Component ===========
+  signUpFunc = (event)=>{
+    event.preventDefault();
+    signUpSubmitFunc(
+        this.state.fname,
+        this.state.lname,
+        this.state.email,
+        this.state.id,
+        this.state.pass
+        );
+  }
+
+  //========= Render Component ===========
   componentWillMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
@@ -60,11 +82,11 @@ class Login extends Component {
                         <form id="signInSubmit" >
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
-	                            <input type="email" className="form-control" value={this.state.email} onChange={this.changeEmail} placeholder="Enter email"/>
+	                            <input type="email" className="form-control" onChange={this.changeEmail} placeholder="Enter email"/>
 	                        </div>
 	                        <div className="form-group">
 	                            <label htmlFor="signInpass">Password</label>
-	                            <input type="password" className="form-control" id="signInpass" placeholder="Enter password"/>
+	                            <input type="password" className="form-control" onChange={this.changePass} placeholder="Enter password"/>
 	                        </div>
 	                        <button type="submit" className="btn btn-primary" onClick={this.signInFunc}>Submit</button>
                         </form>
@@ -75,25 +97,25 @@ class Login extends Component {
                         <form id="signUpSubmit">
                             <div className="form-group">
                                 <label htmlFor="signUpfname">First Name</label>
-                                <input type="text" className="form-control" id="signUpfname" placeholder="Enter first name" />
+                                <input type="text" className="form-control" onChange={this.changefName} placeholder="Enter first name" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUplname">Last Name</label>
-                                <input type="text" className="form-control" id="signUplname" placeholder="Enter last name" />
+                                <input type="text" className="form-control" onChange={this.changelName} placeholder="Enter last name" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUpemail">Email address</label>
-                                <input type="email" className="form-control" id="signUpemail" placeholder="Enter email" />
+                                <input type="email" className="form-control" onChange={this.changeEmail}placeholder="Enter email" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUpid">ID</label>
-                                <input type="text" className="form-control" id="signUpid" placeholder="Enter ID" />
+                                <input type="text" className="form-control" onChange={this.changeID} placeholder="Enter ID" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUppass">Password</label>
-                                <input type="password" className="form-control" id="signUppass" placeholder="Enter password" />
+                                <input type="password" className="form-control" onChange={this.changePass} placeholder="Enter password" />
                             </div>
-                            <button type="submit" className="btn btn-primary" >Submit</button>
+                            <button type="submit" className="btn btn-primary" onClick={this.signUpFunc}>Submit</button>
                         </form>
                     </div>
                 </div>
