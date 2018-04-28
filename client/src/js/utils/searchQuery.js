@@ -12,8 +12,6 @@ $(document).ready(()=>{
 
 	
 export const searchUsers = (_name) => {
-    let results = "";
-
     return fetch('/api/account/getUser',{
         method:'POST',
         headers:{
@@ -26,11 +24,10 @@ export const searchUsers = (_name) => {
     .then(res=>res.json())
     .catch(error => console.error('Error:', error))
     .then(json=>{
-
+        let results = "";
         if (json.length > 0){
             //~ let profilePic; 
             var i;
-            results = "";
 
             for (i = 0; i < json.length; ++i) {
                 //~ profilePic = "../api/account/getImage?filename=" + json[i].profilePic;
@@ -39,9 +36,7 @@ export const searchUsers = (_name) => {
                 results += "<div class=\"name\" data-id=\"" + json[i]._id + "\">" + json[i].firstName +" " + json[i].lastName + "</div></div>";
             }
         }else{
-            if (_name === ""){
-                results = "";
-            }else{
+            if (_name !== ""){
                 results = "<div id=\"noUser\">User Not Found</div>";
             }
         }
