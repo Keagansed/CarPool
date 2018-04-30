@@ -44,7 +44,7 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.get('/', (req, res, next) => {
+router.get('/profilePicture', (req, res, next) => {
 	gfs.files.findOne({ filename: req.query.filename }, (err, file) => {
 		// Check if file
 		if (!file || file.length === 0) {

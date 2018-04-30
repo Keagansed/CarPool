@@ -4,6 +4,8 @@ import {
   getFromStorage
   } from './localStorage.js'
 
+import LoginStore from "../stores/LoginStore"
+
 $(document).ready(()=>{
 
     $(document).on("submit","#signUpSubmit",(event)=>{
@@ -33,34 +35,34 @@ $(document).ready(()=>{
         })
     });
 
-     $(document).on("submit","#signInSubmit",(event)=>{
-        event.preventDefault();
-        fetch('/api/account/signin',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                email:$("#signInemail").val(),
-                password:$("#signInpass").val()
-            })
-        })
-        .then(res=>res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json=>{
-            if(json.success)
-            {
-                console.log('json',json); //========== Probably remove ===============
-                setInStorage('sessionKey',{token:json.token});
-                window.location.reload();
-            }else{
-                alert(json.message);
-            }
-            console.log('json',json); //========== Probably remove ===============
-            setInStorage('sessionKey',{token:json.token});
-            window.location.reload();
-        }) 
-    });
+    //  $(document).on("submit","#signInSubmit",(event)=>{
+    //     event.preventDefault();
+    //     fetch('/api/account/signin',{
+    //         method:'POST',
+    //         headers:{
+    //             'Content-Type':'application/json'
+    //         },
+    //         body:JSON.stringify({
+    //             email:$("#signInemail").val(),
+    //             password:$("#signInpass").val()
+    //         })
+    //     })
+    //     .then(res=>res.json())
+    //     .catch(error => console.error('Error:', error))
+    //     .then(json=>{
+    //         if(json.success)
+    //         {
+    //             console.log('json',json); //========== Probably remove ===============
+    //             setInStorage('sessionKey',{token:json.token});
+    //             window.location.reload();
+    //         }else{
+    //             alert(json.message);
+    //         }
+    //         console.log('json',json); //========== Probably remove ===============
+    //         setInStorage('sessionKey',{token:json.token});
+    //         window.location.reload();
+    //     }) 
+    // });
 
     $(document).on("click","#logOutSubmit",()=>{
 
@@ -80,3 +82,31 @@ $(document).ready(()=>{
 
 });
 
+
+
+export async function authenticate(){
+
+    await fetch('/api/account/signin',{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            email:$("#signInemail").val(),
+            password:$("#signInpass").val()
+        })
+    })
+    .then(res=>res.json())
+    .catch(error => console.error('Error:', error))
+    .then(json=>{
+        if(json.success)
+        {
+            setInStorage('sessionKey',{token:json.token});
+            LoginStore.setToken(json.token);
+            LoginStore.setLoggedIn(json.success);
+        }else{
+            alert(json.message);
+        }
+    }) 
+
+}

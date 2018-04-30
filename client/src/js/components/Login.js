@@ -1,15 +1,14 @@
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
+import { authenticate } from "../utils/loginQuery";
 import { getFromStorage } from '../utils/localStorage.js'
-import "../utils/loginQuery.js";
-//~ import Profile from "./Profile.js"
 
-
-class Login extends Component {
+@observer class Login extends Component {
   constructor(props){
     super(props);
 
@@ -18,25 +17,37 @@ class Login extends Component {
     };
   }
 
-  componentDidMount(){
+  componentWillMount(){
+
+  }
+
+  async componentDidMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
-      //verify token
-      const { token } = obj;
-      fetch('/api/account/verify?token='+token)
-       .then(res => res.json())
-       .then(json => {
+        //verify token
+        const { token } = obj;
+        await fetch('/api/account/verify?token='+token)
+        .then(res => res.json())
+        .then(json => {
             if(json.success){
-                this.setState({
-                    token:token
-                })
+                this.props.store.setToken(token);
+                this.props.store.setLoggedIn(true);
             }
-       });
+        })
     }
   }
 
+  handleLogin = async (e) => {
+    e.preventDefault();
+
+    await authenticate();
+  }
+
   render() {
-    if(!this.state.token){
+
+    const { loggedIn, token } = this.props.store;
+
+    if(!loggedIn){
         return(
             <div className="center_container login_center_container">
                 <div className="row">
@@ -51,7 +62,7 @@ class Login extends Component {
 	                            <label htmlFor="signInpass">Password</label>
 	                            <input type="password" className="form-control" id="signInpass" placeholder="Enter password"/>
 	                        </div>
-	                        <button type="submit" className="btn btn-primary" >Submit</button>
+	                        <button onClick={this.handleLogin} type="submit" className="btn btn-primary" >Submit</button>
                         </form>
                     </div>
                     <div className="col-md-2"></div>
@@ -86,11 +97,10 @@ class Login extends Component {
         );
     }else{
        return(
-            //~ <div className="container">
-                //~ <h3>Account</h3>
-                //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
-            //~ </div>
-	    <Redirect to={"/profile/" + this.state.token} />
+	        <Redirect to={{
+                pathname: "/profile/" + token,
+                state: { token: token }
+            }}/>
         ); 
     }
   }
