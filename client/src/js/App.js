@@ -3,10 +3,10 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import '../css/App.css';
 
 
-import Login from "./components/Login"
-
+import Login from "./components/Login";
 import Profile from './components/Profile';
 import Vouching from './components/Vouching';
+import VerificationDocuments from './components/VerificationDocuments';
 
 class App extends Component {
 
@@ -25,6 +25,7 @@ class App extends Component {
 					<Route path={"/"} exact component={Login}/>
 					<Route path={"/profile/:_id"} exact component={Profile}/>
 					<Route path={"/vouching/:_id"} exact component={Vouching}/>
+					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/>
 				</Switch>
 			</BrowserRouter>
 		);

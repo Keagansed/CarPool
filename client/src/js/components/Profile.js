@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
@@ -6,8 +7,6 @@ import '../../css/App.css';
 import "../utils/fileQuery.js";
 import { disableEditBut } from "../utils/editProfile.js";
 import VouchAverage from "./vouching/VouchAverage"
-// import VouchTally from "./vouching/VouchTally"
-import Background from './Background.js';
 import Search from './Search.js';
 
 class Profile extends Component {
@@ -15,8 +14,8 @@ class Profile extends Component {
 	{
 		super();
 		this.state = {
-			user:"",
-			//~ tab:Vouching,
+			user:{},
+			profilePic: '',
 			_id:"",
 			editMode: false
 		};
@@ -28,9 +27,7 @@ class Profile extends Component {
 	
 	componentDidMount()//every load
 	{
-		fetch('/api/account/getProfile?_id=' + this.state._id)
-		.then(res => res.json())
-		.then(json => this.setState({user: json}));
+		this.fetchUser();
 	}
 	
 	componentWillMount()// once
@@ -38,21 +35,18 @@ class Profile extends Component {
 		const { match: {params}} = this.props;
 		this.setState({_id:params._id});
 	}
-	
-	showRatings()
-	{
-		//~ this.setState({tab: Vouching});
-	}
-	
-	showBackInfo()
-	{
-		this.setState({tab: Background});
-	}
-	
-	showSearch()
-	{
-		this.setState({tab: Search});
-	}
+
+	fetchUser = () =>
+    {
+        fetch('/api/account/getProfile?_id=' + this.props.match.params._id)
+		.then(res => res.json())
+		.then(json => {           
+            this.setState({
+				user: json[0],
+				profilePic: json[0].profilePic,
+            })      
+        });
+    }
 	
 	toggleEditMode()
 	{
@@ -61,9 +55,33 @@ class Profile extends Component {
 		else
 			this.setState({editMode: true});
 	}
+
+	uploadProfilePic = (event) =>
+    {
+        const formData = new FormData();
+        formData.append('id', this.props.match.params._id);
+        formData.append('file', event.target.files[0]);
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', '/api/account/uploadFile/profilePicture', true);
+        xhr.onreadystatechange = res =>
+        {            
+            if(xhr.readyState === XMLHttpRequest.DONE)
+            {
+                this.fetchUser();
+            }
+        }
+
+		this.setState({
+			editMode: false
+		})
+        xhr.send(formData);  
+
+    }
 	
 	render() {
-		const jsonPro = this.state.user[0];
+		const jsonPro = this.state.user;
 		if (jsonPro)
 		{
 			fetch('/api/account/verify?token='+this.state._id)
@@ -73,9 +91,14 @@ class Profile extends Component {
 					disableEditBut();
 				}
 		       });
-			//~ const userName = jsonPro.firstName;
+			
+			let profilePic = '';
+
 			const name = jsonPro.firstName + " " + jsonPro.lastName;
-			const profilePic = "../api/account/getImage?filename=" + jsonPro.profilePic;
+			if(this.state.profilePic)
+			{
+				profilePic = "../api/account/getImage?filename=" + this.state.profilePic;
+			}
 			const secLvl = 1;
 			const email = jsonPro.email;
 			const idNum = jsonPro.id;
@@ -92,11 +115,9 @@ class Profile extends Component {
 							<div className="center_container profile_center_container bubble">
 								<div className="row full_row">
 									<div className="col-md-7 col-sm-12 img-wrap">
-										<img src={profilePic} id="profilePic" className="profilePic" alt="Profile Pic" />
-										<form action="/api/account/uploadFile" method="POST" encType="multipart/form-data">
-											<input type="hidden" id="userId" name="id" defaultValue={this.state._id} />
-											<input type="file" name="file" id="file"/>
-											<input type="submit" value="submit" id="upProPic" className="btn btn-secondary"/>
+										<img src={profilePic} id="profilePic" className="profilePic" alt="" />
+										<form encType="multipart/form-data">
+											<input type="file" name="file" id="file" onChange={this.uploadProfilePic}/>
 										</form>
 									</div>
 									<div className="col-md-5 col-sm-7 profileUserDetails">
@@ -149,7 +170,7 @@ class Profile extends Component {
 							<div className="center_container profile_center_container bubble">
 								<div className="row full_row">
 									<div className="col-md-7 col-sm-12 img-wrap">
-										<img src={profilePic} className="profilePic" alt="Profile Pic" />
+										<img src={profilePic} className="profilePic" alt="" />
 									</div>
 									<div className="col-md-5 col-sm-7 profileUserDetails">
 										<h3 className="profileUserName">{name}</h3>
@@ -177,6 +198,9 @@ class Profile extends Component {
 										</div>
 										<div>
 											<button id="logOutSubmit" className="btn btn-primary">logout</button>
+										</div>
+										<div>
+											<Link to={"/verification/" + this.state._id}><button id="verificationDocuments" className="btn btn-success">Verification Documents</button></Link>
 										</div>
 									</div>
 								</div>
