@@ -9,14 +9,14 @@ import { getFromStorage } from '../utils/localStorage.js'
 @observer class Login extends Component {
   constructor(props){
     super(props);
-
+    //========= Properties ===========
     this.state ={
       token:'',
-      email:'',
-      password:''
     };
-  }
 
+  }
+  
+  //========= Render Component ===========
   componentWillMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
@@ -94,7 +94,7 @@ import { getFromStorage } from '../utils/localStorage.js'
                 <div className="row">
                     <div className="col-md-5 col-sm-12 bubble">
                         <h3>Sign In</h3><hr/>
-                        <form id="signInSubmit">
+                        <form id="signInSubmit" >
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
 	                            <input type="email" onChange={this.updateLoginEmailValue} className="form-control" id="signInemail" placeholder="Enter email"/>

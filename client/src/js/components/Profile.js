@@ -14,6 +14,7 @@ import VouchAverage from "./vouching/VouchAverage"
 	constructor()
 	{
 		super();
+		//========= Properties ===========
 		this.state = {
 			_id:"",
 			editButton: "button",
@@ -23,14 +24,14 @@ import VouchAverage from "./vouching/VouchAverage"
 	componentDidMount()//every load
 	{
 		this.props.store.getProfile(this.props.match.params._id);
-		// fetch('/api/account/verify?token='+this.props.match.params._id)
-		// .then(res => res.json())
-		// .then(json => {
-		// 	console.log(json)
-		// 	if(!json.success){
-		// 		this.disableEditBut();
-		// 	}
-		// });
+		fetch('/api/account/verify?token='+this.props.match.params._id)
+		.then(res => res.json())
+		.then(json => {
+			console.log(json)
+			if(!json.success){
+				this.disableEditBut();
+			}
+		});
 	}
 	
 	componentWillMount()// once
@@ -119,7 +120,6 @@ import VouchAverage from "./vouching/VouchAverage"
 
 		store.editMode = false;
         xhr.send(formData);  
-
     }
 	
 	//render function
@@ -178,7 +178,7 @@ import VouchAverage from "./vouching/VouchAverage"
 										</form>
 										<input type={this.state.editButton} value="cancel" id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary" />
 										<div>
-											<button id="logOutSubmit" className="btn btn-primary">logout</button>
+											<button  className="btn btn-primary" onClick={this.handleLogout}>logout</button>
 										</div>
 									</div>
 								</div>

@@ -6,12 +6,7 @@ var UserSessionSchema = new mongoose.Schema({
 		defaut: ""
 	},
 	timestamp:{
-		type: Date,
-		defaut:Date.now()
-	},
-	isDeleted:{
-		type:Boolean,
-		default:false
+		type: String,
 	}
 });
 

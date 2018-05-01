@@ -51,7 +51,9 @@ router.post('/',(req,res,next)=>{
 
 		//create user session
 		const userSession = new UserSession();
+		let date = new Date();
 		userSession.userId = user._id;
+		userSession.timestamp = date.toDateString();
 		userSession.save((err,user)=>{
 			if(err){
 				return res.send({
