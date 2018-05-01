@@ -48,47 +48,133 @@ const upload = multer({ storage });
 
 router.post('/profilePicture', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.id};
-	User.findOneAndUpdate(query, {$set:{profilePic: req.file.filename}}, {upsert:true}, function(err, doc){
-		if (err) 
-			return res.send(500, { error: err });
+	User.findOne(query,(err,user)=>{	
+		if(err){
+			return res.send({ 
+				success:false,
+				message:"Error: Server Error"
+			});
+		}
+		else
+		{
+			gfs.files.findOne({"filename":user.profilePic}, (err, file)=> {
+				gfs.remove({_id:file._id, root:'uploads'},(err, gridStore)=>{
+				if (err) 
+				      return res.status(404).json({ err: err });
+				});
+			}); 
+			User.findOneAndUpdate(query, {$set:{profilePic: req.file.filename}}, {upsert:true}, function(err, doc){
+				if (err) 
+					return res.send(500, { error: err });
+			});
+			res.redirect('/');
+		}
 	});
-	res.redirect('/');
 });
 
 router.post('/driversLicense', upload.single('file'), (req, res, next) => {
  const query = {'_id': req.body.id};
- User.findOneAndUpdate(query, {$set:{driversLicense: req.file.filename}}, {upsert:true}, function(err, doc){
-   if (err) 
-     return res.send(500, { error: err });
- });
- res.redirect('/');
+	User.findOne(query,(err,user)=>{	
+		if(err){
+			return res.send({ 
+				success:false,
+				message:"Error: Server Error"
+			});
+		}
+		else
+		{
+			gfs.files.findOne({"filename":user.driversLicense}, (err, file)=> {
+				gfs.remove({_id:file._id, root:'uploads'},(err, gridStore)=>{
+				if (err) 
+				      return res.status(404).json({ err: err });
+				});
+			}); 
+			 User.findOneAndUpdate(query, {$set:{driversLicense: req.file.filename}}, {upsert:true}, function(err, doc){
+			   if (err) 
+			     return res.send(500, { error: err });
+			 });
+			 res.redirect('/');
+		}
+	});
+
 });
 
 router.post('/IdDocument', upload.single('file'), (req, res, next) => {
   const query = {'_id': req.body.id};
-  User.findOneAndUpdate(query, {$set:{IdDocument: req.file.filename}}, {upsert:true}, function(err, doc){
-    if (err) 
-      return res.send(500, { error: err });
-  });
-  res.redirect('/');
+	User.findOne(query,(err,user)=>{	
+		if(err){
+			return res.send({ 
+				success:false,
+				message:"Error: Server Error"
+			});
+		}
+		else
+		{
+			gfs.files.findOne({"filename":user.IdDocument}, (err, file)=> {
+				gfs.remove({_id:file._id, root:'uploads'},(err, gridStore)=>{
+				if (err) 
+				      return res.status(404).json({ err: err });
+				});
+			}); 
+			User.findOneAndUpdate(query, {$set:{IdDocument: req.file.filename}}, {upsert:true}, function(err, doc){
+			    if (err) 
+			      return res.send(500, { error: err });
+			  });
+			  res.redirect('/');
+		}
+	});
  });
 
 router.post('/CarPic', upload.single('file'), (req, res, next) => {
   const query = {'_id': req.body.id};
-  User.findOneAndUpdate(query, {$set:{CarPic: req.file.filename}}, {upsert:true}, function(err, doc){
-    if (err) 
-      return res.send(500, { error: err });
-  });
-  res.redirect('/');
+	User.findOne(query,(err,user)=>{	
+		if(err){
+			return res.send({ 
+				success:false,
+				message:"Error: Server Error"
+			});
+		}
+		else
+		{
+			gfs.files.findOne({"filename":user.CarPic}, (err, file)=> {
+				gfs.remove({_id:file._id, root:'uploads'},(err, gridStore)=>{
+				if (err) 
+				      return res.status(404).json({ err: err });
+				});
+			}); 
+			  User.findOneAndUpdate(query, {$set:{CarPic: req.file.filename}}, {upsert:true}, function(err, doc){
+			    if (err) 
+			      return res.send(500, { error: err });
+			  });
+			  res.redirect('/');
+		}
+	});
  });
 
  router.post('/CarRegistration', upload.single('file'), (req, res, next) => {
   const query = {'_id': req.body.id};
-  User.findOneAndUpdate(query, {$set:{CarRegistration: req.file.filename}}, {upsert:true}, function(err, doc){
-    if (err) 
-      return res.send(500, { error: err });
-  });
-  res.redirect('/');
+  User.findOne(query,(err,user)=>{	
+		if(err){
+			return res.send({ 
+				success:false,
+				message:"Error: Server Error"
+			});
+		}
+		else
+		{
+			gfs.files.findOne({"filename":user.CarRegistration}, (err, file)=> {
+				gfs.remove({_id:file._id, root:'uploads'},(err, gridStore)=>{
+				if (err) 
+				      return res.status(404).json({ err: err });
+				});
+			}); 
+			  User.findOneAndUpdate(query, {$set:{CarRegistration: req.file.filename}}, {upsert:true}, function(err, doc){
+			    if (err) 
+			      return res.send(500, { error: err });
+			  });
+			  res.redirect('/');
+		}
+	});
  });
 
 module.exports = router;
