@@ -1,3 +1,9 @@
+module.exports.ValidateEmail = function(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+
 module.exports.ValidateIDNumber = function(idNumber) {
     // assume everything is correct and if it later turns out not to be, just set this to false
     var correct = true;
