@@ -24,7 +24,7 @@ class SearchResultList extends Component {
 	render()
 	{
 		if (this.props.results === "none")
-			return (<div id="noUser">User Not Found</div>);
+			return (<div id="noUser" className="row searchItem">User Not Found</div>);
 		else if (this.props.results)
 		{
 			return(

@@ -23,14 +23,14 @@ import VouchAverage from "./vouching/VouchAverage"
 	componentDidMount()//every load
 	{
 		this.props.store.getProfile(this.props.match.params._id);
-		// fetch('/api/account/verify?token='+this.props.match.params._id)
-		// .then(res => res.json())
-		// .then(json => {
-		// 	console.log(json)
-		// 	if(!json.success){
-		// 		this.disableEditBut();
-		// 	}
-		// });
+		fetch('/api/account/verify?token='+this.props.match.params._id)
+		.then(res => res.json())
+		.then(json => {
+			console.log(json)
+		 	if(!json.success){
+		 		this.disableEditBut();
+		 	}
+		 });
 	}
 	
 	componentWillMount()// once
@@ -98,7 +98,7 @@ import VouchAverage from "./vouching/VouchAverage"
 	}
 
 	uploadProfilePic = (event) =>
-    {
+	{
 		const { store } = this.props;
 
         const formData = new FormData();

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-import ProfileStore from '../../stores/ProfileStore.js'
+import { Link } from 'react-router-dom';
+import ProfileStore from '../../stores/ProfileStore.js';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 class SearchResult extends Component {	
@@ -12,7 +12,14 @@ class SearchResult extends Component {
 	render()
 	{
 		const res = this.props.result;
-		return(<Link onClick={this.setProfile()} to={'/profile/'+res._id}>{res.firstName +" "+ res.lastName}</Link>);
+		return(
+			<Link onClick={this.setProfile} to={'/profile/'+res._id}>
+				<div className="row searchItem">
+					<div className="name">
+						{res.firstName +" "+ res.lastName}
+					</div>
+				</div>
+			</Link>);
 	}
 }
 
