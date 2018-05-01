@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
-import { authenticate } from "../utils/loginQuery";
+//import { authenticate } from "../utils/loginQuery";
 import { getFromStorage } from '../utils/localStorage.js'
 
 @observer class Login extends Component {
@@ -14,19 +14,17 @@ import { getFromStorage } from '../utils/localStorage.js'
 
     this.state ={
       token:'',
+      email:'',
+      password:''
     };
   }
 
   componentWillMount(){
-
-  }
-
-  async componentDidMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
         //verify token
         const { token } = obj;
-        await fetch('/api/account/verify?token='+token)
+        fetch('/api/account/verify?token='+token)
         .then(res => res.json())
         .then(json => {
             if(json.success){
@@ -37,10 +35,28 @@ import { getFromStorage } from '../utils/localStorage.js'
     }
   }
 
-  handleLogin = async (e) => {
-    e.preventDefault();
+  componentDidMount(){
+    
+  }
 
-    await authenticate();
+  updateEmailValue = event =>
+  {
+    this.setState({
+        email: event.target.value,
+    })
+  }
+
+  updatePasswordValue = event =>
+  {
+    this.setState({
+        password: event.target.value,
+    })
+  }
+
+  handleLogin = event => {
+    event.preventDefault();
+
+    this.props.store.authenticate(this.state.email, this.state.password);
   }
 
   render() {
@@ -56,11 +72,11 @@ import { getFromStorage } from '../utils/localStorage.js'
                         <form id="signInSubmit">
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
-	                            <input type="email" className="form-control" id="signInemail" placeholder="Enter email"/>
+	                            <input type="email" onChange={this.updateEmailValue} className="form-control" id="signInemail" placeholder="Enter email"/>
 	                        </div>
 	                        <div className="form-group">
 	                            <label htmlFor="signInpass">Password</label>
-	                            <input type="password" className="form-control" id="signInpass" placeholder="Enter password"/>
+	                            <input type="password" onChange={this.updatePasswordValue} className="form-control" id="signInpass" placeholder="Enter password"/>
 	                        </div>
 	                        <button onClick={this.handleLogin} type="submit" className="btn btn-primary" >Submit</button>
                         </form>

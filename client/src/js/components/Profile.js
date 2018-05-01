@@ -6,9 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
 import "../utils/fileQuery.js";
-// import { disableEditBut } from "../utils/editProfile.js";
-import VouchAverage from "./vouching/VouchAverage"
+import LoginStore from '../stores/LoginStore'
 import Search from './Search.js';
+import VouchAverage from "./vouching/VouchAverage"
 
 @observer class Profile extends Component {
 	constructor()
@@ -41,6 +41,12 @@ import Search from './Search.js';
 			this.setState({editMode: false});
 		else
 			this.setState({editMode: true});
+	}
+
+	handleLogout = () =>
+	{
+		LoginStore.setLoggedIn(false);
+		LoginStore.setToken('');
 	}
 	
 	render() {
@@ -94,14 +100,9 @@ import Search from './Search.js';
 											< VouchAverage _id={this.props.match.params._id}/>
 										</div>
 									</div>
-									{/* <div>
-										<Redirect to={"/"}>
-											<button id="logOutSubmit" className="btn btn-primary">logout</button>
-										</Redirect>
-									</div> */}
 
 									<Link to="/">
-										<button id="logOutSubmit" className="btn btn-primary">Logout</button>
+										<button onClick={this.handleLogout} id="logOutSubmit" className="btn btn-primary">Logout</button>
 									</Link>
 								</div>
 							</div>
