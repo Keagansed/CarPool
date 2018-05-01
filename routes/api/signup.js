@@ -50,6 +50,11 @@ router.post('/',(req,res,next)=>{
 			success:false,
 			message:"Error: ID invalid!"
 		});
+	}else if(!util.ValidateEmail(email)){
+		return res.send({ 
+			success:false,
+			message:"Error: Email invalid!"
+		});
 	}
 	if(!password){
 		return res.send({ 
