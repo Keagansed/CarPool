@@ -28,10 +28,10 @@ import VouchAverage from "./vouching/VouchAverage"
 		.then(res => res.json())
 		.then(json => {
 			console.log(json)
-			if(!json.success){
-				this.disableEditBut();
-			}
-		});
+		 	if(!json.success){
+		 		this.disableEditBut();
+		 	}
+		 });
 	}
 	
 	componentWillMount()// once
@@ -100,7 +100,7 @@ import VouchAverage from "./vouching/VouchAverage"
 	}
 
 	uploadProfilePic = (event) =>
-    {
+	{
 		const { store } = this.props;
 
         const formData = new FormData();
