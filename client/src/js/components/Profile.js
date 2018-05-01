@@ -15,8 +15,6 @@ import VouchAverage from "./vouching/VouchAverage"
 	{
 		super();
 		this.state = {
-			user:{},
-			profilePic: '',
 			_id:"",
 			editButton: "button",
 		};
@@ -24,7 +22,7 @@ import VouchAverage from "./vouching/VouchAverage"
 	
 	componentDidMount()//every load
 	{
-		this.fetchUser();
+		this.props.store.getProfile(this.props.match.params._id);
 		// fetch('/api/account/verify?token='+this.props.match.params._id)
 		// .then(res => res.json())
 		// .then(json => {
@@ -46,17 +44,6 @@ import VouchAverage from "./vouching/VouchAverage"
 		this.props.store.getProfile(params._id);		
 	}
 
-	fetchUser = () =>
-    {
-        fetch('/api/account/getProfile?_id=' + this.props.match.params._id)
-		.then(res => res.json())
-		.then(json => {           
-            this.setState({
-				user: json[0],
-				profilePic: json[0].profilePic,
-            })      
-        });
-    }
 	toggleEditMode()
 	{
 		const { store } = this.props;
@@ -136,7 +123,9 @@ import VouchAverage from "./vouching/VouchAverage"
 	
 	//render function
 	render() {
-		if (this.props.store.profileFound)
+		const test =  false
+
+		if (test)
 		{
 
 			const { firstName, lastName, profilePic, secLvl, email, idNum } = this.props.store;
