@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { searchUsers } from "../utils/searchQuery.js";
 import '../../css/App.css';
 
+import SearchResultList from './search/SearchResultList.js'
+
 class Search extends Component {
 	goPro(){
 		alert("fuckyeah");
@@ -48,9 +50,8 @@ class Search extends Component {
 				                    </div>
 				                </div>
 				            </form>
-							<ul className="" id="user-list">			{/*results injected into this class*/}
-			                     <div dangerouslySetInnerHTML={this.createMarkup()} /> 
-							</ul>			                		                
+						{/*results injected into this class*/}
+						<SearchResultList results={this.state.searchResults}/>		                		                
 			            </div>
 			        </div>
 			</div>

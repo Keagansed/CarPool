@@ -1,16 +1,4 @@
-import $ from 'jquery';
 
-$(document).ready(()=>{
-	$(document).on("click", ".name",function(e){
-		window.location = window.location.href + "./../" + $(this).attr("data-id");
-    });
-});
-
-// export const viewProfile = (profileID) => {
-//     window.location = window.location.href + "./../" + profileID;
-// }
-
-	
 export const searchUsers = (_name) => {
     return fetch('/api/account/getUser',{
         method:'POST',
@@ -25,19 +13,18 @@ export const searchUsers = (_name) => {
     .catch(error => console.error('Error:', error))
     .then(json=>{
         let results = "";
-        if (json.length > 0){
-            //~ let profilePic; 
-            var i;
+        if (json.length > 0)
+	{
+            //~ var i;
 
-            for (i = 0; i < json.length; ++i) {
-                //~ profilePic = "../api/account/getImage?filename=" + json[i].profilePic;
-                results += "<div class=\"row searchItem\">";
-                // results += "<img src=\"" + profilePic + "\" class=\"col-md-3 col-4 profilePic\" alt=\"Profile Pic\" /> ";
-                results += "<div class=\"name\" data-id=\"" + json[i]._id + "\">" + json[i].firstName +" " + json[i].lastName + "</div></div>";
-            }
+            //~ for (i = 0; i < json.length; ++i) {
+                //~ results += "<div class=\"row searchItem\">";
+                //~ results += "<div class=\"name\" data-id=\"" + json[i]._id + "\">" + json[i].firstName +" " + json[i].lastName + "</div></div>";
+            //~ }
+		results = json;
         }else{
             if (_name !== ""){
-                results = "<div id=\"noUser\">User Not Found</div>";
+                results = "none";
             }
         }
         return results;
