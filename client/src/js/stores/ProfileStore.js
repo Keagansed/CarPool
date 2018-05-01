@@ -7,6 +7,15 @@ class profileStore {
     @observable profileFound = false;
     @observable token = null;
 
+    //Editing profile
+
+    @observable eFName = '';
+    @observable eLName = '';
+    @observable eEmail = '';
+    @observable eID = '';
+    @observable ePass = '';
+    @observable eNewPass = '';
+
     @computed get firstName() { return this.user.firstName}
     @computed get lastName() {return this.user.lastName}
     @computed get email() { return this.user.email}
