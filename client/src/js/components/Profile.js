@@ -123,9 +123,7 @@ import VouchAverage from "./vouching/VouchAverage"
 	
 	//render function
 	render() {
-		const test =  false
-
-		if (test)
+		if (this.props.store.profileFound)
 		{
 
 			const { firstName, lastName, profilePic, secLvl, email, idNum } = this.props.store;
