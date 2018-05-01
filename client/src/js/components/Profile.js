@@ -7,7 +7,6 @@ import '../../css/App.css';
 
 import "../utils/fileQuery.js";
 import LoginStore from '../stores/LoginStore'
-import { editSubmit } from "../utils/editProfileQuery.js";
 import Search from './Search.js';
 import VouchAverage from "./vouching/VouchAverage"
 
@@ -18,25 +17,19 @@ import VouchAverage from "./vouching/VouchAverage"
 		this.state = {
 			_id:"",
 			editButton: "button",
-			editMode: false,
-			eFName:"",
-			eLName:"",
-			eEmail:"",
-			eID:"",
-			ePass:"",
-			eNewPass:""
 		};
 	}
 	
 	componentDidMount()//every load
 	{
-		fetch('/api/account/verify?token='+this.props.match.params._id)
-		.then(res => res.json())
-		.then(json => {
-			if(!json.success){
-				this.disableEditBut();
-			}
-		});
+		// fetch('/api/account/verify?token='+this.props.match.params._id)
+		// .then(res => res.json())
+		// .then(json => {
+		// 	console.log(json)
+		// 	if(!json.success){
+		// 		this.disableEditBut();
+		// 	}
+		// });
 	}
 	
 	componentWillMount()// once
@@ -52,28 +45,25 @@ import VouchAverage from "./vouching/VouchAverage"
 
 	toggleEditMode()
 	{
-		if (this.state.editMode)
-			this.setState({editMode: false});
+		const { store } = this.props;
+
+		if(store.editMode)
+		{
+			store.editMode = false;
+		}
 		else
-			this.setState({
-				editMode: true, 
-				eFName: this.props.store.firstName,
-				eLName: this.props.store.lastName,
-				eEmail: this.props.store.email,
-				eID: this.props.store.id
-			});
+		{
+			store.editMode = true;
+			store.eFName = store.firstName;
+			store.eLName = store.lastName;
+			store.eEmail = store.email;
+			store.eID = store.idNum;
+		}
 	}
 	
 	bEditSubmit = ()=>{
-		editSubmit(
-			this.state._id,
-			this.state.eFName,
-			this.state.eLName,
-			this.state.eEmail,
-			this.state.eID,
-			this.state.ePass,
-			this.state.eNewPass
-		);
+		const { store } = this.props;
+		store.editSubmit();
 	}
 	
 	disableEditBut = ()=>{
@@ -82,22 +72,22 @@ import VouchAverage from "./vouching/VouchAverage"
 	
 	//change handlers
 	fNameChange = (e)=>{
-		this.setState({eFName: e.target.value});
+		this.props.store.eFName = e.target.value;
 	}
 	lNameChange = (e)=>{
-		this.setState({eLName:e.target.value});
+		this.props.store.eLName = e.target.value;
 	}
 	emailChange = (e)=>{
-		this.setState({eEmail:e.target.value});
+		this.props.store.eEmail = e.target.value;
 	}
 	idChange = (e)=>{
-		this.setState({eID:e.target.value});
+		this.props.store.eID = e.target.value;
 	}
 	passChange = (e)=>{
-		this.setState({ePass:e.target.value});
+		this.props.store.ePass = e.target.value;
 	}
 	newPassChange = (e)=>{
-		this.setState({eNewPass:e.target.value});
+		this.props.store.eNewPass = e.target.value;
 	}
 
 	handleLogout = () =>
@@ -115,7 +105,7 @@ import VouchAverage from "./vouching/VouchAverage"
 
 			const profilePicture = "../api/account/getImage/profilePicture?filename=" + profilePic;
 
-			if(this.state.editMode)
+			if(this.props.store.editMode)
 			{
 				return (
 				

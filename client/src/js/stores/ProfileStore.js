@@ -7,15 +7,6 @@ class profileStore {
     @observable profileFound = false;
     @observable token = null;
 
-    //Editing profile
-
-    @observable eFName = '';
-    @observable eLName = '';
-    @observable eEmail = '';
-    @observable eID = '';
-    @observable ePass = '';
-    @observable eNewPass = '';
-
     @computed get firstName() { return this.user.firstName}
     @computed get lastName() {return this.user.lastName}
     @computed get email() { return this.user.email}
@@ -31,6 +22,46 @@ class profileStore {
             this.user = json[0];
             this.profileFound = true;
         })
+    }
+
+    //Editing profile
+
+    @observable editMode = false;
+    @observable eFName = '';
+    @observable eLName = '';
+    @observable eEmail = '';
+    @observable eID = '';
+    @observable ePass = '';
+    @observable eNewPass = '';
+
+    @action editSubmit = () => {
+
+        fetch('/api/account/updateProfile',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                firstName: this.eFName,
+                lastName: this.eLName,
+                email: this.eEmail,
+                id: this.eID,
+                pass: this.ePass,
+                newPass: this.eNewPass,
+                _id: this.token
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success){
+                alert("Successfully updated!");
+                this.editMode = false;
+                this.getProfile(this.token);
+            }else{
+                alert(json.message);
+            }
+        });
     }
 
 }
