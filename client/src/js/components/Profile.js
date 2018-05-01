@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { observer } from "mobx-react";
+import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
 
 import "../utils/fileQuery.js";
-import { disableEditBut } from "../utils/editProfile.js";
-import VouchAverage from "./vouching/VouchAverage"
+import LoginStore from '../stores/LoginStore'
 import Search from './Search.js';
+import VouchAverage from "./vouching/VouchAverage"
 
-class Profile extends Component {
+@observer class Profile extends Component {
 	constructor()
 	{
 		super();
@@ -17,23 +18,32 @@ class Profile extends Component {
 			user:{},
 			profilePic: '',
 			_id:"",
-			editMode: false
+			editButton: "button",
 		};
-	}
-	
-	goVouch(){
-		this.props.history.push('/vouching/' + this.state._id);
 	}
 	
 	componentDidMount()//every load
 	{
 		this.fetchUser();
+		// fetch('/api/account/verify?token='+this.props.match.params._id)
+		// .then(res => res.json())
+		// .then(json => {
+		// 	console.log(json)
+		// 	if(!json.success){
+		// 		this.disableEditBut();
+		// 	}
+		// });
 	}
 	
 	componentWillMount()// once
 	{
 		const { match: {params}} = this.props;
-		this.setState({_id:params._id});
+
+		this.setState({
+			_id: params._id,
+		})
+
+		this.props.store.getProfile(params._id);		
 	}
 
 	fetchUser = () =>
@@ -47,17 +57,63 @@ class Profile extends Component {
             })      
         });
     }
-	
 	toggleEditMode()
 	{
-		if (this.state.editMode)
-			this.setState({editMode: false});
+		const { store } = this.props;
+
+		if(store.editMode)
+		{
+			store.editMode = false;
+		}
 		else
-			this.setState({editMode: true});
+		{
+			store.editMode = true;
+			store.eFName = store.firstName;
+			store.eLName = store.lastName;
+			store.eEmail = store.email;
+			store.eID = store.idNum;
+		}
+	}
+	
+	bEditSubmit = ()=>{
+		const { store } = this.props;
+		store.editSubmit();
+	}
+	
+	disableEditBut = ()=>{
+		this.setState({editButton:"hidden"});
+	}
+	
+	//change handlers
+	fNameChange = (e)=>{
+		this.props.store.eFName = e.target.value;
+	}
+	lNameChange = (e)=>{
+		this.props.store.eLName = e.target.value;
+	}
+	emailChange = (e)=>{
+		this.props.store.eEmail = e.target.value;
+	}
+	idChange = (e)=>{
+		this.props.store.eID = e.target.value;
+	}
+	passChange = (e)=>{
+		this.props.store.ePass = e.target.value;
+	}
+	newPassChange = (e)=>{
+		this.props.store.eNewPass = e.target.value;
+	}
+
+	handleLogout = () =>
+	{
+		LoginStore.setLoggedIn(false);
+		LoginStore.setToken('');
 	}
 
 	uploadProfilePic = (event) =>
     {
+		const { store } = this.props;
+
         const formData = new FormData();
         formData.append('id', this.props.match.params._id);
         formData.append('file', event.target.files[0]);
@@ -69,44 +125,28 @@ class Profile extends Component {
         {            
             if(xhr.readyState === XMLHttpRequest.DONE)
             {
-                this.fetchUser();
+                store.getProfile(this.state._id);
             }
         }
 
-		this.setState({
-			editMode: false
-		})
+		store.editMode = false;
         xhr.send(formData);  
 
     }
 	
+	//render function
 	render() {
-		const jsonPro = this.state.user;
-		if (jsonPro)
+		if (this.props.store.profileFound)
 		{
-			fetch('/api/account/verify?token='+this.state._id)
-		       .then(res => res.json())
-		       .then(json => {
-				if(!json.success){
-					disableEditBut();
-				}
-		       });
-			
-			let profilePic = '';
 
-			const name = jsonPro.firstName + " " + jsonPro.lastName;
-			if(this.state.profilePic)
+			const { firstName, lastName, profilePic, secLvl, email, idNum } = this.props.store;
+
+			const profilePicture = "../api/account/getImage?filename=" + profilePic;
+
+			if(this.props.store.editMode)
 			{
-				profilePic = "../api/account/getImage?filename=" + this.state.profilePic;
-			}
-			const secLvl = 1;
-			const email = jsonPro.email;
-			const idNum = jsonPro.id;
-
-			if (this.state.editMode)
-		       {
-
 				return (
+				
 					<div>
 						<div>
 							<div>
@@ -115,40 +155,40 @@ class Profile extends Component {
 							<div className="center_container profile_center_container bubble">
 								<div className="row full_row">
 									<div className="col-md-7 col-sm-12 img-wrap">
-										<img src={profilePic} id="profilePic" className="profilePic" alt="" />
+										<img src={profilePicture} id="profilePic" className="profilePic" alt="s" />
 										<form encType="multipart/form-data">
 											<input type="file" name="file" id="file" onChange={this.uploadProfilePic}/>
 										</form>
 									</div>
 									<div className="col-md-5 col-sm-7 profileUserDetails">
 										<form method="POST" action="/api/account/updateProfile" id="upProInfo">
-											first name: <input className="shorten" id="upFName" type="text" defaultValue={jsonPro.firstName}/><br/>
-											last name: <input className="shorten" id="upLName" type="text" defaultValue={jsonPro.lastName}/><br/>
+											first name: <input onChange={this.fNameChange} className="shorten" id="upFName" type="text" defaultValue={firstName}/><br/>
+											last name: <input onChange={this.lNameChange} className="shorten" id="upLName" type="text" defaultValue={lastName}/><br/>
 											<div className="row profileSpecificDetails">
 												<div className="col-md-12">
 													Email:
-													<input className="shorten" id="upEmail" type="email" defaultValue={email}/>
+													<input onChange={this.emailChange} className="shorten" type="email" defaultValue={email}/>
 												</div>
 												<div className="col-md-12">
 													ID:
-													<input className="shorten" id="upId" type="text" defaultValue={idNum}/>
+													<input onChange={this.idChange} className="shorten" type="text" defaultValue={idNum}/>
 												</div>
 												<div className="col-md-12">
 													Current password: 
-													<input className="shorten" id="upPass" type="password"/>
+													<input onChange={this.passChange} className="shorten" type="password"/>
 												</div>
 												<div className="col-md-12">
 													New password: 
-													<input className="shorten" id="upPassChange" type="password" placeholder="leave blank for no change"/>
+													<input onChange={this.newPassChange} className="shorten" type="password" placeholder="leave blank for no change"/>
 												</div>
 												<div className="col-md-12">
 												Security:
 													<h6 className="profileValue">Level {secLvl}</h6>
 												</div>
 											</div>
-											<input className="btn btn-primary" type="submit" value="update"/>
+											<input onClick={this.bEditSubmit} className="btn btn-primary" type="button" value="update"/>
 										</form>
-										<button id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary">stop editiing</button>
+										<input type={this.state.editButton} value="cancel" id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary" />
 										<div>
 											<button id="logOutSubmit" className="btn btn-primary">logout</button>
 										</div>
@@ -161,57 +201,68 @@ class Profile extends Component {
 			}
 			else
 			{
+				const vouchPath = "/vouching/" + this.state._id;
 				return (
 					<div>
 						<div>
 							<Search />
 						</div>
-						<div>
-							<div className="center_container profile_center_container bubble">
-								<div className="row full_row">
-									<div className="col-md-7 col-sm-12 img-wrap">
-										<img src={profilePic} className="profilePic" alt="" />
+						<div className="center_container profile_center_container bubble">
+							<div className="row full_row">
+								<div className="col-md-7 col-sm-12 img-wrap">
+									<img src={profilePicture} className="profilePic" alt="Profile Pic" />
+								</div>
+								<div className="col-md-5 col-sm-7 profileUserDetails">
+									<h3 className="profileUserName">{firstName + " " + lastName}</h3>
+									<div className="row profileSpecificDetails">
+										<div className="col-md-5 col-sm-6 col-sx-12">
+											Email:
+											<h6 className="profileValue">{email}</h6>
+										</div>
+										<div className="col-md-5 col-sm-6 col-sx-12">
+											ID:
+											<h6 className="profileValue">{idNum}</h6>
+										</div>
+										<div className="col-md-5 col-sm-6 col-sx-12">
+										Security:
+											<h6 className="profileValue">Level {secLvl}</h6>
+										</div>
 									</div>
-									<div className="col-md-5 col-sm-7 profileUserDetails">
-										<h3 className="profileUserName">{name}</h3>
-										<div className="row profileSpecificDetails">
-											<div className="col-md-5 col-sm-6 col-sx-12">
-												Email:
-												<h6 className="profileValue">{email}</h6>
-											</div>
-											<div className="col-md-5 col-sm-6 col-sx-12">
-												ID:
-												<h6 className="profileValue">{idNum}</h6>
-											</div>
-											<div className="col-md-5 col-sm-6 col-sx-12">
-											Security:
-												<h6 className="profileValue">Level {secLvl}</h6>
-											</div>
-										</div>
 
-										<button id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary">edit profile</button>
+										<input type={this.state.editButton} value="edit profile" id="startEdit" onClick={this.toggleEditMode.bind(this)} className="btn btn-primary" />
 
-										<div onClick={this.goVouch.bind(this)}>
-											<div className="profile-vouch">
-												< VouchAverage _id={this.state._id}/>
-											</div>
-										</div>
-										<div>
-											<button id="logOutSubmit" className="btn btn-primary">logout</button>
-										</div>
+										
+										<div className="profile-vouch">
+											<Link to={vouchPath}>
+												<VouchAverage _id={this.state._id}/>
+											</Link>
+										</div>										
+
 										<div>
 											<Link to={"/verification/" + this.state._id}><button id="verificationDocuments" className="btn btn-success">Verification Documents</button></Link>
 										</div>
+
+										<Link to="/">
+											<button onClick={this.handleLogout} id="logOutSubmit" className="btn btn-primary">Logout</button>
+										</Link>
+
 									</div>
+
+									
 								</div>
-							</div> 
-						</div>
-					</div>
-				);
+							</div>
+						</div> 
+				)
 			}
 		}
 		else
-			return (<h1>Profile not found</h1>);
+		{
+			return (
+				<div>
+					<h1>LOADING</h1>
+				</div>
+			);
+		}
 	}
 }
 

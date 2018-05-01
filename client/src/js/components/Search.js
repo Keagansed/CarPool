@@ -4,11 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "../utils/searchQuery.js";
 import '../../css/App.css';
 
-class Search extends Component {
-	goPro(){
-		alert("fuckyeah");
-	}
-	
+class Search extends Component {	
 	render(){
 		
 		return(

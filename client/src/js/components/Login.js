@@ -1,42 +1,67 @@
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/App.css';
-
 import { getFromStorage } from '../utils/localStorage.js'
-import "../utils/loginQuery.js";
-//~ import Profile from "./Profile.js"
 
-
-class Login extends Component {
+@observer class Login extends Component {
   constructor(props){
     super(props);
 
     this.state ={
       token:'',
+      email:'',
+      password:''
     };
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const obj = getFromStorage('sessionKey');
     if(obj && obj.token){
-      //verify token
-      const { token } = obj;
-      fetch('/api/account/verify?token='+token)
-       .then(res => res.json())
-       .then(json => {
+        //verify token
+        const { token } = obj;
+        fetch('/api/account/verify?token='+token)
+        .then(res => res.json())
+        .then(json => {
             if(json.success){
-                this.setState({
-                    token:token
-                })
+                this.props.store.setToken(token);
+                this.props.store.setLoggedIn(true);
             }
-       });
+        })
     }
   }
 
+  componentDidMount(){
+    
+  }
+
+  updateEmailValue = event =>
+  {
+    this.setState({
+        email: event.target.value,
+    })
+  }
+
+  updatePasswordValue = event =>
+  {
+    this.setState({
+        password: event.target.value,
+    })
+  }
+
+  handleLogin = event => {
+    event.preventDefault();
+
+    this.props.store.authenticate(this.state.email, this.state.password);
+  }
+
   render() {
-    if(!this.state.token){
+
+    const { loggedIn, token } = this.props.store;
+
+    if(!loggedIn){
         return(
             <div className="center_container login_center_container">
                 <div className="row">
@@ -45,13 +70,13 @@ class Login extends Component {
                         <form id="signInSubmit">
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
-	                            <input type="email" className="form-control" id="signInemail" placeholder="Enter email"/>
+	                            <input type="email" onChange={this.updateEmailValue} className="form-control" id="signInemail" placeholder="Enter email"/>
 	                        </div>
 	                        <div className="form-group">
 	                            <label htmlFor="signInpass">Password</label>
-	                            <input type="password" className="form-control" id="signInpass" placeholder="Enter password"/>
+	                            <input type="password" onChange={this.updatePasswordValue} className="form-control" id="signInpass" placeholder="Enter password"/>
 	                        </div>
-	                        <button type="submit" className="btn btn-primary" >Submit</button>
+	                        <button onClick={this.handleLogin} type="submit" className="btn btn-primary" >Submit</button>
                         </form>
                     </div>
                     <div className="col-md-2"></div>
@@ -86,11 +111,10 @@ class Login extends Component {
         );
     }else{
        return(
-            //~ <div className="container">
-                //~ <h3>Account</h3>
-                //~ <button type="submit" className="btn btn-primary" id="logOutSubmit">Log Out</button>
-            //~ </div>
-	    <Redirect to={"/profile/" + this.state.token} />
+	        <Redirect to={{
+                pathname: "/profile/" + token,
+                state: { token: token }
+            }}/>
         ); 
     }
   }
