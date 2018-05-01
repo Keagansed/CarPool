@@ -23,12 +23,6 @@ class loginStore {
     }
 
     @action signUp = () => {
-        console.log(this.sFName);
-        console.log(this.sLName);
-        console.log(this.sEmail);
-        console.log(this.sPassword);
-        console.log(this.sId);
-
         fetch('/api/account/signup',{
             method:'POST',
             headers:{

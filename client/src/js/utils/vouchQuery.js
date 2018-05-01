@@ -26,7 +26,6 @@ $(document).ready(()=>{
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            console.log('json',json); //========== Probably remove ===============
         })
         $('#vouchModal').modal('toggle');
         window.location.reload();

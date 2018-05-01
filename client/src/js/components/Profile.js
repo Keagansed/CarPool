@@ -27,7 +27,6 @@ import VouchAverage from "./vouching/VouchAverage"
 		fetch('/api/account/verify?token='+this.props.match.params._id)
 		.then(res => res.json())
 		.then(json => {
-			console.log(json)
 			if(!json.success){
 				this.disableEditBut();
 			}
