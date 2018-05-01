@@ -46,8 +46,7 @@ const storage = new GridFsStorage({
 });
 const upload = multer({ storage });
 
-router.post('/', upload.single('file'), (req, res, next) => {
-   //~ res.json({ file: req.file });
+router.post('/profilePicture', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.id};
 	User.findOneAndUpdate(query, {$set:{profilePic: req.file.filename}}, {upsert:true}, function(err, doc){
 		if (err) 
@@ -55,5 +54,41 @@ router.post('/', upload.single('file'), (req, res, next) => {
 	});
 	res.redirect('/');
 });
+
+router.post('/driversLicense', upload.single('file'), (req, res, next) => {
+ const query = {'_id': req.body.id};
+ User.findOneAndUpdate(query, {$set:{driversLicense: req.file.filename}}, {upsert:true}, function(err, doc){
+   if (err) 
+     return res.send(500, { error: err });
+ });
+ res.redirect('/');
+});
+
+router.post('/IdDocument', upload.single('file'), (req, res, next) => {
+  const query = {'_id': req.body.id};
+  User.findOneAndUpdate(query, {$set:{IdDocument: req.file.filename}}, {upsert:true}, function(err, doc){
+    if (err) 
+      return res.send(500, { error: err });
+  });
+  res.redirect('/');
+ });
+
+router.post('/CarPic', upload.single('file'), (req, res, next) => {
+  const query = {'_id': req.body.id};
+  User.findOneAndUpdate(query, {$set:{CarPic: req.file.filename}}, {upsert:true}, function(err, doc){
+    if (err) 
+      return res.send(500, { error: err });
+  });
+  res.redirect('/');
+ });
+
+ router.post('/CarRegistration', upload.single('file'), (req, res, next) => {
+  const query = {'_id': req.body.id};
+  User.findOneAndUpdate(query, {$set:{CarRegistration: req.file.filename}}, {upsert:true}, function(err, doc){
+    if (err) 
+      return res.send(500, { error: err });
+  });
+  res.redirect('/');
+ });
 
 module.exports = router;
