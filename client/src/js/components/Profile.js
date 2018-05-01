@@ -95,6 +95,7 @@ import VouchAverage from "./vouching/VouchAverage"
 	{
 		LoginStore.setLoggedIn(false);
 		LoginStore.setToken('');
+		LoginStore.logOut();
 	}
 
 	uploadProfilePic = (event) =>

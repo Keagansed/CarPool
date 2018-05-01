@@ -37,24 +37,51 @@ import { getFromStorage } from '../utils/localStorage.js'
     
   }
 
-  updateEmailValue = event =>
+  updateLoginEmailValue = event =>
   {
-    this.setState({
-        email: event.target.value,
-    })
+    this.props.store.lEmail = event.target.value;
   }
 
-  updatePasswordValue = event =>
+  updateLoginPasswordValue = event =>
   {
-    this.setState({
-        password: event.target.value,
-    })
+    this.props.store.lPassword = event.target.value;
+  }
+
+  updateSignUpfNameValue = event =>
+  {
+    this.props.store.sFName = event.target.value;
+  }
+
+  updateSignUplNameValue = event =>
+  {
+    this.props.store.sLName = event.target.value;
+  }
+
+  updateSignUpEmailValue = event =>
+  {
+    this.props.store.sEmail = event.target.value;
+  }
+
+  updateSignUpIDValue = event =>
+  {
+    this.props.store.sId = event.target.value;
+  }
+
+  updateSignUpPasswordValue = event =>
+  {
+    this.props.store.sPassword = event.target.value;
   }
 
   handleLogin = event => {
     event.preventDefault();
 
     this.props.store.authenticate(this.state.email, this.state.password);
+  }
+
+  handleSignup = event => {
+    event.preventDefault();
+
+    this.props.store.signUp();
   }
 
   render() {
@@ -70,11 +97,11 @@ import { getFromStorage } from '../utils/localStorage.js'
                         <form id="signInSubmit">
 	                        <div className="form-group">
 	                            <label htmlFor="signInemail">Email address</label>
-	                            <input type="email" onChange={this.updateEmailValue} className="form-control" id="signInemail" placeholder="Enter email"/>
+	                            <input type="email" onChange={this.updateLoginEmailValue} className="form-control" id="signInemail" placeholder="Enter email"/>
 	                        </div>
 	                        <div className="form-group">
 	                            <label htmlFor="signInpass">Password</label>
-	                            <input type="password" onChange={this.updatePasswordValue} className="form-control" id="signInpass" placeholder="Enter password"/>
+	                            <input type="password" onChange={this.updateLoginPasswordValue} className="form-control" id="signInpass" placeholder="Enter password"/>
 	                        </div>
 	                        <button onClick={this.handleLogin} type="submit" className="btn btn-primary" >Submit</button>
                         </form>
@@ -85,25 +112,25 @@ import { getFromStorage } from '../utils/localStorage.js'
                         <form id="signUpSubmit">
                             <div className="form-group">
                                 <label htmlFor="signUpfname">First Name</label>
-                                <input type="text" className="form-control" id="signUpfname" placeholder="Enter first name" />
+                                <input type="text" onChange={this.updateSignUpfNameValue} className="form-control" id="signUpfname" placeholder="Enter first name" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUplname">Last Name</label>
-                                <input type="text" className="form-control" id="signUplname" placeholder="Enter last name" />
+                                <input type="text" onChange={this.updateSignUplNameValue} className="form-control" id="signUplname" placeholder="Enter last name" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUpemail">Email address</label>
-                                <input type="email" className="form-control" id="signUpemail" placeholder="Enter email" />
+                                <input type="email" onChange={this.updateSignUpEmailValue} className="form-control" id="signUpemail" placeholder="Enter email" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUpid">ID</label>
-                                <input type="text" className="form-control" id="signUpid" placeholder="Enter ID" />
+                                <input type="text" onChange={this.updateSignUpIDValue} className="form-control" id="signUpid" placeholder="Enter ID" />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="signUppass">Password</label>
-                                <input type="password" className="form-control" id="signUppass" placeholder="Enter password" />
+                                <input type="password" onChange={this.updateSignUpPasswordValue} className="form-control" id="signUppass" placeholder="Enter password" />
                             </div>
-                            <button type="submit" className="btn btn-primary" >Submit</button>
+                            <button onClick={this.handleSignup} type="submit" className="btn btn-primary" >Submit</button>
                         </form>
                     </div>
                 </div>

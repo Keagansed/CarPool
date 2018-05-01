@@ -1,10 +1,19 @@
 import { observable, action } from 'mobx';
-import { setInStorage } from '../utils/localStorage.js'
+import { setInStorage, getFromStorage } from '../utils/localStorage.js'
 
 class loginStore {
 
     @observable token = null;
     @observable loggedIn = false;
+
+    @observable lEmail = '';
+    @observable lPassword = '';
+
+    @observable sFName = '';
+    @observable sLName = '';
+    @observable sEmail = '';
+    @observable sPassword = '';
+    @observable sId = '';
 
     @action setToken = (token) => {
         this.token = token;        
@@ -13,7 +22,38 @@ class loginStore {
         this.loggedIn = success;
     }
 
-    @action authenticate = (_email, _password) => {  
+    @action signUp = () => {
+        console.log(this.sFName);
+        console.log(this.sLName);
+        console.log(this.sEmail);
+        console.log(this.sPassword);
+        console.log(this.sId);
+
+        fetch('/api/account/signup',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                firstName: this.sFName,
+                lastName: this.sLName,
+                email: this.sEmail,
+                id: this.sId,
+                password: this.sPassword
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success){
+                alert("Successfully signed up!!");
+            }else{
+                alert(json.message);
+            }
+        })
+    }
+
+    @action authenticate = () => {  
 
         fetch('/api/account/signin',{
             method:'POST',
@@ -21,8 +61,8 @@ class loginStore {
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                email: _email,
-                password: _password
+                email: this.lEmail,
+                password: this.lPassword
             })
         })
         .then(res=>res.json())
@@ -37,6 +77,22 @@ class loginStore {
                 alert(json.message);
             }
         }) 
+    }
+
+    @action logOut = () => {
+    
+        const obj = getFromStorage('sessionKey');
+        if(obj && obj.token){
+          //verify token
+          const { token } = obj;
+          fetch('/api/account/logout?token='+token)
+           .then(res => res.json())
+           .then(json => {
+                this.setLoggedIn(false);
+                this.setToken('');
+           });
+        }
+
     }
 
 }
