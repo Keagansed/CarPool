@@ -12,7 +12,8 @@ class loginStore {
     @observable sFName = '';
     @observable sLName = '';
     @observable sEmail = '';
-    @observable sPassword = '';
+    @observable sPassword1 = '';
+    @observable sPassword2 = '';
     @observable sId = '';
 
     @action setToken = (token) => {
@@ -23,28 +24,34 @@ class loginStore {
     }
 
     @action signUp = () => {
-        fetch('/api/account/signup',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                firstName: this.sFName,
-                lastName: this.sLName,
-                email: this.sEmail,
-                id: this.sId,
-                password: this.sPassword
+        if(this.sPassword1 !== this.sPassword2)
+        {
+            alert("Passwords do not match");
+        }
+        else{
+            fetch('/api/account/signup',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    firstName: this.sFName,
+                    lastName: this.sLName,
+                    email: this.sEmail,
+                    id: this.sId,
+                    password: this.sPassword1
+                })
             })
-        })
-        .then(res=>res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json=>{
-            if(json.success){
-                alert("Successfully signed up!!");
-            }else{
-                alert(json.message);
-            }
-        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success){
+                    alert("Successfully signed up!!");
+                }else{
+                    alert(json.message);
+                }
+            })
+        }
     }
 
     @action authenticate = () => {  

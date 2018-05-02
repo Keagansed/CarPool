@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import '../css/App.css';
+// import '../css/App.css';
+import '../css/style.css';
 
-
-import Login from "./components/Login"
-import LoginStore from "./stores/LoginStore"
+import LandingPage from "./components/LandingPage";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
 import Profile from './components/Profile';
-import ProfileStore from "./stores/ProfileStore"
-import Vouching from './components/Vouching';
-import VerificationDocuments from './components/VerificationDocuments';
+import LoginStore from "./stores/LoginStore";
+import ProfileStore from "./stores/ProfileStore";
+// import Vouching from './components/Vouching';
+// import VerificationDocuments from './components/VerificationDocuments';
 
 class App extends Component {
 
@@ -16,10 +18,12 @@ class App extends Component {
 		return(
 			<BrowserRouter>
 				<Switch>
-					<Route path={"/"} exact render={(props) => <Login {...props} store={LoginStore}/>}/>
+					<Route path={"/"} exact component={LandingPage}/>
+					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
+					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
-					<Route path={"/vouching/:_id"} exact component={Vouching}/>
-					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/>
+					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
+					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 				</Switch>
 			</BrowserRouter>
 		);
