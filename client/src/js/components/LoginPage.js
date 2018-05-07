@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { getFromStorage } from '../utils/localStorage.js'
+// import { getFromStorage } from '../utils/localStorage.js';
 
 import fbIcon from "./../../css/images/fb_icon.png";
 import googleIcon from "./../../css/images/google_icon.png";
@@ -10,28 +10,28 @@ import googleIcon from "./../../css/images/google_icon.png";
 @observer class Login extends Component {
     constructor(props){
         super(props);
-        //========= Properties ===========
+        // ========= Properties ===========
         this.state ={
           token:'',
         }; 
     }
 
     //========= Render Component ===========
-    componentWillMount(){
-        const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
-            //verify token
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success){
-                    this.props.store.setToken(token);
-                    this.props.store.setLoggedIn(true);
-                }
-            })
-        }
-    }
+    // componentWillMount(){
+    //     const obj = getFromStorage('sessionKey');
+    //     if(obj && obj.token){
+    //         //verify token
+    //         const { token } = obj;
+    //         fetch('/api/account/verify?token='+token)
+    //         .then(res => res.json())
+    //         .then(json => {
+    //             if(json.success){
+    //                 this.props.store.setToken(token);
+    //                 this.props.store.setLoggedIn(true);
+    //             }
+    //         })
+    //     }
+    // }
     componentDidMount(){}
 
     updateLoginEmailValue = event =>
@@ -51,7 +51,7 @@ import googleIcon from "./../../css/images/google_icon.png";
 
     render() {
 
-        const { loggedIn, token } = this.props.store;
+        const { loggedIn } = this.props.store;
     
         if(!loggedIn){
             return(
@@ -107,10 +107,11 @@ import googleIcon from "./../../css/images/google_icon.png";
             );
         }else{
             return(
-                 <Redirect to={{
-                     pathname: "/profile/" + token,
-                     state: { token: token }
-                 }}/>
+                <Redirect to={"/HomePage"}/>
+                //  <Redirect to={{
+                //      pathname: "/profile/" + token,
+                //      state: { token: token }
+                //  }}/>
              ); 
         }
     }

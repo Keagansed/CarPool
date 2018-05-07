@@ -10,6 +10,18 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+.HomePage{
+  background-image: url('images/backgroundImage.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat:no-repeat;
+  height: 100%;
+  width: 100%;
+}
+#root{
+  height: 100%;
+  width: 100%;
+}
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
