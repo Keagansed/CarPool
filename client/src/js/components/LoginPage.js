@@ -67,10 +67,10 @@ import googleIcon from "./../../css/images/google_icon.png";
                                         <input onChange={this.updateLoginPasswordValue} type="password" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
                                     </div>
                                     <p className="my-2" id="dividerOR">
-                                        <strike>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strike>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Forgot Password? &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                        <strike>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strike> &nbsp; <b className="small">Forgot Password?</b> &nbsp;
                                         <strike>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strike>
                                     </p>
-                                    <button onClick={this.handleLogin} type="submit" className="btn btn-primary roundCorners w-75 text-white my-3">
+                                    <button onClick={this.handleLogin} type="submit" className="btn btn-primary roundCorners w-75 text-secondary my-3 font-weight-medium">
                                         <b>Login</b>
                                     </button>
                                 </form>
@@ -78,12 +78,12 @@ import googleIcon from "./../../css/images/google_icon.png";
                         </div>
                     </div>
 
-                    <div className="py-2 text-center">
+                    <div className="text-center">
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-12">
                                     <p id="dividerOR">
-                                        OR
+                                        <b className="small font-weight-medium">OR</b>
                                     </p>
                                 </div>
                             </div>
@@ -93,10 +93,10 @@ import googleIcon from "./../../css/images/google_icon.png";
                     <div className="p-0">
                         <div className="text-center container">
                             <div className="row text-center">
-                                <div className="col-2 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto">
+                                <div className="col-2-pr-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto">
                                     <img className="img-fluid d-block mx-auto" src={fbIcon} id="btnFacebookLogin" alt="fbLogin"/> 
                                 </div>
-                                <div className="col-2 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto">
+                                <div className="col-2-pl-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto">
                                     <img className="img-fluid d-block mx-auto" src={googleIcon} id="btnGoogleLogin" alt="googleLogin"/> 
                                 </div>
                             </div>

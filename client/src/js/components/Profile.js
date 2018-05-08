@@ -2,9 +2,6 @@ import { Link } from 'react-router-dom';
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../css/App.css';
-
 import "../utils/fileQuery.js";
 import LoginStore from '../stores/LoginStore'
 import Search from './Search.js';

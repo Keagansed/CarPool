@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-// import '../css/App.css';
+import '../css/font.css';
 import './../css/style.css';
 
 import LandingPage from "./components/LandingPage";
@@ -9,7 +9,7 @@ import RegisterPage from "./components/RegisterPage";
 // import Profile from './components/Profile';
 import HomePage from "./components/HomePage";
 import LoginStore from "./stores/LoginStore";
-import ProfileStore from "./stores/ProfileStore";
+//import ProfileStore from "./stores/ProfileStore";
 
 // import Vouching from './components/Vouching';
 // import VerificationDocuments from './components/VerificationDocuments';

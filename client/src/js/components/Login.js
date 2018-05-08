@@ -2,8 +2,6 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../css/App.css';
 import { getFromStorage } from '../utils/localStorage.js'
 
 @observer class Login extends Component {
