@@ -61,10 +61,10 @@ import googleIcon from "./../../css/images/google_icon.png";
                             <div className="col-md-12">
                                 <form className="">
                                     <div className="form-group">
-                                        <input onChange={this.updateLoginEmailValue} type="email" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Email" required="required" name="txtEmail" id="txtEmail"/> 
+                                        <input onChange={this.updateLoginEmailValue} type="email" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Email" required="required" name="txtEmail" id="txtEmail"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateLoginPasswordValue} type="password" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
+                                        <input onChange={this.updateLoginPasswordValue} type="password" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
                                     </div>
                                     <p className="my-2" id="dividerOR">
                                         <strike>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strike> &nbsp; <b className="small">Forgot Password?</b> &nbsp;

@@ -51,22 +51,22 @@ import googleIcon from "./../../css/images/google_icon.png";
                             <div className="col-md-12">
                                 <form className="">
                                     <div className="form-group my-2">
-                                        <input onChange={this.updateSignUpfNameValue} type="text" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="First Name" required="required" name="txtFirstName" id="txtFirstName"/> 
+                                        <input onChange={this.updateSignUpfNameValue} type="text" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="First Name" required="required" name="txtFirstName" id="txtFirstName"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateSignUplNameValue}  type="text" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Last Name" required="required" name="txtLastName" id="txtLastName"/> 
+                                        <input onChange={this.updateSignUplNameValue}  type="text" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Last Name" required="required" name="txtLastName" id="txtLastName"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateSignUpIDValue} type="text" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="ID Number" required="required" name="txtID" id="txtID"/> 
+                                        <input onChange={this.updateSignUpIDValue} type="text" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="ID Number" required="required" name="txtID" id="txtID"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateSignUpEmailValue} type="email" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Email" required="required" name="txtEmail" id="txtEmail"/> 
+                                        <input onChange={this.updateSignUpEmailValue} type="email" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Email" required="required" name="txtEmail" id="txtEmail"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateSignUpPasswordValue1} type="password" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
+                                        <input onChange={this.updateSignUpPasswordValue1} type="password" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateSignUpPasswordValue2} type="password" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Confirm Password" required="required" name="txtConfirmPassword" id="txtConfirmPassword"/> 
+                                        <input onChange={this.updateSignUpPasswordValue2} type="password" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Confirm Password" required="required" name="txtConfirmPassword" id="txtConfirmPassword"/> 
                                     </div>
                                     <button onClick={this.handleSignup} type="submit" className="mt-3 mb-2 btn btn-primary roundCorners w-75 text-secondary font-weight-medium">
                                         <b>Register</b>
