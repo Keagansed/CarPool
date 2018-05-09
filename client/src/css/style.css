@@ -6235,7 +6235,7 @@ html, body {
   margin-top: 20%; }
 
 .notScrollable {
-  overflow: hidden; }
+  overflow: auto; }
 
 .nav-link {
   color: #140D4F;
