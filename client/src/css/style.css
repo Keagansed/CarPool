@@ -30,6 +30,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
+  --gray-light: #CBD3D8;
   --primary: #6FEDB7;
   --secondary: #140D4F;
   --success: #28a745;
@@ -2683,8 +2684,10 @@ tbody.collapse.show {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #6FEDB7; }
+  color: #140D4F;
+  /* background-color: #6FEDB7;  */
+  background-color: #CBD3D8;
+}
 
 .nav-fill .nav-item {
   flex: 1 1 auto;
@@ -6273,12 +6276,13 @@ html, body {
 
 /* Place the navbar at the bottom of the page, and make it stick */
 .navbarBottom {
-  background-color: #6FEDB7;
+  background-color: #F5F7F7;
   max-width: 100%;
   position: fixed;
   bottom: 0;
   width: 100%; 
   height: 49px;
+  border-top: 0.5px solid #CFD7DB;
 }
 
 .navbar-component{

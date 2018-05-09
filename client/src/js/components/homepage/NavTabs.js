@@ -27,9 +27,9 @@ class NavTabs extends Component{
                 </a>
                 </li>
                 <li className="nav-item w-25 bg-info text-center flex-center no-active">
-                    <a className="nav-link p-0 bg-info no-active" href="">
+                    <div className="nav-link p-0 bg-info no-active" href="">
                         <i className="fa fa-plus fa-lg fa-fw d-inline nav-item-circle"></i>
-                    </a>
+                    </div>
                 </li>
             </ul>
         )
