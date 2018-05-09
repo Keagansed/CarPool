@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 
-import { getFromStorage } from '../utils/localStorage.js'
 import Carpools from './homepage/carpoolPage/Carpools'
 import Navbar from './Navbar'
 import NavTabs from './homepage/NavTabs'
@@ -26,6 +25,27 @@ import Trips from './homepage/tripsPage/Trips'
         
     }
 
+    setTab = () => {
+        const { store } = this.props;
+
+        if(store.routeTab === true)
+        {
+            console.log("Returning Routes")
+            return <Routes/>;            
+        }
+        else if(store.carpoolTab === true)
+        {
+            console.log("Returning Carpools")
+            return <Carpools />;
+        }
+        else if(store.tripTab === true)
+        {
+            console.log("Returning Trips")
+            return <Trips />;
+        }
+
+    }
+
     render(){
         const { token } = this.props.location;
 
@@ -38,11 +58,8 @@ import Trips from './homepage/tripsPage/Trips'
                                 <NavTabs store={this.props.store}/>
                                 <div className="tab-content">
                                     
-                                    <Routes/>
+                                    {this.setTab()}
 
-                                    <Carpools />
-
-                                    <Trips />
                                 </div>
                             </div>
                         </div>

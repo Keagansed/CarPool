@@ -1,5 +1,4 @@
 import { observable, action } from 'mobx';
-import { setInStorage, getFromStorage } from '../utils/localStorage.js'
 
 class homePageStore {
 
@@ -12,6 +11,8 @@ class homePageStore {
         this.carpoolTab = false;
         this.tripTab = false;
         this.routeTab = true;
+
+        console.log(this);
     }
 
     @action toggleToCarpool = () =>
@@ -19,6 +20,7 @@ class homePageStore {
         this.carpoolTab = true;
         this.tripTab = false;
         this.routeTab = false;
+        console.log(this);
     }
 
     @action toggleToTrip = () =>
@@ -26,6 +28,7 @@ class homePageStore {
         this.carpoolTab = false;
         this.tripTab = true;
         this.routeTab = false;
+        console.log(this);
     }
 }
 

@@ -8,7 +8,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 .HomePage{
-  background-color: white; 
+  background-color: white !important; 
+
 }
 #root{
   height: 100%;
@@ -2703,6 +2704,11 @@ tbody.collapse.show {
   padding: 3px;
 }
 
+.tab-content{
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
 .tab-content > .tab-pane {
   display: none; }
 
@@ -3506,7 +3512,7 @@ tbody.collapse.show {
   flex-direction: column;
   padding-left: 0;
   margin-bottom: 0;
-  
+  overflow-y: auto;
   }
 
 .list-group-item-action {
@@ -4166,12 +4172,12 @@ button.bg-primary:focus {
   background-color: #42e7a0 !important; }
 
 .bg-secondary {
-  background-color: #140D4F !important; }
+  background-color: #140D4F ; }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
 button.bg-secondary:hover,
 button.bg-secondary:focus {
-  background-color: #090623 !important; }
+  background-color: #090623 ; }
 
 .bg-success {
   background-color: #28a745 !important; }
@@ -6302,5 +6308,6 @@ html, body {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  padding-top: 5px;
   z-index: 1;
 }
