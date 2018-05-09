@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Carpools  extends Component {
     render(){
         return(
-            <div className="tab-pane fade" id="tabtwo" role="tabpanel">
-                <p className="text-secondary">Tab pane two. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div>
+                <h1 className="text-secondary p-2 font-weight-bold">Carpools</h1>
             </div>
         );
     }

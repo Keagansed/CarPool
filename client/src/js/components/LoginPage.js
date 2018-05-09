@@ -18,19 +18,19 @@ import googleIcon from "./../../css/images/google_icon.png";
 
     //========= Render Component ===========
     componentWillMount(){
-        const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
-            //verify token
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success){
-                    this.props.store.setToken(token);
-                    this.props.store.setLoggedIn(true);
-                }
-            })
-        }
+        // const obj = getFromStorage('sessionKey');
+        // if(obj && obj.token){
+        //     //verify token
+        //     const { token } = obj;
+        //     fetch('/api/account/verify?token='+token)
+        //     .then(res => res.json())
+        //     .then(json => {
+        //         if(json.success){
+        //             this.props.store.setToken(token);
+        //             this.props.store.setLoggedIn(true);
+        //         }
+        //     })
+        // }
     }
     componentDidMount(){}
 

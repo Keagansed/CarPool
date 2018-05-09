@@ -18,8 +18,11 @@ import Trips from './homepage/tripsPage/Trips'
         .then(res => res.json())
         .then(json => {
             if(json.success){
-                this.props.store.setToken(token);
-                this.props.store.setLoggedIn(true);
+                // this.props.store.setToken(token);
+                // this.props.store.setLoggedIn(true);
+            }
+            else{
+                console.log("ERROR - NO TOKEN")
             }
         })
         
@@ -36,12 +39,12 @@ import Trips from './homepage/tripsPage/Trips'
         else if(store.carpoolTab === true)
         {
             console.log("Returning Carpools")
-            return <Carpools />;
+            return <Carpools/>;
         }
         else if(store.tripTab === true)
         {
             console.log("Returning Trips")
-            return <Trips />;
+            return <Trips/>;
         }
 
     }
@@ -57,9 +60,9 @@ import Trips from './homepage/tripsPage/Trips'
                             <div className="col-md-12 p-0">
                                 <NavTabs store={this.props.store}/>
                                 <div className="tab-content">
-                                    
-                                    {this.setTab()}
-
+                                    <div className="tab-pane show active">
+                                        {this.setTab()}
+                                    </div>
                                 </div>
                             </div>
                         </div>
