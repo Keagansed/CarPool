@@ -10,32 +10,24 @@ import Trips from './homepage/tripsPage/Trips'
 
 @observer class HomePage extends Component{
 
-    constructor(props){
-        super(props);
-        //========= Properties ===========
-        this.state ={
-          token:'',
-        }; 
-    }
     //========= Fetch Session Token ===========
     componentWillMount(){
-        const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
-            //verify token
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success){
-                    this.props.store.setToken(token);
-                    this.props.store.setLoggedIn(true);
-                }
-            })
-        }
+        
+        const { token } = this.props.location;
+
+        fetch('/api/account/verify?token='+token)
+        .then(res => res.json())
+        .then(json => {
+            if(json.success){
+                this.props.store.setToken(token);
+                this.props.store.setLoggedIn(true);
+            }
+        })
+        
     }
 
     render(){
-        const { token } = this.props.store;
+        const { token } = this.props.location;
 
         return(
             <div className="HomePage">
@@ -43,7 +35,7 @@ import Trips from './homepage/tripsPage/Trips'
                     <div className="container-fluid m-0">
                         <div className="row">
                             <div className="col-md-12 p-0">
-                                <NavTabs />
+                                <NavTabs store={this.props.store}/>
                                 <div className="tab-content">
                                     
                                     <Routes/>

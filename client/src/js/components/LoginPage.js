@@ -106,12 +106,14 @@ import googleIcon from "./../../css/images/google_icon.png";
                 </div>
             );
         }else{
-            return(
-                <Redirect to={"/HomePage"}/>
-                //  <Redirect to={{
-                //      pathname: "/profile/" + token,
-                //      state: { token: token }
-                //  }}/>
+
+            const { token } = this.props.store;
+
+            return(               
+                 <Redirect to={{
+                     pathname: "/HomePage",
+                     token: token 
+                 }}/>
              ); 
         }
     }

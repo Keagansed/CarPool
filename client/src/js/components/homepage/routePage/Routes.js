@@ -11,7 +11,31 @@ class Routes  extends Component {
                     <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
                     <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
                     <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
-                                                                                                      
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                    <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
+                    <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
+                    <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                                                                                  
                 </div>
             </div>
         );
