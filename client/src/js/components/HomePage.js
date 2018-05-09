@@ -46,7 +46,7 @@ import Trips from './homepage/tripsPage/Trips'
 
                                 <NavTabs />
 
-                                <div className="tab-content overflow-scroll">
+                                <div className="tab-content ">
                                     
                                     <Routes/>
 

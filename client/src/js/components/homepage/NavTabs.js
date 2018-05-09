@@ -4,7 +4,8 @@ class NavTabs extends Component{
 
     render(){
         return(
-            <ul className="nav nav-tabs bg-primary">
+        
+            <ul className="nav nav-tabs bg-primary fixed">
                 <li className="nav-item w-25 bg-info text-center px-0">
                 <a href="" className="nav-link active bg-info" data-toggle="tab" data-target="#tabone">
                     <b>
@@ -32,6 +33,7 @@ class NavTabs extends Component{
                     </div>
                 </li>
             </ul>
+           
         )
     }
 }
