@@ -1,24 +1,27 @@
+import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
 import Route from './Route'
+import RouteStore from '../../../stores/RouteStore';
 
-class Routes  extends Component {
+@observer class Routes  extends Component {
+
+    componentWillMount(){
+        this.props.store.getRoutes(this.props.token);
+    }
+
+    
+
     render(){
+
+        const Routes = this.props.store.routes.map(route => 
+            <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
+        )
+
         return(
             <div className="list-group bg-info">
 
-                <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
-                <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
-                <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
-                <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
-                <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
-                <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
-                <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
-                <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
-                <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
-                <Route header="Home to Work" time="07:00" distance="17km" matches="4 new matches"/>
-                <Route header="Work to Home" time="16:00" distance="17km" matches="1 new matches"/>
-                <Route header="Home to Gym" time="08:00" distance="3km" matches="0 new matches"/>
+                {Routes}
                                                                                 
             </div>
         );

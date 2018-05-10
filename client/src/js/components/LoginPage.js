@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-//import { getFromStorage } from '../utils/localStorage.js';
+import { getFromStorage } from '../utils/localStorage.js';
 
 import fbIcon from "./../../css/images/fb_icon.png";
 import googleIcon from "./../../css/images/google_icon.png";
@@ -18,19 +18,19 @@ import googleIcon from "./../../css/images/google_icon.png";
 
     //========= Render Component ===========
     componentWillMount(){
-        // const obj = getFromStorage('sessionKey');
-        // if(obj && obj.token){
-        //     //verify token
-        //     const { token } = obj;
-        //     fetch('/api/account/verify?token='+token)
-        //     .then(res => res.json())
-        //     .then(json => {
-        //         if(json.success){
-        //             this.props.store.setToken(token);
-        //             this.props.store.setLoggedIn(true);
-        //         }
-        //     })
-        // }
+        const obj = getFromStorage('sessionKey');
+        if(obj && obj.token){
+            //verify token
+            const { token } = obj;
+            fetch('/api/account/verify?token='+token)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success){
+                    this.props.store.setToken(token);
+                    this.props.store.setLoggedIn(true);
+                }
+            })
+        }
     }
     componentDidMount(){}
 

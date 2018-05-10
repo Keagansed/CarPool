@@ -6,14 +6,11 @@ class routesStore {
     @observable routeSuccess = false;
 
     @action getRoutes = (token) => {
-        fetch('/api/system/route/getRoutes',{
+        fetch('/api/system/route/getRoutes?userId=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({
-                userId: token
-            })
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
@@ -21,7 +18,8 @@ class routesStore {
 
             if(json.success)
             {
-                console.log("Retrieved routes");
+                console.log(json.data)
+                this.routes = json.data;
             }
             else
             {
@@ -29,6 +27,8 @@ class routesStore {
             }
         })
     }
+
+    
 
     @action newRoute = (token, startLocation, endLocation, days, time, routeName, repeat) => {
         const route = {
@@ -62,7 +62,6 @@ class routesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            console.log("Received success message: " + json.success);
             this.routeSuccess = true;
         })  
 

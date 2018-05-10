@@ -1,6 +1,7 @@
+import '../../../../css/components/NewRoute.css'
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import RoutesStore from '../../../stores/RoutesStore'
 
 @observer class NewRoute extends Component{
@@ -319,9 +320,7 @@ import RoutesStore from '../../../stores/RoutesStore'
 
     handleAddRoute = (event) => {
         event.preventDefault();
-
-        console.log(this.state);
-
+        
         const {
             token,
             startLocation,
@@ -344,8 +343,14 @@ import RoutesStore from '../../../stores/RoutesStore'
         }
         else{
             return(
-                <div>
-                    <form action="">
+                <div>                    
+                    <p className="m-2 font-weight-bold h1">  
+                        <Link className="text-white" to="/Homepage">                    
+                            &lt;
+                        </Link>                     
+                    </p>
+                    
+                    <form className="m-5" action="">
                         <div className="form-group">
                             <input type="text" placeholder="Name" onChange={this.updateNameValue}/>
                         </div>
@@ -360,13 +365,13 @@ import RoutesStore from '../../../stores/RoutesStore'
 
                         <div className="form-group">
                             <label>Days: </label>
-                            <input type="button" value="M" onClick={this.toggleMonday}/>
-                            <input type="button" value="T" onClick={this.toggleTuesday}/>
-                            <input type="button" value="W" onClick={this.toggleWednesday}/>
-                            <input type="button" value="T" onClick={this.toggleThursday}/>
-                            <input type="button" value="F" onClick={this.toggleFriday}/>
-                            <input type="button" value="S" onClick={this.toggleSaturday}/>
-                            <input type="button" value="S" onClick={this.toggleSunday}/>
+                            <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>
+                            <input className={"button-" + this.state.days.tuesday} type="button" value="T" onClick={this.toggleTuesday}/>
+                            <input className={"button-" + this.state.days.wednesday} type="button" value="W" onClick={this.toggleWednesday}/>
+                            <input className={"button-" + this.state.days.thursday} type="button" value="T" onClick={this.toggleThursday}/>
+                            <input className={"button-" + this.state.days.friday} type="button" value="F" onClick={this.toggleFriday}/>
+                            <input className={"button-" + this.state.days.saturday} type="button" value="S" onClick={this.toggleSaturday}/>
+                            <input className={"button-" + this.state.days.sunday} type="button" value="S" onClick={this.toggleSunday}/>
                         </div>
 
                         <div className="form-group">

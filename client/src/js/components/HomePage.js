@@ -6,43 +6,55 @@ import { getFromStorage } from '../utils/localStorage.js';
 import Navbar from './Navbar'
 import NavTabs from './homepage/NavTabs'
 import Routes from './homepage/routePage/Routes'
+import RoutesStore from '../stores/RoutesStore'
 import Trips from './homepage/tripsPage/Trips'
 
 @observer class HomePage extends Component{
 
+    constructor(){
+        super()
+
+        this.state = {
+            loading: true,
+        }
+    }
+
     //========= Fetch Session Token ===========
     componentWillMount(){
-        
         const obj = getFromStorage('sessionKey');
         if(obj && obj.token){
             const { token } = obj;
             fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
-                console.log(json)
                 if(json.success){
                     this.props.store.token = token;
-                    console.log(token);
+
+                    this.setState({
+                        loading: false,
+                    })
                 }
             })
-        }
-        
+        }  
     }
 
     setTab = () => {
         const { store } = this.props;
 
-        if(store.routeTab === true)
+        if(!this.state.loading)
         {
-            return <Routes/>;            
-        }
-        else if(store.carpoolTab === true)
-        {
-            return <Carpools/>;
-        }
-        else if(store.tripTab === true)
-        {
-            return <Trips/>;
+            if(store.routeTab === true)
+            {
+                return <Routes store={RoutesStore} token={this.props.store.token}/>;            
+            }
+            else if(store.carpoolTab === true)
+            {
+                return <Carpools/>;
+            }
+            else if(store.tripTab === true)
+            {
+                return <Trips/>;
+            }
         }
 
     }

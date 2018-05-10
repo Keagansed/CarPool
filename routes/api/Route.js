@@ -43,7 +43,7 @@ router.post('/newRoute',(req,res,next) => {
 
 })
 
-router.post('/getRoutes',(req,res,next) => {
+router.get('/getRoutes',(req,res,next) => {
     
     const { query } = req;
     const { userId } = query;
@@ -52,7 +52,11 @@ router.post('/getRoutes',(req,res,next) => {
         userId: userId
     },
     (err,data) => {
-        res.json(data);
+        res.send({
+            success: true,
+            message: "Routes retrieved successfully",
+            data: data
+        })
     });
 
 })

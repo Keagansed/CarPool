@@ -74,7 +74,7 @@ import React, { Component } from 'react';
                 </li>
                 <li className="nav-item w-25 bg-info text-center flex-center no-active">
                     <div className="nav-link p-0 bg-info no-active" href="">
-                        <Link to={{pathname: '/newRoute', token: this.props.token}}>
+                        <Link className="text-secondary" to={{pathname: '/newRoute', token: this.props.token}}>
                             <i className="fa fa-plus fa-lg fa-fw d-inline nav-item-circle" onClick={this.handleAddRoute}></i>
                         </Link>
                     </div>
