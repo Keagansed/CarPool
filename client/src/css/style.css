@@ -6259,3 +6259,14 @@ html, body {
   position: fixed;
   bottom: 0;
   width: 100%; }
+
+  .profileHeader{
+    background-image: url('images/headerBackImage.jpeg');
+    background-position:center center;
+    background-size:cover;
+    background-repeat:no-repeat;
+  }
+
+  .border-white{
+    border-color: white;
+  }
