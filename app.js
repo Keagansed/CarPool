@@ -18,6 +18,7 @@ let getImageRouter = require('./routes/api/getImage.js');
 let getAllUsersRouter = require('./routes/api/getAllUsers.js');
 let updateProfileRouter = require('./routes/api/updateProfile.js');
 let getUserRouter = require('./routes/api/getUser.js');
+let routesRouter = require('./routes/api/Route')
 
 var app = express();
 
@@ -48,6 +49,7 @@ app.use('/api/account/getImage', getImageRouter)
 app.use('/api/account/getAllUsers', getAllUsersRouter)
 app.use('/api/account/updateProfile', updateProfileRouter)
 app.use('/api/account/getUser', getUserRouter)
+app.use('/api/system/route', routesRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

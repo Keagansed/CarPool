@@ -13,10 +13,6 @@ import React, { Component } from 'react';
         }
     }
 
-    handleAddRoute = (event) => {
-        event.preventDefault();
-    }
-
     handleRouteToggle = (event) => {
         event.preventDefault();
 
@@ -48,6 +44,12 @@ import React, { Component } from 'react';
             carpoolTabActive: "",
             tripTabActive: "active", 
         })
+    }
+
+    handleAddRoute = (event) => {
+        event.preventDefault();
+
+        
     }
 
     render(){

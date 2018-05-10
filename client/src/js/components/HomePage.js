@@ -33,17 +33,14 @@ import Trips from './homepage/tripsPage/Trips'
 
         if(store.routeTab === true)
         {
-            console.log("Returning Routes")
             return <Routes/>;            
         }
         else if(store.carpoolTab === true)
         {
-            console.log("Returning Carpools")
             return <Carpools/>;
         }
         else if(store.tripTab === true)
         {
-            console.log("Returning Trips")
             return <Trips/>;
         }
 
