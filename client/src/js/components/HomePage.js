@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer } from "mobx-react";
 
 import Carpools from './homepage/carpoolPage/Carpools'
+import { getFromStorage } from '../utils/localStorage.js';
 import Navbar from './Navbar'
 import NavTabs from './homepage/NavTabs'
 import Routes from './homepage/routePage/Routes'
@@ -12,19 +13,19 @@ import Trips from './homepage/tripsPage/Trips'
     //========= Fetch Session Token ===========
     componentWillMount(){
         
-        const { token } = this.props.location;
-
-        fetch('/api/account/verify?token='+token)
-        .then(res => res.json())
-        .then(json => {
-            if(json.success){
-                // this.props.store.setToken(token);
-                // this.props.store.setLoggedIn(true);
-            }
-            else{
-                console.log("ERROR - NO TOKEN")
-            }
-        })
+        const obj = getFromStorage('sessionKey');
+        if(obj && obj.token){
+            const { token } = obj;
+            fetch('/api/account/verify?token='+token)
+            .then(res => res.json())
+            .then(json => {
+                console.log(json)
+                if(json.success){
+                    this.props.store.token = token;
+                    console.log(token);
+                }
+            })
+        }
         
     }
 
@@ -47,15 +48,15 @@ import Trips from './homepage/tripsPage/Trips'
     }
 
     render(){
-        const { token } = this.props.location;
-
+        const { token } = this.props.store;
+        
         return(
             <div className="HomePage">
                 <div className="p-0 page-content">
                     <div className="container-fluid m-0">
                         <div className="row">
                             <div className="col-md-12 p-0">
-                                <NavTabs store={this.props.store}/>
+                                <NavTabs store={this.props.store} token={token}/>
                                 <div className="tab-content">
                                     <div className="tab-pane show active">
                                         {this.setTab()}

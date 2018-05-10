@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 
 class homePageStore {
 
+    @observable token = '';
     @observable routeTab = true;
     @observable carpoolTab = false;
     @observable tripTab = false;
@@ -26,6 +27,7 @@ class homePageStore {
         this.tripTab = true;
         this.routeTab = false;
     }
+
 }
 
 const  HomePageStore = new homePageStore();

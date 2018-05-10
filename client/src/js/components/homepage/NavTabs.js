@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
 @observer class NavTabs extends Component{
@@ -46,12 +47,6 @@ import React, { Component } from 'react';
         })
     }
 
-    handleAddRoute = (event) => {
-        event.preventDefault();
-
-        
-    }
-
     render(){
         return(
         
@@ -79,7 +74,9 @@ import React, { Component } from 'react';
                 </li>
                 <li className="nav-item w-25 bg-info text-center flex-center no-active">
                     <div className="nav-link p-0 bg-info no-active" href="">
-                        <i className="fa fa-plus fa-lg fa-fw d-inline nav-item-circle" onClick={this.handleAddRoute}></i>
+                        <Link to={{pathname: '/newRoute', token: this.props.token}}>
+                            <i className="fa fa-plus fa-lg fa-fw d-inline nav-item-circle" onClick={this.handleAddRoute}></i>
+                        </Link>
                     </div>
                 </li>
             </ul>

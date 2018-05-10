@@ -4,7 +4,7 @@ const Route = require('../../models/Route.js');
 
 router.post('/newRoute',(req,res,next) => {
     const { body } = req;
-    
+
     const {
         userId,
         startLocation,
@@ -27,6 +27,7 @@ router.post('/newRoute',(req,res,next) => {
     newRoute.save((err, route) => {
         if(err)
         {
+            
             return res.send({
                 success:false,
                 message:"Error: Server error"
