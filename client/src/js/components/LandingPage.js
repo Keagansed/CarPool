@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // import 'bootstrap/dist/css/bootstrap.min.css'; 
 // import 'bootstrap/dist/js/bootstrap.min.js';
+import LoginStore from '../stores/LoginStore'
 import logo  from "./../../css/images/logo.png";
 import fbIcon from "./../../css/images/fb_icon.png";
 import googleIcon from "./../../css/images/google_icon.png";
 
 
 class LandingPage extends Component{
+    componentWillMount(){
+        LoginStore.setRegistered(false);
+    }
+
     render(){
         return(
             <div>

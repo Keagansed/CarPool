@@ -8,12 +8,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 .HomePage{
-  background-image: url('images/backgroundImage.png');
-  background-position: center center;
-  background-size: cover;
-  background-repeat:no-repeat;
-  height: 100%;
-  width: 100%;
+  background-color: white !important; 
+  min-height: 100%
 }
 #root{
   height: 100%;
@@ -33,6 +29,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
+  --gray-light: #CBD3D8;
   --primary: #6FEDB7;
   --secondary: #140D4F;
   --success: #28a745;
@@ -84,7 +81,7 @@ body {
 hr {
   box-sizing: content-box;
   height: 0;
-  overflow: visible; }
+}
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
@@ -360,6 +357,10 @@ h6, .h6 {
   font-size: 3.5rem;
   font-weight: 300;
   line-height: 1.2; }
+
+.display-flex{
+  display: flex;
+}
 
 hr {
   margin-top: 1.5rem;
@@ -2654,28 +2655,24 @@ tbody.collapse.show {
   padding: 0.5rem 1rem; }
   .nav-link:hover, .nav-link:focus {
     text-decoration: none; }
-  .nav-link.disabled {
-    color: #6c757d; }
 
-.nav-tabs {
-  border-bottom: 1px solid #dee2e6; }
   .nav-tabs .nav-item {
     margin-bottom: -1px; }
-  .nav-tabs .nav-link {
+  /* .nav-tabs .nav-link {
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem; }
-    .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
-      border-color: #e9ecef #e9ecef #dee2e6; }
+    border-top-right-radius: 0.25rem; } */
+    .nav-tabs .nav-link:hover  {
+      color: #140D4F }
     .nav-tabs .nav-link.disabled {
       color: #6c757d;
       background-color: transparent;
       border-color: transparent; }
   .nav-tabs .nav-link.active,
   .nav-tabs .nav-item.show .nav-link {
-    color: #495057;
+    color: #140D4F;
     background-color: white;
-    border-color: #dee2e6 #dee2e6 white; }
+    border-color: #140D4F; }
   .nav-tabs .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;
@@ -2686,8 +2683,10 @@ tbody.collapse.show {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #6FEDB7; }
+  color: #140D4F;
+  /* background-color: #6FEDB7;  */
+  background-color: #CBD3D8;
+}
 
 .nav-fill .nav-item {
   flex: 1 1 auto;
@@ -2698,6 +2697,19 @@ tbody.collapse.show {
   flex-grow: 1;
   text-align: center; }
 
+.nav-item-circle{
+  border-radius: 100%;
+  border: 1.5px solid #140D4F;
+  overflow: hidden;
+  padding: 3px;
+}
+
+.tab-content{
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .tab-content > .tab-pane {
   display: none; }
 
@@ -3500,7 +3512,8 @@ tbody.collapse.show {
   display: flex;
   flex-direction: column;
   padding-left: 0;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  }
 
 .list-group-item-action {
   width: 100%;
@@ -3509,17 +3522,17 @@ tbody.collapse.show {
   .list-group-item-action:hover, .list-group-item-action:focus {
     color: #495057;
     text-decoration: none;
-    background-color: #f8f9fa; }
+    background-color: #140D4F; }
   .list-group-item-action:active {
     color: #140D4F;
-    background-color: #e9ecef; }
+    background-color: #140D4F; }
 
 .list-group-item {
   position: relative;
   display: block;
   padding: 0.75rem 1.25rem;
   margin-bottom: -1px;
-  background-color: #fff;
+  background-color: #140D4F;
   border: 1px solid rgba(0, 0, 0, 0.125); }
   .list-group-item:first-child {
     border-top-left-radius: 0.25rem;
@@ -3533,11 +3546,11 @@ tbody.collapse.show {
     text-decoration: none; }
   .list-group-item.disabled, .list-group-item:disabled {
     color: #6c757d;
-    background-color: #fff; }
+    background-color: #140D4F; }
   .list-group-item.active {
     z-index: 2;
     color: #fff;
-    background-color: #6FEDB7;
+    background-color: #140D4F;
     border-color: #6FEDB7; }
 
 .list-group-flush .list-group-item {
@@ -4159,12 +4172,12 @@ button.bg-primary:focus {
   background-color: #42e7a0 !important; }
 
 .bg-secondary {
-  background-color: #140D4F !important; }
+  background-color: #140D4F ; }
 
 a.bg-secondary:hover, a.bg-secondary:focus,
 button.bg-secondary:hover,
 button.bg-secondary:focus {
-  background-color: #090623 !important; }
+  background-color: #090623 ; }
 
 .bg-success {
   background-color: #28a745 !important; }
@@ -4237,6 +4250,9 @@ button.bg-dark:focus {
 
 .border-0 {
   border: 0 !important; }
+
+.border-1_5 {
+  border: 1.5px solid #dee2e6 !important; }
 
 .border-top-0 {
   border-top: 0 !important; }
@@ -4488,6 +4504,12 @@ button.bg-dark:focus {
 
 .flex-wrap-reverse {
   flex-wrap: wrap-reverse !important; }
+
+.flex-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
 .justify-content-start {
   justify-content: flex-start !important; }
@@ -4890,6 +4912,12 @@ button.bg-dark:focus {
   clip: auto;
   white-space: normal;
   clip-path: none; }
+
+.w-15 {
+  width: 15% !important; }
+
+.w-20 {
+  width: 20% !important; }
 
 .w-25 {
   width: 25% !important; }
@@ -6083,7 +6111,8 @@ a.text-dark:hover, a.text-dark:focus {
   .container {
     min-width: 992px !important; }
   .navbar {
-    display: none; }
+    display: none;
+  }
   .badge {
     border: 1px solid #000; }
   .table {
@@ -6212,7 +6241,7 @@ html, body {
   margin-top: 20%; }
 
 .notScrollable {
-  overflow: hidden; }
+  overflow: auto; }
 
 .nav-link {
   color: #140D4F;
@@ -6225,7 +6254,6 @@ html, body {
   border-right: 0px; }
 
 .nav-link:hover {
-  border-bottom: 5px solid #140d4f;
   border-top: 0px;
   border-left: 0px;
   border-right: 0px; }
@@ -6254,8 +6282,32 @@ html, body {
 
 /* Place the navbar at the bottom of the page, and make it stick */
 .navbarBottom {
-  background-color: #6FEDB7;
-  overflow: hidden;
+  background-color: #CBD3D8;
+  max-width: 100%;
   position: fixed;
   bottom: 0;
-  width: 100%; }
+  width: 100%; 
+  height: 49px;
+  border-top: 0.5px solid #A7ADB1;
+}
+
+.navbar-component{
+  display: block;
+}
+
+.overflow-scroll{
+  overflow-y: scroll;
+}
+
+.page-content{
+  display: block;
+  position: relative;
+}
+
+.fixed{
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding-top: 5px;
+  z-index: 1;
+}

@@ -2,7 +2,7 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-// import { getFromStorage } from '../utils/localStorage.js';
+import { getFromStorage } from '../utils/localStorage.js';
 
 import fbIcon from "./../../css/images/fb_icon.png";
 import googleIcon from "./../../css/images/google_icon.png";
@@ -17,21 +17,21 @@ import googleIcon from "./../../css/images/google_icon.png";
     }
 
     //========= Render Component ===========
-    // componentWillMount(){
-    //     const obj = getFromStorage('sessionKey');
-    //     if(obj && obj.token){
-    //         //verify token
-    //         const { token } = obj;
-    //         fetch('/api/account/verify?token='+token)
-    //         .then(res => res.json())
-    //         .then(json => {
-    //             if(json.success){
-    //                 this.props.store.setToken(token);
-    //                 this.props.store.setLoggedIn(true);
-    //             }
-    //         })
-    //     }
-    // }
+    componentWillMount(){
+        const obj = getFromStorage('sessionKey');
+        if(obj && obj.token){
+            //verify token
+            const { token } = obj;
+            fetch('/api/account/verify?token='+token)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success){
+                    this.props.store.setToken(token);
+                    this.props.store.setLoggedIn(true);
+                }
+            })
+        }
+    }
     componentDidMount(){}
 
     updateLoginEmailValue = event =>
@@ -61,10 +61,10 @@ import googleIcon from "./../../css/images/google_icon.png";
                             <div className="col-md-12">
                                 <form className="">
                                     <div className="form-group">
-                                        <input onChange={this.updateLoginEmailValue} type="email" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Email" required="required" name="txtEmail" id="txtEmail"/> 
+                                        <input onChange={this.updateLoginEmailValue} type="email" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Email" required="required" name="txtEmail" id="txtEmail"/> 
                                     </div>
                                     <div className="form-group">
-                                        <input onChange={this.updateLoginPasswordValue} type="password" className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
+                                        <input onChange={this.updateLoginPasswordValue} type="password" className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white" placeholder="Password" required="required" name="txtPassword" id="txtPassword"/> 
                                     </div>
                                     <p className="my-2" id="dividerOR">
                                         <strike>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</strike> &nbsp; <b className="small">Forgot Password?</b> &nbsp;
@@ -106,12 +106,11 @@ import googleIcon from "./../../css/images/google_icon.png";
                 </div>
             );
         }else{
-            return(
-                <Redirect to={"/HomePage"}/>
-                //  <Redirect to={{
-                //      pathname: "/profile/" + token,
-                //      state: { token: token }
-                //  }}/>
+
+            return(               
+                 <Redirect to={{
+                     pathname: "/HomePage", 
+                 }}/>
              ); 
         }
     }
