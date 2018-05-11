@@ -8,7 +8,7 @@ import HomePageStore from './stores/HomePageStore';
 import LoginStore from "./stores/LoginStore";
 import NewRoute from "./components/homepage/routePage/NewRoute";
 import RegisterPage from "./components/RegisterPage";
-import Profile from './components/Profile';
+// import Profile from './components/Profile';
 import ProfilePage from './components/ProfilePage';
 import ProfileStore from "./stores/ProfileStore";
 
@@ -28,7 +28,7 @@ class App extends Component {
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/> */}
-					<Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
+					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/> */}
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
