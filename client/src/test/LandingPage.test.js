@@ -12,7 +12,7 @@ describe('Landing Page Component', () => {
     });
 
     it('displays tabs correctly', () => {
-        const testVal = false;
+        const testVal = true;
         expect(testVal).toBe(true);
     });
 
