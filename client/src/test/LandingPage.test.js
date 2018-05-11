@@ -11,4 +11,9 @@ describe('Landing Page Component', () => {
         expect(shallow(<LandingPage />).exists(<div className="container"></div>)).toBe(true);
     });
 
+    it('displays tabs correctly', () => {
+        const testVal = false;
+        expect(testVal).toBe(true);
+    });
+
 });

@@ -36,4 +36,34 @@ describe('Register Component', () => {
         wrapper.simulate('click');
         expect(window.alert);       //no idea if this is actually working
     });
+
+    it('verifies firstname', () => {
+            const testVal = false;
+            expect(testVal).toBe(true);
+    });
+
+    it('verifies lastname', () => {
+            const testVal = true;
+            expect(testVal).toBe(true);
+    });
+
+    it('verifies id', () => {
+        const testVal = true;
+        expect(testVal).toBe(true);
+    });
+
+    it('verifies email', () => {
+        const testVal = true;
+        expect(testVal).toBe(true);
+    });
+
+    it('verifies password', () => {
+        const testVal = true;
+        expect(testVal).toBe(true);
+    });
+
+    it('verifies password confirmation', () => {
+        const testVal = true;
+        expect(testVal).toBe(true);
+    });
 });
