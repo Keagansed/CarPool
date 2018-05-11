@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var util = require('./Util/idCheck.js');
 const User = require('../../models/User.js');
 //Sign up
 
@@ -19,7 +19,7 @@ router.post('/',(req,res,next)=>{
 		password
 	} = body;
 	let { email } = body;
-
+	
 	//error check data
 	//====== Use return res.send to stop if err occurs
 	if(!firstName){
@@ -45,10 +45,15 @@ router.post('/',(req,res,next)=>{
 			success:false,
 			message:"Error: ID cannot be blank!"
 		});
-	}else if(id.length != 13){
+	}else if(!util.ValidateIDNumber(id)){ 
 		return res.send({ 
 			success:false,
 			message:"Error: ID invalid!"
+		});
+	}else if(!util.ValidateEmail(email)){
+		return res.send({ 
+			success:false,
+			message:"Error: Email invalid!"
 		});
 	}
 	if(!password){
@@ -121,9 +126,6 @@ router.post('/',(req,res,next)=>{
 		}
 	});
 	
-
-	
-
 });
 
 module.exports = router;
