@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search Component renders correctly 1`] = `
+<div
+  className="center_container search_center_container"
+>
+  <div
+    className="row no-padding-margin search-container"
+  >
+    <div
+      className="col-md-8 offset-md-2 no-padding"
+    >
+      <form
+        id="searchUsers"
+      >
+        <div
+          className="row"
+        >
+          <div
+            className="col-md-12 col-12 no-padding-margin"
+          >
+            <div
+              className="input-group c-search"
+            >
+              <input
+                autoComplete="off"
+                className="form-control"
+                id="user-search"
+                onChange={[Function]}
+                placeholder="Search"
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+      <div />
+    </div>
+  </div>
+</div>
+`;

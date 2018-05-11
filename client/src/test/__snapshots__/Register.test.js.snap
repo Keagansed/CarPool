@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register Component renders correctly 1`] = `
+<div>
+  <div
+    className="text-center"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row bigTopMargin"
+      >
+        <div
+          className="col-md-12"
+        >
+          <form
+            className=""
+          >
+            <div
+              className="form-group my-2"
+            >
+              <input
+                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                id="txtFirstName"
+                name="txtFirstName"
+                onChange={[Function]}
+                placeholder="First Name"
+                required="required"
+                type="text"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                id="txtLastName"
+                name="txtLastName"
+                onChange={[Function]}
+                placeholder="Last Name"
+                required="required"
+                type="text"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                id="txtID"
+                name="txtID"
+                onChange={[Function]}
+                placeholder="ID Number"
+                required="required"
+                type="text"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                id="txtEmail"
+                name="txtEmail"
+                onChange={[Function]}
+                placeholder="Email"
+                required="required"
+                type="email"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                id="txtPassword"
+                name="txtPassword"
+                onChange={[Function]}
+                placeholder="Password"
+                required="required"
+                type="password"
+              />
+            </div>
+            <div
+              className="form-group"
+            >
+              <input
+                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                id="txtConfirmPassword"
+                name="txtConfirmPassword"
+                onChange={[Function]}
+                placeholder="Confirm Password"
+                required="required"
+                type="password"
+              />
+            </div>
+            <button
+              className="mt-3 mb-2 btn btn-primary roundCorners w-75 text-secondary font-weight-medium"
+              onClick={[Function]}
+              type="submit"
+            >
+              <b>
+                Register
+              </b>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="py-2 text-center"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <strike>
+                                
+          </strike>
+              
+          <b
+            className="small font-weight-medium"
+          >
+            OR
+          </b>
+              
+          <strike>
+                                
+          </strike>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="my-2"
+  >
+    <div
+      className="text-center container"
+    >
+      <div
+        className="row text-center"
+      >
+        <div
+          className="col-2-pr-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto"
+        >
+          <img
+            alt="fbLogin"
+            className="img-fluid d-block mx-auto"
+            id="btnFacebookLogin"
+            src="fb_icon.png"
+          />
+        </div>
+        <div
+          className="col-2-pl-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto"
+        >
+          <img
+            alt="googleLogin"
+            className="img-fluid d-block mx-auto"
+            id="btnGoogleLogin"
+            src="google_icon.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
