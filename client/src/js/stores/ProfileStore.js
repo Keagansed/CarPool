@@ -55,13 +55,14 @@ class profileStore {
         .catch(error => console.error('Error:', error))
         .then(json=>{
             if(json.success){
-                //alert("Successfully updated!");
+                alert("Successfully updated!");
                 this.editMode = false;
 
                 this.user.firstName = this.eFName;
                 this.user.lastName = this.eLName;
                 this.user.idNum = this.eID;
                 this.user.email = this.eEmail;
+                
             }else{
                 alert(json.message);
             }

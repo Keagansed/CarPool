@@ -16,13 +16,13 @@ class Navbar extends Component{
                                     </Link>
                                 </li>
                                 <li className="nav-item w-25">
-                                    <Link to={`/`} className="nav-link no-hover" >
+                                    <Link to={`/HomePage`} className="nav-link no-hover" >
                                         <i className="fa fa-fw fa-car fa-2x d-inline text-secondary"></i>
                                     </Link>
                                 </li>
                                 <li className="nav-item mr-auto text-secondary w-25">
                                 <Link to={{
-                                        pathname: "/profile/" + this.props.token,
+                                        pathname: "/ProfilePage/" + this.props.token,
                                         state: { token: this.props.token }
                                     }} className="nav-link no-hover"
                                 >
