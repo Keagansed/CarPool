@@ -6,6 +6,7 @@ import "../utils/fileQuery.js";
 import LoginStore from '../stores/LoginStore'
 import Search from './Search.js';
 import VouchAverage from "./vouching/VouchAverage"
+import VouchList from './vouching/VouchList';
 
 @observer class Profile extends Component {
 	constructor()

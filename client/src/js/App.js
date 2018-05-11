@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
+// import Vouching from './components/Vouching';
+// import VerificationDocuments from './components/VerificationDocuments';
 import LandingPage from "./components/LandingPage";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
@@ -10,11 +12,10 @@ import ProfilePage from './components/ProfilePage';
 import LoginStore from "./stores/LoginStore";
 import ProfileStore from "./stores/ProfileStore";
 
+
 import '../css/font.css';
 import './../css/style.css';
 
-// import Vouching from './components/Vouching';
-// import VerificationDocuments from './components/VerificationDocuments';
 
 class App extends Component {
 
