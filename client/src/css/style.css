@@ -7,19 +7,7 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-.HomePage{
-  background-image: url('images/backgroundImage.png');
-  background-position: center center;
-  background-size: cover;
-  background-repeat:no-repeat;
-  height: 100%;
-  width: 100%;
-}
-#root{
-  height: 100%;
-  width: 100%;
-}
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -70,7 +58,6 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 
 body {
   margin: 0;
-  font-family: quicksand;
   font-size: 1rem;
   font-weight: 200;
   line-height: 1.5;
@@ -314,7 +301,6 @@ template {
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-bottom: 0.75rem;
-  font-family: quicksand;
   font-weight: 200;
   line-height: 1.2;
   color: inherit; }
@@ -537,16 +523,6 @@ pre {
 .col-2 {
   flex: 0 0 16.66667%;
   max-width: 16.66667%; }
-
-.col-2-pr-5 {
-  flex: 0 0 16.66667%;
-  max-width: 16.66667%;
-  padding-right: 5px;}
-
-.col-2-pl-5 {
-  flex: 0 0 16.66667%;
-  max-width: 16.66667%;
-  padding-left: 5px;}
 
 .col-3 {
   flex: 0 0 25%;
@@ -2542,8 +2518,7 @@ tbody.collapse.show {
   background-color: #6FEDB7; }
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E"); 
-}
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E"); }
 
 .custom-radio .custom-control-input:disabled:checked ~ .custom-control-label::before {
   background-color: rgba(111, 237, 183, 0.5); }
@@ -2953,8 +2928,7 @@ tbody.collapse.show {
   border-color: rgba(0, 0, 0, 0.1); }
 
 .navbar-light .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); 
-}
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); }
 
 .navbar-light .navbar-text {
   color: rgba(0, 0, 0, 0.5); }
@@ -2986,8 +2960,7 @@ tbody.collapse.show {
   border-color: rgba(255, 255, 255, 0.1); }
 
 .navbar-dark .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); 
-}
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); }
 
 .navbar-dark .navbar-text {
   color: rgba(255, 255, 255, 0.5); }
@@ -3778,7 +3751,6 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: quicksand;
   font-style: normal;
   font-weight: 200;
   line-height: 1.5;
@@ -3863,7 +3835,6 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: quicksand;
   font-style: normal;
   font-weight: 200;
   line-height: 1.5;
@@ -4074,12 +4045,10 @@ button.close {
   background-size: 100% 100%; }
 
 .carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); 
-}
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E"); }
 
 .carousel-control-next-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"); 
-}
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"); }
 
 .carousel-indicators {
   position: absolute;
@@ -4221,7 +4190,7 @@ button.bg-dark:focus {
   background-color: transparent !important; }
 
 .border {
-  border: 1px solid #dee2e6 !important; }
+  border: 4px solid #dee2e6 !important; }
 
 .border-top {
   border-top: 1px solid #dee2e6 !important; }
@@ -5969,10 +5938,7 @@ button.bg-dark:focus {
   font-weight: 300 !important; }
 
 .font-weight-normal {
-  font-weight: 400 !important; }
-  
-.font-weight-medium {
-  font-weight: 500 !important; }
+  font-weight: 200 !important; }
 
 .font-weight-bold {
   font-weight: 700 !important; }
@@ -6252,6 +6218,14 @@ html, body {
 .w-10 {
   width: 10% !important; }
 
+.h-35 {
+  height: 35% !important; }
+.h-45 {
+  height: 45% !important; }
+
+.w-3rd {
+  width: 33.3333% !important; }
+
 /* Place the navbar at the bottom of the page, and make it stick */
 .navbarBottom {
   background-color: #6FEDB7;
@@ -6260,13 +6234,55 @@ html, body {
   bottom: 0;
   width: 100%; }
 
-  .profileHeader{
-    background-image: url('images/headerBackImage.jpeg');
-    background-position:center center;
-    background-size:cover;
-    background-repeat:no-repeat;
-  }
+.border-2{
+	border: 3px;
+}
 
-  .border-white{
-    border-color: white;
-  }
+.thin-border-sides {
+  border-left: 2px solid #dee2e6 !important;
+  border-right: 2px solid #dee2e6 !important; 
+}
+
+.square:after {
+  display: block;
+  padding-bottom: 100%;
+}
+
+.text-13-bold{
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.text-10{
+  font-size: 10px;
+}
+
+.purple-text{
+  color: #140D4F;
+}
+
+.profileHeader{
+  background-image: url('images/headerBackImage.jpeg');
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+
+.border-white{
+  border: 4px solid white;
+}
+
+.border-secondary{
+  border: 4px solid var(--secondary);
+}
+
+.wrapper{
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+#root{
+  height: 100%;
+  width: 100%;
+}

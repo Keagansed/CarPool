@@ -122,7 +122,7 @@ import { getFromStorage } from '../utils/localStorage.js'
                                     </li>
                                     <li className="nav-item mr-auto text-secondary w-25">
                                     <Link to={{
-                                            pathname: "/profile/" + token,
+                                            pathname: "/ProfilePage/" + token,
                                             state: { token: token }
                                         }} className="nav-link no-hover"
                                     >
