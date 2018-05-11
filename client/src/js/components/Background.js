@@ -11,7 +11,7 @@ class Background extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="Background">
 				<h1>Background</h1>
 			</div>
 		);

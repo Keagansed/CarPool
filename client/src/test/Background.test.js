@@ -1,9 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import Background from '../js/components/Background';
+import { shallow } from 'enzyme';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Background />, div);
-  ReactDOM.unmountComponentAtNode(div);
+
+describe('Background Component', () => {
+  it('renders correctly', () => {
+    // const div = document.createElement('div');
+    // ReactDOM.render(<Background />, div);
+    // ReactDOM.unmountComponentAtNode(div);
+
+    expect(shallow(<Background />).exists(<div className="Background"></div>)).toBe(true);
+  });
 });
