@@ -6290,3 +6290,25 @@ html, body {
 .hidden{
   display: none;
 }
+
+.textRight{
+  text-align: right;
+}
+
+.textCenter{
+  text-align: center;
+}
+
+.secondaryBorderBoddom{
+  border-bottom: 3px solid var(--secondary);
+}
+
+.btnDetailUpdate{
+  background-color: var(--secondary);
+  color: white;
+  font-size: 20px;
+}
+
+.btnDetailUpdate:hover{
+  border: 3px solid var(--primary);
+}

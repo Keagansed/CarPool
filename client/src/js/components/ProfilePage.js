@@ -245,8 +245,86 @@ import infoIcon from "./../../css/images/info-icon.png";
 										</a>
 									</div>
 								</div>
-								<div className="tab-pane fade" id="tabthree" role="tabpanel">
-									<p className="">Tab pane three. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+								<div className="tab-pane fade px-2" id="tabthree" role="tabpanel">
+									<form method="POST" action="/api/account/updateProfile" id="upProInfo">
+										<div className="row px-3 py-2 secondaryBorderBoddom">
+											<div className="col-md-6 col-6 p-0">
+												<h4 className="text-secondary m-0">
+													<b>First Name:</b>
+												</h4>
+											</div>
+											<div className="col-md-6 col-6 p-0 textRight">
+												<p className="text-secondary m-0">
+													<input onChange={this.fNameChange} className="shorten" id="upFName" type="text" defaultValue={firstName}/>
+												</p>
+											</div>
+										</div>
+										<div className="row px-3 py-2 secondaryBorderBoddom">
+											<div className="col-md-6 col-6 p-0">
+												<h4 className="text-secondary m-0">
+													<b>Last Name:</b>
+												</h4>
+											</div>
+											<div className="col-md-6 col-6 p-0 textRight">
+												<p className="text-secondary m-0">
+													<input onChange={this.lNameChange} className="shorten" id="upLName" type="text" defaultValue={lastName}/>
+												</p>
+											</div>
+										</div>
+										<div className="row px-3 py-2 secondaryBorderBoddom">
+											<div className="col-md-6 col-6 p-0">
+												<h4 className="text-secondary m-0">
+													<b>Email:</b>
+												</h4>
+											</div>
+											<div className="col-md-6 col-6 p-0 textRight">
+												<p className="text-secondary m-0">
+													<input onChange={this.emailChange} className="shorten" type="email" defaultValue={email}/>
+												</p>
+											</div>
+										</div>
+										<div className="row px-3 py-2 secondaryBorderBoddom">
+											<div className="col-md-6 col-6 p-0">
+												<h4 className="text-secondary m-0">
+													<b>ID Number:</b>
+												</h4>
+											</div>
+											<div className="col-md-6 col-6 p-0 textRight">
+												<p className="text-secondary m-0">
+													<input onChange={this.idChange} className="shorten" type="text" defaultValue={idNum}/>
+												</p>
+											</div>
+										</div>
+										<div className="row px-3 py-2 secondaryBorderBoddom">
+											<div className="col-md-6 col-6 p-0">
+												<h4 className="text-secondary m-0">
+													<b>Current Password:</b>
+												</h4>
+											</div>
+											<div className="col-md-6 col-6 p-0 textRight">
+												<p className="text-secondary m-0">
+													<input onChange={this.passChange} className="shorten" type="password"/>
+												</p>
+											</div>
+										</div>
+										<div className="row px-3 py-2 secondaryBorderBoddom">
+											<div className="col-md-6 col-6 p-0">
+												<h4 className="text-secondary m-0">
+													<b>New Password:</b>
+												</h4>
+											</div>
+											<div className="col-md-6 col-6 p-0 textRight">
+												<p className="text-secondary m-0">
+													<input onChange={this.newPassChange} className="shorten" type="password" placeholder="leave blank for no change"/>
+												</p>
+											</div>
+										</div>
+										<div className="row px-3 py-3">
+											<div className="col-md-12 col-12 p-0 textCenter">
+												<input onClick={this.bEditSubmit} className="btn btnDetailUpdate" type="button" value="update"/>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
