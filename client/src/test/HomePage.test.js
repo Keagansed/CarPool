@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 // let renderer = require('react-test-renderer');
 
 
-describe('Home Page Component', () => {
+describe('Home Page Component', () => { //always gives errors
     it('renders correctly', () => {
         // const tree = renderer.create(<HomePage />).toJSON();
         // expect(tree).toMatchSnapshot();\

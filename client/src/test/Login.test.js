@@ -3,7 +3,7 @@ import Login from '../js/components/Login';
 import { shallow } from 'enzyme';
 // let renderer = require('react-test-renderer');
 
-describe('Login Component', () => {
+describe('Login Component', () => {   //always gives errors
   it('renders correctly', () => {
     // const tree = renderer.create(<Login />).shallowToJSON();
     // expect(tree).toMatchSnapshot();

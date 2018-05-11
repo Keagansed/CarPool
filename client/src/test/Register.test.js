@@ -1,6 +1,6 @@
 import React from 'react';
 import Register from '../js/components/RegisterPage';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 // import { shallowToJson } from 'enzyme-to-json';
 let renderer = require('react-test-renderer');
 
@@ -13,9 +13,13 @@ describe('Register Component', () => {
 
     it('displays correct errors for invalid input', () => {
         window.alert = jest.fn();
-        const form = mount(
+        const wrapper = shallow(
             <Register />
         );
+        // wrapper.find('#txtFirstName').simulate('change', {target: {name: 'txtFirstName', value: 'John'}});        
+ 
+        
+       
         // const firstname = form.find('txtFirstName').get(0);
         // firstname.value = "John";
         // const lastname = form.find('txtLastName').get(0);
@@ -29,7 +33,7 @@ describe('Register Component', () => {
         // const confirmPass = form.find('txtConfirmPassword').get(0);
         // confirmPass.value = "12";
             
-        form.simulate('click');
+        wrapper.simulate('click');
         expect(window.alert);       //no idea if this is actually working
     });
 });
