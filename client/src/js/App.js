@@ -8,10 +8,9 @@ import HomePageStore from './stores/HomePageStore';
 import LoginStore from "./stores/LoginStore";
 import NewRoute from "./components/homepage/routePage/NewRoute";
 import RegisterPage from "./components/RegisterPage";
-import Profile from './components/Profile';
 import ProfilePage from './components/ProfilePage';
 import ProfileStore from "./stores/ProfileStore";
-
+import SettingsPage from "./components/Settings";
 
 import '../css/font.css';
 import './../css/style.css';
@@ -27,12 +26,11 @@ class App extends Component {
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
-					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/> */}
-					<Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 					<Route path={"/newRoute"} exact component={NewRoute}/>
+					<Route path={"/Setting"} exact render={(props) => <SettingsPage {...props} store={LoginStore}/>}/>
 				</Switch>
 			</BrowserRouter>
 		);

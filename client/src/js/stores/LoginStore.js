@@ -23,6 +23,8 @@ class loginStore {
     }
     @action setLoggedIn = (success) => {
         this.loggedIn = success;
+        this.lEmail = '';
+        this.lPassword = '';
     }
 
     @action setRegistered = (value) => {

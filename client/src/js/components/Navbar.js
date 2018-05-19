@@ -11,7 +11,7 @@ class Navbar extends Component{
                         <div className="col-md-12 ">
                             <ul className="nav nav-pills navbarBottom text-center">
                                 <li className="nav-item ml-auto w-25">
-                                    <Link to={`/`} className="nav-link no-hover">
+                                    <Link to={`/Setting`} className="nav-link no-hover">
                                         <i className="fa fa-cog fa-2x text-secondary d-inline"></i>&nbsp;
                                     </Link>
                                 </li>

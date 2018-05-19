@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { observer } from "mobx-react";
+import LoginStore from '../stores/LoginStore';
+import { Link } from 'react-router-dom';
 
-class Settings  extends Component {
+import Navbar from './Navbar'
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+@observer class Settings  extends Component {
+
+    handleLogout = () =>
+    {
+        LoginStore.logOut();
+    }
+
     render(){
         return(
-            <h1>Settings</h1>
+            <div>
+                <h1>Settings</h1>
+                <Link to={"/"} onClick={this.handleLogout}>Log Out</Link> 
+                <Navbar token={ this.props.store.token }/>
+            </div>
         );
     }
 }

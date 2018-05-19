@@ -203,21 +203,21 @@ import { getFromStorage } from '../utils/localStorage.js';
 							<div className="col-md-12 p-0">
 							<ul className="nav nav-tabs bg-primary">
 								<li className="nav-item w-3rd bg-info text-center px-0">
-									<a href="" className="nav-link bg-info" data-toggle="tab" data-target="#tabone">
+									<a  className="nav-link bg-info" data-toggle="tab" data-target="#tabone">
 										<b>
 											<b>Trips</b>
 										</b>
 									</a>
 								</li>
 								<li className="nav-item w-3rd text-center bg-info">
-									<a className="nav-link active bg-info" data-target="#tabtwo" data-toggle="tab" href="">
+									<a className="nav-link active bg-info" data-target="#tabtwo" data-toggle="tab" >
 										<b>
 											<b>Vouches</b>
 										</b>
 									</a>
 								</li>
 								<li className="nav-item w-3rd text-center bg-info">
-									<a className="nav-link bg-info" href="" data-target="#tabthree" data-toggle="tab">
+									<a className="nav-link bg-info"  data-target="#tabthree" data-toggle="tab">
 										<b>
 											<b>Details</b>
 										</b>
@@ -230,19 +230,19 @@ import { getFromStorage } from '../utils/localStorage.js';
 								</div>
 								<div className="tab-pane fade show active" id="tabtwo" role="tabpanel">
 								<div className="list-group bg-info">
-										<a href="#" className="list-group-item list-group-item-action flex-column align-items-start bg-info text-white m-0 py-1">
+										<a className="list-group-item list-group-item-action flex-column align-items-start bg-info text-white m-0 py-1">
 											<div className="row p-0">
 												<div className="col-3 col-md-3 text-center p-0">
-													<img className="d-block rounded-circle border-secondary mx-auto" src={profilePicture} id="imgProfilePic" width="80" height="80"/> 
+													<img className="d-block rounded-circle border-secondary mx-auto" src={profilePicture} id="imgProfilePic" width="80" height="80" alt ="profilePic"/> 
 												</div>
 												<div className="col-6 col-md-6 px-2">
 													<div className="row">
 														<div className="col-md-12 col-12 p-0">
-															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex" src={starEmpty} width="20" height="20"/> 
+															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20" alt="star"/>
+															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20" alt="star"/>
+															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20" alt="star"/>
+															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20" alt="star"/>
+															<img className="d-block img-fluid d-inline-flex" src={starEmpty} width="20" height="20" alt="star"/> 
 														</div>
 														<div className="col-md-12 col-12 p-0">
 															<p className="text-secondary m-0">
@@ -258,7 +258,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 													</div>
 												</div>
 												<div className="mr-auto col-3 col-md-3">
-													<img className="d-block rounded-circle p-1 my-3 float-right" src={infoIcon} id="imgProfilePic" width="50" height="50"/> 
+													<img className="d-block rounded-circle p-1 my-3 float-right" src={infoIcon} width="50" height="50" alt="profile"/> 
 												</div>
 											</div>
 										</a>

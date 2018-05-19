@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import { searchUsers } from "../utils/searchQuery.js";
 import SearchResultList from './search/SearchResultList.js'
