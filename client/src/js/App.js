@@ -11,6 +11,7 @@ import RegisterPage from "./components/RegisterPage";
 import Profile from './components/Profile';
 import ProfilePage from './components/ProfilePage';
 import ProfileStore from "./stores/ProfileStore";
+import Messaging from './components/Messaging';
 
 
 import '../css/font.css';
@@ -33,6 +34,8 @@ class App extends Component {
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 					<Route path={"/newRoute"} exact component={NewRoute}/>
+					<Route path={"/Messaging"} exact render={(props) => <Messaging />}/>
+
 				</Switch>
 			</BrowserRouter>
 		);
