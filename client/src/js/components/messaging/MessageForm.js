@@ -11,7 +11,7 @@ class MessageForm extends Component {
             newMessageContent : ''
         };
         this.handleUserInput = this.handleUserInput.bind(this);
-        this.sendNote = this.sendNote.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
     }
 
     handleUserInput(e)
@@ -21,9 +21,9 @@ class MessageForm extends Component {
         })
     }
 
-    sendNote()
+    sendMessage()
     {
-        this.props.addMessage(this.state.newMessageContent);
+        this.props.addMessage(this.state.newMessageContent, getFromStorage('sessionKey').token);
         this.setState({
             newMessageContent: '',
         })
@@ -36,7 +36,7 @@ class MessageForm extends Component {
             <div className="formWrapper">
                 <input className="messageInput" placeholder="Write a message..." value={this.state.newMessageContent}
                 onChange={this.handleUserInput}/>
-                <button className="messageButton" onClick={this.sendNote}>Send Message</button>
+                <button className="messageButton" onClick={this.sendMessage}>Send Message</button>
             </div>
         );
     }

@@ -34,7 +34,7 @@ class App extends Component {
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 					<Route path={"/newRoute"} exact component={NewRoute}/>
-					<Route path={"/Messaging"} exact render={(props) => <Messaging />}/>
+					<Route path={"/Messaging/:chat"} exact render={(props) => <Messaging {...props} />}/>
 
 				</Switch>
 			</BrowserRouter>

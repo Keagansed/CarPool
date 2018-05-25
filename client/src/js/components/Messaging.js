@@ -7,10 +7,6 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 import '../../css/components/Message.css'
 
-import {
-    getFromStorage
-} from '../utils/localStorage.js'
-
 class Messaging extends Component {
     constructor(props){
         super(props);
@@ -18,10 +14,11 @@ class Messaging extends Component {
             messages:[
             ],
         };
+
         this.addMessage = this.addMessage.bind(this);
 
         this.app = firebase.initializeApp(DB_CONFIG);
-        this.database = this.app.database().ref().child('messages');
+        this.database = this.app.database().ref().child('groupChats/'+this.props.match.params.chat);
     }
 
     componentWillMount(){
@@ -30,6 +27,7 @@ class Messaging extends Component {
             previousMessages.push({
                 id: snap.key,
                 messageContent: snap.val().messageContent,
+                userID: snap.val().userID,
             });
 
             this.setState({
@@ -38,9 +36,9 @@ class Messaging extends Component {
         })
     }
 
-    addMessage(message)
+    addMessage(message, userID)
     {
-        this.database.push().set({messageContent: message});
+        this.database.push().set({userID: userID, messageContent: message});
     }
 
     render() {
@@ -54,7 +52,7 @@ class Messaging extends Component {
                     {
                         this.state.messages.map((message) => {
                             return(
-                                <Message messageContent={message.messageContent} messageID={message.id} key={message.id}/>
+                                <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} key={message.id}/>
                             )
                         })
                     }

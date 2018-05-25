@@ -16,12 +16,22 @@ class Message extends Component {
 
 
     render(props) {
-
-        return (
-            <div className="message fade-in">
-                <p className="messageContent">{ this.messageContent }</p>
-            </div>
-        );
+        if (this.props.userID === getFromStorage('sessionKey').token)
+        {
+            return (
+                <div className="myMessage fade-in">
+                    <p className="messageContent">{ this.messageContent }</p>
+                </div>
+            );
+        }
+        else
+        {
+            return (
+                <div className="message fade-in">
+                    <p className="messageContent">{ this.messageContent }</p>
+                </div>
+            );
+        }
     }
 }
 
