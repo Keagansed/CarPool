@@ -1,9 +1,30 @@
-import '../../../../css/components/NewRoute.css'
+import '../../../../css/components/NewRoute.css';
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import RoutesStore from '../../../stores/RoutesStore'
+import RoutesStore from '../../../stores/RoutesStore';
 
+import GoogleMapComponent from './GoogleMap';
+
+import LocationSearchInput from './GoogleAuto';
+
+// @observer class newRoute extends Component{
+//     render(){
+//         // RoutesStore.routes;
+//         // let v = RoutesStore.origin;
+//         // let v = ;
+//         return(
+//             <div>
+//                 <LocationSearchInput placeholder='Origin'/>
+//                 <LocationSearchInput placeholder='Destination'/>
+//                 <div>
+//                     {RoutesStore.origin.lat}
+//                 </div>
+//             </div>
+//         );
+//     }
+// }
+// export default newRoute
 @observer class NewRoute extends Component{
     constructor(){
         super()
@@ -15,7 +36,7 @@ import RoutesStore from '../../../stores/RoutesStore'
             endLocation: '',
             days: {
                 monday: false,
-                tuesday: false,
+                tuesday: false, 
                 wednesday: false,
                 thursday: false,
                 friday: false,
@@ -24,6 +45,7 @@ import RoutesStore from '../../../stores/RoutesStore'
             },
             time: '00:00',
             repeat: false,
+            firstRender: true,
         }
     }
 
@@ -332,8 +354,28 @@ import RoutesStore from '../../../stores/RoutesStore'
         } = this.state;
 
         RoutesStore.newRoute(token, startLocation, endLocation, days, time, routeName, repeat)
-
+    
     }
+
+    setReRender = () =>
+    {
+        this.setState({
+                reRender: true
+            })
+    }
+
+    renderMap = () =>
+    {
+        if(this.state.reRender)
+        {
+            this.setState({
+                reRender: false
+            });
+
+            return <GoogleMapComponent oLat={RoutesStore.origin.lat} oLng={RoutesStore.origin.lng} dLat={RoutesStore.destination.lat} dLng={RoutesStore.destination.lng} />;
+        }
+    }
+
 
     render(){
         if(RoutesStore.routeSuccess){
@@ -343,7 +385,8 @@ import RoutesStore from '../../../stores/RoutesStore'
         }
         else{
             return(
-                <div>                    
+                <div>      
+                             
                     <p className="m-2 font-weight-bold h1">  
                         <Link className="text-white" to="/Homepage">                    
                             &lt;
@@ -356,13 +399,16 @@ import RoutesStore from '../../../stores/RoutesStore'
                         </div>
 
                         <div className="form-group">
-                            <input type="text" placeholder="Start Location" onChange={this.updateStartValue}/>
+                            <LocationSearchInput placeholder='Origin'/>
                         </div>
 
                         <div className="form-group">
-                            <input type="text" placeholder="End Location" onChange={this.updateEndValue}/>
+                            <LocationSearchInput placeholder='Destination' finishSelect={ this.setReRender.bind(this) }/>
                         </div>
 
+                        {this.renderMap}
+
+                        {/* <GoogleMapComponent oLat={RoutesStore.origin.lat} oLng={RoutesStore.origin.lng} dLat={RoutesStore.destination.lat} dLng={RoutesStore.destination.lng} /> */}
                         <div className="form-group">
                             <label>Days: </label>
                             <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>
