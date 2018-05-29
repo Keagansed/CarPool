@@ -1,0 +1,20 @@
+html, body{
+    height:100%; /* important to vertically align the container */
+    margin:0;
+    padding:0;
+    font-family: Quicksand;
+}
+
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+  
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-primary{
+      background-color: #6FEDB7;
+      color: #140D4F;
+      font-weight: bold;
+  }
