@@ -1,0 +1,107 @@
+import { Link } from 'react-router-dom';
+import { observer } from "mobx-react";
+import React, { Component } from 'react';
+
+import VouchAverage from "../vouching/VouchAverage";
+
+@observer class ProfileHeader  extends Component {
+
+    getFName = () =>
+    {
+        if(this.props.store.profileFound)
+            return this.props.store.firstName;
+    }
+
+    getLName = () =>
+    {
+        if(this.props.store.profileFound)
+        {
+            return this.props.store.lastName;
+        }
+        else
+        {
+            return "."
+        }
+    }
+
+    getSecLvl = () =>
+    {
+        if(this.props.store.profileFound)
+            return this.props.store.secLvl;
+    }
+
+    getProfilePic = () =>
+    {
+        if(this.props.store.profileFound)
+            return "../api/account/getImage?filename=" + this.props.store.profilePic;
+    }
+
+    getToken = () =>
+    {
+        if(this.props.store.profileFound)
+            return this.props.store.token;
+    }
+
+    render(){
+
+        const vouchPath = "/vouching/" + this.getToken();
+
+        return(
+
+            <div className="col-md-12 col-12 profileHeader">
+                <div className="row w-100 m-0 h-100 py-3">
+
+                    <div className="m-0 p-0 col-md-12" id="colHeaderImage">
+                        <img src={this.getProfilePic()} id="profilePic" className="d-block mx-auto rounded-circle border-white profilePic" height="120" width="120" alt="" />
+                        <form encType="multipart/form-data" className="hidden">
+                            <input type="file" name="file" id="file" onChange={this.uploadProfilePic} />
+                        </form>
+                    </div>
+
+                    <div className="p-0 col-md-12">
+                        <h5 className={"text-white text-center m-0 p-1 " + this.props.store.opacity} id="headName">
+                            <b>{this.getFName()} {this.getLName()}</b>
+                        </h5>
+                    </div>
+
+                    <div className="py-2 col-md-12">
+                        <div className="row">
+
+                            <div className="col-4">
+                                <div className="row">
+                                    <div className="col-12 text-center py-0">
+                                        <p className="text-primary m-0 text-center" id="pRatingAvg">
+                                            <Link to={vouchPath}>
+                                                <VouchAverage _id={this.getToken()}/>
+                                            </Link>
+                                        </p>
+                                    </div>
+                                    <div className="col-12 py-0">
+                                        <p className="text-white text-center m-0" id="pRatingLabel">Ratings</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="thin-border-sides col-4 col-md-4">
+                                <p className="text-primary text-center m-0" id="pNumTrips">
+                                    <font color="#140d4f" className="text-primary">0</font>
+                                </p>
+                                <p className="text-white text-center m-0" id="pNumTripsLabel">Trips</p>
+                            </div>
+
+                            <div className="col-4 col-md-4">
+                                <p className="text-primary text-center m-0" id="pTrust">
+                                    <font color="#140d4f" className="text-primary">{this.getSecLvl()}/5</font>
+                                </p>
+                                <p className="text-white text-center m-0" id="pTrustLabel">Trust</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default ProfileHeader;

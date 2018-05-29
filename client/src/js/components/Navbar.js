@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import LoginStore from '../stores/LoginStore'
+import React, { Component } from 'react';
 
 class Navbar extends Component{
 
@@ -22,8 +23,8 @@ class Navbar extends Component{
                                 </li>
                                 <li className="nav-item mr-auto text-secondary w-25">
                                 <Link to={{
-                                        pathname: "/ProfilePage/" + this.props.token,
-                                        state: { token: this.props.token }
+                                        pathname: "/ProfilePage/" + LoginStore.token,
+                                        state: { token: LoginStore.token }
                                     }} className="nav-link no-hover"
                                 >
                                     <i className="fa fa-fw fa-2x fa-user d-inline text-secondary"></i>
