@@ -2,10 +2,10 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { getFromStorage } from '../utils/localStorage.js';
+import { getFromStorage } from '../../utils/localStorage.js';
 
-import fbIcon from "./../../css/images/fb_icon.png";
-import googleIcon from "./../../css/images/google_icon.png";
+import fbIcon from "../../../css/images/fb_icon.png";
+import googleIcon from "../../../css/images/google_icon.png";
 
 @observer class Login extends Component {
     constructor(props){

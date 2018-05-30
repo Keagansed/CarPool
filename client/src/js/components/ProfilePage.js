@@ -46,8 +46,6 @@ import VouchesTab from './profilepage/VouchesTab';
 
 	handleLogout = () =>
 	{
-		LoginStore.setLoggedIn(false);
-		LoginStore.setToken('');
 		LoginStore.logOut();
 	}
 

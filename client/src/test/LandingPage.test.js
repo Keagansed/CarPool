@@ -1,5 +1,5 @@
 import React from 'react';
-import LandingPage from '../js/components/LandingPage';
+import LandingPage from '../js/components/landing/LandingPage';
 import { shallow } from 'enzyme';
 // let renderer = require('react-test-renderer');
 
