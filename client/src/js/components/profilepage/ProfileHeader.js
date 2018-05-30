@@ -51,7 +51,7 @@ import VouchAverage from "../vouching/VouchAverage";
             return <Link to={vouchPath}> <VouchAverage _id={this.getToken()}/></Link>
         }
         else{
-            return <p className="opacity-0 m-0">0</p>
+            return <b className="opacity-0 m-0">0</b>
         }
     }
 
