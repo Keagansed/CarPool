@@ -16,16 +16,31 @@ import GoogleMapComponent from './GoogleMap';
         this.setState({
             loading:3
         })
-    }
+    };
+
+
+
     render(){
+        let GoogleMap = ({coords}) => (
+            <div>
+                {coords.map(coords => (
+                    <GoogleMapComponent oLat={coords.olat} oLng={coords.olng} dLat={coords.dlat} dLng={coords.olng} />
+                ))}
+            </div>
+        );
+
         let load = RoutesStore.destination;
         // if(load !== {}){
         //     this.setState({loading:load});
         // }
         if(load.lat === undefined){
+            let coords = [
+                {olat:'-25.86518',olng:'28.160347',dlat:'-25.7561672',dlng:'28.231116199999974'}
+            ];
             return(
                 <div>
-                    <GoogleMapComponent oLat='-25.86518' oLng='28.160347' dLat='-25.7561672' dLng='28.231116199999974' />
+                    <GoogleMap coords={coords}/>
+                    {/*<GoogleMapComponent oLat='-25.86518' oLng='28.160347' dLat='-25.7561672' dLng='28.231116199999974' />*/}
                     <p>Testing: {RoutesStore.origin.lat}</p>
                     <p>Testing state: {this.state.loading.lng}</p>
                     <button onClick={this.refresh}>safd</button>
@@ -36,9 +51,13 @@ import GoogleMapComponent from './GoogleMap';
             let olng = RoutesStore.origin.lng;
             let dlat = RoutesStore.destination.lat;
             let dlng = RoutesStore.destination.lng;
+            let coords = [
+                {olat:RoutesStore.origin.lat,olng:RoutesStore.origin.lng,dlat:RoutesStore.destination.lat,dlng:RoutesStore.destination.lng}
+            ];
             return(
                 <div>
-                    <GoogleMapComponent oLat={olat} oLng={olng} dLat={dlat} dLng={olng} />
+                    <GoogleMap coords={coords}/>
+                    {/*<GoogleMapComponent oLat={olat} oLng={olng} dLat={dlat} dLng={olng} />*/}
                     <p>olat: {olat}</p>
                     <p>olng: {olng}</p>
                     <p>dlat: {dlat}</p>
