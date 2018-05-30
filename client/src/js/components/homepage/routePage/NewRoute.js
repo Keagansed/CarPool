@@ -4,27 +4,10 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import RoutesStore from '../../../stores/RoutesStore';
 
-import GoogleMapComponent from './GoogleMap';
+import MapWrapper from './MapWrapper';
 
 import LocationSearchInput from './GoogleAuto';
 
-// @observer class newRoute extends Component{
-//     render(){
-//         // RoutesStore.routes;
-//         // let v = RoutesStore.origin;
-//         // let v = ;
-//         return(
-//             <div>
-//                 <LocationSearchInput placeholder='Origin'/>
-//                 <LocationSearchInput placeholder='Destination'/>
-//                 <div>
-//                     {RoutesStore.origin.lat}
-//                 </div>
-//             </div>
-//         );
-//     }
-// }
-// export default newRoute
 @observer class NewRoute extends Component{
     constructor(){
         super()
@@ -45,7 +28,8 @@ import LocationSearchInput from './GoogleAuto';
             },
             time: '00:00',
             repeat: false,
-            firstRender: true,
+            reRender: true,
+
         }
     }
 
@@ -357,27 +341,8 @@ import LocationSearchInput from './GoogleAuto';
     
     }
 
-    setReRender = () =>
-    {
-        this.setState({
-                reRender: true
-            })
-    }
-
-    renderMap = () =>
-    {
-        if(this.state.reRender)
-        {
-            this.setState({
-                reRender: false
-            });
-
-            return <GoogleMapComponent oLat={RoutesStore.origin.lat} oLng={RoutesStore.origin.lng} dLat={RoutesStore.destination.lat} dLng={RoutesStore.destination.lng} />;
-        }
-    }
-
-
     render(){
+        
         if(RoutesStore.routeSuccess){
             return(
                 <Redirect to="/HomePage"/>    
@@ -403,12 +368,11 @@ import LocationSearchInput from './GoogleAuto';
                         </div>
 
                         <div className="form-group">
-                            <LocationSearchInput placeholder='Destination' finishSelect={ this.setReRender.bind(this) }/>
+                            <LocationSearchInput placeholder='Destination'/>
                         </div>
 
-                        {this.renderMap}
-
-                        {/* <GoogleMapComponent oLat={RoutesStore.origin.lat} oLng={RoutesStore.origin.lng} dLat={RoutesStore.destination.lat} dLng={RoutesStore.destination.lng} /> */}
+                        <MapWrapper/>
+                        
                         <div className="form-group">
                             <label>Days: </label>
                             <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>
