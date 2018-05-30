@@ -15,6 +15,7 @@ router.get('/', function(req, res, next) {
   	userId:token,
   	timestamp: currentDate
   }, (err,sessions)=>{
+
   	if(err){
 		return res.send({ 
 			success:false,

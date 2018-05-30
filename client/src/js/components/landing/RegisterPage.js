@@ -2,8 +2,8 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 
-import fbIcon from "./../../css/images/fb_icon.png";
-import googleIcon from "./../../css/images/google_icon.png";
+import fbIcon from "../../../css/images/fb_icon.png";
+import googleIcon from "../../../css/images/google_icon.png";
 
 
 @observer class Register extends Component {

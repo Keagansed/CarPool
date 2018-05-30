@@ -29,7 +29,6 @@ class routesStore {
 
             if(json.success)
             {
-                console.log(json.data)
                 this.routes = json.data;
             }
             else

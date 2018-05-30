@@ -22,8 +22,10 @@ import Trips from './homepage/tripsPage/Trips'
     //========= Fetch Session Token ===========
     componentWillMount(){
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
+        if(obj && obj.token)
+        {
             const { token } = obj;
+            
             fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
@@ -56,6 +58,17 @@ import Trips from './homepage/tripsPage/Trips'
                 return <Trips/>;
             }
         }
+        else
+        {
+            return(
+                <div>
+					<div className="spinner">
+						<div className="double-bounce1"></div>
+						<div className="double-bounce2"></div>
+					</div>
+				</div>
+            )
+        }
 
     }
 
@@ -79,7 +92,7 @@ import Trips from './homepage/tripsPage/Trips'
                     </div>
                 </div>
                 
-                <Navbar token={token}/>
+                <Navbar/>
             
             </div>
         );
