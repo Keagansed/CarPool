@@ -9,7 +9,7 @@ import fbIcon from "./../../css/images/fb_icon.png";
 import googleIcon from "./../../css/images/google_icon.png";
 
 
-class LandingPage extends Component{
+export class LandingPage extends Component{
     componentWillMount(){
         LoginStore.setRegistered(false);
     }
@@ -30,16 +30,16 @@ class LandingPage extends Component{
                     <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                        <Link to={`/Login`} className="btn w-75 text-center btn-primary text-secondary roundCorners font-weight-medium" id="btnLogin">
-                            <b>Login</b>
-                        </Link>
+                            <Link to={`/Login`} className="btn w-75 text-center btn-primary text-secondary roundCorners font-weight-medium" id="btnLogin">
+                                <b>Login</b>
+                            </Link>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12">
-                        <Link to={`/Register`} className="btn w-75 text-center btn-primary text-secondary roundCorners my-3 font-weight-medium" id="btnRegister">
-                            <b>Register</b>
-                        </Link>
+                            <Link to={`/Register`} className="btn w-75 text-center btn-primary text-secondary roundCorners my-3 font-weight-medium" id="btnRegister">
+                                <b>Register</b>
+                            </Link>
                         </div>
                     </div>
                     </div>

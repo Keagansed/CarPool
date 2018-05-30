@@ -1,15 +1,16 @@
 import React from 'react';
-import Login from '../js/components/Login';
+import Settings from '../js/components/Settings';
 import { shallow } from 'enzyme';
+import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store'
 
-describe('Login Component', () => {   //always gives errors
+describe('Settings Page Component', () => {
     const mockStore = configureStore()
     let store, container
 
     beforeEach(() => {
         store = mockStore();
-        container = shallow(<Login store={store} />)
+        container = shallow(<Settings store={store} />)
     });
 
     it('renders correctly', () => {
