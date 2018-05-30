@@ -97,7 +97,7 @@ class Vouching extends Component {
       const obj = getFromStorage('sessionKey');
       var vouchButton = (<span/>);
 
-      if(this.state._id != obj.token)
+      if(this.state._id !== obj.token)
       {
           vouchButton = (<button id="addReview" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#vouchModal">Vouch</button>);
       }

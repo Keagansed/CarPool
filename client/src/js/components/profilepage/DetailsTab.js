@@ -47,13 +47,38 @@ import React, { Component } from 'react';
 	newPassChange = (e)=>{
 		this.props.store.eNewPass = e.target.value;
     }
-    
+
     bEditSubmit = (e) =>
 	{
         e.preventDefault();
 
 		const { store } = this.props;
 		store.editSubmit();
+    }
+    
+    
+    uploadProfilePic = (event) =>
+    {
+		const { store } = this.props;
+
+        const formData = new FormData();
+        formData.append('id', store.token);
+        formData.append('file', event.target.files[0]);
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', '/api/account/uploadFile/profilePicture', true);
+        xhr.onreadystatechange = res =>
+        {            
+            if(xhr.readyState === XMLHttpRequest.DONE)
+            {
+                store.getProfile(store.token);
+                
+            }
+        }
+
+		store.editMode = false;
+        xhr.send(formData);  
 	}
 
 
@@ -135,6 +160,20 @@ import React, { Component } from 'react';
                             </p>
                         </div>
                     </div>
+
+                    <div className="row px-3 py-2 secondaryBorderBoddom bg-white">
+                        <div className="col-md-6 col-6 p-0">
+                            <h4 className="text-secondary m-0">
+                                <b>Change Picture</b>
+                            </h4>
+                        </div>
+                        <div className="col-md-6 col-6 p-0 textRight">
+                            <p className="text-secondary m-0">
+                                <input type="file" name="file" id="file" onChange={this.uploadProfilePic}/>
+                            </p>
+                        </div>
+                    </div>
+
                     <div className="row px-3 py-3 bg-white">
                         <div className="col-md-12 col-12 p-0 textCenter">
                             <input onClick={this.bEditSubmit} className="btn btnDetailUpdate" type="button" value="Update"/>

@@ -40,11 +40,24 @@ import VouchAverage from "../vouching/VouchAverage";
     {
         if(this.props.store.profileFound)
             return this.props.store.token;
+    }    
+
+    getVouchAverage = () =>
+    {
+        if(this.props.store.profileFound)
+        {
+            const vouchPath = "/vouching/" + this.getToken();
+
+            return <Link to={vouchPath}> <VouchAverage _id={this.getToken()}/></Link>
+        }
+        else{
+            return <p className="opacity-0 m-0">0</p>
+        }
     }
 
     render(){
 
-        const vouchPath = "/vouching/" + this.getToken();
+        
 
         return(
 
@@ -53,9 +66,6 @@ import VouchAverage from "../vouching/VouchAverage";
 
                     <div className="m-0 p-0 col-md-12" id="colHeaderImage">
                         <img src={this.getProfilePic()} id="profilePic" className="d-block mx-auto rounded-circle border-white profilePic" height="120" width="120" alt="" />
-                        <form encType="multipart/form-data" className="hidden">
-                            <input type="file" name="file" id="file" onChange={this.uploadProfilePic} />
-                        </form>
                     </div>
 
                     <div className="p-0 col-md-12">
@@ -70,30 +80,28 @@ import VouchAverage from "../vouching/VouchAverage";
                             <div className="col-4">
                                 <div className="row">
                                     <div className="col-12 text-center py-0">
-                                        <p className="text-primary m-0 text-center" id="pRatingAvg">
-                                            <Link to={vouchPath}>
-                                                <VouchAverage _id={this.getToken()}/>
-                                            </Link>
+                                        <p className="text-primary m-0 text-center font-weight-normal" id="pRatingAvg">
+                                            {this.getVouchAverage()}
                                         </p>
                                     </div>
                                     <div className="col-12 py-0">
-                                        <p className="text-white text-center m-0" id="pRatingLabel">Ratings</p>
+                                        <p className="text-white text-center m-0 font-weight-medium" id="pRatingLabel">Ratings</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="thin-border-sides col-4 col-md-4">
-                                <p className="text-primary text-center m-0" id="pNumTrips">
+                                <p className="text-primary text-center m-0  font-weight-normal" id="pNumTrips">
                                     <font color="#140d4f" className="text-primary">0</font>
                                 </p>
-                                <p className="text-white text-center m-0" id="pNumTripsLabel">Trips</p>
+                                <p className="text-white text-center m-0 font-weight-medium" id="pNumTripsLabel">Trips</p>
                             </div>
 
                             <div className="col-4 col-md-4">
-                                <p className="text-primary text-center m-0" id="pTrust">
+                                <p className="text-primary text-center m-0  font-weight-normal" id="pTrust">
                                     <font color="#140d4f" className="text-primary">{this.getSecLvl()}/5</font>
                                 </p>
-                                <p className="text-white text-center m-0" id="pTrustLabel">Trust</p>
+                                <p className="text-white text-center m-0 font-weight-medium" id="pTrustLabel">Trust</p>
                             </div>
 
                         </div>

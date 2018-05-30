@@ -2,7 +2,6 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
 import  "../../css/components/Spinner.css"
-import "../utils/fileQuery.js";
 
 import DetailsTab from './profilepage/DetailsTab';
 import { getFromStorage } from '../utils/localStorage.js';
@@ -52,28 +51,6 @@ import VouchesTab from './profilepage/VouchesTab';
 		LoginStore.logOut();
 	}
 
-	uploadProfilePic = (event) =>
-    {
-		const { store } = this.props;
-
-        const formData = new FormData();
-        formData.append('id', store.token);
-        formData.append('file', event.target.files[0]);
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.open('POST', '/api/account/uploadFile/profilePicture', true);
-        xhr.onreadystatechange = res =>
-        {            
-            if(xhr.readyState === XMLHttpRequest.DONE)
-            {
-                store.getProfile(store.token);
-            }
-        }
-
-		store.editMode = false;
-        xhr.send(formData);  
-	}
 	
 	setTab = () =>
 	{

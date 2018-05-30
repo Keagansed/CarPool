@@ -7,7 +7,7 @@ import {
 export const submitVouch = (rating) =>
 {
     const obj = getFromStorage('sessionKey');
-    if(obj.token != document.getElementById("vouchModal").getAttribute("data-id"))
+    if(obj.token !== document.getElementById("vouchModal").getAttribute("data-id"))
     {
         fetch('/api/account/submitVouch',{
             method:'POST',

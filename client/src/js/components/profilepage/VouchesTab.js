@@ -41,7 +41,7 @@ import infoIcon from "./../../../css/images/info-icon.png";
     render(){
 
         return(
-            <div className="tab-pane show active" id="tabtwo" role="tabpanel">
+            <div className="tab-pane show" id="tabtwo" role="tabpanel">
                 <div className="list-group bg-info">
                     <a className="list-group-item list-group-item-action flex-column align-items-start bg-info text-white m-0 py-1">
                         <div className="row p-0">
