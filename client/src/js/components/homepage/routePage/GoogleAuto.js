@@ -23,7 +23,6 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
                 RoutesStore.setOrigin(latLng);
             }else{
                 RoutesStore.setdestination(latLng);
-                this.props.finishSelect;
             }
             // alert(RoutesStore.origin.lat);
         })
