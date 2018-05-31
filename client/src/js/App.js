@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import LandingPage from "./components/landing/LandingPage";
-import LoginPage from "./components/landing/LoginPage";
 import HomePage from "./components/HomePage";
 import HomePageStore from './stores/HomePageStore';
+import LandingPage from "./components/landing/LandingPage";
+import LoginPage from "./components/landing/LoginPage";
 import LoginStore from "./stores/LoginStore";
 import NewRoute from "./components/homepage/routePage/NewRoute";
-import RegisterPage from "./components/landing/RegisterPage";
 import ProfilePage from './components/ProfilePage';
 import ProfileStore from "./stores/ProfileStore";
+import RegisterPage from "./components/landing/RegisterPage";
 import SettingsPage from "./components/Settings";
 
 import '../css/font.css';

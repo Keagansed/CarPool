@@ -34,7 +34,7 @@ import VouchesTab from './profilepage/VouchesTab';
 		{
 			const { token } = obj;
 
-            fetch('/api/account/verify?token='+token)
+			fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
                 if(json.success){
@@ -48,7 +48,6 @@ import VouchesTab from './profilepage/VouchesTab';
 	{
 		LoginStore.logOut();
 	}
-
 	
 	setTab = () =>
 	{
@@ -56,17 +55,18 @@ import VouchesTab from './profilepage/VouchesTab';
 
 		if(store.profileFound === true)
 		{
-			if(store.tripsTab === true)
-			{
+			if(store.tripsTab === true){
+
 				return <TripsTab store={store}/>;
-			}
-			else if(store.vouchesTab === true)
-			{
+
+			}else if(store.vouchesTab === true){
+
 				return <VouchesTab store={store}/>;
-			}
-			else if(store.detailsTab === true)
-			{
+
+			}else if(store.detailsTab === true){
+
 				return <DetailsTab store={store}/>;
+
 			}
 		}
 		else
