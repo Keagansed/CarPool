@@ -46,6 +46,7 @@
     background-color: #eed;
     border-radius: 3px;
     opacity: 1;
+    position:relative;
 }
 
 .myMessage {
@@ -60,6 +61,7 @@
     background-color: #a8ee88;
     border-radius: 3px;
     opacity: 1;
+    position:relative;
 }
 
 @keyframes fadeIn { from { opacity:0; } to { opacity:0.8; } }
@@ -131,4 +133,20 @@
     background-color: #E4F1FE;
     color: #111;
     transition: 0.2s ease-in;
+}
+
+.dateTime{
+    position:absolute;
+    bottom:0;
+    right:0;
+}
+
+.box {
+    position:relative;
+}
+
+.chatList{
+    position: relative;
+    font-size: 50px;
+    width: 100%;
 }

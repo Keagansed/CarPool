@@ -12,6 +12,7 @@ import Profile from './components/Profile';
 import ProfilePage from './components/ProfilePage';
 import ProfileStore from "./stores/ProfileStore";
 import Messaging from './components/Messaging';
+import MessageGroups from './components/MessageGroups';
 
 
 import '../css/font.css';
@@ -34,6 +35,7 @@ class App extends Component {
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 					<Route path={"/newRoute"} exact component={NewRoute}/>
+					<Route path={"/MessageGroups"} exact component={MessageGroups}/>
 					<Route path={"/Messaging/:chat"} exact render={(props) => <Messaging {...props} />}/>
 
 				</Switch>
