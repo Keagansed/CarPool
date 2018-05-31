@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import LoginStore from '../stores/LoginStore'
+import LoginStore from './../stores/LoginStore';
 import logo  from "./../../css/images/logo.png";
 import fbIcon from "./../../css/images/fb_icon.png";
 import googleIcon from "./../../css/images/google_icon.png";

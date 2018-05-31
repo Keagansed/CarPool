@@ -1,0 +1,13 @@
+#inputEmail, #inputPassword{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+}

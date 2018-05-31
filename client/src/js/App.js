@@ -5,7 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css'; 
 import './../css/AllPages.css'; 
 
-import LandingPage from "./components/FinalLandingPage.js";
+import LoginStore from './stores/LoginStore';
+
+import LandingPage from "./components/landing/LandingPage.js";
+import LoginPage from "./components/login/LoginPage.js";
+import RegisterPage from "./components/register/RegisterPage.js";
 
 class App extends Component {
 
@@ -14,9 +18,9 @@ class App extends Component {
 			<BrowserRouter>
 				<Switch>
 					<Route path={"/"} exact component={LandingPage}/>
-					{/* <Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
+					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
-					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
+					{/* <Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					<Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>

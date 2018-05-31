@@ -1,3 +1,5 @@
+/* ============================================================================ */
+/*Body & html elements */
 html, body{
     height:100%; /* important to vertically align the container */
     margin:0;
@@ -5,16 +7,73 @@ html, body{
     font-family: Quicksand;
 }
 
+/* ============================================================================ */
+/*Alignment */
 .vertical-center {
     min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
     min-height: 100vh; /* These two lines are counted as one :-)       */
-  
+
     display: flex;
     align-items: center;
-  }
+}
 
-  .btn-primary{
-      background-color: #6FEDB7;
-      color: #140D4F;
-      font-weight: bold;
-  }
+/* ============================================================================ */
+/*Margins*/
+.mbottom-1rem{
+    margin-bottom: 1rem;
+}
+.mbottom-2rem{
+    margin-bottom: 2rem;
+}
+
+/* ============================================================================ */
+/*Font weights*/
+.fw-bold{
+    font-weight: bold;
+}
+
+.fw-100{
+    font-weight: 100;
+}
+
+/* ============================================================================ */
+/*Text colours*/
+.txt-purple{
+    color: #140D4F;
+}
+.txt-white{
+    color: white !important;
+}
+
+/* ============================================================================ */
+/*Background colours*/
+.bg-aqua{
+    background-color: #6FEDB7;
+}
+.bg-purple{
+    background-color: #140D4F;
+}
+.bg-trans{
+    background-color: rgba(0,0,0,0);
+}
+/* ============================================================================ */
+/*Widths*/
+.width-15rem{
+    width: 15rem;
+}
+
+/* ============================================================================ */
+/*Borders*/
+.bord-05rem-aqua{
+    border: 0.05rem solid #6FEDB7;
+}
+
+/* ============================================================================ */
+
+/* ============================================================================ */
+/*Border radiuses*/
+.brad-2rem{
+    border-radius: 2rem;
+}
+
+/* ============================================================================ */
