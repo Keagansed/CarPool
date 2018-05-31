@@ -1,11 +1,14 @@
 import React from 'react';
 import LandingPage from '../js/components/LandingPage';
+import { MemoryRouter } from 'react-router-dom'
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 describe('Landing Page Component', () => {
-    it ('capturing snapshot', () => {
-        const renderedValue = renderer.create(<LandingPage />).toJSON()
+
+    // Render within a <MemoryRouter> component to mitigate "<Link> outside of <Router>" warnings
+    it ('captures snapshot', () => {
+        const renderedValue = renderer.create(<MemoryRouter><LandingPage /></MemoryRouter>).toJSON()
         expect(renderedValue).toMatchSnapshot();
     });
 

@@ -1,10 +1,21 @@
 import React from 'react';
 import Search from '../js/components/Search';
-let renderer = require('react-test-renderer');
+import { shallow } from 'enzyme';
+import renderer from 'react-test-renderer';
 
 describe('Search Component', () => {
-  it('renders correctly', () => {
-    const tree = renderer.create(<Search />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
+    let container;
+
+    beforeEach(() => {
+      container = shallow(<Search />);
+    });
+
+    it('captures snapshot', () => {
+      const renderedValue = renderer.create(<Search />).toJSON();
+      expect(renderedValue).toMatchSnapshot();
+    });
+    
+    it ('renders correctly', () => {
+      expect(container.length).toEqual(1);
+    });
 });

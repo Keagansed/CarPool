@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Page Component captures snapshot 1`] = `
+<div
+  className="HomePage"
+>
+  <div
+    className="p-0 page-content"
+  >
+    <div
+      className="container-fluid m-0"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12 p-0"
+        >
+          <ul
+            className="nav nav-tabs bg-primary fixed"
+          >
+            <li
+              className="nav-item w-25 bg-info text-center px-0"
+            >
+              <a
+                className="nav-link bg-info active"
+                href=""
+                onClick={[Function]}
+              >
+                <b>
+                  <b>
+                    Routes
+                  </b>
+                </b>
+              </a>
+            </li>
+            <li
+              className="nav-item w-25 text-center bg-info"
+            >
+              <a
+                className="nav-link bg-info "
+                href=""
+                onClick={[Function]}
+              >
+                <b>
+                  <b>
+                    Carpools
+                  </b>
+                </b>
+              </a>
+            </li>
+            <li
+              className="nav-item w-25 text-center bg-info"
+            >
+              <a
+                className="nav-link bg-info "
+                href=""
+                onClick={[Function]}
+              >
+                <b>
+                  <b>
+                    Trips
+                  </b>
+                </b>
+              </a>
+            </li>
+            <li
+              className="nav-item w-25 bg-info text-center flex-center no-active"
+            >
+              <div
+                className="nav-link p-0 bg-info no-active"
+                href=""
+              >
+                <a
+                  className="text-secondary"
+                  href="/newRoute"
+                  onClick={[Function]}
+                >
+                  <i
+                    className="fa fa-plus fa-lg fa-fw d-inline nav-item-circle"
+                    onClick={undefined}
+                  />
+                </a>
+              </div>
+            </li>
+          </ul>
+          <div
+            className="tab-content"
+          >
+            <div
+              className="tab-pane show active"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="navbar-component navbarBottom"
+  >
+    <div
+      className="container-fluid p-0"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12 "
+        >
+          <ul
+            className="nav nav-pills navbarBottom text-center"
+          >
+            <li
+              className="nav-item ml-auto w-25"
+            >
+              <a
+                className="nav-link no-hover"
+                href="/Setting"
+                onClick={[Function]}
+              >
+                <i
+                  className="fa fa-cog fa-2x text-secondary d-inline"
+                />
+                 
+              </a>
+            </li>
+            <li
+              className="nav-item w-25"
+            >
+              <a
+                className="nav-link no-hover"
+                href="/HomePage"
+                onClick={[Function]}
+              >
+                <i
+                  className="fa fa-fw fa-car fa-2x d-inline text-secondary"
+                />
+              </a>
+            </li>
+            <li
+              className="nav-item mr-auto text-secondary w-25"
+            >
+              <a
+                className="nav-link no-hover"
+                href="/ProfilePage/undefined"
+                onClick={[Function]}
+              >
+                <i
+                  className="fa fa-fw fa-2x fa-user d-inline text-secondary"
+                />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
