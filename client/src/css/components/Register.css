@@ -1,9 +1,7 @@
 #inputFirstName, 
 #inputLastName,
 #inputID,
-#inputEmail,
-#inputPassword,
-#inputConfirmPassword
+#inputEmail
 {
     background-color: rgba(0,0,0,0) !important;
     color: white;
