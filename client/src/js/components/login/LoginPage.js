@@ -1,12 +1,12 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 import "./../../../css/components/Login.css"
 
 import logo  from "./../../../css/images/logo.png";
 import { getFromStorage } from './../../utils/localStorage.js';
+import Modal from './modal';
 
 @observer class Login extends Component {
     constructor(props){
@@ -50,6 +50,12 @@ import { getFromStorage } from './../../utils/localStorage.js';
         this.props.store.authenticate(this.state.email, this.state.password);
     }
 
+    openModal = event =>{
+        event.preventDefault();
+        console.log("link clicked");
+        this.modal.open();
+    }
+
     render() {
 
         const { loggedIn } = this.props.store;
@@ -75,11 +81,12 @@ import { getFromStorage } from './../../utils/localStorage.js';
                             </div>
                         </form>
                         <div className="row">
-                            <Link to={`/Login`} className="mx-auto txt-white fw-100" id="linkForgotPassword">
+                            <a data-toggle="modal" data-target="#myModal" className="mx-auto txt-white fw-100" id="linkForgotPassword">
                                 Forgot Password?
-                            </Link>
+                            </a>
                         </div>
                     </div>
+                    <Modal />
                 </div>
             );
         }else{

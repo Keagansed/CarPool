@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 
-import Carpools from './homepage/carpoolPage/Carpools'
+import Carpools from './carpoolPage/Carpools';
 import { getFromStorage } from '../utils/localStorage.js';
-import Navbar from './Navbar'
-import NavTabs from './homepage/NavTabs'
-import Routes from './homepage/routePage/Routes'
-import RoutesStore from '../stores/RoutesStore'
-import Trips from './homepage/tripsPage/Trips'
+import Navbar from './Navbar';
+import NavTabs from './NavTabs';
+import Routes from './routePage/Routes';
+import RoutesStore from './../../stores/RoutesStore';
+import Trips from './homepage/tripsPage/Trips';
 
 @observer class HomePage extends Component{
 
