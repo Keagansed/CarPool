@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 
-import "./../../../css/components/Home.css"
-
 import Carpools from './carpoolPage/Carpools';
 import { getFromStorage } from './../../utils/localStorage.js';
-import Navbar from './../Navbar';
+import Navbar from './../navbar/Navbar';
 import NavTabs from './NavTabs';
 import Routes from './routePage/Routes';
 import RoutesStore from './../../stores/RoutesStore';
@@ -68,6 +66,7 @@ import Trips from './tripsPage/Trips';
             <div className="size-100 bg-purple">
                     <NavTabs store={this.props.store} token={token}/>
                     {this.setTab()}
+                    <Navbar token={token}/>
             </div>
         );
     }

@@ -2,8 +2,6 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import "./../../../css/components/Login.css"
-
 import logo  from "./../../../css/images/logo.png";
 import { getFromStorage } from './../../utils/localStorage.js';
 import Modal from './modal';

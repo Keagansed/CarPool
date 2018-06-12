@@ -1,9 +1,9 @@
 /* ============================================================================ */
 /*Body & html elements */
 html, body{
-    height:100%; /* important to vertically align the container */
-    margin:0;
-    padding:0;
+    height:100vh; /* important to vertically align the container */
+    margin:0 !important;
+    padding:0 !important;
     font-family: Quicksand;
 }
 
@@ -15,6 +15,12 @@ html, body{
 
     display: flex;
     align-items: center;
+}
+.vertical-right{
+    text-align: right;
+}
+.txt-center{
+    text-align: center;
 }
 
 /* ============================================================================ */
@@ -28,6 +34,15 @@ html, body{
 /*font size */
 .font-20px {
     font-size: 20px;
+}
+.txt-50px{
+    font-size: 50px;
+}
+.txt-40px{
+    font-size: 40px;
+}
+.txt-30px{
+    font-size: 30px;
 }
 
 /* ============================================================================ */
@@ -80,9 +95,18 @@ html, body{
 }
 
 /* ============================================================================ */
+/*Padding*/
+.pad-10px{
+    padding: 10px;
+}
+
+/* ============================================================================ */
 /*Borders*/
 .bord-05rem-aqua{
     border: 0.05rem solid #6FEDB7;
+}
+.bordbot-2px-white{
+    border-bottom: 2px solid white;
 }
 
 /* ============================================================================ */
@@ -99,3 +123,45 @@ html, body{
 button.btnTab.active{
     border-bottom: 5px solid #140D4F;
 }
+
+#inputEmail, #inputPassword{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+
+/* ============================================================================ */
+/*LoginPage*/
+/* Forgot password modal */
+#forgotPasswordModal{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,100);
+}
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ============================================================================ */
+/*RegisterPage*/
+#inputFirstName, 
+#inputLastName,
+#inputID,
+#inputEmail,
+#inputConfirmPassword
+{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+} 

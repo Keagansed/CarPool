@@ -3,16 +3,28 @@ import React, { Component } from 'react';
 class Route  extends Component {
     render(){
         return(
-            <a href="" className="list-group-item list-group-item-action flex-column align-items-start text-white m-1">
-                <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-1">{this.props.store.routeName}</h5>
+            <div className="container-fluid bg-purple bordbot-2px-white">
+                <div className="pad-10px">
+                    <div className="row txt-white">
+                        <div className="col-8">
+                            <div className="col-12">
+                                <h5>{this.props.store.routeName}</h5>
+                            </div>
+                            <div className="col-12">
+                            <h6>Mon Tue Wed Thu Fri</h6>
+                            </div>
+                        </div>
+                        <div className="col-4 vertical-right">
+                            <div className="col-12">
+                                <h4>➦</h4>
+                            </div>
+                            <div className="col-12">
+                                <h6>{this.props.store.time}</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="d-flex w-100 justify-content-between">
-                    <small className="text-white">{this.props.store.time}</small>
-                    <small className="text-white">{this.props.store.startLocation + " to " + this.props.store.endLocation}</small>
-                    <small className="text-white">{Math.floor(Math.random() * (40 - 5) + 5) + "km"}</small>
-                </div>
-            </a>
+            </div>
         );
     }
 }
