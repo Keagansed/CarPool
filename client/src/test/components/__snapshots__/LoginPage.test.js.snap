@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page Component captures snapshot 1`] = `
+<div
+  className="text-center"
+>
+  <div
+    className="container"
+  >
+    <div
+      className="row bigTopMargin"
+    >
+      <div
+        className="col-md-12"
+      >
+        <form
+          className=""
+        >
+          <div
+            className="form-group"
+          >
+            <input
+              className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
+              id="txtEmail"
+              name="txtEmail"
+              onChange={[Function]}
+              placeholder="Email"
+              required="required"
+              type="email"
+            />
+          </div>
+          <div
+            className="form-group"
+          >
+            <input
+              className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
+              id="txtPassword"
+              name="txtPassword"
+              onChange={[Function]}
+              placeholder="Password"
+              required="required"
+              type="password"
+            />
+          </div>
+          <p
+            className="my-2"
+            id="dividerOR"
+          >
+            <strike>
+                             
+            </strike>
+               
+            <b
+              className="small"
+            >
+              Forgot Password?
+            </b>
+              
+            <strike>
+                             
+            </strike>
+          </p>
+          <button
+            className="btn btn-primary roundCorners w-75 text-secondary my-3 font-weight-medium"
+            onClick={[Function]}
+            type="submit"
+          >
+            <b>
+              Login
+            </b>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    className="text-center"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <p
+            id="dividerOR"
+          >
+            <b
+              className="small font-weight-medium"
+            >
+              OR
+            </b>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="p-0"
+  >
+    <div
+      className="text-center container"
+    >
+      <div
+        className="row text-center"
+      >
+        <div
+          className="col-2-pr-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto"
+        >
+          <img
+            alt="fbLogin"
+            className="img-fluid d-block mx-auto"
+            id="btnFacebookLogin"
+            src="fb_icon.png"
+          />
+        </div>
+        <div
+          className="col-2-pl-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto"
+        >
+          <img
+            alt="googleLogin"
+            className="img-fluid d-block mx-auto"
+            id="btnGoogleLogin"
+            src="google_icon.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

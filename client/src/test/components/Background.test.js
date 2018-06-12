@@ -1,6 +1,6 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
-import Background from '../js/components/Background';
+import Background from '../../js/components/Background';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 

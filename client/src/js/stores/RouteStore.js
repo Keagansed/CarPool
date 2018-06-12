@@ -13,7 +13,7 @@ class RouteStore {
         this.routeName = routeName;
         this.startLocation = start;
         this.endLocation = end;
-        this.setDays = days;
+        this.days = days;
         this.time = time;
         this.repeat = repeat;
     }
@@ -31,7 +31,7 @@ class RouteStore {
     }
 
     @action setDays = (days) => {
-        this.setDays = days;
+        this.days = days;
     }
 
     @action setTime = (time) => {

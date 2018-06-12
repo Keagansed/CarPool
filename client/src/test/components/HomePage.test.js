@@ -1,22 +1,23 @@
 import React from 'react';
-import Settings from '../js/components/Settings';
+import HomePage from '../../js/components/HomePage';
 import { shallow } from 'enzyme';
-import renderer from 'react-test-renderer';
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
+import renderer from 'react-test-renderer';
 
-describe('Settings Page Component', () => {
+
+describe('Home Page Component', () => {
     const mockStore = configureStore();
     let store, container;
-    const initialState = {token:"123FuckYou"};
+    const initialState = {token:"123Foo"};
 
     beforeEach(() => {
         store = mockStore(initialState);
-        container = shallow(<MemoryRouter><Settings store={store} /></MemoryRouter>);
+        container = shallow(<MemoryRouter><HomePage store={store} /></MemoryRouter>);
     });
 
     it('captures snapshot', () => {
-        const renderedValue = renderer.create(<MemoryRouter><Settings store={store} /></MemoryRouter>).toJSON();
+        const renderedValue = renderer.create(<MemoryRouter><HomePage store={store} /></MemoryRouter>).toJSON();
         expect(renderedValue).toMatchSnapshot();
     });
 

@@ -1,20 +1,20 @@
 import React from 'react';
-import Login from '../js/components/Login';
+import LoginPage from '../../js/components/LoginPage';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store'
 import renderer from 'react-test-renderer';
 
-describe('Login Component', () => {   //always gives errors
+describe('Login Page Component', () => {   //always gives errors
     const mockStore = configureStore()
     let store, container;
 
     beforeEach(() => {
         store = mockStore();
-        container = shallow(<Login store={store} />)
+        container = shallow(<LoginPage store={store} />)
     });
 
     it('captures snapshot', () => {
-        const renderedValue = renderer.create(<Login store={store} />).toJSON();
+        const renderedValue = renderer.create(<LoginPage store={store} />).toJSON();
         expect(renderedValue).toMatchSnapshot();
     });
 

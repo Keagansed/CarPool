@@ -1,5 +1,5 @@
 import React from 'react';
-import Search from '../js/components/Search';
+import Search from '../../js/components/Search';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
