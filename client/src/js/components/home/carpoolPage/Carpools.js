@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import Carpool from './Carpool'
 
 class Carpools  extends Component {
     render(){
         return(
             <div>
-                <h1 className="text-secondary p-2 font-weight-bold">Carpools</h1>
+                {/*Just an example... */}
+                <Carpool />                                                            
             </div>
         );
     }
