@@ -48,15 +48,15 @@ import React, { Component } from 'react';
 
     render(){
         return(
-            <div className="fixed-top container-fluid">
-                <div className="row font-20px">
-                    <button className={"btnTab col-4 btn bg-aqua txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} onClick={this.handleRouteToggle}>
+            <div className="fixed-top container-fluid height-50px bg-aqua">
+                <div className="row font-20px height-100p">
+                    <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} onClick={this.handleRouteToggle}>
                         Routes
                     </button>
-                    <button className={"btnTab col-4 btn bg-aqua txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} onClick={this.handleCarPoolToggle}>
+                    <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} onClick={this.handleCarPoolToggle}>
                         Carpools
                     </button>
-                    <button className={"btnTab col-4 btn bg-aqua txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} onClick={this.handleTripToggle}>
+                    <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} onClick={this.handleTripToggle}>
                         Trips
                     </button>
                 </div>

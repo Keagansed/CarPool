@@ -19,7 +19,7 @@ class Trip  extends Component {
                                 <h4><i className="fa fa-chevron-circle-right"></i></h4>
                             </div>
                             <div className="col-12 txt-10px txt-gold">
-                                <i className="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                                <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> 
                             </div>
                         </div>
                     </div>

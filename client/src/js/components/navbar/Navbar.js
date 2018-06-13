@@ -5,7 +5,7 @@ class Navbar extends Component{
 
     render(){
         return(
-            <div className="fixed-bottom container-fluid pad-10px bg-aqua">
+            <div className="height-50px fixed-bottom container-fluid pad-10px bg-aqua">
                 <div className="row">
                     <div className="col-4 txt-center">
                         <Link to={`/HomePage`}>
@@ -18,7 +18,10 @@ class Navbar extends Component{
                         </Link>
                     </div>
                     <div className="col-4 txt-center">
-                        <Link to={`/HomePage`}>
+                        <Link to={{
+                        pathname: "/ProfilePage/" + this.props.token,
+                        state: { token: this.props.token }
+                        }}>
                             <i className="fa fa-user txt-purple txt-30px"></i>
                         </Link>
                     </div>

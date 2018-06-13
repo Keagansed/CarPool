@@ -66,7 +66,7 @@ import Trips from './tripsPage/Trips';
             <div className="size-100 bg-purple">
                     <NavTabs store={this.props.store} token={token}/>
                     {/* Padding is there for top and bottom navs*/}
-                    <div className="padtop-48px padbot-53px">
+                    <div className="padtop-50px padbot-50px">
                         {this.setTab()}
                     </div>
                     <Navbar token={token}/>

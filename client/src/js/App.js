@@ -7,11 +7,13 @@ import './../css/AllPages.css';
 
 import LoginStore from './stores/LoginStore';
 import HomePageStore from './stores/HomePageStore';
+import ProfileStore from './stores/ProfileStore';
 
 import LandingPage from "./components/landing/LandingPage.js";
 import LoginPage from "./components/login/LoginPage.js";
 import RegisterPage from "./components/register/RegisterPage.js";
 import HomePage from "./components/home/HomePage.js";
+import ProfilePage from "./components/profile/ProfilePage.js";
 
 class App extends Component {
 
@@ -23,8 +25,8 @@ class App extends Component {
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
+					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
-					<Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					<Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/>
