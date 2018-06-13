@@ -16,7 +16,7 @@ class Carpool  extends Component {
                         </div>
                         <div className="col-4 vertical-right">
                             <div className="col-12">
-                                <h4>➦</h4>
+                                <h4><i className="fa fa-chevron-circle-right"></i></h4>
                             </div>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import Carpool from './Carpool'
 class Carpools  extends Component {
     render(){
         return(
-            <div>
+            <div className="scroll-vert">
                 {/*Just an example... */}
                 <Carpool />                                                            
             </div>

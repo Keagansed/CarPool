@@ -32,6 +32,9 @@ html, body{
 
 /* ============================================================================ */
 /*font size */
+.txt-10px{
+    font-size: 10px;
+}
 .font-20px {
     font-size: 20px;
 }
@@ -47,11 +50,20 @@ html, body{
 
 /* ============================================================================ */
 /*Margins*/
+.mbottom-05rem{
+    margin-bottom: 0.5rem;
+}
 .mbottom-1rem{
     margin-bottom: 1rem;
 }
 .mbottom-2rem{
     margin-bottom: 2rem;
+}
+.mtop-48px{
+    margin-top: 48px;
+}
+.mbottom-53px{
+    margin-bottom: 53px;
 }
 
 /* ============================================================================ */
@@ -72,6 +84,9 @@ html, body{
 .txt-white{
     color: white !important;
 }
+.txt-gold{
+    color: gold !important;
+}
 
 /* ============================================================================ */
 /*Background colours*/
@@ -83,6 +98,9 @@ html, body{
 }
 .bg-trans{
     background-color: rgba(0,0,0,0);
+}
+.bg-whitelight{
+    background-color: rgba(255, 255, 255, 0.349);
 }
 
 /* ============================================================================ */
@@ -98,6 +116,18 @@ html, body{
 /*Padding*/
 .pad-10px{
     padding: 10px;
+}
+.padleft-10px{
+    padding-left: 10px;
+}
+.padtop-10px{
+    padding-top: 10px;
+}
+.padtop-48px{
+    padding-top: 48px;
+}
+.padbot-53px{
+    padding-bottom: 53px;
 }
 
 /* ============================================================================ */
@@ -116,6 +146,14 @@ html, body{
 }
 .brad-0{
     border-radius: 0px;
+}
+
+/* ============================================================================ */
+/*Scroll bars*/
+.scroll-vert{
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
 }
 
 /* ============================================================================ */

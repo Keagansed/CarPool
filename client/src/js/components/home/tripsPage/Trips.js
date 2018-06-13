@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
+import Trip from './Trip';
 
 class Trips  extends Component {
     render(){
         return(
-            <div>
-                <h1 className="text-secondary p-2 font-weight-bold">Trips</h1>           
+            <div className="scroll-vert">
+                <div className="pad-10px bg-whitelight txt-white">
+                        <h4>Upcoming Trips</h4>
+                </div>
+                {/*Upcoming trips will go here*/}
+                {/*These are just static trips for example*/}
+                <Trip />
+                <Trip />
+                <div className="pad-10px bg-whitelight txt-white">
+                        <h4>Past Trips</h4>
+                </div>
+                {/*Upcoming trips will go here*/}
+                {/*These are just static trips for example*/}
+                <Trip />
+                <Trip />
+                <Trip />
+                <Trip />
+                <Trip />
+                <Trip />                                                                   
             </div>
         );
     }

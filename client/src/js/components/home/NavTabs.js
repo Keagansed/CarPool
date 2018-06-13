@@ -48,7 +48,7 @@ import React, { Component } from 'react';
 
     render(){
         return(
-            <div className="container-fluid">
+            <div className="fixed-top container-fluid">
                 <div className="row font-20px">
                     <button className={"btnTab col-4 btn bg-aqua txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} onClick={this.handleRouteToggle}>
                         Routes

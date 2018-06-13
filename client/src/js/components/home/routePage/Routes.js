@@ -33,7 +33,7 @@ import RouteStore from '../../../stores/RouteStore';
         // )
 
         return(
-            <div>
+            <div className="scroll-vert">
                 {/*What will come here -> {Routes} */}
                 
                 {/*Just an example... */}

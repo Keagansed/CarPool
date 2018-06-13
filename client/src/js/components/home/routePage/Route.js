@@ -16,7 +16,7 @@ class Route  extends Component {
                         </div>
                         <div className="col-4 vertical-right">
                             <div className="col-12">
-                                <h4>➦</h4>
+                                <h4><i className="fa fa-chevron-circle-right"></i></h4>
                             </div>
                             <div className="col-12">
                                 <h6>{this.props.store.time}</h6>
