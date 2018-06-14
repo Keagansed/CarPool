@@ -35,6 +35,9 @@ html, body{
 .txt-10px{
     font-size: 10px;
 }
+.txt-15px{
+    font-size: 15px;
+}
 .font-20px {
     font-size: 20px;
 }
@@ -52,6 +55,9 @@ html, body{
 /*Margins*/
 .mbottom-05rem{
     margin-bottom: 0.5rem;
+}
+.mbottom-0{
+    margin-bottom: 0;
 }
 .mbottom-1rem{
     margin-bottom: 1rem;
@@ -117,14 +123,41 @@ html, body{
 .height-100p{
     height: 100%;
 }
+.height-40px{
+    height: 40px;
+}
 .height-50px{
     height: 50px;
+}
+.height-60px{
+    height: 60px;
+}
+.height-150px{
+    height: 150px;
 }
 
 /* ============================================================================ */
 /*Padding*/
+.pad-5px{
+    padding: 5px;
+}
 .pad-10px{
     padding: 10px;
+}
+.padtop-20px{
+    padding-top: 20px;
+}
+.padtop-300px{
+    padding-top: 300px;
+}
+.padtop-15px{
+    padding-top: 15px;
+}
+.padtop-10px{
+    padding-top: 10px;
+}
+.padbot-10px{
+    padding-bottom: 10px;
 }
 .padleft-10px{
     padding-left: 10px;
@@ -138,6 +171,10 @@ html, body{
 .padbot-50px{
     padding-bottom: 50px;
 }
+.padver-10px{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
 /* ============================================================================ */
 /*Borders*/
@@ -146,6 +183,27 @@ html, body{
 }
 .bordbot-2px-white{
     border-bottom: 2px solid white;
+}
+.bord-2px-purple{
+    border: 2px solid #140D4F;
+}
+.bordbot-2px-purple{
+    border-bottom: 2px solid #140D4F;
+}
+.bord-2px-white{
+    border: 2px solid white;
+}
+.bord-5px-white{
+    border: 5px solid white;
+}
+.bord-2px-aqua{
+    border: 2px solid #6FEDB7;
+}
+.bordleft-1px-white{
+    border-left: 1px solid white;
+}
+.bordright-1px-white{
+    border-right: 1px solid white;
 }
 
 /* ============================================================================ */
@@ -166,20 +224,23 @@ html, body{
 }
 
 /* ============================================================================ */
-/*HomePage*/
+/*tab buttons*/
 button.btnTab.active{
     border-bottom: 5px solid #140D4F;
 }
+button.btnTabWhiteActive.active{
+    border-bottom: 5px solid white;
+}
 
+
+/* ============================================================================ */
+/*LoginPage*/
+/* Forgot password modal */
 #inputEmail, #inputPassword{
     background-color: rgba(0,0,0,0) !important;
     color: white;
     border: 0.05rem solid #6FEDB7;
 }
-
-/* ============================================================================ */
-/*LoginPage*/
-/* Forgot password modal */
 #forgotPasswordModal{
     width: 100%;
     height: 100%;

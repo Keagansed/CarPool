@@ -4,8 +4,7 @@ class Trip  extends Component {
     render(){
         return(
             <div className="container-fluid bg-purple bordbot-2px-white">
-                <div className="pad-10px">
-                    <div className="row txt-white">
+                    <div className="row txt-white padver-10px">
                         <div className="col-8">
                             <div className="col-12">
                                 <h5>Home to Work</h5>
@@ -23,7 +22,6 @@ class Trip  extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         );
     }

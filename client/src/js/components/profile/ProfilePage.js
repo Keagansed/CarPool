@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom';
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
 import "./../../utils/fileQuery.js";
 import LoginStore from './../../stores/LoginStore';
-import Search from './../Search.js';
+import Vouches from './vouchesPage/Vouches';
+import Trusts from './trustPage/Trusts';
 import VouchAverage from "./../vouching/VouchAverage";
-import VouchList from './../vouching/VouchList';
-import Navbar from './../navbar/Navbar'
+import Navbar from './../navbar/Navbar';
+import NavTabs from './NavTabs';
 import { getFromStorage } from './../../utils/localStorage.js';
 
 @observer class ProfilePage extends Component {
@@ -16,8 +16,7 @@ import { getFromStorage } from './../../utils/localStorage.js';
 		super();
 		//========= Properties ===========
 		this.state = {
-			_id:"",
-			editButton: "button",
+			_id:""
 		};
 	}
 	
@@ -135,22 +134,67 @@ import { getFromStorage } from './../../utils/localStorage.js';
 
 		store.editMode = false;
         xhr.send(formData);  
+	}
+	
+	setTab = () => {
+        const { store } = this.props;
+
+        if(!this.state.loading)
+        {
+            if(store.vouchTab === true)
+            {
+                return <Vouches/>;            
+            }
+            else if(store.trustTab === true)
+            {
+                return <Trusts/>;
+            }
+        }
+
     }
 	
 	//render function
 	render() {
-		const { firstName, lastName, profilePic, secLvl, email, idNum } = this.props.store;
+		const { firstName, lastName, profilePic, secLvl } = this.props.store;
 		const profilePicture = "./../api/account/getImage?filename=" + profilePic;
-		const vouchPath = "/vouching/" + this.state._id;
 
 		if (this.props.store.profileFound)
 		{
 			const token = this.state._id;
 			return(
-				<div className="size-100 bg-purple">
-                    <div className="padbot-50px">
-						Profile page will come here
-                    </div>
+				<div className="size-100 bg-white">
+					<div className="container-fluid fixed-top">
+						<div className="row height-150px bg-purple">
+							<img src={profilePicture} id="profilePic" className="mx-auto my-auto rounded-circle bord-5px-white" height="120" width="120" alt="s" />
+						</div>
+						<div className="row height-40px bg-purple">
+							<h4 className="mx-auto my-auto txt-white mbottom-0">{firstName} {lastName}</h4>
+						</div>
+						<div className="row height-60px bg-purple padbot-10px">
+								<div className="col-6 bordright-1px-white my-auto">
+									<div className="col-12 txt-center txt-white">
+										<h6 className="mbottom-0"><VouchAverage _id={this.state._id}/> <i className="fa fa-star txt-gold txt-15px"></i></h6>
+									</div>
+									<div className="col-12 txt-center txt-white">
+										<h6>Vouch Average</h6>
+									</div>
+								</div>
+								<div className="col-6 bordleft-1px-white my-auto">
+									<div className="col-12 txt-center txt-white">
+										<h6 className="mbottom-0">{secLvl}/5</h6>
+									</div>
+									<div className="col-12 txt-center txt-white">
+										<h6>Trust Rating</h6>
+									</div>
+								</div>
+						</div>
+						<div className="row">
+							<NavTabs store={this.props.store} token={token}/>
+						</div>
+					</div>
+                    <div className="padtop-300px padbot-50px">
+						{this.setTab()}
+					</div>
                     <Navbar token={token}/>
             	</div>
 			);

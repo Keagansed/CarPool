@@ -80,7 +80,7 @@ class VouchAverage extends Component {
 
   render() {
     return (
-      <font color="#140d4f" className="text-primary">
+      <font>
         {this.averageRating().toFixed(1)}
       </font>
       // <div>
