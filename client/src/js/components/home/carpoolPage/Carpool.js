@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Carpool  extends Component {
     render(){
         return(
             <div className="container-fluid bg-purple bordbot-2px-white">
-                <div className="row txt-white padver-10px">
-                    <div className="col-8">
-                        <div className="col-12">
-                            <h5>Moreleta Park</h5>
+                <Link to={`/HomePage/`}>
+                    <div className="row txt-white padver-10px">
+                        <div className="col-9">
+                            <div className="col-12">
+                                <h5>Moreleta Park</h5>
+                            </div>
+                            <div className="col-12">
+                                5 New Messages
+                            </div>
                         </div>
-                        <div className="col-12">
-                        <h6>5 New Messages</h6>
+                        <div className="col-3 vertical-right">
+                            <div className="col-12">
+                                <h5><i className="fa fa-chevron-circle-right"></i></h5>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
+                            </div>
                         </div>
                     </div>
-                    <div className="col-4 vertical-right">
-                        <div className="col-12">
-                            <h4><i className="fa fa-chevron-circle-right"></i></h4>
-                        </div>
-                    </div>
-                </div>
+                </Link>
             </div>
         );
     }

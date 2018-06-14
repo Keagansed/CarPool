@@ -19,6 +19,9 @@ html, body{
 .vertical-right{
     text-align: right;
 }
+.vertical-left{
+    text-align: left;
+}
 .txt-center{
     text-align: center;
 }
@@ -34,6 +37,9 @@ html, body{
 /*font size */
 .txt-10px{
     font-size: 10px;
+}
+.txt-12px{
+    font-size: 12px;
 }
 .txt-15px{
     font-size: 15px;
@@ -93,6 +99,12 @@ html, body{
 .txt-gold{
     color: gold !important;
 }
+.txt-green{
+    color: green !important;
+}
+.txt-red{
+    color: red !important;
+}
 
 /* ============================================================================ */
 /*Background colours*/
@@ -141,6 +153,9 @@ html, body{
 .pad-5px{
     padding: 5px;
 }
+.pad-0{
+    padding: 0;
+}
 .pad-10px{
     padding: 10px;
 }
@@ -162,6 +177,12 @@ html, body{
 .padleft-10px{
     padding-left: 10px;
 }
+.padleft-0{
+    padding-left: 0;
+}
+.padright-0{
+    padding-right: 0;
+}
 .padtop-10px{
     padding-top: 10px;
 }
@@ -170,6 +191,9 @@ html, body{
 }
 .padbot-50px{
     padding-bottom: 50px;
+}
+.padbot-0{
+    padding-bottom: 0;
 }
 .padver-10px{
     padding-top: 10px;
@@ -221,6 +245,11 @@ html, body{
     height: 100%;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
+}
+/* To hide scrollbar on desktop browsers */
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
 }
 
 /* ============================================================================ */
