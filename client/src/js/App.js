@@ -14,7 +14,8 @@ import LoginPage from "./components/login/LoginPage.js";
 import RegisterPage from "./components/register/RegisterPage.js";
 import HomePage from "./components/home/HomePage.js";
 import ProfilePage from "./components/profile/ProfilePage.js";
-import Matches from "./components/home/routePage/matchesPage/Matches";
+import MatchesPage from "./components/home/routePage/matchesPage/MatchesPage";
+import ChatPage from "./components/home/carpoolPage/chatPage/ChatPage";
 
 class App extends Component {
 
@@ -26,7 +27,8 @@ class App extends Component {
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
-					<Route path={"/HomePage/RouteMatches"} exact render={(props) => <Matches {...props} store={HomePageStore}/>}/>
+					<Route path={"/HomePage/RouteMatches"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
+					<Route path={"/HomePage/Chat"} exact render={(props) => <ChatPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>

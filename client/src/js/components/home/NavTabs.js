@@ -50,14 +50,19 @@ import React, { Component } from 'react';
         return(
             <div className="fixed-top container-fluid height-50px bg-aqua">
                 <div className="row font-20px height-100p">
-                    <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} onClick={this.handleRouteToggle}>
-                        Routes
-                    </button>
-                    <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} onClick={this.handleCarPoolToggle}>
-                        Carpools
-                    </button>
-                    <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} onClick={this.handleTripToggle}>
-                        Trips
+                    <div className="col-10 pad-0">
+                        <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} onClick={this.handleRouteToggle}>
+                            Routes
+                        </button>
+                        <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} onClick={this.handleCarPoolToggle}>
+                            Carpools
+                        </button>
+                        <button className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} onClick={this.handleTripToggle}>
+                            Trips
+                        </button>
+                    </div>
+                    <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
+                        <i class="fa fa-plus"></i>
                     </button>
                 </div>
             </div>

@@ -59,6 +59,9 @@ html, body{
 
 /* ============================================================================ */
 /*Margins*/
+.m-0{
+    margin: 0;
+}
 .mbottom-05rem{
     margin-bottom: 0.5rem;
 }
@@ -71,11 +74,17 @@ html, body{
 .mbottom-2rem{
     margin-bottom: 2rem;
 }
-.mtop-48px{
-    margin-top: 48px;
+.mtop-50px{
+    margin-top: 50px;
 }
-.mbottom-53px{
-    margin-bottom: 53px;
+.mtop-0{
+    margin-top: 0;
+}
+.mbot-0{
+    margin-bottom: 0;
+}
+.mbot-50px{
+    margin-bottom: 50px;
 }
 
 /* ============================================================================ */
@@ -104,6 +113,9 @@ html, body{
 }
 .txt-red{
     color: red !important;
+}
+.txt-orange{
+    color: orange !important;
 }
 
 /* ============================================================================ */
@@ -154,7 +166,13 @@ html, body{
     padding: 5px;
 }
 .pad-0{
-    padding: 0;
+    padding: 0 !important;
+}
+.padtop-0{
+    padding-top: 0 !important;
+}
+.padbot-0{
+    padding-bottom: 0 !important;
 }
 .pad-10px{
     padding: 10px;
@@ -213,6 +231,9 @@ html, body{
 }
 .bordbot-2px-purple{
     border-bottom: 2px solid #140D4F;
+}
+.bordbot-2px-orange{
+    border-bottom: 2px solid orange;
 }
 .bord-2px-white{
     border: 2px solid white;

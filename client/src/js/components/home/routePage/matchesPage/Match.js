@@ -9,7 +9,7 @@ class Match  extends Component {
             <div className="container-fluid bg-purple bordbot-2px-white">
                 <div className="row txt-white padver-10px">
                     <div className="col-2">
-                            <img src={tempProPic} className="mx-auto my-auto rounded-circle bord-2px-purple" height="60" width="60" alt="s" />
+                            <img src={tempProPic} className="mx-auto my-auto rounded-circle bord-2px-white" height="60" width="60" alt="s" />
                     </div>
                     <div className="col-7">
                         <div className="col-12">
