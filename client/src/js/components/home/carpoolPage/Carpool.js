@@ -9,7 +9,7 @@ class Carpool  extends Component {
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
-                                <h5>Moreleta Park</h5>
+                                <h5>Brogrammers Carpool</h5>
                             </div>
                             <div className="col-12">
                                 5 New Messages

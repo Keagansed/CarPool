@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
+import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import Navbar from './../../../navbar/Navbar';
@@ -41,21 +42,23 @@ import Matches from './Matches';
             <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
                         <div className="row font-20px height-100p">
-                            <div className="col-10">
+                            <Link to={`/HomePage`} className="col-2 txt-center">
                                 <button className="btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                    Home to Work
+                                    <i className="fa fa-chevron-circle-left"></i>
                                 </button>
-                            </div>
+                            </Link>
+                            <button className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                Home to Work
+                            </button>
                             <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
-                                <i class="fa fa-info-circle"></i>
+                                <i className="fa fa-wrench"></i>
                             </button>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
-                    <div className="padtop-50px padbot-50px">
+                    <div className="padtop-50px">
                         <Matches />
                     </div>
-                    <Navbar token={token}/>
             </div>
         );
     }

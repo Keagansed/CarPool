@@ -108,6 +108,12 @@ html, body{
 .txt-gold{
     color: gold !important;
 }
+.txt-yellow{
+    color: yellow !important;
+}
+.txt-silver{
+    color: silver !important;
+}
 .txt-green{
     color: green !important;
 }
@@ -192,6 +198,12 @@ html, body{
 .padbot-10px{
     padding-bottom: 10px;
 }
+.padbot-5px{
+    padding-bottom: 5px;
+}
+.padbot-100px{
+    padding-bottom: 100px;
+}
 .padleft-10px{
     padding-left: 10px;
 }
@@ -223,6 +235,15 @@ html, body{
 .bord-05rem-aqua{
     border: 0.05rem solid #6FEDB7;
 }
+.focusbord-1px-purple:focus{
+    border: 1px solid #140D4F;
+}
+.bord-0{
+    border: none;
+}
+input.bord-0:focus{
+    outline: none;
+}
 .bordbot-2px-white{
     border-bottom: 2px solid white;
 }
@@ -249,6 +270,9 @@ html, body{
 }
 .bordright-1px-white{
     border-right: 1px solid white;
+}
+.bordbot-1px-dash-grey{
+    border-bottom: 1px dashed grey;
 }
 
 /* ============================================================================ */
@@ -323,3 +347,22 @@ input:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s;
 } 
+/* ============================================================================ */
+/*Day of week selector*/
+.weekDays-selector input {
+    display: none!important;
+}
+.weekDays-selector input[type=checkbox] + label {
+    display: inline-block;
+    border-radius: 6px;
+    background: #dddddd;
+    height: 40px;
+    width: 30px;
+    margin-right: 3px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.weekDays-selector input[type=checkbox]:checked + label {
+    background: #6FEDB7;
+}

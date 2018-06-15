@@ -62,7 +62,7 @@ import React, { Component } from 'react';
                         </button>
                     </div>
                     <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
-                        <i class="fa fa-plus"></i>
+                        <i className="fa fa-plus"></i>
                     </button>
                 </div>
             </div>
