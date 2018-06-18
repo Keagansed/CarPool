@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-class CarPool  extends Component {
+class Chat  extends Component {
     render(){
         return(
-            <h1>CarPool</h1>
+            <h1>Chat</h1>
         );
     }
 }
 
-export default CarPool;
+export default Chat;

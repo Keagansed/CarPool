@@ -36,6 +36,21 @@ class profileStore {
     @observable eID = '';
     @observable ePass = '';
     @observable eNewPass = '';
+    @observable token = '';
+    @observable vouchTab = true;
+    @observable trustTab = false;
+
+    @action toggleToVouch = () =>
+    {
+        this.vouchTab = true;
+        this.trustTab = false;
+    }
+
+    @action toggleToTrust = () =>
+    {
+        this.trustTab = true;
+        this.vouchTab = false;
+    }
 
     setEdit = () => {
         this.eFName = this.firstName;

@@ -1,0 +1,368 @@
+/* ============================================================================ */
+/*Body & html elements */
+html, body{
+    height:100vh; /* important to vertically align the container */
+    margin:0 !important;
+    padding:0 !important;
+    font-family: Quicksand;
+}
+
+/* ============================================================================ */
+/*Alignment */
+.vertical-center {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
+}
+.vertical-right{
+    text-align: right;
+}
+.vertical-left{
+    text-align: left;
+}
+.txt-center{
+    text-align: center;
+}
+
+/* ============================================================================ */
+/*size */
+.size-100 {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+}
+
+/* ============================================================================ */
+/*font size */
+.txt-10px{
+    font-size: 10px;
+}
+.txt-12px{
+    font-size: 12px;
+}
+.txt-15px{
+    font-size: 15px;
+}
+.font-20px {
+    font-size: 20px;
+}
+.txt-50px{
+    font-size: 50px;
+}
+.txt-40px{
+    font-size: 40px;
+}
+.txt-30px{
+    font-size: 30px;
+}
+
+/* ============================================================================ */
+/*Margins*/
+.m-0{
+    margin: 0;
+}
+.mbottom-05rem{
+    margin-bottom: 0.5rem;
+}
+.mbottom-0{
+    margin-bottom: 0;
+}
+.mbottom-1rem{
+    margin-bottom: 1rem;
+}
+.mbottom-2rem{
+    margin-bottom: 2rem;
+}
+.mtop-50px{
+    margin-top: 50px;
+}
+.mtop-0{
+    margin-top: 0;
+}
+.mbot-0{
+    margin-bottom: 0;
+}
+.mbot-50px{
+    margin-bottom: 50px;
+}
+
+/* ============================================================================ */
+/*Font weights*/
+.fw-bold{
+    font-weight: bold;
+}
+
+.fw-100{
+    font-weight: 100;
+}
+
+/* ============================================================================ */
+/*Text colours*/
+.txt-purple{
+    color: #140D4F;
+}
+.txt-white{
+    color: white !important;
+}
+.txt-gold{
+    color: gold !important;
+}
+.txt-yellow{
+    color: yellow !important;
+}
+.txt-silver{
+    color: silver !important;
+}
+.txt-green{
+    color: green !important;
+}
+.txt-red{
+    color: red !important;
+}
+.txt-orange{
+    color: orange !important;
+}
+
+/* ============================================================================ */
+/*Background colours*/
+.bg-aqua{
+    background-color: #6FEDB7;
+}
+.bg-purple{
+    background-color: #140D4F;
+}
+.bg-trans{
+    background-color: rgba(0,0,0,0);
+}
+.bg-whitelight{
+    background-color: rgba(255, 255, 255, 0.349);
+}
+
+/* ============================================================================ */
+/*Widths*/
+.width-15rem{
+    width: 15rem;
+}
+.width-100p{
+    width: 100%;
+}
+
+/* ============================================================================ */
+/*Heightss*/
+.height-100p{
+    height: 100%;
+}
+.height-40px{
+    height: 40px;
+}
+.height-50px{
+    height: 50px;
+}
+.height-60px{
+    height: 60px;
+}
+.height-150px{
+    height: 150px;
+}
+
+/* ============================================================================ */
+/*Padding*/
+.pad-5px{
+    padding: 5px;
+}
+.pad-0{
+    padding: 0 !important;
+}
+.padtop-0{
+    padding-top: 0 !important;
+}
+.padbot-0{
+    padding-bottom: 0 !important;
+}
+.pad-10px{
+    padding: 10px;
+}
+.padtop-20px{
+    padding-top: 20px;
+}
+.padtop-300px{
+    padding-top: 300px;
+}
+.padtop-15px{
+    padding-top: 15px;
+}
+.padtop-10px{
+    padding-top: 10px;
+}
+.padbot-10px{
+    padding-bottom: 10px;
+}
+.padbot-5px{
+    padding-bottom: 5px;
+}
+.padbot-100px{
+    padding-bottom: 100px;
+}
+.padleft-10px{
+    padding-left: 10px;
+}
+.padleft-0{
+    padding-left: 0;
+}
+.padright-0{
+    padding-right: 0;
+}
+.padtop-10px{
+    padding-top: 10px;
+}
+.padtop-50px{
+    padding-top: 50px;
+}
+.padbot-50px{
+    padding-bottom: 50px;
+}
+.padbot-0{
+    padding-bottom: 0;
+}
+.padver-10px{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* ============================================================================ */
+/*Borders*/
+.bord-05rem-aqua{
+    border: 0.05rem solid #6FEDB7;
+}
+.focusbord-1px-purple:focus{
+    border: 1px solid #140D4F;
+}
+.bord-0{
+    border: none;
+}
+input.bord-0:focus{
+    outline: none;
+}
+.bordbot-2px-white{
+    border-bottom: 2px solid white;
+}
+.bord-2px-purple{
+    border: 2px solid #140D4F;
+}
+.bordbot-2px-purple{
+    border-bottom: 2px solid #140D4F;
+}
+.bordbot-2px-orange{
+    border-bottom: 2px solid orange;
+}
+.bord-2px-white{
+    border: 2px solid white;
+}
+.bord-5px-white{
+    border: 5px solid white;
+}
+.bord-2px-aqua{
+    border: 2px solid #6FEDB7;
+}
+.bordleft-1px-white{
+    border-left: 1px solid white;
+}
+.bordright-1px-white{
+    border-right: 1px solid white;
+}
+.bordbot-1px-dash-grey{
+    border-bottom: 1px dashed grey;
+}
+
+/* ============================================================================ */
+/*Border radiuses*/
+.brad-2rem{
+    border-radius: 2rem;
+}
+.brad-0{
+    border-radius: 0px;
+}
+
+/* ============================================================================ */
+/*Scroll bars*/
+.scroll-vert{
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+}
+/* To hide scrollbar on desktop browsers */
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+/* ============================================================================ */
+/*tab buttons*/
+button.btnTab.active{
+    border-bottom: 5px solid #140D4F;
+}
+button.btnTabWhiteActive.active{
+    border-bottom: 5px solid white;
+}
+
+
+/* ============================================================================ */
+/*LoginPage*/
+/* Forgot password modal */
+#inputEmail, #inputPassword{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+#forgotPasswordModal{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,100);
+}
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ============================================================================ */
+/*RegisterPage*/
+#inputFirstName, 
+#inputLastName,
+#inputID,
+#inputEmail,
+#inputConfirmPassword
+{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    transition: background-color 5000s ease-in-out 0s;
+} 
+/* ============================================================================ */
+/*Day of week selector*/
+.weekDays-selector input {
+    display: none!important;
+}
+.weekDays-selector input[type=checkbox] + label {
+    display: inline-block;
+    border-radius: 6px;
+    background: #dddddd;
+    height: 40px;
+    width: 30px;
+    margin-right: 3px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+.weekDays-selector input[type=checkbox]:checked + label {
+    background: #6FEDB7;
+}
