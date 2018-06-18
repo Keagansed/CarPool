@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Search Component renders correctly 1`] = `
+exports[`Search Component captures snapshot 1`] = `
 <div
   className="center_container search_center_container"
 >

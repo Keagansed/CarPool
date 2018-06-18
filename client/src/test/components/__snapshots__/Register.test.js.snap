@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Register Component renders correctly 1`] = `
+exports[`Register Component captures snapshot 1`] = `
 <div>
   <div
     className="text-center"
@@ -21,7 +21,7 @@ exports[`Register Component renders correctly 1`] = `
               className="form-group my-2"
             >
               <input
-                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
                 id="txtFirstName"
                 name="txtFirstName"
                 onChange={[Function]}
@@ -34,7 +34,7 @@ exports[`Register Component renders correctly 1`] = `
               className="form-group"
             >
               <input
-                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
                 id="txtLastName"
                 name="txtLastName"
                 onChange={[Function]}
@@ -47,7 +47,7 @@ exports[`Register Component renders correctly 1`] = `
               className="form-group"
             >
               <input
-                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
                 id="txtID"
                 name="txtID"
                 onChange={[Function]}
@@ -60,7 +60,7 @@ exports[`Register Component renders correctly 1`] = `
               className="form-group"
             >
               <input
-                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
                 id="txtEmail"
                 name="txtEmail"
                 onChange={[Function]}
@@ -73,7 +73,7 @@ exports[`Register Component renders correctly 1`] = `
               className="form-group"
             >
               <input
-                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
                 id="txtPassword"
                 name="txtPassword"
                 onChange={[Function]}
@@ -86,7 +86,7 @@ exports[`Register Component renders correctly 1`] = `
               className="form-group"
             >
               <input
-                className="form-control roundCorners bg-info border border-primary w-75 mx-auto text-white"
+                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
                 id="txtConfirmPassword"
                 name="txtConfirmPassword"
                 onChange={[Function]}
