@@ -162,8 +162,8 @@ import { getFromStorage } from './../../utils/localStorage.js';
 		{
 			const token = this.state._id;
 			return(
-				<div className="size-100 bg-white">
-					<div className="container-fluid fixed-top">
+				<div className="size-100 bg-purple">
+					<div className="container-fluid fixed-top bg-purple">
 						<div className="row height-150px bg-purple">
 							<img src={profilePicture} id="profilePic" className="mx-auto my-auto rounded-circle bord-5px-white" height="120" width="120" alt="s" />
 						</div>
