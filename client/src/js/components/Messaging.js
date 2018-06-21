@@ -22,11 +22,10 @@ class Messaging extends Component {
         };
 
         this.addMessage = this.addMessage.bind(this);
-
         this.app = firebase.initializeApp(DB_CONFIG);
-        this.database = this.app.database().ref().child('groupChats/'+this.props.match.params.chat);
-        this.messages = this.app.database().ref().child('groupChats/'+this.props.match.params.chat+"/messages");
-        this.users = this.app.database().ref().child('groupChats/'+this.props.match.params.chat+"/users");
+        this.database = this.app.database().ref().child('groupChats/'+this.props.chat);
+        this.messages = this.app.database().ref().child('groupChats/'+this.props.chat+"/messages");
+        this.users = this.app.database().ref().child('groupChats/'+this.props.chat+"/users");
     }
 
     componentWillMount(){
@@ -71,10 +70,11 @@ class Messaging extends Component {
 
         if (verify){
             return (
-                <div className="messagesWrapper">
-                    <div className="messagesHeader">
-                        <div className="heading">Group messaging</div>
-                    </div>
+                <div>
+                    {/*<div className="messagesWrapper">*/}
+                    {/*<div className="messagesHeader">*/}
+                    {/*<div className="heading">Group messaging</div>*/}
+                    {/*</div>*/}
                     <div className="messagesBody" id="messageBody">
                         {
                             this.state.messages.map((message) => {
@@ -83,10 +83,11 @@ class Messaging extends Component {
                                 )
                             })
                         }
-                    </div>
-                    <div className="messagesFooter" >
+                        </div>
+                        {/*<div className="messagesFooter" >*/}
                         <MessageForm addMessage={this.addMessage}/>
-                    </div>
+                        {/*</div>*/}
+                        {/*</div>*/}
                 </div>
             );
         }

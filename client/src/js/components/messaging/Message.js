@@ -94,20 +94,66 @@ class Message extends Component {
         if (this.props.userID === getFromStorage('sessionKey').token)
         {
             return (
-                <div className="myMessage fade-in" id="this.props.userID">
-                    <strong>You</strong><br/>
-                    <p className="messageContent">{ this.messageContent }</p>
-                    <div className="dateTime">{dat}</div>
+                <div className="container-fluid bg-purple bordbot-2px-white">
+                    {/* Maybe use different colours for different users? */}
+                    <div className="row txt-orange padver-10px padbot-0">
+                        <div className="col-9">
+                            <div className="col-12">
+                                <h5>You</h5>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
+                            </div>
+                        </div>
+                        <div className="col-3 vertical-right">
+                            <div className="col-12">
+                                <h5>{dat}</h5>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row txt-white padver-10px padtop-0">
+                        <div className="col-12">
+                            <div className="col-12">
+                                { this.messageContent }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             );
         }
         else
         {
             return (
-                <div className="message fade-in" id="this.props.userID">
-                    <strong><p>{this.getUsername(this.props.userID)}</p></strong>
-                    <p className="messageContent">{ this.messageContent }</p>
-                    <div className="dateTime">{dat}</div>
+                <div className="container-fluid bg-purple bordbot-2px-white">
+                    {/* Maybe use different colours for different users? */}
+                    <div className="row txt-orange padver-10px padbot-0">
+                        <div className="col-9">
+                            <div className="col-12">
+                                <h5>{this.getUsername(this.props.userID)}</h5>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
+                            </div>
+                        </div>
+                        <div className="col-3 vertical-right">
+                            <div className="col-12">
+                                <h5>{dat}</h5>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row txt-white padver-10px padtop-0">
+                        <div className="col-12">
+                            <div className="col-12">
+                                { this.messageContent }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             );
         }

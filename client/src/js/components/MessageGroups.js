@@ -24,8 +24,8 @@ class MessageGroups extends Component {
 
         this.addChat = this.addChat.bind(this);
 
-        this.app = firebase.initializeApp(DB_CONFIG);
-        this.groupChats = this.app.database().ref().child('groupChats');
+        // this.app = firebase.initializeApp(DB_CONFIG);
+        // this.groupChats = this.app.database().ref().child('groupChats');
         // this.users = this.app.database().ref().child('groupChats/'+this.props.match.params.chat+"/users");
     }
 
