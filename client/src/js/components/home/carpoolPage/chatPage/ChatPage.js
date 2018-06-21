@@ -48,12 +48,8 @@ import NewTripModal from './newTripModal/NewTripModal';
                                     <i className="fa fa-chevron-circle-left"></i>
                                 </button>
                             </Link>
-                            <button data-toggle="modal" data-target="#carpoolInfoModal" className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                Brogrammers Carpool
-                            </button>
-                            <button data-toggle="modal" data-target="#newTripModal"  className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
-                                <i className="fa fa-car"></i>
-                            </button>
+                            <CarpoolInfoModal />
+                            <NewTripModal />
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
@@ -68,8 +64,6 @@ import NewTripModal from './newTripModal/NewTripModal';
                             </button>
                         </div>
                     </div>
-                    <CarpoolInfoModal />
-                    <NewTripModal />
             </div>
         );
     }

@@ -1,17 +1,38 @@
 import React, { Component } from 'react';
-import {observer} from 'mobx-react';
 
-@observer
-class Modal extends Component{
-    render(){
-        return(
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
+  
+class Modal extends Component {
+    constructor(props) {
+        super(props);
+        this.toggle = this.toggle.bind(this);
+  
+        this.state = {
+            toggle: false
+        }
+    }
+  
+    toggle(event) {
+        this.setState(prevState => ({
+            toggle: !prevState.toggle
+        }));
+    }
+  
+    render() {
+        var modal = [];
+        modal.push(
             // Modal
-            <div className="modal" tabIndex="-1" role="dialog" id="myModal">
+            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Forgot Password?</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -29,6 +50,14 @@ class Modal extends Component{
                         </div>
                     </div>
                 </div>
+            </div>
+        );
+        return (
+            <div className="mx-auto">
+                <a className="txt-white fw-100" onClick={this.toggle}>
+                    Forgot Password?
+                </a>
+                {modal}
             </div>
         );
     }
