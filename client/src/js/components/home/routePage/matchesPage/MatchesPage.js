@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
-import Navbar from './../../../navbar/Navbar';
+//import Navbar from './../../../navbar/Navbar';
 import Matches from './Matches';
 
 @observer class MatchesPage extends Component{
@@ -36,7 +36,7 @@ import Matches from './Matches';
     }
 
     render(){
-        const { token } = this.props.store;
+//        const { token } = this.props.store;
         
         return(
             <div className="size-100 bg-purple">

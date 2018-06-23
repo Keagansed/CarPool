@@ -8,7 +8,7 @@ class Navbar extends Component{
             <div className="height-50px fixed-bottom container-fluid pad-10px bg-aqua">
                 <div className="row">
                     <div className="col-4 txt-center">
-                        <Link to={`/HomePage`}>
+                        <Link to={`/Settings`}>
                             <i className="fa fa-cog txt-purple txt-30px"></i>
                         </Link>
                     </div>
