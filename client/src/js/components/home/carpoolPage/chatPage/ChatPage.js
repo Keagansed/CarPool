@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import Messages from './Messages';
-import CarpoolInfoModal from './carpoolInfoModal/CarpoolInfoModal';
-import NewTripModal from './newTripModal/NewTripModal';
 
 @observer class ChatPage extends Component{
 
@@ -47,7 +45,7 @@ import NewTripModal from './newTripModal/NewTripModal';
                                 </button>
                             </Link>
                             <button data-toggle="modal" data-target="#carpoolInfoModal" className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                Brogrammers Carpool
+                                {this.props.match.params.carpoolName}
                             </button>
                             <button data-toggle="modal" data-target="#newTripModal"  className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
                                 <i className="fa fa-car"></i>
@@ -58,8 +56,6 @@ import NewTripModal from './newTripModal/NewTripModal';
                     <div className="padtop-50px padbot-50px">
                         <Messages carpoolID={this.props.match.params.carpoolID}/>
                     </div>
-                    <CarpoolInfoModal />
-                    <NewTripModal />
             </div>
         );
     }

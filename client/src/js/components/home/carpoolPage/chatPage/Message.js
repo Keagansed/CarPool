@@ -100,18 +100,10 @@ class Message extends Component {
             return (
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
-                    <div className="row txt-orange padver-10px padbot-0">
+                    <div className="row padver-10px padbot-0">
                         <div className="col-6">
-                            <div className="col-12">
+                            <div className={"col-12 "+this.props.userColour}>
                                 <h5>You</h5>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                        <div className="col-6 vertical-right">
-                            <div className="col-12">
-                                <h5>{dat}</h5>
                             </div>
                             <div className="col-12">
                                 {/* Empty for now */}
@@ -125,6 +117,17 @@ class Message extends Component {
                             </div>
                         </div>
                     </div>
+                    <div className="row txt-white padver-10px padtop-0">
+                        <div className="col-6"></div>
+                        <div className="col-6 vertical-right txt-grey">
+                            <div className="col-12">
+                                <h6>{dat}</h6>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -133,18 +136,10 @@ class Message extends Component {
             return (
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
-                    <div className="row txt-orange padver-10px padbot-0">
+                    <div className="row padver-10px padbot-0">
                         <div className="col-6">
-                            <div className="col-12">
+                            <div className={"col-12 "+this.props.userColour}>
                                 <h5>{this.getUsername(this.props.userID)}</h5>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                        <div className="col-6 vertical-right">
-                            <div className="col-12">
-                                <h5>{dat}</h5>
                             </div>
                             <div className="col-12">
                                 {/* Empty for now */}
@@ -155,6 +150,17 @@ class Message extends Component {
                         <div className="col-12">
                             <div className="col-12">
                             { this.messageContent }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row txt-white padver-10px padtop-0">
+                        <div className="col-6"></div>
+                        <div className="col-6 vertical-right txt-grey">
+                            <div className="col-12">
+                                <h6>{dat}</h6>
+                            </div>
+                            <div className="col-12">
+                                {/* Empty for now */}
                             </div>
                         </div>
                     </div>

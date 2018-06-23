@@ -4,6 +4,8 @@ import Message from './Message';
 import MessageForm from './MessageForm';
 import app from '../../../../stores/MessagingStore'
 import "../../../../../css/components/Spinner.css"
+import CarpoolInfoModal from './carpoolInfoModal/CarpoolInfoModal';
+import NewTripModal from './newTripModal/NewTripModal';
 
 import {
     getFromStorage
@@ -45,6 +47,19 @@ class Messages extends Component {
             this.setState({
                 users: previousUsers
             });
+            if (snap.key === getFromStorage('sessionKey').token)
+            {
+                app.database().ref().child('groupChats/'+this.props.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+                    .update({lastRefresh:JSON.stringify(new Date())}).then(() => {
+                    return {};
+                }).catch(error => {
+                    return {
+                        errorCode: error.code,
+                        errorMessage: error.message
+                    }
+                });
+
+            }
         });
     }
 
@@ -59,7 +74,7 @@ class Messages extends Component {
 
         for(let user in this.state.users)
         {
-            if (this.state.users[user] === getFromStorage('sessionKey').token)
+            if (user === getFromStorage('sessionKey').token)
             {
                 verify = true;
             }
@@ -83,13 +98,16 @@ class Messages extends Component {
                     <div id="messageBody">
                         {
                             this.state.messages.map((message) => {
+                                let userColour = this.state.users[message.userID].colour;
                                 return(
-                                    <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} dateTime={message.dateTime} key={message.id}/>
+                                    <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                 )
                             })
                         }
                     </div>
                     <MessageForm addMessage={this.addMessage}/>
+                    <CarpoolInfoModal users={this.state.users}/>
+                    <NewTripModal users={this.state.users}/>
                 </div>
             );
         }

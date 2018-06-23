@@ -5,7 +5,41 @@ import WeekdaySelector from './WeekdaySelector';
 
 @observer
 class NewTripModal extends Component{
+    constructor(props){
+        super(props);
+
+        this.state ={user:[]};
+    }
+
+    componentDidMount(){
+        fetch('/api/account/getAllUsers')
+            .then(res => res.json())
+            .then(json => this.setState({user: json}));
+    }
+
+    getUsername(_id)
+    {
+        for (var x in this.state.user)
+        {
+            if(this.state.user[x]._id === _id)
+            {
+                return this.state.user[x].firstName;
+            }
+        }
+
+    }
+
     render(){
+        let users = [];
+
+        for(let user in this.props.users)
+        {
+            users.push(
+                <div className="row bordbot-1px-dash-grey">
+                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right">View Profile</div>
+                </div>
+            );
+        }
         return(
             // Modal
             <div className="modal" tabIndex="-1" role="dialog" id="newTripModal">
@@ -37,31 +71,7 @@ class NewTripModal extends Component{
                                 <div className="row bordbot-1px-dash-grey">
                                     <h6 className="fw-bold mx-auto">Participants</h6>
                                 </div>
-                                {/* Static data will be replaced by dynamic data */}
-                                <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Marcus Bornman</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Vernon Francis</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Leonardo Ianigro</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Keagan Seddon</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Michael Yatrakos</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Myron Ouyang</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
-                                </div>
+                                {users}
                             </form>
                         </div>
                     </div>

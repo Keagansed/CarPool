@@ -124,6 +124,26 @@ html, body{
     color: orange !important;
 }
 
+.txt-lightBlue{
+    color: #00B7FF;
+}
+
+.txt-pink{
+    color: #e83e8c;
+}
+
+.txt-mediumPurple{
+    color: mediumpurple;
+}
+
+.txt-lime{
+    color:lime;
+}
+
+.txt-grey{
+    color: darkgray;
+}
+
 /* ============================================================================ */
 /*Background colours*/
 .bg-aqua{

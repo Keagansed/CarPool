@@ -29,7 +29,7 @@ class App extends Component {
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/RouteMatches"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
-					<Route path={"/HomePage/Chat/:carpoolID"} exact render={(props) => <ChatPage {...props} store={HomePageStore}/>}/>
+					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <ChatPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
