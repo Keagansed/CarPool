@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
     getFromStorage
-} from '../../utils/localStorage.js'
+} from '../../../../utils/localStorage.js'
 
 class MessageForm extends Component {
     constructor(props){

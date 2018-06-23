@@ -17,8 +17,6 @@ import ProfilePage from "./components/profile/ProfilePage.js";
 import MatchesPage from "./components/home/routePage/matchesPage/MatchesPage";
 import ChatPage from "./components/home/carpoolPage/chatPage/ChatPage";
 
-import Messaging from "./components/Messaging";
-import MessageGroups from "./components/MessageGroups";
 
 class App extends Component {
 
@@ -41,8 +39,6 @@ class App extends Component {
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 					{/* <Route path={"/newRoute"} exact component={NewRoute}/>*/}
-					<Route path={"/MessageGroups"} exact component={MessageGroups}/>
-					<Route path={"/Messaging/:chat"} exact render={(props) => <Messaging {...props} />}/>
 
 				</Switch>
 			</BrowserRouter>
