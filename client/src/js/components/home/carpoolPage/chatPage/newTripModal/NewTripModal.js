@@ -35,8 +35,8 @@ class NewTripModal extends Component{
         for(let user in this.props.users)
         {
             users.push(
-                <div className="row bordbot-1px-dash-grey">
-                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right">View Profile</div>
+                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
                 </div>
             );
         }

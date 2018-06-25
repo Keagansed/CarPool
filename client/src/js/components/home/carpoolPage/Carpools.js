@@ -23,6 +23,7 @@ class Carpools extends Component {
             user3: '',
             groupChats:[],
             loading: true,
+            colours:{0:false,1:false,2:false,3:false,4:false,5:false,6:false},
         };
 
         this.addChat = this.addChat.bind(this);
@@ -75,12 +76,26 @@ class Carpools extends Component {
         this.setState({user3: e.target.value})
     }
 
+    getRandomColour(){
+        let colours = {0:"txt-yellow",1:"txt-red",2:"txt-orange",3:"txt-lightBlue",4:"txt-pink",5:"txt-mediumPurple",6:"txt-lime"};
+        let number = Math.floor(Math.random() * 7);
+        if(!this.state.colours[number])
+        {
+            this.state.colours[number] = true;
+            return colours[number];
+        }
+        else
+        {
+            return this.getRandomColour();
+        }
+    }
+
     addChat()
     {
         let name = this.state.groupChatName;
-        let users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:"txt-lime"},
-            [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:"txt-lightBlue"},
-            [this.state.user3]:{lastRefresh:JSON.stringify(new Date()),colour:"txt-orange"}};
+        let users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
+            [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
+            [this.state.user3]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()}};
         this.groupChats.push().set({name: name, users: users});
     }
 
@@ -152,7 +167,6 @@ class Carpools extends Component {
                                 let newMessageCount = 0;
                                 for (let message in messagesArray)
                                 {
-                                    {/*window.alert(messagesArray[message].userID);*/}
                                     let lastRefresh = JSON.parse(usersArray[getFromStorage('sessionKey').token].lastRefresh);
                                     let messageDate = JSON.parse(messagesArray[message].dateTime);
                                     if(messageDate > lastRefresh)
@@ -185,6 +199,15 @@ class Carpools extends Component {
                                         </Link>
                                     </div>
                                 )
+                            }
+                            else
+                            {
+                                return (
+                                    <div className="spinner">
+                                        <div className="double-bounce1"></div>
+                                        <div className="double-bounce2"></div>
+                                    </div>
+                                );
                             }
                         })
                     }

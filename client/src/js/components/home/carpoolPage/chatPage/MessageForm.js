@@ -43,8 +43,8 @@ class MessageForm extends Component {
                         <input type="text" placeholder="Write a message..." className="col-10 bord-0 focusbord-1px-purple"
                                value={this.state.newMessageContent}
                                onChange={this.handleUserInput}/>
-                        <button className="col-2 btn height-100p bg-white txt-purple fw-bold brad-0 font-20px txt-center">
-                            <i className="fa fa-arrow-circle-right" onClick={this.sendMessage}></i>
+                        <button className="col-2 btn height-100p bg-white txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.sendMessage}>
+                            <i className="fa fa-arrow-circle-right" ></i>
                         </button>
                     </div>
                 </div>

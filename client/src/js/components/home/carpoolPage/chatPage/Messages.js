@@ -92,10 +92,16 @@ class Messages extends Component {
         if (verify){
             return (
                 <div>
-                    <div id="messageBody">
+                    <div id="messageBody" className="autoScroll padtop-50px padbot-50px">
                         {
                             this.state.messages.map((message) => {
-                                let userColour = this.state.users[message.userID].colour;
+                                let userColour;
+                                try {
+                                    userColour = this.state.users[message.userID].colour;
+                                }
+                                catch (e) {
+                                    userColour = "txt-white";
+                                }
                                 return(
                                     <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                 )
