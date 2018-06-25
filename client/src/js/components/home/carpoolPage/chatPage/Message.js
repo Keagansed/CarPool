@@ -109,22 +109,19 @@ class Message extends Component {
                                 {/* Empty for now */}
                             </div>
                         </div>
-                    </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-12">
-                            <div className="col-12">
-                                { this.messageContent }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-6"></div>
                         <div className="col-6 vertical-right txt-grey">
                             <div className="col-12">
                                 <h6>{dat}</h6>
                             </div>
                             <div className="col-12">
                                 {/* Empty for now */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row txt-white padver-10px padtop-0">
+                        <div className="col-12">
+                            <div className="col-12">
+                                { this.messageContent }
                             </div>
                         </div>
                     </div>
@@ -145,22 +142,19 @@ class Message extends Component {
                                 {/* Empty for now */}
                             </div>
                         </div>
-                    </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-12">
-                            <div className="col-12">
-                            { this.messageContent }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-6"></div>
                         <div className="col-6 vertical-right txt-grey">
                             <div className="col-12">
                                 <h6>{dat}</h6>
                             </div>
                             <div className="col-12">
                                 {/* Empty for now */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row txt-white padver-10px padtop-0">
+                        <div className="col-12">
+                            <div className="col-12">
+                            { this.messageContent }
                             </div>
                         </div>
                     </div>

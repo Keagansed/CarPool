@@ -40,6 +40,16 @@ class Messages extends Component {
             this.setState({
                 messages: previousMessages
             });
+
+            app.database().ref().child('groupChats/'+this.props.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+                .update({lastRefresh:JSON.stringify(new Date())}).then(() => {
+                return {};
+            }).catch(error => {
+                return {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+            });
         });
         const previousUsers = this.state.users;
         this.users.on('child_added', snap =>{
@@ -47,19 +57,6 @@ class Messages extends Component {
             this.setState({
                 users: previousUsers
             });
-            if (snap.key === getFromStorage('sessionKey').token)
-            {
-                app.database().ref().child('groupChats/'+this.props.carpoolID+"/users/"+getFromStorage('sessionKey').token)
-                    .update({lastRefresh:JSON.stringify(new Date())}).then(() => {
-                    return {};
-                }).catch(error => {
-                    return {
-                        errorCode: error.code,
-                        errorMessage: error.message
-                    }
-                });
-
-            }
         });
     }
 
