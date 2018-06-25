@@ -2,7 +2,7 @@
   "name": "carpool-app-client",
   "version": "0.0.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://backend.carpool.iminsys.com",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
@@ -70,7 +70,8 @@
     "redux-mock-store": "^1.5.1"
   },
   "scripts": {
-    "start": "concurrently \"node scripts/start.js\" \"nodemon ../bin/www\"",
+    "start": "node scripts/start.js",
+    "local": "concurrently \"node scripts/start.js\" \"nodemon ../bin/www\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
