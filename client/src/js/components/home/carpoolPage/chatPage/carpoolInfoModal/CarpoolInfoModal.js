@@ -41,22 +41,22 @@ class CarpoolInfoModal extends Component {
                                 <h6 className="fw-bold mx-auto">Carpool Members</h6>
                             </div>
                             <div className="row bordbot-1px-dash-grey">
-                                <div className="col-6">Marcus Bornman</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-7">Marcus Bornman</div><div className="col-5 vertical-right">View Profile</div>
                             </div>
                             <div className="row bordbot-1px-dash-grey">
-                                <div className="col-6">Vernon Francis</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-7">Vernon Francis</div><div className="col-5 vertical-right">View Profile</div>
                             </div>
                             <div className="row bordbot-1px-dash-grey">
-                                <div className="col-6">Leonardo Ianigro</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-7">Leonardo Ianigro</div><div className="col-5 vertical-right">View Profile</div>
                             </div>
                             <div className="row bordbot-1px-dash-grey">
-                                <div className="col-6">Keagan Seddon</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-7">Keagan Seddon</div><div className="col-5 vertical-right">View Profile</div>
                             </div>
                             <div className="row bordbot-1px-dash-grey">
-                                <div className="col-6">Michael Yatrakos</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-7">Michael Yatrakos</div><div className="col-5 vertical-right">View Profile</div>
                             </div>
                             <div className="row bordbot-1px-dash-grey">
-                                <div className="col-6">Myron Ouyang</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-7">Myron Ouyang</div><div className="col-5 vertical-right">View Profile</div>
                             </div>
                         </div>
                     </div>

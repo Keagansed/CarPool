@@ -4,10 +4,10 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './../css/AllPages.css'; 
-import './../css/font.css'
 
 import LoginStore from './stores/LoginStore';
 import HomePageStore from './stores/HomePageStore';
+import SettingsPageStore from './stores/SettingsPageStore';
 import ProfileStore from './stores/ProfileStore';
 
 import LandingPage from "./components/landing/LandingPage.js";
@@ -17,7 +17,7 @@ import HomePage from "./components/home/HomePage.js";
 import ProfilePage from "./components/profile/ProfilePage.js";
 import MatchesPage from "./components/home/routePage/matchesPage/MatchesPage";
 import ChatPage from "./components/home/carpoolPage/chatPage/ChatPage";
-import Settings from "./components/Settings";
+import Settings from "./components/settings/SettingsPage";
 
 class App extends Component {
 
@@ -32,7 +32,7 @@ class App extends Component {
 					<Route path={"/HomePage/RouteMatches"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Chat"} exact render={(props) => <ChatPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
-					<Route path={"/Settings"} exact render={(props) => <Settings {...props}/>}/>
+					<Route path={"/Settings"} exact render={(props) => <Settings {...props} store={SettingsPageStore}/>}/>
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					<Route path={"/vouching/:_id"} exact component={Vouching}/>

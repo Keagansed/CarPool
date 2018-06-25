@@ -60,28 +60,28 @@ class NewTripModal extends Component{
                                 </div>
                                 {/* Static data will be replaced by dynamic data */}
                                 <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Marcus Bornman</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
+                                    <div className="col-8">Marcus Bornman</div>
+                                    <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Vernon Francis</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
+                                    <div className="col-8">Vernon Francis</div>
+                                    <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Leonardo Ianigro</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
+                                    <div className="col-8">Leonardo Ianigro</div>
+                                    <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Keagan Seddon</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
+                                    <div className="col-8">Keagan Seddon</div>
+                                    <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Michael Yatrakos</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
+                                    <div className="col-8">Michael Yatrakos</div>
+                                    <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey">
-                                    <div className="col-6">Myron Ouyang</div>
-                                    <div className="col-6 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
+                                    <div className="col-8">Myron Ouyang</div>
+                                    <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
                             </form>
                         </div>
