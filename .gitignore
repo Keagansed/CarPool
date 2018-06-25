@@ -2,7 +2,3 @@ node_modules/
 .vs/
 .idea/
 .vscode/
-package-lock.json
-package.json
-client/package.json
-client/package-lock.json
