@@ -158,7 +158,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 							<div className="col-md-12 col-12 profileHeader">
 								<div className="row w-100 m-0 h-100 py-3">
 									<div className="m-0 p-0 col-md-12" id="colHeaderImage">
-										<img src={profilePicture} id="profilePic" className="d-block mx-auto rounded-circle border-white profilePic" height="120" width="120" alt="s" />
+										<img src={profilePicture} id="profilePic" className="d-block mx-auto rounded-circle border-white profilePic" height="120" width="120" alt="profilePicture" />
 										<form encType="multipart/form-data" className="hidden">
 											<input type="file" name="file" id="file" onChange={this.uploadProfilePic}/>
 										</form>
@@ -233,16 +233,16 @@ import { getFromStorage } from '../utils/localStorage.js';
 										<a href="#" className="list-group-item list-group-item-action flex-column align-items-start bg-info text-white m-0 py-1">
 											<div className="row p-0">
 												<div className="col-3 col-md-3 text-center p-0">
-													<img className="d-block rounded-circle border-secondary mx-auto" src={profilePicture} id="imgProfilePic" width="80" height="80"/> 
+													<img className="d-block rounded-circle border-secondary mx-auto" src={profilePicture} id="imgProfilePic" width="80" height="80" alt="profilePicture" /> 
 												</div>
 												<div className="col-6 col-md-6 px-2">
 													<div className="row">
 														<div className="col-md-12 col-12 p-0">
-															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20"/>
-															<img className="d-block img-fluid d-inline-flex" src={starEmpty} width="20" height="20"/> 
+															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20" alt="filled star" />
+															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20" alt="filled star" />
+															<img className="d-block img-fluid d-inline-flex" src={starFilled} width="20" height="20" alt="filled star" />
+															<img className="d-block img-fluid d-inline-flex mx-1" src={starFilled} width="20" height="20" alt="filled star" />
+															<img className="d-block img-fluid d-inline-flex" src={starEmpty} width="20" height="20" alt="filled star" /> 
 														</div>
 														<div className="col-md-12 col-12 p-0">
 															<p className="text-secondary m-0">
@@ -258,7 +258,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 													</div>
 												</div>
 												<div className="mr-auto col-3 col-md-3">
-													<img className="d-block rounded-circle p-1 my-3 float-right" src={infoIcon} id="imgProfilePic" width="50" height="50"/> 
+													<img className="d-block rounded-circle p-1 my-3 float-right" src={infoIcon} id="imgProfilePic" width="50" height="50" alt="icon" /> 
 												</div>
 											</div>
 										</a>
