@@ -12,8 +12,8 @@ class LogoutSetting extends Component {
         return (
             <div className="mx-auto">
                 <Link to={"/"} onClick={this.handleLogout}>
-                <div className="container-fluid bordbot-2px-purple">
-                    <div className="row txt-purple padver-10px">
+                <div className="container-fluid bordbot-2px-white">
+                    <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
                                 <h5 className="mbottom-0">Log Out</h5>

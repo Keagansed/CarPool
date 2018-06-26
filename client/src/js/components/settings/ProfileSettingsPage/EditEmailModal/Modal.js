@@ -54,8 +54,8 @@ class EditEmailModal extends Component {
         );
         return (
             <div className="mx-auto">
-                <div className="container-fluid bordbot-2px-purple" onClick={this.toggle}>
-                    <div className="row txt-purple padver-10px">
+                <div className="container-fluid bordbot-2px-white" onClick={this.toggle}>
+                    <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
                                 <h5 className="mbottom-0">Edit Email</h5>

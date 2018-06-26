@@ -4,8 +4,8 @@ class UploadIDSetting extends Component {
     render() {
         return (
             <div className="mx-auto">
-                <div className="container-fluid bordbot-2px-purple">
-                    <div className="row txt-purple padver-10px">
+                <div className="container-fluid bordbot-2px-white">
+                    <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
                                 <h5 className="mbottom-0">Upload ID</h5>

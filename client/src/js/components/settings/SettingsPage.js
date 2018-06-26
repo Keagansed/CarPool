@@ -5,7 +5,6 @@ import { getFromStorage } from './../../utils/localStorage.js';
 import Navbar from './../navbar/Navbar';
 import NavTabs from './NavTabs';
 import ProfileSettings from './ProfileSettingsPage/ProfileSettings';
-import TrustSettings from './TrustSettingsPage/TrustSettings';
 import AlertsSettings from './AlertsSettingsPage/AlertsSettings';
 
 @observer class SettingsPage extends Component{
@@ -46,10 +45,6 @@ import AlertsSettings from './AlertsSettingsPage/AlertsSettings';
             {
                 return <ProfileSettings/>;            
             }
-            else if(store.trustTab === true)
-            {
-                return <TrustSettings/>;
-            }
             else if(store.alertsTab === true)
             {
                 return <AlertsSettings/>;
@@ -62,7 +57,7 @@ import AlertsSettings from './AlertsSettingsPage/AlertsSettings';
         const { token } = this.props.store;
         
         return(
-            <div className="size-100 bg-white">
+            <div className="size-100 bg-purple">
                     <NavTabs store={this.props.store} token={token}/>
                     {/* Padding is there for top and bottom navs*/}
                     <div className="padtop-50px padbot-50px">

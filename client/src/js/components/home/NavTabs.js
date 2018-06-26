@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
+import NewRouteModal from './newRouteModal/NewRouteModal';
+
 @observer class NavTabs extends Component{
 
     constructor(){
@@ -61,9 +63,7 @@ import React, { Component } from 'react';
                             Trips
                         </button>
                     </div>
-                    <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
-                        <i className="fa fa-plus"></i>
-                    </button>
+                    <NewRouteModal/>
                 </div>
             </div>
         )
