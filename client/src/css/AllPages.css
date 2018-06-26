@@ -57,6 +57,9 @@ html, body{
 .txt-30px{
     font-size: 30px;
 }
+.txt-25px{
+    font-size: 25px;
+}
 
 /* ============================================================================ */
 /*Margins*/
@@ -86,6 +89,12 @@ html, body{
 }
 .mbot-50px{
     margin-bottom: 50px;
+}
+.mleft-auto{
+    margin-left: auto;
+}
+.mright-auto{
+    margin-right: auto;
 }
 
 /* ============================================================================ */
@@ -280,6 +289,9 @@ input.bord-0:focus{
 /*Border radiuses*/
 .brad-2rem{
     border-radius: 2rem;
+}
+.brad-20px{
+    border-radius: 20px;
 }
 .brad-0{
     border-radius: 0px;
