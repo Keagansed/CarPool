@@ -49,6 +49,7 @@ import ReviewTripModal from './reviewTripModal/ReviewTripModal';
                             <div className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
                                 Home To Work
                             </div>
+                            {/* If this trip is still upcoming the below component should be CancelTripModal **Still to be implemented */}
                             <ReviewTripModal />
                         </div>
                     </div>
