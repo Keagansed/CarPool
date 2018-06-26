@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500');
 /* ============================================================================ */
 /*Body & html elements */
 html, body{
@@ -373,4 +373,14 @@ input:-webkit-autofill:focus {
 }
 .weekDays-selector input[type=checkbox]:checked + label {
     background: #6FEDB7;
+}
+/* ============================================================================ */
+/*SettingsPage*/
+/* modals */
+/* Change Autocomplete styles in Chrome*/
+.settingInput:-webkit-autofill,
+.settingInput:-webkit-autofill:hover,
+.settingInput:-webkit-autofill:focus {
+    -webkit-text-fill-color: #140D4F;
+    transition: background-color 5000s ease-in-out 0s;
 }

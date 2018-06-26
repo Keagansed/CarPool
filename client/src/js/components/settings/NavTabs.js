@@ -8,7 +8,6 @@ import React, { Component } from 'react';
 
         this.state = {
             profileTab: "active",
-            trustTab: "",
             alertsTab: "",    
         }
     }
@@ -19,18 +18,6 @@ import React, { Component } from 'react';
         this.props.store.toggleToProfile();
         this.setState({
             profileTab: "active",
-            trustTab: "",
-            alertsTab: "", 
-        })
-    }
-
-    handleTrustToggle = (event) => {
-        event.preventDefault();
-
-        this.props.store.toggleToTrust();
-        this.setState({
-            profileTab: "",
-            trustTab: "active",
             alertsTab: "", 
         })
     }
@@ -41,7 +28,6 @@ import React, { Component } from 'react';
         this.props.store.toggleToAlerts();
         this.setState({
             profileTab: "",
-            trustTab: "",
             alertsTab: "active", 
         })
     }
@@ -50,13 +36,10 @@ import React, { Component } from 'react';
         return(
             <div className="fixed-top container-fluid height-50px bg-aqua">
                 <div className="row font-20px height-100p">
-                    <button className={"btnTabWhiteActive  col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.profileTab} onClick={this.handleProfileToggle}>
+                    <button className={"btnTabWhiteActive  col-6 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.profileTab} onClick={this.handleProfileToggle}>
                         Profile
                     </button>
-                    <button className={"btnTabWhiteActive  col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.trustTab} onClick={this.handleTrustToggle}>
-                        Trust
-                    </button>
-                    <button className={"btnTabWhiteActive  col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.alertsTab} onClick={this.handleAlertsToggle}>
+                    <button className={"btnTabWhiteActive  col-6 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.alertsTab} onClick={this.handleAlertsToggle}>
                         Alerts
                     </button>
                 </div>
