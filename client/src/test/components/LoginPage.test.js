@@ -1,5 +1,5 @@
 import React from 'react';
-import LoginPage from '../../js/components/LoginPage';
+import LoginPage from '../../js/components/login/LoginPage';
 import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store'
 import renderer from 'react-test-renderer';

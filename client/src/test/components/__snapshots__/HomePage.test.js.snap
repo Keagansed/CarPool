@@ -2,156 +2,306 @@
 
 exports[`Home Page Component captures snapshot 1`] = `
 <div
-  className="HomePage"
+  className="size-100 bg-purple"
 >
   <div
-    className="p-0 page-content"
+    className="fixed-top container-fluid height-50px bg-aqua"
   >
     <div
-      className="container-fluid m-0"
+      className="row font-20px height-100p"
     >
       <div
-        className="row"
+        className="col-10 pad-0"
       >
-        <div
-          className="col-md-12 p-0"
+        <button
+          className="btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px active"
+          onClick={[Function]}
         >
-          <ul
-            className="nav nav-tabs bg-primary fixed"
-          >
-            <li
-              className="nav-item w-25 bg-info text-center px-0"
-            >
-              <a
-                className="nav-link bg-info active"
-                href=""
-                onClick={[Function]}
-              >
-                <b>
-                  <b>
-                    Routes
-                  </b>
-                </b>
-              </a>
-            </li>
-            <li
-              className="nav-item w-25 text-center bg-info"
-            >
-              <a
-                className="nav-link bg-info "
-                href=""
-                onClick={[Function]}
-              >
-                <b>
-                  <b>
-                    Carpools
-                  </b>
-                </b>
-              </a>
-            </li>
-            <li
-              className="nav-item w-25 text-center bg-info"
-            >
-              <a
-                className="nav-link bg-info "
-                href=""
-                onClick={[Function]}
-              >
-                <b>
-                  <b>
-                    Trips
-                  </b>
-                </b>
-              </a>
-            </li>
-            <li
-              className="nav-item w-25 bg-info text-center flex-center no-active"
-            >
-              <div
-                className="nav-link p-0 bg-info no-active"
-                href=""
-              >
-                <a
-                  className="text-secondary"
-                  href="/newRoute"
-                  onClick={[Function]}
-                >
-                  <i
-                    className="fa fa-plus fa-lg fa-fw d-inline nav-item-circle"
-                    onClick={undefined}
-                  />
-                </a>
-              </div>
-            </li>
-          </ul>
+          Routes
+        </button>
+        <button
+          className="btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px "
+          onClick={[Function]}
+        >
+          Carpools
+        </button>
+        <button
+          className="btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px "
+          onClick={[Function]}
+        >
+          Trips
+        </button>
+      </div>
+      <div
+        className="mx-auto"
+      >
+        <button
+          className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-plus"
+          />
+        </button>
+        <div
+          className="modal"
+          id="myModal"
+          role="dialog"
+          style={
+            Object {
+              "display": "none",
+            }
+          }
+          tabIndex="-1"
+        >
           <div
-            className="tab-content"
+            className="modal-dialog"
+            role="document"
           >
             <div
-              className="tab-pane show active"
-            />
+              className="modal-content"
+            >
+              <div
+                className="modal-header bg-aqua"
+              >
+                <h5
+                  className="modal-title fw-bold"
+                >
+                  Create a New Route
+                </h5>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <form>
+                  <div
+                    className="row"
+                  >
+                    <h6
+                      className="fw-bold mx-auto"
+                    >
+                      Time and Date
+                    </h6>
+                  </div>
+                  <div
+                    className="row padbot-10px"
+                  >
+                    <input
+                      className="col-5 form-control mx-auto brad-2rem"
+                      id="inputRouteTime"
+                      name="Time"
+                      placeholder="Time"
+                      required="required"
+                      type="time"
+                    />
+                    <input
+                      className="col-5 form-control mx-auto brad-2rem"
+                      id="inputRouteDate"
+                      name="Date"
+                      placeholder="Date"
+                      required="required"
+                      type="date"
+                    />
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <h6
+                      className="fw-bold mx-auto"
+                    >
+                      Repeat Weekly
+                    </h6>
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <div
+                      className="mx-auto"
+                    >
+                      <div
+                        className="weekDays-selector"
+                      >
+                        <input
+                          className="weekday"
+                          id="weekday-mon"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-mon"
+                        >
+                          M
+                        </label>
+                        <input
+                          className="weekday"
+                          id="weekday-tue"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-tue"
+                        >
+                          T
+                        </label>
+                        <input
+                          className="weekday"
+                          id="weekday-wed"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-wed"
+                        >
+                          W
+                        </label>
+                        <input
+                          className="weekday"
+                          id="weekday-thu"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-thu"
+                        >
+                          T
+                        </label>
+                        <input
+                          className="weekday"
+                          id="weekday-fri"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-fri"
+                        >
+                          F
+                        </label>
+                        <input
+                          className="weekday"
+                          id="weekday-sat"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-sat"
+                        >
+                          S
+                        </label>
+                        <input
+                          className="weekday"
+                          id="weekday-sun"
+                          type="checkbox"
+                        />
+                        <label
+                          htmlFor="weekday-sun"
+                        >
+                          S
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <h6
+                      className="fw-bold mx-auto"
+                    >
+                      Start and End Locations
+                    </h6>
+                  </div>
+                  <div
+                    className="row padbot-10px"
+                  >
+                    <input
+                      className="col-11 form-control mx-auto brad-2rem"
+                      id="inputRouteStart"
+                      name="StartLocation"
+                      placeholder="Start Location"
+                      required="required"
+                      type="text"
+                    />
+                  </div>
+                  <div
+                    className="row padbot-10px"
+                  >
+                    <input
+                      className="col-11 form-control mx-auto brad-2rem"
+                      id="inputRouteEnd"
+                      name="EndLocation"
+                      placeholder="End Location"
+                      required="required"
+                      type="text"
+                    />
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <button
+                      className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                      id="btnNewRoute"
+                      type="submit"
+                    >
+                      Add Route
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div
-    className="navbar-component navbarBottom"
+    className="padtop-50px padbot-50px"
+  />
+  <div
+    className="height-50px fixed-bottom container-fluid pad-10px bg-aqua"
   >
     <div
-      className="container-fluid p-0"
+      className="row"
     >
       <div
-        className="row"
+        className="col-4 txt-center"
       >
-        <div
-          className="col-md-12 "
+        <a
+          href="/Settings"
+          onClick={[Function]}
         >
-          <ul
-            className="nav nav-pills navbarBottom text-center"
-          >
-            <li
-              className="nav-item ml-auto w-25"
-            >
-              <a
-                className="nav-link no-hover"
-                href="/Setting"
-                onClick={[Function]}
-              >
-                <i
-                  className="fa fa-cog fa-2x text-secondary d-inline"
-                />
-                 
-              </a>
-            </li>
-            <li
-              className="nav-item w-25"
-            >
-              <a
-                className="nav-link no-hover"
-                href="/HomePage"
-                onClick={[Function]}
-              >
-                <i
-                  className="fa fa-fw fa-car fa-2x d-inline text-secondary"
-                />
-              </a>
-            </li>
-            <li
-              className="nav-item mr-auto text-secondary w-25"
-            >
-              <a
-                className="nav-link no-hover"
-                href="/ProfilePage/undefined"
-                onClick={[Function]}
-              >
-                <i
-                  className="fa fa-fw fa-2x fa-user d-inline text-secondary"
-                />
-              </a>
-            </li>
-          </ul>
-        </div>
+          <i
+            className="fa fa-cog txt-purple txt-30px"
+          />
+        </a>
+      </div>
+      <div
+        className="col-4 txt-center"
+      >
+        <a
+          href="/HomePage"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-home txt-purple txt-30px"
+          />
+        </a>
+      </div>
+      <div
+        className="col-4 txt-center"
+      >
+        <a
+          href="/ProfilePage/undefined"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-user txt-purple txt-30px"
+          />
+        </a>
       </div>
     </div>
   </div>

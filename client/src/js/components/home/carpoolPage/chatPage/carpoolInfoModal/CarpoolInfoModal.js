@@ -1,74 +1,63 @@
 import React, { Component } from 'react';
 
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
-  
-class CarpoolInfoModal extends Component {
-    constructor(props) {
+class CarpoolInfoModal extends Component{
+    constructor(props){
         super(props);
-        this.toggle = this.toggle.bind(this);
-  
-        this.state = {
-            toggle: false
+        this.state ={
+            user:[],
+        };
+    }
+
+    componentDidMount(){
+        fetch('/api/account/getAllUsers')
+            .then(res => res.json())
+            .then(json => this.setState({user: json}));
+    }
+
+    getUsername(_id)
+    {
+        for (var x in this.state.user)
+        {
+            if(this.state.user[x]._id === _id)
+            {
+                return this.state.user[x].firstName;
+            }
         }
+
     }
-  
-    toggle(event) {
-        this.setState(prevState => ({
-            toggle: !prevState.toggle
-        }));
-    }
-  
-    render() {
-        var modal = [];
-        modal.push(
-            // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Brogrammers Carpool</h5>
-                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto">Carpool Members</h6>
+
+    render(){
+        let users = [];
+
+        for(let user in this.props.users)
+        {
+            users.push(
+                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
+                </div>
+            );
+        }
+
+        return (
+            <div className="mx-auto">
+                <div key="0" className="modal" tabIndex="-1" role="dialog" id="carpoolInfoModal" >
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header bg-aqua">
+                                <h5 className="modal-title fw-bold">{this.props.carpoolName}</h5>
+                                <button type="button" className="close" data-toggle="modal" data-target="#carpoolInfoModal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div className="row bordbot-1px-dash-grey">
-                                <div className="col-7">Marcus Bornman</div><div className="col-5 vertical-right">View Profile</div>
-                            </div>
-                            <div className="row bordbot-1px-dash-grey">
-                                <div className="col-7">Vernon Francis</div><div className="col-5 vertical-right">View Profile</div>
-                            </div>
-                            <div className="row bordbot-1px-dash-grey">
-                                <div className="col-7">Leonardo Ianigro</div><div className="col-5 vertical-right">View Profile</div>
-                            </div>
-                            <div className="row bordbot-1px-dash-grey">
-                                <div className="col-7">Keagan Seddon</div><div className="col-5 vertical-right">View Profile</div>
-                            </div>
-                            <div className="row bordbot-1px-dash-grey">
-                                <div className="col-7">Michael Yatrakos</div><div className="col-5 vertical-right">View Profile</div>
-                            </div>
-                            <div className="row bordbot-1px-dash-grey">
-                                <div className="col-7">Myron Ouyang</div><div className="col-5 vertical-right">View Profile</div>
+                            <div className="modal-body">
+                                <div className="row bordbot-1px-dash-grey">
+                                    <h6 className="fw-bold mx-auto">Carpool Members</h6>
+                                </div>
+                                {users}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
-        return (
-            <div className="mx-auto">
-                <button className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.toggle}>
-                    Brogrammers Carpool
-                </button>
-                {modal}
             </div>
         );
     }

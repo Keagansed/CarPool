@@ -2,130 +2,144 @@
 
 exports[`Login Page Component captures snapshot 1`] = `
 <div
-  className="text-center"
+  className="vertical-center bg-purple"
 >
   <div
-    className="container"
+    className="container-fluid"
   >
     <div
-      className="row bigTopMargin"
+      className="row"
     >
-      <div
-        className="col-md-12"
-      >
-        <form
-          className=""
-        >
-          <div
-            className="form-group"
-          >
-            <input
-              className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-              id="txtEmail"
-              name="txtEmail"
-              onChange={[Function]}
-              placeholder="Email"
-              required="required"
-              type="email"
-            />
-          </div>
-          <div
-            className="form-group"
-          >
-            <input
-              className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-              id="txtPassword"
-              name="txtPassword"
-              onChange={[Function]}
-              placeholder="Password"
-              required="required"
-              type="password"
-            />
-          </div>
-          <p
-            className="my-2"
-            id="dividerOR"
-          >
-            <strike>
-                             
-            </strike>
-               
-            <b
-              className="small"
-            >
-              Forgot Password?
-            </b>
-              
-            <strike>
-                             
-            </strike>
-          </p>
-          <button
-            className="btn btn-primary roundCorners w-75 text-secondary my-3 font-weight-medium"
-            onClick={[Function]}
-            type="submit"
-          >
-            <b>
-              Login
-            </b>
-          </button>
-        </form>
-      </div>
+      <img
+        alt="carpool_logo"
+        className="img-fluid d-block mx-auto mbottom-2rem"
+        id="imgLogo"
+        src="logo.png"
+      />
     </div>
-  </div>
-  <div
-    className="text-center"
-  >
-    <div
-      className="container"
-    >
+    <form>
       <div
         className="row"
       >
-        <div
-          className="col-md-12"
-        >
-          <p
-            id="dividerOR"
-          >
-            <b
-              className="small font-weight-medium"
-            >
-              OR
-            </b>
-          </p>
-        </div>
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputEmail"
+          name="Email"
+          onChange={[Function]}
+          placeholder="Email"
+          required="required"
+          type="email"
+        />
       </div>
-    </div>
-  </div>
-  <div
-    className="p-0"
-  >
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputPassword"
+          name="Password"
+          onChange={[Function]}
+          placeholder="Password"
+          required="required"
+          type="password"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <button
+          className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+          id="btnLogin"
+          onClick={[Function]}
+          type="submit"
+        >
+          Login
+        </button>
+      </div>
+    </form>
     <div
-      className="text-center container"
+      className="row"
     >
       <div
-        className="row text-center"
+        className="mx-auto"
       >
-        <div
-          className="col-2-pr-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto"
+        <a
+          className="txt-white fw-100"
+          onClick={[Function]}
         >
-          <img
-            alt="fbLogin"
-            className="img-fluid d-block mx-auto"
-            id="btnFacebookLogin"
-            src="fb_icon.png"
-          />
-        </div>
+          Forgot Password?
+        </a>
         <div
-          className="col-2-pl-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto"
+          className="modal"
+          id="myModal"
+          role="dialog"
+          style={
+            Object {
+              "display": "none",
+            }
+          }
+          tabIndex="-1"
         >
-          <img
-            alt="googleLogin"
-            className="img-fluid d-block mx-auto"
-            id="btnGoogleLogin"
-            src="google_icon.png"
-          />
+          <div
+            className="modal-dialog"
+            role="document"
+          >
+            <div
+              className="modal-content"
+            >
+              <div
+                className="modal-header"
+              >
+                <h5
+                  className="modal-title"
+                >
+                  Forgot Password?
+                </h5>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <form>
+                  <div
+                    className="row"
+                  >
+                    <input
+                      className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+                      id="inputForgotEmail"
+                      name="Email"
+                      placeholder="Email"
+                      required="required"
+                      type="email"
+                    />
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <button
+                      className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+                      id="btnForgotPassword"
+                      onClick={undefined}
+                      type="submit"
+                    >
+                      Send Me My Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

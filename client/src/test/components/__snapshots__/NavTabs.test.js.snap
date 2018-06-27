@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavTabs Component captures snapshot 1`] = `
+<div
+  className="fixed-top container-fluid height-50px bg-aqua"
+>
+  <div
+    className="row font-20px height-100p"
+  >
+    <div
+      className="col-10 pad-0"
+    >
+      <button
+        className="btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px active"
+        onClick={[Function]}
+      >
+        Routes
+      </button>
+      <button
+        className="btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px "
+        onClick={[Function]}
+      >
+        Carpools
+      </button>
+      <button
+        className="btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px "
+        onClick={[Function]}
+      >
+        Trips
+      </button>
+    </div>
+    <div
+      className="mx-auto"
+    >
+      <button
+        className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-plus"
+        />
+      </button>
+      <div
+        className="modal"
+        id="myModal"
+        role="dialog"
+        style={
+          Object {
+            "display": "none",
+          }
+        }
+        tabIndex="-1"
+      >
+        <div
+          className="modal-dialog"
+          role="document"
+        >
+          <div
+            className="modal-content"
+          >
+            <div
+              className="modal-header bg-aqua"
+            >
+              <h5
+                className="modal-title fw-bold"
+              >
+                Create a New Route
+              </h5>
+              <button
+                aria-label="Close"
+                className="close"
+                onClick={[Function]}
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                >
+                  ×
+                </span>
+              </button>
+            </div>
+            <div
+              className="modal-body"
+            >
+              <form>
+                <div
+                  className="row"
+                >
+                  <h6
+                    className="fw-bold mx-auto"
+                  >
+                    Time and Date
+                  </h6>
+                </div>
+                <div
+                  className="row padbot-10px"
+                >
+                  <input
+                    className="col-5 form-control mx-auto brad-2rem"
+                    id="inputRouteTime"
+                    name="Time"
+                    placeholder="Time"
+                    required="required"
+                    type="time"
+                  />
+                  <input
+                    className="col-5 form-control mx-auto brad-2rem"
+                    id="inputRouteDate"
+                    name="Date"
+                    placeholder="Date"
+                    required="required"
+                    type="date"
+                  />
+                </div>
+                <div
+                  className="row"
+                >
+                  <h6
+                    className="fw-bold mx-auto"
+                  >
+                    Repeat Weekly
+                  </h6>
+                </div>
+                <div
+                  className="row"
+                >
+                  <div
+                    className="mx-auto"
+                  >
+                    <div
+                      className="weekDays-selector"
+                    >
+                      <input
+                        className="weekday"
+                        id="weekday-mon"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-mon"
+                      >
+                        M
+                      </label>
+                      <input
+                        className="weekday"
+                        id="weekday-tue"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-tue"
+                      >
+                        T
+                      </label>
+                      <input
+                        className="weekday"
+                        id="weekday-wed"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-wed"
+                      >
+                        W
+                      </label>
+                      <input
+                        className="weekday"
+                        id="weekday-thu"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-thu"
+                      >
+                        T
+                      </label>
+                      <input
+                        className="weekday"
+                        id="weekday-fri"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-fri"
+                      >
+                        F
+                      </label>
+                      <input
+                        className="weekday"
+                        id="weekday-sat"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-sat"
+                      >
+                        S
+                      </label>
+                      <input
+                        className="weekday"
+                        id="weekday-sun"
+                        type="checkbox"
+                      />
+                      <label
+                        htmlFor="weekday-sun"
+                      >
+                        S
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="row"
+                >
+                  <h6
+                    className="fw-bold mx-auto"
+                  >
+                    Start and End Locations
+                  </h6>
+                </div>
+                <div
+                  className="row padbot-10px"
+                >
+                  <input
+                    className="col-11 form-control mx-auto brad-2rem"
+                    id="inputRouteStart"
+                    name="StartLocation"
+                    placeholder="Start Location"
+                    required="required"
+                    type="text"
+                  />
+                </div>
+                <div
+                  className="row padbot-10px"
+                >
+                  <input
+                    className="col-11 form-control mx-auto brad-2rem"
+                    id="inputRouteEnd"
+                    name="EndLocation"
+                    placeholder="End Location"
+                    required="required"
+                    type="text"
+                  />
+                </div>
+                <div
+                  className="row"
+                >
+                  <button
+                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                    id="btnNewRoute"
+                    type="submit"
+                  >
+                    Add Route
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePage from '../../js/components/HomePage';
+import HomePage from '../../js/components/home/HomePage';
 import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
