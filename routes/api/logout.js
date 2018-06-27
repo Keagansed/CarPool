@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   const { query } = req;
   const { token } = query;
 
-  UserSession.deleteOne({
+  UserSession.remove({
   	userId:token,
   },(err,sessions)=>{
   	if(err){

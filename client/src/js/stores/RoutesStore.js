@@ -5,6 +5,17 @@ class routesStore {
     @observable routes = [];
     @observable routeSuccess = false;
 
+    @observable origin = {};
+    @observable destination = {};
+
+    @action setOrigin = (origin) => {
+        this.origin = origin;
+    }
+
+    @action setdestination = (destination) => {
+        this.destination = destination;
+    }
+    
     @action getRoutes = (token) => {
         fetch('/api/system/route/getRoutes?userId=' + token,{
             method:'GET',
@@ -18,7 +29,6 @@ class routesStore {
 
             if(json.success)
             {
-                console.log(json.data)
                 this.routes = json.data;
             }
             else

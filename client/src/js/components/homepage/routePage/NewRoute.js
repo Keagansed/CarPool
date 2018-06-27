@@ -1,8 +1,12 @@
-import '../../../../css/components/NewRoute.css'
+import '../../../../css/components/NewRoute.css';
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import RoutesStore from '../../../stores/RoutesStore'
+import RoutesStore from '../../../stores/RoutesStore';
+
+import MapWrapper from './MapWrapper';
+
+import LocationSearchInput from './GoogleAuto';
 
 @observer class NewRoute extends Component{
     constructor(){
@@ -15,7 +19,7 @@ import RoutesStore from '../../../stores/RoutesStore'
             endLocation: '',
             days: {
                 monday: false,
-                tuesday: false,
+                tuesday: false, 
                 wednesday: false,
                 thursday: false,
                 friday: false,
@@ -24,6 +28,8 @@ import RoutesStore from '../../../stores/RoutesStore'
             },
             time: '00:00',
             repeat: false,
+            reRender: true,
+
         }
     }
 
@@ -332,10 +338,11 @@ import RoutesStore from '../../../stores/RoutesStore'
         } = this.state;
 
         RoutesStore.newRoute(token, startLocation, endLocation, days, time, routeName, repeat)
-
+    
     }
 
     render(){
+        
         if(RoutesStore.routeSuccess){
             return(
                 <Redirect to="/HomePage"/>    
@@ -343,7 +350,8 @@ import RoutesStore from '../../../stores/RoutesStore'
         }
         else{
             return(
-                <div>                    
+                <div>      
+                             
                     <p className="m-2 font-weight-bold h1">  
                         <Link className="text-white" to="/Homepage">                    
                             &lt;
@@ -356,13 +364,15 @@ import RoutesStore from '../../../stores/RoutesStore'
                         </div>
 
                         <div className="form-group">
-                            <input type="text" placeholder="Start Location" onChange={this.updateStartValue}/>
+                            <LocationSearchInput placeholder='Origin'/>
                         </div>
 
                         <div className="form-group">
-                            <input type="text" placeholder="End Location" onChange={this.updateEndValue}/>
+                            <LocationSearchInput placeholder='Destination'/>
                         </div>
 
+                        <MapWrapper/>
+                        
                         <div className="form-group">
                             <label>Days: </label>
                             <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>

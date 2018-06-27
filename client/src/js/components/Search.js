@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import { searchUsers } from "../utils/searchQuery.js";
 import SearchResultList from './search/SearchResultList.js'
-//import '../../css/App.css';
 
 class Search extends Component {
 	goPro(){

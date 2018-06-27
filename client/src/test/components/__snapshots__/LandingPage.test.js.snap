@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Landing Page Component captures snapshot 1`] = `
+<div>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-12 my-4"
+      >
+        <img
+          alt="logo"
+          className="img-fluid d-block mx-auto"
+          id="imgLogo"
+          src="logo.png"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="text-center"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <a
+            className="btn w-75 text-center btn-primary text-secondary roundCorners font-weight-medium"
+            href="/Login"
+            id="btnLogin"
+            onClick={[Function]}
+          >
+            <b>
+              Login
+            </b>
+          </a>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <a
+            className="btn w-75 text-center btn-primary text-secondary roundCorners my-3 font-weight-medium"
+            href="/Register"
+            id="btnRegister"
+            onClick={[Function]}
+          >
+            <b>
+              Register
+            </b>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="py-2 text-center"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <p
+            className=""
+            id="dividerOR"
+          >
+            <strike>
+                                  
+            </strike>
+                
+            <b
+              className="small font-weight-medium"
+            >
+              OR
+            </b>
+                
+            <strike>
+                                  
+            </strike>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="p-0"
+  >
+    <div
+      className="text-center container"
+    >
+      <div
+        className="row text-center"
+      >
+        <div
+          className="col-2-pr-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto"
+        >
+          <img
+            alt="fbLogin"
+            className="img-fluid d-block mx-auto"
+            id="btnFacebookLogin"
+            src="fb_icon.png"
+          />
+        </div>
+        <div
+          className="col-2-pl-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto"
+        >
+          <img
+            alt="googleLogin"
+            className="img-fluid d-block mx-auto"
+            id="btnGoogleLogin"
+            src="google_icon.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../../../css/style.css';
+// import '../../../css/style.css';
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -80,7 +80,7 @@ class VouchAverage extends Component {
 
   render() {
     return (
-      <font color="#140d4f" className="text-primary">
+      <font>
         {this.averageRating().toFixed(1)}
       </font>
       // <div>
