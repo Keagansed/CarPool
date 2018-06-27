@@ -157,6 +157,10 @@ html, body{
     color: darkgray;
 }
 
+.txt-aqua{
+    color: #6FEDB7;
+}
+
 /* ============================================================================ */
 /*Background colours*/
 .bg-aqua{
@@ -170,6 +174,10 @@ html, body{
 }
 .bg-whitelight{
     background-color: rgba(255, 255, 255, 0.349);
+}
+
+.bg-red{
+    background-color: red;
 }
 
 /* ============================================================================ */
@@ -245,6 +253,9 @@ html, body{
 }
 .padright-0{
     padding-right: 0;
+}
+.padright-10px{
+    padding-right: 10px;
 }
 .padtop-10px{
     padding-top: 10px;
@@ -431,4 +442,11 @@ input:-webkit-autofill:focus {
 /* Stars margin */
 label {
     margin-bottom: 0;
+}
+
+/* ============================================================================ */
+/*TripSuggest*/
+
+.tripSuggest{
+    white-space:pre-wrap;
 }

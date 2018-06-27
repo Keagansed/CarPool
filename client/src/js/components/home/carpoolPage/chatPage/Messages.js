@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Message from './Message';
+import TripSuggest from './TripSuggest';
 import MessageForm from './MessageForm';
 import app from '../../../../stores/MessagingStore'
 import "../../../../../css/components/Spinner.css"
@@ -22,6 +23,7 @@ class Messages extends Component {
         };
 
         this.addMessage = this.addMessage.bind(this);
+        this.suggestTrip = this.suggestTrip.bind(this);
         this.database = app.database().ref().child('groupChats/'+this.props.carpoolID);
         this.messages = app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages");
         this.users = app.database().ref().child('groupChats/'+this.props.carpoolID+"/users");
@@ -35,6 +37,9 @@ class Messages extends Component {
                 messageContent: snap.val().messageContent,
                 userID: snap.val().userID,
                 dateTime: snap.val().dateTime,
+                tripSuggest: snap.val().tripSuggest,
+                usersResponded: snap.val().usersResponded,
+                users: snap.val().users,
             });
 
             this.setState({
@@ -60,9 +65,12 @@ class Messages extends Component {
         });
     }
 
-    addMessage(message, userID)
-    {
-        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date())});
+    addMessage(message, userID) {
+        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:false});
+    }
+
+    suggestTrip(message, userID, users) {
+        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users});
     }
 
     render() {
@@ -102,15 +110,24 @@ class Messages extends Component {
                                 catch (e) {
                                     userColour = "txt-white";
                                 }
-                                return(
-                                    <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
-                                )
-                            })
+                                if(message.tripSuggest){
+                                    {/*window.alert(message.usersResponded);*/}
+                                    return(
+                                        <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.carpoolID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                    );
+                                }
+                                else{
+                                    return(
+                                        <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                    );
+                                }
+
+;                            })
                         }
                     </div>
                     <MessageForm addMessage={this.addMessage}/>
                     <CarpoolInfoModal users={this.state.users} carpoolName={this.props.carpoolName}/>
-                    <NewTripModal users={this.state.users}/>
+                    <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip}/>
                 </div>
             );
         }

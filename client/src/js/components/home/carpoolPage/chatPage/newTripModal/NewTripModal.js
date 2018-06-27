@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 import WeekdaySelector from './WeekdaySelector';
 
+import {
+    getFromStorage
+} from '../../../../../utils/localStorage.js'
+
 class NewTripModal extends Component{
     constructor(props){
         super(props);
@@ -28,6 +32,56 @@ class NewTripModal extends Component{
 
     }
 
+    suggestTrip(){
+        let days = "";
+        if(document.getElementById("weekday-mon").checked)
+            days = days + "Mon ";
+        if(document.getElementById("weekday-tue").checked)
+            days = days + "Tue ";
+        if(document.getElementById("weekday-wed").checked)
+            days = days + "Wed ";
+        if(document.getElementById("weekday-thu").checked)
+            days = days + "Thu ";
+        if(document.getElementById("weekday-fri").checked)
+            days = days + "Fri ";
+        if(document.getElementById("weekday-sat").checked)
+            days = days + "Sat ";
+        if(document.getElementById("weekday-sun").checked)
+            days = days + "Sun ";
+
+        let userNames = "";
+        let users = [];
+        for(let user in this.props.users)
+        {
+            if(document.getElementById(user).checked){
+                userNames = userNames + this.getUsername(user) + " ";
+                users[user]=true;
+            }
+        }
+
+        let messageContent = document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
+        "Days: " + days + "\r\n" +
+        "Members: " +  userNames;
+
+        document.getElementById("inputTripTime").value = "";
+        document.getElementById("inputTripDate").value = "";
+
+        document.getElementById("weekday-mon").checked = false;
+        document.getElementById("weekday-tue").checked = false;
+        document.getElementById("weekday-wed").checked = false;
+        document.getElementById("weekday-thu").checked = false;
+        document.getElementById("weekday-fri").checked = false;
+        document.getElementById("weekday-sat").checked = false;
+        document.getElementById("weekday-sun").checked = false;
+
+        for(let user in this.props.users)
+        {
+            document.getElementById(user).checked = false;
+        }
+
+        this.props.suggestTrip(messageContent, getFromStorage('sessionKey').token, users);
+    }
+
     render(){
         let users = [];
 
@@ -35,7 +89,7 @@ class NewTripModal extends Component{
         {
             users.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
+                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right"><input id={user} type="checkbox"/></div>
                 </div>
             );
         }
@@ -72,6 +126,15 @@ class NewTripModal extends Component{
                                         <h6 className="fw-bold mx-auto">Participants</h6>
                                     </div>
                                     {users}
+                                    <div className="row padtop-20px">
+                                        <div className="col-1"></div>
+                                        <div className="col-10">
+                                            <a onClick={() => this.suggestTrip()} data-toggle="modal" data-target="#newTripModal" className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnSuggestTrip">
+                                                Suggest
+                                            </a>
+                                        </div>
+                                        <div className="col-1"></div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

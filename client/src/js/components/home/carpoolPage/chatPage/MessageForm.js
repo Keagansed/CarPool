@@ -23,7 +23,7 @@ class MessageForm extends Component {
 
     sendMessage()
     {
-        this.props.addMessage(this.state.newMessageContent, getFromStorage('sessionKey').token);
+        this.props.addMessage(this.state.newMessageContent, getFromStorage('sessionKey').token, false);
         this.setState({
             newMessageContent: '',
         })
