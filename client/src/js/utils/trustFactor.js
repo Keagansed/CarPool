@@ -1,4 +1,6 @@
-export const calcSecLvl = function(user){
+ //calls all the other funtions in the file to calculate the sec lvl
+ //set the weights of each helper function in this function
+export const calcSecLvl = function(user){ 
     let secLvl = 0;
     secLvl += hasDocs(user);
     secLvl += reviewFactor(user) * 3;
@@ -6,6 +8,7 @@ export const calcSecLvl = function(user){
     return secLvl;
 }
 
+//all functions bellow should return a value >= 0 and <= 1
 function hasDocs(user){
     let temp = 0;
     if (user.driversLicense !== "")
