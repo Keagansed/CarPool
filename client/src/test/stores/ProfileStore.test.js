@@ -11,7 +11,7 @@ describe ('Profile Store test functions', () => {
             user : {},
             secLvl : 1,
             profileFound : false,
-            token : null
+            token : ''
         };
 
         data = {

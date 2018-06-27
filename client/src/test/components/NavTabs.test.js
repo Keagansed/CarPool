@@ -1,19 +1,18 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-import Background from '../../js/components/Background';
+import NavTabs from '../../js/components/home/NavTabs';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 
-describe('Background Component', () => {
+describe('NavTabs Component', () => {
     let container;
 
     beforeEach(() => {
-        container = shallow(<Background />);
+        container = shallow(<NavTabs />);
     });
 
     it('captures snapshot', () => {
-        const wrapper = renderer.create(<Background />).toJSON();
+        const wrapper = renderer.create(<NavTabs />).toJSON();
         expect(wrapper).toMatchSnapshot();
     });
 

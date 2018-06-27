@@ -1,174 +1,114 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Register Component captures snapshot 1`] = `
-<div>
+<div
+  className="vertical-center bg-purple"
+>
   <div
-    className="text-center"
+    className="container-fluid"
   >
     <div
-      className="container"
+      className="row"
     >
-      <div
-        className="row bigTopMargin"
-      >
-        <div
-          className="col-md-12"
-        >
-          <form
-            className=""
-          >
-            <div
-              className="form-group my-2"
-            >
-              <input
-                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-                id="txtFirstName"
-                name="txtFirstName"
-                onChange={[Function]}
-                placeholder="First Name"
-                required="required"
-                type="text"
-              />
-            </div>
-            <div
-              className="form-group"
-            >
-              <input
-                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-                id="txtLastName"
-                name="txtLastName"
-                onChange={[Function]}
-                placeholder="Last Name"
-                required="required"
-                type="text"
-              />
-            </div>
-            <div
-              className="form-group"
-            >
-              <input
-                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-                id="txtID"
-                name="txtID"
-                onChange={[Function]}
-                placeholder="ID Number"
-                required="required"
-                type="text"
-              />
-            </div>
-            <div
-              className="form-group"
-            >
-              <input
-                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-                id="txtEmail"
-                name="txtEmail"
-                onChange={[Function]}
-                placeholder="Email"
-                required="required"
-                type="email"
-              />
-            </div>
-            <div
-              className="form-group"
-            >
-              <input
-                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-                id="txtPassword"
-                name="txtPassword"
-                onChange={[Function]}
-                placeholder="Password"
-                required="required"
-                type="password"
-              />
-            </div>
-            <div
-              className="form-group"
-            >
-              <input
-                className="form-control roundCorners bg-info border-1_5 border-primary w-75 mx-auto text-white"
-                id="txtConfirmPassword"
-                name="txtConfirmPassword"
-                onChange={[Function]}
-                placeholder="Confirm Password"
-                required="required"
-                type="password"
-              />
-            </div>
-            <button
-              className="mt-3 mb-2 btn btn-primary roundCorners w-75 text-secondary font-weight-medium"
-              onClick={[Function]}
-              type="submit"
-            >
-              <b>
-                Register
-              </b>
-            </button>
-          </form>
-        </div>
-      </div>
+      <img
+        alt="carpool_logo"
+        className="img-fluid d-block mx-auto mbottom-2rem"
+        id="imgLogo"
+        src="logo.png"
+      />
     </div>
-  </div>
-  <div
-    className="py-2 text-center"
-  >
-    <div
-      className="container"
-    >
+    <form>
       <div
         className="row"
       >
-        <div
-          className="col-md-12"
-        >
-          <strike>
-                                
-          </strike>
-              
-          <b
-            className="small font-weight-medium"
-          >
-            OR
-          </b>
-              
-          <strike>
-                                
-          </strike>
-        </div>
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputFirstName"
+          name="FirstName"
+          onChange={[Function]}
+          placeholder="First Name"
+          required="required"
+          type="text"
+        />
       </div>
-    </div>
-  </div>
-  <div
-    className="my-2"
-  >
-    <div
-      className="text-center container"
-    >
       <div
-        className="row text-center"
+        className="row"
       >
-        <div
-          className="col-2-pr-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 ml-auto"
-        >
-          <img
-            alt="fbLogin"
-            className="img-fluid d-block mx-auto"
-            id="btnFacebookLogin"
-            src="fb_icon.png"
-          />
-        </div>
-        <div
-          className="col-2-pl-5 col-sm-2 col-md-6 col-lg-2 col-xl-2 mr-auto"
-        >
-          <img
-            alt="googleLogin"
-            className="img-fluid d-block mx-auto"
-            id="btnGoogleLogin"
-            src="google_icon.png"
-          />
-        </div>
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputLastName"
+          name="LastName"
+          onChange={[Function]}
+          placeholder="Last Name"
+          required="required"
+          type="text"
+        />
       </div>
-    </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputID"
+          name="ID"
+          onChange={[Function]}
+          placeholder="ID Number"
+          required="required"
+          type="text"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputEmail"
+          name="Email"
+          onChange={[Function]}
+          placeholder="Email"
+          required="required"
+          type="email"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputPassword"
+          name="Password"
+          onChange={[Function]}
+          placeholder="Password"
+          required="required"
+          type="password"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputConfirmPassword"
+          name="ConfirmPassword"
+          onChange={[Function]}
+          placeholder="Confirm Password"
+          required="required"
+          type="password"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <button
+          className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+          id="btnLogin"
+          onClick={[Function]}
+          type="submit"
+        >
+          Register
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 `;

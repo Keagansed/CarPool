@@ -2,62 +2,46 @@
 
 exports[`Navbar Component captures snapshot 1`] = `
 <div
-  className="navbar-component navbarBottom"
+  className="height-50px fixed-bottom container-fluid pad-10px bg-aqua"
 >
   <div
-    className="container-fluid p-0"
+    className="row"
   >
     <div
-      className="row"
+      className="col-4 txt-center"
     >
-      <div
-        className="col-md-12 "
+      <a
+        href="/Settings"
+        onClick={[Function]}
       >
-        <ul
-          className="nav nav-pills navbarBottom text-center"
-        >
-          <li
-            className="nav-item ml-auto w-25"
-          >
-            <a
-              className="nav-link no-hover"
-              href="/Setting"
-              onClick={[Function]}
-            >
-              <i
-                className="fa fa-cog fa-2x text-secondary d-inline"
-              />
-               
-            </a>
-          </li>
-          <li
-            className="nav-item w-25"
-          >
-            <a
-              className="nav-link no-hover"
-              href="/HomePage"
-              onClick={[Function]}
-            >
-              <i
-                className="fa fa-fw fa-car fa-2x d-inline text-secondary"
-              />
-            </a>
-          </li>
-          <li
-            className="nav-item mr-auto text-secondary w-25"
-          >
-            <a
-              className="nav-link no-hover"
-              href="/ProfilePage/undefined"
-              onClick={[Function]}
-            >
-              <i
-                className="fa fa-fw fa-2x fa-user d-inline text-secondary"
-              />
-            </a>
-          </li>
-        </ul>
-      </div>
+        <i
+          className="fa fa-cog txt-purple txt-30px"
+        />
+      </a>
+    </div>
+    <div
+      className="col-4 txt-center"
+    >
+      <a
+        href="/HomePage"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-home txt-purple txt-30px"
+        />
+      </a>
+    </div>
+    <div
+      className="col-4 txt-center"
+    >
+      <a
+        href="/ProfilePage/undefined"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-user txt-purple txt-30px"
+        />
+      </a>
     </div>
   </div>
 </div>
