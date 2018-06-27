@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
@@ -62,7 +63,13 @@ import React, { Component } from 'react';
                         </button>
                     </div>
                     <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
-                        <i className="fa fa-plus"></i>
+                        <Link to={{
+                            pathname: `/newRoute`,
+                            token: this.props.token,
+                            }}
+                        >
+                            <i className="fa fa-plus"></i>
+                        </Link>
                     </button>
                 </div>
             </div>

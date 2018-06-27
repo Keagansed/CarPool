@@ -4,6 +4,7 @@ class routesStore {
 
     @observable routes = [];
     @observable routeSuccess = false;
+    @observable loadingRoutes = true;
 
     @observable origin = {};
     @observable destination = {};
@@ -30,6 +31,7 @@ class routesStore {
             if(json.success)
             {
                 this.routes = json.data;
+                this.loadingRoutes = false;
             }
             else
             {
@@ -51,9 +53,6 @@ class routesStore {
             repeat: repeat
         }
 
-        this.routes.push(route);
-
-
         fetch('/api/system/route/newRoute',{
             method:'POST',
             headers:{
@@ -72,7 +71,14 @@ class routesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            this.routeSuccess = true;
+            if(json.success === true) {
+                this.routeSuccess = true;
+                this.routes.push(route);
+            }
+            else{
+                window.alert("Failed to create new route");
+            }
+            
         })  
 
     }
