@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import Messages from './Messages';
-import CarpoolInfoModal from './carpoolInfoModal/CarpoolInfoModal';
-import NewTripModal from './newTripModal/NewTripModal';
 
 @observer class ChatPage extends Component{
 
@@ -33,12 +31,10 @@ import NewTripModal from './newTripModal/NewTripModal';
                     })
                 }
             })
-        }  
+        }
     }
 
     render(){
-        //const { token } = this.props.store;
-        
         return(
             <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -48,21 +44,17 @@ import NewTripModal from './newTripModal/NewTripModal';
                                     <i className="fa fa-chevron-circle-left"></i>
                                 </button>
                             </Link>
-                            <CarpoolInfoModal />
-                            <NewTripModal />
+                            <button data-toggle="modal" data-target="#carpoolInfoModal" className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                {this.props.match.params.carpoolName}
+                            </button>
+                            <button data-toggle="modal" data-target="#newTripModal"  className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
+                                <i className="fa fa-car"></i>
+                            </button>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
                     <div className="padtop-50px padbot-50px">
-                        <Messages/>
-                    </div>
-                    <div className="fixed-bottom container-fluid height-50px">
-                        <div className="row height-100p txt-purple font-20px fw-bold">
-                            <input type="text" className="col-10 bord-0 focusbord-1px-purple"/>
-                            <button className="col-2 btn height-100p bg-white txt-purple fw-bold brad-0 font-20px txt-center">
-                                <i className="fa fa-arrow-circle-right"></i>
-                            </button>
-                        </div>
+                        <Messages carpoolID={this.props.match.params.carpoolID} carpoolName={this.props.match.params.carpoolName}/>
                     </div>
             </div>
         );

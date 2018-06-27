@@ -137,6 +137,26 @@ html, body{
     color: orange !important;
 }
 
+.txt-lightBlue{
+    color: #00B7FF;
+}
+
+.txt-pink{
+    color: #e83e8c;
+}
+
+.txt-mediumPurple{
+    color: mediumpurple;
+}
+
+.txt-lime{
+    color:lime;
+}
+
+.txt-grey{
+    color: darkgray;
+}
+
 /* ============================================================================ */
 /*Background colours*/
 .bg-aqua{
@@ -311,6 +331,12 @@ input.bord-0:focus{
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.autoScroll{
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    overflow: scroll;
 }
 
 /* ============================================================================ */
