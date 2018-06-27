@@ -81,6 +81,9 @@ html, body{
 .mtop-50px{
     margin-top: 50px;
 }
+.mtop-10px{
+    margin-top: 10px;
+}
 .mtop-0{
     margin-top: 0;
 }
@@ -395,4 +398,11 @@ input:-webkit-autofill:focus {
 .settingInput:-webkit-autofill:focus {
     -webkit-text-fill-color: #140D4F;
     transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ============================================================================ */
+/*Review Trip Modal*/
+/* Stars margin */
+label {
+    margin-bottom: 0;
 }

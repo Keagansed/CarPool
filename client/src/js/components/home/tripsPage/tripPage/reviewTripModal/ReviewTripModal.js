@@ -30,7 +30,7 @@ class ReviewTripModal extends Component{
     }
 
     render(){
-        const { rating } = this.state;
+        //const { rating } = this.state;
         var modal = [];
         modal.push(
             // Modal
@@ -48,6 +48,11 @@ class ReviewTripModal extends Component{
                             <UserReview/>
                             <UserReview/>
                             <UserReview/>
+                            <div className="row">
+                                <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnSubmitReview">
+                                    Submit Review
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

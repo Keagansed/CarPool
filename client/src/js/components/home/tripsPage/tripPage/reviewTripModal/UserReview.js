@@ -30,7 +30,7 @@ class UserReview extends Component{
                 </div>
                 <div className="row">
                     <div className="col-5 mleft-auto">Rating:</div>
-                    <div className="col-5 vertical-right txt-20px mright-auto">
+                    <div className="col-5 vertical-right mright-auto">
                         <StarRatingComponent 
                             name="rate1" 
                             starCount={5}

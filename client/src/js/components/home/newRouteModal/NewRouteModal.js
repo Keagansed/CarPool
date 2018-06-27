@@ -61,8 +61,13 @@ class NewRouteModal extends Component{
                                 <div className="row padbot-10px">
                                     <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="Start Location" required="required" name="StartLocation" id="inputRouteStart"/> 
                                 </div>
-                                <div className="row">
+                                <div className="row padbot-10px">
                                     <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="End Location" required="required" name="EndLocation" id="inputRouteEnd"/> 
+                                </div>
+                                <div className="row">
+                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                        Add Route
+                                    </button>
                                 </div>
                             </form>
                         </div>
