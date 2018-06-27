@@ -1,4 +1,5 @@
 import { observable, action, computed } from 'mobx';
+import { calcSecLvl } from '../utils/trustFactor.js'
 
 class profileStore {
 
@@ -24,6 +25,7 @@ class profileStore {
             this.profileFound = true;
             this.opacity = "";
             this.setEdit();
+            this.secLvl = calcSecLvl(this.user);
         })
     }
 
