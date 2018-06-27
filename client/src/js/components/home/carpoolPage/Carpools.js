@@ -10,12 +10,12 @@ import CarpoolOffer from './CarpoolOffer';
 //                         <h4 className="mbottom-0">Carpool Offers</h4>
 //                 </div>
 //                 {/*Just an example... */}
-//                 <CarpoolOffer /> 
+//                 <CarpoolOffer />
 //                 <div className="pad-10px bg-whitelight txt-white">
 //                         <h4 className="mbottom-0">Your Carpools</h4>
 //                 </div>
 //                 {/*Just an example... */}
-//                 <Carpool />                                                            
+//                 <Carpool />
 
 import 'firebase/database';
 import app from '../../../stores/MessagingStore'
@@ -159,7 +159,15 @@ class Carpools extends Component {
 
         return (
             <div>
-                <div className="container-fluid bg-purple">
+                <div className="scroll-vert">
+                    <div className="pad-10px bg-whitelight txt-white">
+                        <h4 className="mbottom-0">Carpool Offers</h4>
+                    </div>
+                    {/*Just an example... */}
+                    <CarpoolOffer />
+                    <div className="pad-10px bg-whitelight txt-white">
+                        <h4 className="mbottom-0">Your Carpools</h4>
+                    </div>
                     {
                         this.state.groupChats.map((groupChat) => {
                             let verifyUser = false;
