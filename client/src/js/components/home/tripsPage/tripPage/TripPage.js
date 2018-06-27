@@ -3,11 +3,9 @@ import { observer } from "mobx-react";
 import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
-import Messages from './Messages';
-import CarpoolInfoModal from './carpoolInfoModal/CarpoolInfoModal';
-import NewTripModal from './newTripModal/NewTripModal';
+import ReviewTripModal from './reviewTripModal/ReviewTripModal';
 
-@observer class ChatPage extends Component{
+@observer class TripPage extends Component{
 
     constructor(){
         super()
@@ -48,25 +46,20 @@ import NewTripModal from './newTripModal/NewTripModal';
                                     <i className="fa fa-chevron-circle-left"></i>
                                 </button>
                             </Link>
-                            <CarpoolInfoModal />
-                            <NewTripModal />
+                            <div className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                Home To Work
+                            </div>
+                            {/* If this trip is still upcoming the below component should be CancelTripModal **Still to be implemented */}
+                            <ReviewTripModal />
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
-                    <div className="padtop-50px padbot-50px">
-                        <Messages/>
-                    </div>
-                    <div className="fixed-bottom container-fluid height-50px">
-                        <div className="row height-100p txt-purple font-20px fw-bold">
-                            <input type="text" className="col-10 bord-0 focusbord-1px-purple"/>
-                            <button className="col-2 btn height-100p bg-white txt-purple fw-bold brad-0 font-20px txt-center">
-                                <i className="fa fa-arrow-circle-right"></i>
-                            </button>
-                        </div>
+                    <div className="padtop-50px">
+                        
                     </div>
             </div>
         );
     }
 }
 
-export default ChatPage;
+export default TripPage;

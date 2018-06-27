@@ -5,7 +5,7 @@ class Trip  extends Component {
     render(){
         return(
             <div className="container-fluid bg-purple bordbot-2px-white">
-                <Link to={`/HomePage/`}>
+                <Link to={`/HomePage/Trip`}>
                     <div className="row txt-white padver-10px">
                         <div className="col-8">
                             <div className="col-12">

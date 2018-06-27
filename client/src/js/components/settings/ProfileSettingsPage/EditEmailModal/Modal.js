@@ -7,7 +7,7 @@ const hide = {
     display: 'none'
 };
   
-class Modal extends Component {
+class EditEmailModal extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
@@ -30,8 +30,8 @@ class Modal extends Component {
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Forgot Password?</h5>
+                        <div className="modal-header bg-aqua">
+                            <h5 className="modal-title fw-bold">Edit Email</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -39,11 +39,11 @@ class Modal extends Component {
                         <div className="modal-body">
                             <form>
                                 <div className="row">
-                                    <input type="email" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem" placeholder="Email" required="required" name="Email" id="inputForgotEmail"/> 
+                                    <input type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Email" required="required" name="email" id="changeEmail"/> 
                                 </div>
                                 <div className="row">
-                                    <button onClick={this.handleLogin} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnForgotPassword">
-                                        Send Me My Password
+                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
+                                        Submit Change
                                     </button>
                                 </div>
                             </form>
@@ -54,13 +54,24 @@ class Modal extends Component {
         );
         return (
             <div className="mx-auto">
-                <a className="txt-white fw-100" onClick={this.toggle}>
-                    Forgot Password?
-                </a>
+                <div className="container-fluid bordbot-2px-white" onClick={this.toggle}>
+                    <div className="row txt-white padver-10px">
+                        <div className="col-9">
+                            <div className="col-12">
+                                <h5 className="mbottom-0">Edit Email</h5>
+                            </div>
+                        </div>
+                        <div className="col-3 vertical-right">
+                            <div className="col-12">
+                                <h5 className="mbottom-0"><i className="fa fa-at"></i></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {modal}
             </div>
         );
     }
 }
 
-export default Modal;
+export default EditEmailModal;

@@ -79,12 +79,9 @@ import Modal from './modal';
                             </div>
                         </form>
                         <div className="row">
-                            <a data-toggle="modal" data-target="#myModal" className="mx-auto txt-white fw-100" id="linkForgotPassword">
-                                Forgot Password?
-                            </a>
+                            <Modal />
                         </div>
                     </div>
-                    <Modal />
                 </div>
             );
         }else{

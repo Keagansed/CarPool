@@ -83,11 +83,6 @@ class NewTripModal extends Component{
                                     <div className="col-8">Myron Ouyang</div>
                                     <div className="col-4 vertical-right"><input type="checkbox" className="form-check-input" value=""/></div>
                                 </div>
-                                <div className="row mtop-10px">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnNewTrip">
-                                        Suggest Trip
-                                    </button>
-                                </div>
                             </form>
                         </div>
                     </div>
