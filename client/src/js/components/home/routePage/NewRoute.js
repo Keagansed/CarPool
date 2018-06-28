@@ -343,7 +343,7 @@ import RoutesStore from '../../../stores/RoutesStore'
         }
         else{
             return(
-                <div>                    
+                <div className="bg-purple size-100">                    
                     <p className="m-2 font-weight-bold h1">  
                         <Link className="text-white" to="/Homepage">                    
                             &lt;

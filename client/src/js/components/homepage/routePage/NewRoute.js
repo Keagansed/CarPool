@@ -15,8 +15,8 @@ import LocationSearchInput from '../../home/newRouteModal/GoogleAuto';
         this.state = {
             token: '',
             routeName: '',
-            startLocation: '',
-            endLocation: '',
+            startLocation: 'Pretoria',
+            endLocation: 'Joburg',
             days: {
                 monday: false,
                 tuesday: false, 
@@ -350,7 +350,7 @@ import LocationSearchInput from '../../home/newRouteModal/GoogleAuto';
         }
         else{
             return(
-                <div>      
+                <div className="bg-purple size-100">      
                              
                     <p className="m-2 font-weight-bold h1">  
                         <Link className="text-white" to="/Homepage">                    
@@ -364,17 +364,17 @@ import LocationSearchInput from '../../home/newRouteModal/GoogleAuto';
                         </div>
 
                         <div className="form-group">
-                            <LocationSearchInput placeholder='Origin'/>
+                            <LocationSearchInput placeholder='Origin' onChange={this.updateStartValue}/>
                         </div>
 
                         <div className="form-group">
-                            <LocationSearchInput placeholder='Destination'/>
+                            <LocationSearchInput placeholder='Destination' onChange={this.updateEndValue}/>
                         </div>
 
                         <MapWrapper/>
                         
                         <div className="form-group">
-                            <label>Days: </label>
+                            <label className="txt-white">Days: </label>
                             <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>
                             <input className={"button-" + this.state.days.tuesday} type="button" value="T" onClick={this.toggleTuesday}/>
                             <input className={"button-" + this.state.days.wednesday} type="button" value="W" onClick={this.toggleWednesday}/>
@@ -385,12 +385,12 @@ import LocationSearchInput from '../../home/newRouteModal/GoogleAuto';
                         </div>
 
                         <div className="form-group">
-                            <label>Time: </label>
+                            <label className="txt-white">Time: </label>
                             <input type="time" onChange={this.updateTimeValue}/>
                         </div>
 
                         <div className="form-group"> 
-                            <label>Repeat: </label>
+                            <label className="txt-white">Repeat: </label>
                             <input type="checkbox" onChange={this.updateRepeatValue}/>
                         </div> 
 

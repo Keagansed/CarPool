@@ -14,7 +14,7 @@ import RouteStore from '../../../stores/RouteStore';
 
     render(){
 
-        const Routes = this.props.store.routes.map(route => 
+        const Routes = this.props.store.routes.map(route =>             
             <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
         )
 
