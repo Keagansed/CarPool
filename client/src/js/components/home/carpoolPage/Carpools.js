@@ -98,7 +98,9 @@ class Carpools extends Component {
         let number = Math.floor(Math.random() * 7);
         if(!this.state.colours[number])
         {
-            this.state.colours[number] = true;
+            let temp = this.state.colours;
+            temp[number] = true;
+            this.setState({colours: temp});
             return colours[number];
         }
         else
