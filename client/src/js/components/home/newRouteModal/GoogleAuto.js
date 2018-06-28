@@ -43,19 +43,19 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
                         <input
                         {...getInputProps({
                             placeholder: this.props.placeholder,
-                            className: 'location-search-input' //=========== Class to change the shape and size of input box
+                            className: 'col-11 form-control mx-auto brad-2rem' // Class to change the input box
                         })}
                         />
-                        <div className="autocomplete-dropdown-container">
+                        <div className="autocomplete-dropdown-container"> {/*Class for the dropdown box that contains all the suggestions*/}
                             {suggestions.map(suggestion => {
                                 const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
                                 // inline style for demonstration purpose
                                 const style = suggestion.active
-                                ? { backgroundColor: '#fafafa', cursor: 'pointer', color:'#000' }
-                                : { backgroundColor: '#ffffff', cursor: 'pointer', color:'#000' };
+                                ? { backgroundColor: '#fafafa', cursor: 'pointer', color:'#000' } //Styling for selected suggestion
+                                : { backgroundColor: '#ffffff', cursor: 'pointer', color:'#000' }; //Styling for all other suggestions
                                 return (
                                     <div {...getSuggestionItemProps(suggestion, { className, style })}>
-                                    <span>{suggestion.description}</span>
+                                        <span>{suggestion.description}</span>
                                     </div>
                                 )
                             })}

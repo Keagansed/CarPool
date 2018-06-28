@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import RoutesStore from '../../../stores/RoutesStore';
 
-import MapWrapper from './MapWrapper';
+import MapWrapper from '../../home/newRouteModal/MapWrapper';
 
-import LocationSearchInput from './GoogleAuto';
+import LocationSearchInput from '../../home/newRouteModal/GoogleAuto';
 
 @observer class NewRoute extends Component{
     constructor(){
