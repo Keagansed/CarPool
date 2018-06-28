@@ -106,7 +106,7 @@ class NewTripModal extends Component{
         {
             users.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">{this.getUsername(user)}</div><div className="col-6 vertical-right"><input id={user} type="checkbox"/></div>
+                    <div className="col-6 txt-left">{this.getUsername(user)}</div><div className="col-6 vertical-right"><input id={user} type="checkbox"/></div>
                 </div>
             );
         }
