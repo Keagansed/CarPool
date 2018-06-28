@@ -1,0 +1,176 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+
+\begin{document}
+\input{title_page.tex}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+  \subsection{Purpose}
+  The purpose of this document is to provide a comprehensive guide on the overall requirements of general architecture of the system.
+  \subsection{Scope}
+  \begin{itemize}
+    \item Name: Carpool
+    \item Functions and Limitations: 
+    \begin{itemize}
+    	\item The system will provide a platform for communication between commuters with similar travel paths
+        \item It will attempt to provide as much security amongst users as possible, however it cannot guarantee complete safety for its users.
+     \end{itemize}
+     
+     \item Product uses:
+       \begin{itemize}
+       \item Create a community amongst travelers
+       \item Simplify trip organization
+       \item Provide a platform for carpooling
+       \end{itemize}
+     
+  \end{itemize}
+
+\section{Overall Description}
+
+\subsection{Product Perspective}
+    \subsubsection{User Interfaces}
+    \begin{itemize}
+    \item Landing Page \newline
+    A simple page to allow the user to choose between logging in and signing up. 
+    
+    \item Login Page \newline
+    A simple page with two text boxes where the user will enter their email and password to enter the application
+    
+    \item Dashboard Page \newline
+    This page will be the homepage that will allow the user to navigate to the rest of the app. It will default to the routes tab, which shows the pending routes the user has active.
+    
+   
+    \end{itemize}
+    \subsubsection{Hardware Interfaces}
+    As a progressive web application it will have an almost seamless transition between almost any "smart" device (desktop computers, smart phones, tablets, etc.), from the users perspective of the hardware.
+   \newline
+   However, on the back-end we will have series of servers running, in order to reduce downtime of the servers and also to ensure that service and data is not lost, or at least that the loss is minimized, if a server goes down for some reason.  The deployment diagram (Fig:2) shows a better view on how the hardware will interact, it can be found in section 4.2.
+
+    \subsubsection{Software Interfaces}
+    The application will be able to connect to the servers through most web-browsers, but will have the option to be downloaded as a progressive web application.  This will create a shortcut on the users home-screen as well as install a service worker which will then communicate with the server in a much cleaner fashion, and also allow some off-line features with caching.  \newline
+    The server will communicate with the database using mongoose.  The package diagram (Fig :3)contains a more detailed view, it can be found in section 4.3.
+    
+    \subsubsection{Memory}
+    
+    This being a progressive web application, the static components of the web application will be stored in device memory. The dynamic data (data which needs to be constantly retrieved and checked against the server) will be cached for a fixed period of time on the device cache storage to allow limited offline usage of the system.
+    
+\subsection{Product Functions} 
+	A high level summary of the product functionality
+    \begin{itemize}
+    	\item Allow users to sign up 
+        \item Allow users to log out
+        \item Authenticate users, based on supporting documentation
+        \item Rate user(s) after trips
+        \item View other users profiles
+        \item Each user should have a "security level" based on multiple factors including: overall rating and security checks completed
+        \item Set up a route
+        \item Match similar routes
+        \item Make use of artificial intelligence to recommend commuters with similar routes
+        \item Allow commuters to communicate with each other
+        \item Provide limited offline functionality
+    \end{itemize}
+
+\subsection{User Characteristics}
+	This application is designed for general users with either no means of transport between destinations or users with means of transportation and is willing to assist others. The minimum requirements for the users is:
+    \begin{itemize}
+    	\item They must be able to operate a smart phone
+        \item They must be a South African citizen
+    \end{itemize}
+
+
+\section{Specific Requirements}
+\subsection{External Interface Requirements}
+	\subsubsection{User Interface Requirements}
+    	\begin{itemize}
+            \item Adjust for different screen sizes
+            \item Store the static components of the webpage
+            \item Cache the dynamic components of the webpage for a limited period of time
+            \item Easy to navigate
+            \item Responsive
+    	\end{itemize}
+        
+\subsection{Functional Requirements}
+	\begin{itemize}
+    	\item Allow users to sign up 
+        \item Allow users to log out
+        \item Allow users to upload identifying documentation
+        \item Rate user(s) after trips
+        \item View other users profiles
+        \item Set up a route
+        \item Match similar routes
+        \item Make use of artificial intelligence to recommend commuters with similar routes
+        \item Allow commuters to communicate with each other
+        \item Provide metadata about trips
+        \item Provide limited offline functionality
+    \end{itemize}
+
+\subsection{Performance Requirements}
+	\begin{itemize}
+    	\item Provide a sense of trust and security amongst users
+        \item System must be responsive during navigation between components
+        \item System must be easily scalable
+        \item System must be maintainable
+        \item System must be portable
+    \end{itemize}
+    
+\section{Architecture}
+\subsection{Domain Diagram}
+Fig:[\ref{fig:1}] The system will be heavily focused on the user as most of the functionality will need the user in some way.
+The background and review system will be how we establish trust between our users.
+The route and trip subsystem will provide the main functionality of the system as it?ll contain all details about the trip including metadata about the trip such as ETAs.
+There will also be a simple messaging subsystem in order for users to communicate about their upcoming trip.
+
+\begin{figure}[h!]
+     \centering
+     \includegraphics[scale=0.5]{domain_model.png}
+     \caption{UML Domain Diagram for the Carpool System}
+     \label{fig:1}
+\end{figure}
+
+\subsection{Deployment Diagram}
+Fig:[\ref{fig:2}] We are mostly going to use a client server architecture.
+This will make it possible to see other users data and routes even if their device is offline as it will be centralised.
+This allows most of the processing to be done server side making the speed consistent across all devices. \newline
+The server and database will consist of a trio of each to help minimize downtime and data loss in the case of a server failure.
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[scale=0.7]{CarPool.png}
+     \caption{UML Deployment Diagram for the Carpool System}
+     \label{fig:2}
+\end{figure}
+
+\subsection{Package Diagram}
+Fig:[\ref{fig:3}] This is just a general overview of how the systems of our project will work together. The interesting part of this is that we?re using a progressive web app.
+
+Being a PWA this:
+Will allow the user to download an extreme lightweight application shell onto their device
+Will also allow the app to function as if it has been installed on the device with features such as push notifications and background sync.
+
+Very powerful because it allows the app to be used across a large range of devices very easily with little overhead on the devices themselves
+
+
+\begin{figure}[!ht]
+     \centering
+     \includegraphics[scale=0.16]{PackageDiagram.png}
+     \caption{UML Deployment Diagram for the Carpool System}
+     \label{fig:3}
+\end{figure}
+
+\end{document}
