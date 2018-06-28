@@ -26,6 +26,9 @@ html, body{
 .txt-center{
     text-align: center;
 }
+.txt-left{
+    text-align: left;
+}
 
 /* ============================================================================ */
 /*size */
