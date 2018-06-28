@@ -140,7 +140,6 @@ class Messages extends Component {
                                             userColour = "txt-white";
                                         }
                                         if(message.tripSuggest){
-                                            {/*window.alert(message.usersResponded);*/}
                                             return(
                                                 <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                             );
@@ -150,8 +149,7 @@ class Messages extends Component {
                                                 <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                             );
                                         }
-
-                                        ;                            })
+                                    })
                                 }
                             </div>
                             <MessageForm addMessage={this.addMessage}/>

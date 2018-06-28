@@ -159,7 +159,7 @@ class TripSuggest extends Component {
 
         try{
             if(this.props.usersResponded[getFromStorage('sessionKey').token] === undefined){
-                throw "Hasn't responded";
+                throw new Error();
             }
             else if(this.props.usersResponded[getFromStorage('sessionKey').token]) {
                 this.buttons = (

@@ -229,12 +229,7 @@ class Carpools extends Component {
                             }
                             else
                             {
-                                return (
-                                    <div className="spinner">
-                                        <div className="double-bounce1"></div>
-                                        <div className="double-bounce2"></div>
-                                    </div>
-                                );
+                                return (<div key={Math.random()}></div>);
                             }
                         })
                     }
