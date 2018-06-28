@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
+
 class CarpoolInfoModal extends Component{
     constructor(props){
         super(props);
+        this.toggle = this.toggle.bind(this);
+
         this.state ={
             user:[],
+            toggle: false
         };
     }
 
@@ -26,6 +36,12 @@ class CarpoolInfoModal extends Component{
 
     }
 
+    toggle(event) {
+        this.setState(prevState => ({
+            toggle: !prevState.toggle
+        }));
+    }
+
     render(){
         let users = [];
 
@@ -38,7 +54,9 @@ class CarpoolInfoModal extends Component{
             );
         }
 
-        return (
+        var modal = [];
+        modal.push(
+            // Modal
             <div className="mx-auto">
                 <div key="0" className="modal" tabIndex="-1" role="dialog" id="carpoolInfoModal" >
                     <div className="modal-dialog" role="document">
@@ -58,6 +76,16 @@ class CarpoolInfoModal extends Component{
                         </div>
                     </div>
                 </div>
+            </div>
+        );
+
+        return (
+            <div className="mx-auto">
+                <button className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.toggle}>
+                    {/* *** */}
+                    {this.props.match.params.carpoolName}
+                </button>
+                {modal}
             </div>
         );
     }

@@ -2,12 +2,28 @@ import React, { Component } from 'react';
 
 import WeekdaySelector from './WeekdaySelector';
 
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
+
 class NewTripModal extends Component{
     constructor(props){
         super(props);
+        this.toggle = this.toggle.bind(this);
+
         this.state ={
             user:[],
+            toggle: false
         };
+    }
+
+    toggle(event) {
+        this.setState(prevState => ({
+            toggle: !prevState.toggle
+        }));
     }
 
     componentDidMount(){
@@ -40,7 +56,9 @@ class NewTripModal extends Component{
             );
         }
 
-        return(
+        var modal = [];
+        modal.push(
+            // Modal
             <div className="mx-auto">
                 <div key="0" className="modal" tabIndex="-1" role="dialog" id="newTripModal">
                     <div className="modal-dialog" role="document">
@@ -77,6 +95,15 @@ class NewTripModal extends Component{
                         </div>
                     </div>
                 </div>
+            </div>
+        );
+
+        return(
+            <div className="mx-auto">
+                <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.toggle}>
+                    <i className="fa fa-car"></i>
+                </button>
+                {modal}
             </div>
         );
     }
