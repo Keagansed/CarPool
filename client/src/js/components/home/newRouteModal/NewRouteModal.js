@@ -50,7 +50,7 @@ class NewRouteModal extends Component{
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Repeat Weekly</h6>
                                 </div>
-                                <div className="row">
+                                <div className="row padbot-10px">
                                     <div className="mx-auto">
                                         <WeekdaySelector/>
                                     </div>
