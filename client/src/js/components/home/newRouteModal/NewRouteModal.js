@@ -61,10 +61,10 @@ class NewRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Start and End Locations</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <LocationSearchInput className="col-11 form-control mx-auto brad-2rem" placeholder="Start Location"/> 
+                                    <LocationSearchInput placeholder="Start Location"/> 
                                 </div>
                                 <div className="row padbot-10px">
-                                    <LocationSearchInput className="col-11 form-control mx-auto brad-2rem" placeholder="End Location"/> 
+                                    <LocationSearchInput placeholder="End Location"/> 
                                 </div>
                                 <MapWrapper/>
                                 <div className="row">

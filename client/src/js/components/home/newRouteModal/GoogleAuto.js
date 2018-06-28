@@ -20,8 +20,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
         geocodeByAddress(address)
         .then(results => getLatLng(results[0]))
         .then(latLng => {
-            console.log("success",latLng);
-            if(this.props.placeholder==='Origin'){ 
+            if(this.props.placeholder === 'Start Location'){ 
                 RoutesStore.setOrigin(latLng);
             }else{
                 RoutesStore.setdestination(latLng);
