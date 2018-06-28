@@ -71,7 +71,8 @@
     "redux-mock-store": "^1.5.1"
   },
   "scripts": {
-    "start": "concurrently \"node scripts/start.js\" \"nodemon ../bin/www\"",
+    "start": "node scripts/start.js",
+    "local": "concurrently \"node scripts/start.js\" \"nodemon ../bin/www\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
