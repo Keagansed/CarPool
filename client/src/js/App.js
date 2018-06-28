@@ -16,9 +16,9 @@ import RegisterPage from "./components/register/RegisterPage.js";
 import HomePage from "./components/home/HomePage.js";
 import ProfilePage from "./components/profile/ProfilePage.js";
 import MatchesPage from "./components/home/routePage/matchesPage/MatchesPage";
-import ChatPage from "./components/home/carpoolPage/chatPage/ChatPage";
 import TripPage from "./components/home/tripsPage/tripPage/TripPage";
 import Settings from "./components/settings/SettingsPage";
+import Messages from "./components/home/carpoolPage/chatPage/Messages";
 
 
 class App extends Component {
@@ -33,7 +33,7 @@ class App extends Component {
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/RouteMatches"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Trip"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
-					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <ChatPage {...props} store={HomePageStore}/>}/>
+					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <Messages {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					<Route path={"/Settings"} exact render={(props) => <Settings {...props} store={SettingsPageStore}/>}/>
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>

@@ -57,7 +57,7 @@ class CarpoolInfoModal extends Component{
         var modal = [];
         modal.push(
             // Modal
-            <div className="mx-auto">
+            <div className="mx-auto" key={Math.random()}>
                 <div key="0" className="modal" tabIndex="-1" role="dialog" id="carpoolInfoModal" style={this.state.toggle ? display : hide}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
@@ -83,7 +83,7 @@ class CarpoolInfoModal extends Component{
             <div className="mx-auto">
                 <button className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.toggle}>
                     {/* *** */}
-                    {this.props.match.params.carpoolName}
+                    {this.props.carpoolName}
                 </button>
                 {modal}
             </div>
