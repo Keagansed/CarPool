@@ -118,8 +118,8 @@ class Messages extends Component {
                         <div className="fixed-top container-fluid height-50px bg-aqua">
                             <div className="row font-20px height-100p">
                                 <Link to={`/HomePage`} className="col-2 txt-center">
-                                    <button className="btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={() =>this.updateLastRefresh(this.props.match.params.carpoolID)}>
-                                        <i className="fa fa-chevron-circle-left"></i>
+                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                        <i className="fa fa-chevron-circle-left txt-center"></i>
                                     </button>
                                 </Link>
                                 <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>

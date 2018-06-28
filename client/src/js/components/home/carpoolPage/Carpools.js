@@ -205,21 +205,23 @@ class Carpools extends Component {
                                 return (
                                     <div key={Math.random()}>
                                         <Link to={`/HomePage/Chat/`+groupChat.id+'/'+this.state.groupChats[groupChat.id].name}>
-                                            <div className="row txt-white padver-10px bordbot-2px-white">
-                                                <div className="col-9">
-                                                    <div className="col-12">
-                                                        <h5>{this.state.groupChats[groupChat.id].name}</h5>
+                                            <div className="container-fluid bg-purple bordbot-2px-white">
+                                                <div className="row txt-white padver-10px">
+                                                    <div className="col-9">
+                                                        <div className="col-12">
+                                                            <h5>{this.state.groupChats[groupChat.id].name}</h5>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            {newMessageCount} New {messageString}
+                                                        </div>
                                                     </div>
-                                                    <div className="col-12">
-                                                        {newMessageCount} New {messageString}
-                                                    </div>
-                                                </div>
-                                                <div className="col-3 vertical-right">
-                                                    <div className="col-12">
-                                                        <h5><i className="fa fa-chevron-circle-right"></i></h5>
-                                                    </div>
-                                                    <div className="col-12">
-                                                        {/* Empty for now */}
+                                                    <div className="col-3 vertical-right">
+                                                        <div className="col-12">
+                                                            <h5><i className="fa fa-chevron-circle-right"></i></h5>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            {/* Empty for now */}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

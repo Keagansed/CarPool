@@ -80,8 +80,8 @@ class CarpoolInfoModal extends Component{
         );
 
         return (
-            <div className="mx-auto">
-                <button className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.toggle}>
+            <div className="col-8 txt-center">
+                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.toggle}>
                     {/* *** */}
                     {this.props.carpoolName}
                 </button>

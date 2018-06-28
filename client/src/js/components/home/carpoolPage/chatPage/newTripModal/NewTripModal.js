@@ -163,8 +163,8 @@ class NewTripModal extends Component{
         );
 
         return(
-            <div className="mx-auto">
-                <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.toggle}>
+            <div className="col-2 txt-center">
+                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.toggle}>
                     <i className="fa fa-car"></i>
                 </button>
                 {modal}
