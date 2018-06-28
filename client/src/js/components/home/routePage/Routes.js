@@ -33,7 +33,15 @@ import RouteStore from '../../../stores/RouteStore';
             <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
         )
 
-        return Routes;
+        if(Routes.length > 0) {
+            return Routes;
+        }else {
+            return(
+                <h5 className="txt-center mtop-50px txt-white">
+                    No Routes
+                </h5>
+            );
+        }
     }
 
     renderLoading = () => {
@@ -53,7 +61,7 @@ import RouteStore from '../../../stores/RouteStore';
         if(this.props.store.loadingRoutes) {
             return(
                 <div className="scroll-vert">
-                    
+                    {this.renderLoading()}
                 </div>
             );
         }
