@@ -5,6 +5,7 @@ import app from '../../../../stores/MessagingStore'
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import Messages from './Messages';
+import CarpoolInfoModal from './carpoolInfoModal/CarpoolInfoModal';
 
 @observer class ChatPage extends Component{
 
@@ -58,9 +59,7 @@ import Messages from './Messages';
                                     <i className="fa fa-chevron-circle-left"></i>
                                 </button>
                             </Link>
-                            <button data-toggle="modal" data-target="#carpoolInfoModal" className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                {this.props.match.params.carpoolName}
-                            </button>
+                            <CarpoolInfoModal />
                             <button data-toggle="modal" data-target="#newTripModal"  className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
                                 <i className="fa fa-car"></i>
                             </button>
