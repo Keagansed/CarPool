@@ -60,12 +60,12 @@ class NewTripModal extends Component{
         modal.push(
             // Modal
             <div className="mx-auto">
-                <div key="0" className="modal" tabIndex="-1" role="dialog" id="newTripModal">
+                <div key="0" className="modal" tabIndex="-1" role="dialog" id="newTripModal" style={this.state.toggle ? display : hide}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header bg-aqua">
                                 <h5 className="modal-title fw-bold">Suggest a Trip</h5>
-                                <button type="button" className="close" data-toggle="modal" data-target="#newTripModal" aria-label="Close">
+                                <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
