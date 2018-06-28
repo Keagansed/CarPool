@@ -34,7 +34,7 @@ class Vouch  extends Component {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">User Review</h5>
+                            <h5 className="modal-title fw-bold">Michael's Review</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -55,7 +55,7 @@ class Vouch  extends Component {
                                 <div className="row">
                                     <div className="col-12">
                                         <p className="txt-center mbottom-0">
-                                            I had a great drive with Mike. He was friendly and enjoyable to talk to.
+                                            I had a great drive with Marcus. He was friendly and enjoyable to talk to.
                                         </p>
                                     </div>                                
                                 </div>

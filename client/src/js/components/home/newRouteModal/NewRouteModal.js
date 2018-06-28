@@ -41,6 +41,12 @@ class NewRouteModal extends Component{
                         <div className="modal-body">
                             <form>
                                 <div className="row">
+                                    <h6 className="fw-bold mx-auto">Route Name</h6>
+                                </div>
+                                <div className="row padbot-10px">
+                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work" required="required" name="routeName" id="inputRouteName"/> 
+                                </div>
+                                <div className="row">
                                     <h6 className="fw-bold mx-auto">Time and Date</h6>
                                 </div>
                                 <div className="row padbot-10px">
