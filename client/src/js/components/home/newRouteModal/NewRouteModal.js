@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import LocationSearchInput from './GoogleAuto';
 import MapWrapper from './MapWrapper';
-import WeekdaySelector from './WeekdaySelector';
+// import WeekdaySelector from './WeekdaySelector';
 
 const display = {
     display: 'block'
@@ -17,14 +17,66 @@ class NewRouteModal extends Component{
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            token: '',
+            routeName: '',
+            startLocation: '',
+            endLocation: '',
+            time: '00:00',
+            repeat: false,
         }
     }
   
     toggle(event) {
+        event.preventDefault();
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    updateNameValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            routeName: event.target.value
+        })
+    }
+
+    // updateStartValue = (event) => {
+    //     event.preventDefault();
+
+    //     this.setState({
+    //         startLocation: event.target.value
+    //     })
+    // }
+
+    // updateEndValue = (event) => {
+    //     event.preventDefault();
+
+    //     this.setState({
+    //         endLocation: event.target.value
+    //     })
+    // }
+
+    updateTimeValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            time: event.target.value
+        })
+    }
+
+    updateRepeatValue = (event) => {
+        event.preventDefault();
+
+        let value = false;
+
+        if(event.target.value === 'on')
+            value = true;
+
+        this.setState({
+            repeat: value
+        })
     }
 
     render(){
@@ -43,20 +95,20 @@ class NewRouteModal extends Component{
                         <div className="modal-body">
                             <form>
                                 <div className="row">
-                                    <h6 className="fw-bold mx-auto">Time and Date</h6>
+                                    <h6 className="fw-bold mx-auto" onChange={this.updateTimeValue}>Time</h6>
                                 </div>
                                 <div className="row padbot-10px">
                                     <input type="time" className="col-5 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputRouteTime"/> 
-                                    <input type="date" className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate"/>
+                                    {/* <input type="date" className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate"/> */}
                                 </div>
-                                <div className="row">
+                                {/* <div className="row">
                                     <h6 className="fw-bold mx-auto">Repeat Weekly</h6>
                                 </div>
                                 <div className="row">
                                     <div className="mx-auto">
                                         <WeekdaySelector/>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Start and End Locations</h6>
                                 </div>

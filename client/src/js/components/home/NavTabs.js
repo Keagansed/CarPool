@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
+import RoutesStore from "../../stores/RoutesStore";
 
 import NewRouteModal from './newRouteModal/NewRouteModal';
 
@@ -64,7 +65,7 @@ import NewRouteModal from './newRouteModal/NewRouteModal';
                             Trips
                         </button>
                     </div>
-                    <NewRouteModal/>
+                    <NewRouteModal store={RoutesStore}/>
                 </div>
             </div>
         )

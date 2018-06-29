@@ -1,18 +1,36 @@
-import { observable, action } from 'mobx';
+import { action, observable  } from 'mobx';
 
 class routesStore {
-
+    
     @observable routes = [];
     @observable routeSuccess = false;
     @observable loadingRoutes = true;
-
+    
+    @observable originResult = {};
+    @observable destinationResult = {};
+    
+    @observable originName = "";
+    @observable destinationName = "";
+    
     @observable origin = {};
     @observable destination = {};
-
+    
+    @action setGoogleOriginResult = (result) =>
+    {
+        this.originResult = result;
+        this.originName = result.formatted_address;
+    }
+    
+    @action setGoogleDestinationResult = (result) =>
+    {
+        this.destinationResult = result;
+        this.destinationName = result.formatted_name;
+    }
+    
     @action setOrigin = (origin) => {
         this.origin = origin;
     }
-
+    
     @action setdestination = (destination) => {
         this.destination = destination;
     }
@@ -27,7 +45,7 @@ class routesStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-
+            
             if(json.success)
             {
                 this.routes = json.data;
@@ -39,20 +57,28 @@ class routesStore {
             }
         })
     }
-
     
-
-    @action newRoute = (token, startLocation, endLocation, days, time, routeName, repeat) => {
+    
+    
+    @action newRoute = (token, startLocation, endLocation/*, days*/, time, routeName/*, repeat*/) => {
         const route = {
             userId: token,
-            startLocation: startLocation,
-            endLocation: endLocation,
-            days: days,
+            startLocation: {
+                name: this.originName,
+                lat: this.origin.lat,
+                lng: this.origin.lng
+            },
+            endLocation: {
+                name: this.destinationName,
+                lat: this.destination.lat,
+                lng: this.destination.lng
+            },
+            // days: days,
             time: time,
             routeName: routeName,
-            repeat: repeat
+            // repeat: repeat
         }
-
+        
         fetch('/api/system/route/newRoute',{
             method:'POST',
             headers:{
@@ -62,10 +88,10 @@ class routesStore {
                 userId: token,
                 startLocation: startLocation,
                 endLocation: endLocation,
-                days: days,
+                // days: days,
                 time: time,
                 routeName: routeName,
-                repeat: repeat
+                // repeat: repeat
             })
         }) 
         .then(res=>res.json())
@@ -80,9 +106,9 @@ class routesStore {
             }
             
         })  
-
+        
     }
-
+    
 }
 
 const  RoutesStore = new routesStore();

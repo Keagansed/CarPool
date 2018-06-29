@@ -18,13 +18,21 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
     handleSelect = (address) => {
         this.setState({ address });
         geocodeByAddress(address)
-        .then(results => getLatLng(results[0]))
-        .then(latLng => {
-            if(this.props.placeholder === 'Start Location'){ 
-                RoutesStore.setOrigin(latLng);
+        .then(results => {
+            if(this.props.placeholder === 'Start Location'){
+                RoutesStore.setGoogleOriginResult(results[0]);
             }else{
-                RoutesStore.setdestination(latLng);
+                RoutesStore.setGoogleDestinationResult(results[0]);
             }
+            
+            getLatLng(results[0])
+            .then(latLng => {
+                if(this.props.placeholder === 'Start Location'){ 
+                    RoutesStore.setOrigin(latLng);
+                }else{
+                    RoutesStore.setdestination(latLng);
+                }
+            })
         })
         .catch(error => console.error('Error', error))
     }
