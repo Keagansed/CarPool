@@ -9,16 +9,22 @@ const hide = {
     display: 'none'
 };
 
-class NewRouteModal extends Component{
-    constructor(props) {
+class EditRouteModal extends Component{
+    constructor(props){
         super(props);
         this.toggle = this.toggle.bind(this);
-  
-        this.state = {
+
+        this.state ={
             toggle: false
-        }
+        };
     }
-  
+
+    componentDidMount(){
+        fetch('/api/account/getAllUsers')
+            .then(res => res.json())
+            .then(json => this.setState({user: json}));
+    }
+
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
@@ -33,7 +39,7 @@ class NewRouteModal extends Component{
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Create a New Route</h5>
+                            <h5 className="modal-title fw-bold">Edit Route</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -44,7 +50,7 @@ class NewRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Route Name</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work" required="required" name="routeName" id="inputRouteName"/> 
+                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="Home to Work" required="required" name="routeName" id="inputRouteName"/> 
                                 </div>
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Time and Date</h6>
@@ -65,14 +71,14 @@ class NewRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Start and End Locations</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="Start Location" required="required" name="StartLocation" id="inputRouteStart"/> 
+                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="2 Jagluiperd Street, The Wilds, Pretoria, South Africa" required="required" name="StartLocation" id="inputRouteStart"/> 
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="End Location" required="required" name="EndLocation" id="inputRouteEnd"/> 
+                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="1195 South Street, Hatfield, Pretoria, South Africa" required="required" name="EndLocation" id="inputRouteEnd"/> 
                                 </div>
                                 <div className="row">
                                     <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
-                                        Add Route
+                                        Confirm Changes
                                     </button>
                                 </div>
                             </form>
@@ -81,10 +87,11 @@ class NewRouteModal extends Component{
                 </div>
             </div>
         );
-        return(
-            <div className="mx-auto">
-                <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.toggle}>
-                    <i className="fa fa-plus"></i>
+
+        return (
+            <div className="col-2 txt-center">
+                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px"  onClick={this.toggle}>
+                    <i className="fa fa-wrench"></i>
                 </button>
                 {modal}
             </div>
@@ -92,4 +99,4 @@ class NewRouteModal extends Component{
     }
 }
 
-export default NewRouteModal;
+export default EditRouteModal;

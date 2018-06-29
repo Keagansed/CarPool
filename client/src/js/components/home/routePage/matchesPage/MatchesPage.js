@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import Matches from './Matches';
 import RouteInfoModal from './routeInfoModal/RouteInfoModal';
+import EditRouteModal from './editRouteModal/EditRouteModal';
 
 @observer class MatchesPage extends Component{
 
@@ -43,14 +44,12 @@ import RouteInfoModal from './routeInfoModal/RouteInfoModal';
                     <div className="fixed-top container-fluid height-50px bg-aqua">
                         <div className="row height-100p">
                             <Link to={`/HomePage`} className="col-2 txt-center">
-                                <button className="btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                    <i className="fa fa-chevron-circle-left"></i>
+                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                    <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
                             <RouteInfoModal/>
-                            <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
-                                <i className="fa fa-wrench"></i>
-                            </button>
+                            <EditRouteModal/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
