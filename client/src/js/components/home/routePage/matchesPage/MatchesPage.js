@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import Matches from './Matches';
+import RouteInfoModal from './routeInfoModal/RouteInfoModal';
 
 @observer class MatchesPage extends Component{
 
@@ -40,15 +41,13 @@ import Matches from './Matches';
         return(
             <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
-                        <div className="row font-20px height-100p">
+                        <div className="row height-100p">
                             <Link to={`/HomePage`} className="col-2 txt-center">
                                 <button className="btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
                                     <i className="fa fa-chevron-circle-left"></i>
                                 </button>
                             </Link>
-                            <button className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                Home to Work
-                            </button>
+                            <RouteInfoModal/>
                             <button className="col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center">
                                 <i className="fa fa-wrench"></i>
                             </button>
