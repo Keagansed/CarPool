@@ -68,7 +68,7 @@ class CarpoolMatch  extends Component {
                                 </div>
                                 <div className="row">
                                     <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
-                                        Make Offer
+                                        Send Request
                                     </button>
                                 </div>
                             </form>
