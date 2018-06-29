@@ -27,7 +27,14 @@ const GoogleMapComponent = compose(
                     destination: new window.google.maps.LatLng(this.props.dLat, this.props.dLng),
                     travelMode: window.google.maps.TravelMode.DRIVING,
                 }, (result, status) => {
-
+                    if (status === window.google.maps.DirectionsStatus.OK) 
+                    {
+                        this.setState({
+                            directions: result
+                        });
+                    } else {
+                      //  console.error(`error fetching directions ${result}`);
+                    }
                 });  
             }
         })
