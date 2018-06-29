@@ -56,8 +56,9 @@ class EditRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Time and Date</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="time" className="col-4 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputRouteTime"/> 
-                                    <input type="date" className="col-6 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate"/>
+                                    {/* Default values should be current details of trip */}
+                                    <input type="time" className="col-4 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputRouteTime" defaultValue="08:00"/> 
+                                    <input type="date" className="col-6 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate" defaultValue="2018-06-20"/>
                                 </div>
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Repeat Weekly</h6>

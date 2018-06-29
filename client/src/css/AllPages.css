@@ -172,6 +172,12 @@ html, body{
 .bg-aqua{
     background-color: #6FEDB7;
 }
+.bg-grey{
+    background-color: grey;
+}
+.bg-lightgrey{
+    background-color: lightgrey;
+}
 .bg-purple{
     background-color: #140D4F;
 }

@@ -73,6 +73,13 @@ class RouteInfoModal extends Component{
                                         </p>
                                     </div>                                
                                 </div>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <p className="txt-center mbottom-0">
+                                            ***Map to go here***
+                                        </p>
+                                    </div>                                
+                                </div>
                         </div>
                     </div>
                 </div>

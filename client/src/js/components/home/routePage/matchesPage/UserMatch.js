@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 //Just using temporarily for demonstration purposes
 import tempProPic from './../../../../../css/images/profile_default.png';
 
-class Match  extends Component {
+class UserMatch  extends Component {
     render(){
         return(
             <div className="container-fluid bg-purple bordbot-2px-white">
@@ -33,4 +33,4 @@ class Match  extends Component {
     }
 }
 
-export default Match;
+export default UserMatch;

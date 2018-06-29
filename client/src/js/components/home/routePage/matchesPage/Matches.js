@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 
-import Match from './Match';
+import UserMatch from './UserMatch';
+import CarpoolMatch from './CarpoolMatch';
 
 @observer class Matches extends Component{
     render(){
@@ -10,15 +11,8 @@ import Match from './Match';
         return(
             <div>
                 {/* dummy static matches */}
-                <Match />
-                <Match />
-                <Match />
-                <Match />
-                <Match />
-                <Match />
-                <Match />
-                <Match />
-                <Match />
+                <UserMatch />
+                <CarpoolMatch/>
             </div>
         );
     }
