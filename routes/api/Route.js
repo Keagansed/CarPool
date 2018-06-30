@@ -9,6 +9,7 @@ router.post('/newRoute',(req,res,next) => {
         userId,
         startLocation,
         endLocation,
+        waypoints,
         //days,
         time,
         routeName,
@@ -19,6 +20,7 @@ router.post('/newRoute',(req,res,next) => {
     newRoute.userId = userId;
     newRoute.startLocation = startLocation;
     newRoute.endLocation = endLocation;
+    newRoute.waypoints = waypoints;
     //newRoute.days = days;
     newRoute.time = time;
     newRoute.routeName = routeName;

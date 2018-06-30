@@ -61,6 +61,9 @@ class routesStore {
     
     
     @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/) => {
+        
+        let waypoints = [];
+        
         const route = {
             userId: token,
             startLocation: {
@@ -73,6 +76,7 @@ class routesStore {
                 lat: this.destination.lat,
                 lng: this.destination.lng
             },
+            waypoints: waypoints,
             // days: days,
             time: time,
             routeName: routeName,
@@ -99,6 +103,7 @@ class routesStore {
                     lat: this.destination.lat,
                     lng: this.destination.lng
                 },
+                waypoints: waypoints,
                 // days: days,
                 time: time,
                 routeName: routeName,
