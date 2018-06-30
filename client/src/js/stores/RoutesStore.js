@@ -77,9 +77,8 @@ class routesStore {
             time: time,
             routeName: routeName,
             // repeat: repeat
+            _id: Date.now
         }
-
-        console.log(route);
         
         fetch('/api/system/route/newRoute',{
             method:'POST',

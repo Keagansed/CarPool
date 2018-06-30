@@ -29,10 +29,10 @@ import RouteStore from '../../../stores/RouteStore';
     }
 
     renderRoutes = () => {
-        const Routes = this.props.store.routes.map(route => 
+        const Routes = this.props.store.routes.map(route =>             
             <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
         )
-
+        
         if(Routes.length > 0) {
             return Routes;
         }else {
@@ -56,7 +56,6 @@ import RouteStore from '../../../stores/RouteStore';
     }
 
     render(){
-        // Temporarily commented out to prevent warnings, uncomment when using 'Routes' instead of dummy route
         
         if(this.props.store.loadingRoutes) {
             return(
