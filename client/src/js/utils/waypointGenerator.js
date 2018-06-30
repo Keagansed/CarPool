@@ -1,7 +1,7 @@
 // Code adapted from : https://stackoverflow.com/questions/9594598/add-markers-along-a-route
 var polyline = new window.google.maps.Polyline({});
-export async function waypointGenerator(oriLat,oriLng, destLat,destLng){
-    var pointsArr = [];
+var pointsArr = [];
+export async function waypointGenerator(oriLat=-25.864029,oriLng=28.088857800000028, destLat=-25.7818819,destLng=28.276781099999994){   
     var origin= oriLat+","+oriLng;
     var destination= destLat +","+destLng;
     var originObj= {'lat':oriLat,'lng':oriLng};
@@ -29,7 +29,9 @@ export async function waypointGenerator(oriLat,oriLng, destLat,destLng){
             pointsArr.push(originObj);
             var points = polyline.GetPointsAtDistance(2000);
             for(let i = 0 ; i<points.length;i++){
-                var pointObj = {'lat':points[i].lat(),'lng':points[i].lng()};
+                var lat = points[i].lat();
+                var lng = points[i].lng()
+                var pointObj = {'lat':lat,'lng':lng};
                 pointsArr.push(pointObj)
             }
             pointsArr.push(destObj);      
@@ -39,6 +41,10 @@ export async function waypointGenerator(oriLat,oriLng, destLat,destLng){
         }
     });
     console.log(pointsArr);
+    var rv = {};
+    for (var i = 0; i < pointsArr.length; ++i)
+        rv[i] = pointsArr[i];
+    console.log(rv);
     return pointsArr; 
 }
 
