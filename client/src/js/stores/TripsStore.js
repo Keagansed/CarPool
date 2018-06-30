@@ -22,7 +22,6 @@ class tripsStore {
                 users: this.users,
             })
         })
-            
             .then(res=>res.json())
             .catch(error => console.error('Error:', error))
             .then(json=>{
