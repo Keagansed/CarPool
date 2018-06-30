@@ -25,6 +25,7 @@ class Messages extends Component {
 
         this.addMessage = this.addMessage.bind(this);
         this.suggestTrip = this.suggestTrip.bind(this);
+        this.updateLastRefresh = this.updateLastRefresh.bind(this);
         this.database = app.database().ref().child('groupChats/'+this.props.match.params.carpoolID);
         this.messages = app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/messages");
         this.users = app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users");
@@ -41,6 +42,7 @@ class Messages extends Component {
                 tripSuggest: snap.val().tripSuggest,
                 usersResponded: snap.val().usersResponded,
                 users: snap.val().users,
+                tripID: snap.val().tripID,
             });
 
             this.setState({
@@ -70,12 +72,12 @@ class Messages extends Component {
         this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:false});
     }
 
-    suggestTrip(message, userID, users) {
-        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users});
+    suggestTrip(message, userID, users, tripID) {
+        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users, tripID:tripID, usersResponded:{[getFromStorage('sessionKey').token]:true}});
     }
 
-    updateLastRefresh(id){
-        app.database().ref().child('groupChats/'+id+"/users/"+getFromStorage('sessionKey').token)
+    updateLastRefresh(){
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:JSON.stringify(new Date())}).then(() => {
             return {};
         }).catch(error => {
@@ -102,10 +104,12 @@ class Messages extends Component {
         if(this.state.loading)
         {
             return(
-                <div>
-                    <div className="spinner">
-                        <div className="double-bounce1"></div>
-                        <div className="double-bounce2"></div>
+                <div className="size-100 bg-purple">
+                    <div className="fixed-top container-fluid height-50px bg-aqua">
+                        <div className="spinner">
+                            <div className="double-bounce1"></div>
+                            <div className="double-bounce2"></div>
+                        </div>
                     </div>
                 </div>
             )
@@ -113,47 +117,45 @@ class Messages extends Component {
 
         if (verify){
             return (
-                <div>
-                    <div className="size-100 bg-purple">
-                        <div className="fixed-top container-fluid height-50px bg-aqua">
-                            <div className="row height-100p">
-                                <Link to={`/HomePage`} className="col-2 txt-center">
-                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                        <i className="fa fa-chevron-circle-left txt-center"></i>
-                                    </button>
-                                </Link>
-                                <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
-                                <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip}/>
-                            </div>
+                <div className="size-100 bg-purple">
+                    <div className="fixed-top container-fluid height-50px bg-aqua">
+                        <div className="row height-100p">
+                            <Link to={`/HomePage`} className="col-2 txt-center">
+                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.updateLastRefresh}>
+                                    <i className="fa fa-chevron-circle-left txt-center"></i>
+                                </button>
+                            </Link>
+                            <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
+                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip}/>
                         </div>
-                        {/* Padding is there for top and bottom navs*/}
-                        <div className="padtop-50px padbot-50px">
-                            {/*<Messages carpoolID={this.props.match.params.carpoolID} carpoolName={this.props.match.params.carpoolName}/>*/}
-                            <div id="messageBody" className="autoScroll padtop-50px padbot-50px">
-                                {
-                                    this.state.messages.map((message) => {
-                                        let userColour;
-                                        try {
-                                            userColour = this.state.users[message.userID].colour;
-                                        }
-                                        catch (e) {
-                                            userColour = "txt-white";
-                                        }
-                                        if(message.tripSuggest){
-                                            return(
-                                                <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
-                                            );
-                                        }
-                                        else{
-                                            return(
-                                                <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
-                                            );
-                                        }
-                                    })
-                                }
-                            </div>
-                            <MessageForm addMessage={this.addMessage}/>
+                    </div>
+                    {/* Padding is there for top and bottom navs*/}
+                    <div className="padtop-50px padbot-50px">
+                        {/*<Messages carpoolID={this.props.match.params.carpoolID} carpoolName={this.props.match.params.carpoolName}/>*/}
+                        <div id="messageBody" className="autoScroll padtop-50px padbot-50px">
+                            {
+                                this.state.messages.map((message) => {
+                                    let userColour;
+                                    try {
+                                        userColour = this.state.users[message.userID].colour;
+                                    }
+                                    catch (e) {
+                                        userColour = "txt-white";
+                                    }
+                                    if(message.tripSuggest){
+                                        return(
+                                            <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} tripID={message.tripID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                        );
+                                    }
+                                    else{
+                                        return(
+                                            <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                        );
+                                    }
+                                })
+                            }
                         </div>
+                        <MessageForm addMessage={this.addMessage}/>
                     </div>
                 </div>
             );
@@ -161,10 +163,12 @@ class Messages extends Component {
         else
         {
             return(
-                <div>
-                    <div className="spinner">
-                        <div className="double-bounce1"></div>
-                        <div className="double-bounce2"></div>
+                <div className="size-100 bg-purple">
+                    <div className="fixed-top container-fluid height-50px bg-aqua">
+                        <div className="spinner">
+                            <div className="double-bounce1"></div>
+                            <div className="double-bounce2"></div>
+                        </div>
                     </div>
                 </div>
             );

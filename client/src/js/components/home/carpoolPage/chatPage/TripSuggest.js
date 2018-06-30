@@ -125,6 +125,26 @@ class TripSuggest extends Component {
             )
         });
         this.buttons = this.state.buttons;
+        fetch('/api/system/respondToTrip',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                _id: this.props.tripID,
+                userID: getFromStorage('sessionKey').token
+            })
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success){
+                    // this.tripID = json._id;
+                    // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
+                }else{
+                    alert(json.message);
+                }
+            })
     }
 
     reject(){
@@ -157,39 +177,59 @@ class TripSuggest extends Component {
             dat = this.getDaysAgo(this.props.dateTime);
         }
 
-        try{
-            if(this.props.usersResponded[getFromStorage('sessionKey').token] === undefined){
-                throw new Error();
-            }
-            else if(this.props.usersResponded[getFromStorage('sessionKey').token]) {
-                this.buttons = (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-12">
-                            <p className="txt-aqua">Accepted</p>
-                        </div>
+        if(this.props.userID === getFromStorage('sessionKey').token){
+            this.buttons = (
+                <div className="row txt-white padtop-0" key={Math.random()}>
+                    <div className="col-12">
+                        <p className="txt-grey">You suggested this trip</p>
                     </div>
-                );
-            }
-            if(!this.props.usersResponded[getFromStorage('sessionKey').token]){
-                this.buttons = (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-12">
-                            <p className="txt-red">Rejected</p>
-                        </div>
-                    </div>
-                );
-            }
-            else {
-
-            }
+                </div>
+            );
         }
-        catch (e) {
-            try {
-                if (this.props.users[getFromStorage('sessionKey').token] === true){
-                    this.buttons = this.state.buttons;
+        else{
+            try{
+                if(this.props.usersResponded[getFromStorage('sessionKey').token] === undefined){
+                    throw new Error();
                 }
-                else
-                {
+                else if(this.props.usersResponded[getFromStorage('sessionKey').token]) {
+                    this.buttons = (
+                        <div className="row txt-white padtop-0" key={Math.random()}>
+                            <div className="col-12">
+                                <p className="txt-aqua">Accepted</p>
+                            </div>
+                        </div>
+                    );
+                }
+                if(!this.props.usersResponded[getFromStorage('sessionKey').token]){
+                    this.buttons = (
+                        <div className="row txt-white padtop-0" key={Math.random()}>
+                            <div className="col-12">
+                                <p className="txt-red">Rejected</p>
+                            </div>
+                        </div>
+                    );
+                }
+                else {
+
+                }
+            }
+            catch (e) {
+                try {
+                    if (this.props.users[getFromStorage('sessionKey').token] === true){
+                        this.buttons = this.state.buttons;
+                    }
+                    else
+                    {
+                        this.buttons = (
+                            <div className="row txt-white padtop-0" key={Math.random()}>
+                                <div className="col-12">
+                                    <p className="txt-grey">You are not part of this suggestion</p>
+                                </div>
+                            </div>
+                        );
+                    }
+                }
+                catch (e){
                     this.buttons = (
                         <div className="row txt-white padtop-0" key={Math.random()}>
                             <div className="col-12">
@@ -198,19 +238,9 @@ class TripSuggest extends Component {
                         </div>
                     );
                 }
-            }
-            catch (e){
-                this.buttons = (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-12">
-                            <p className="txt-grey">You are not part of this suggestion</p>
-                        </div>
-                    </div>
-                );
-            }
 
+            }
         }
-
 
         if (this.props.userID === getFromStorage('sessionKey').token)
         {
