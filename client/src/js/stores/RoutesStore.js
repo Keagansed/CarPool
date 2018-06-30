@@ -60,7 +60,7 @@ class routesStore {
     
     
     
-    @action newRoute = (token, startLocation, endLocation/*, days*/, time, routeName/*, repeat*/) => {
+    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/) => {
         const route = {
             userId: token,
             startLocation: {
@@ -78,6 +78,8 @@ class routesStore {
             routeName: routeName,
             // repeat: repeat
         }
+
+        console.log(route);
         
         fetch('/api/system/route/newRoute',{
             method:'POST',
@@ -86,8 +88,18 @@ class routesStore {
             },
             body:JSON.stringify({
                 userId: token,
-                startLocation: startLocation,
-                endLocation: endLocation,
+                // startLocation: startLocation,
+                startLocation: {
+                    name: this.originName,
+                    lat: this.origin.lat,
+                    lng: this.origin.lng
+                },
+                // endLocation: endLocation,
+                endLocation: {
+                    name: this.destinationName,
+                    lat: this.destination.lat,
+                    lng: this.destination.lng
+                },
                 // days: days,
                 time: time,
                 routeName: routeName,
@@ -97,6 +109,7 @@ class routesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
+            console.log(json);
             if(json.success === true) {
                 this.routeSuccess = true;
                 this.routes.push(route);

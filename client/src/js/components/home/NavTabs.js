@@ -65,7 +65,7 @@ import NewRouteModal from './newRouteModal/NewRouteModal';
                             Trips
                         </button>
                     </div>
-                    <NewRouteModal store={RoutesStore}/>
+                    <NewRouteModal store={RoutesStore} token={this.props.token}/>
                 </div>
             </div>
         )

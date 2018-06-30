@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
+// const display = {
+//     display: 'block'
+// };
+// const hide = {
+//     display: 'none'
+// };
 
 class CarpoolInfoModal extends Component{
     constructor(props){

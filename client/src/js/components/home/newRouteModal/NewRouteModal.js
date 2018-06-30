@@ -18,7 +18,7 @@ class NewRouteModal extends Component{
   
         this.state = {
             toggle: false,
-            token: '',
+            token: this.props.token,
             routeName: '',
             startLocation: '',
             endLocation: '',
@@ -79,6 +79,18 @@ class NewRouteModal extends Component{
         })
     }
 
+    handleAddRoute = (event) => {
+        event.preventDefault();
+
+        const {
+            token,
+            routeName,
+            time
+        } = this.state;
+
+        this.props.store.newRoute(token, time, routeName);
+    }
+
     render(){
         var modal = [];
         modal.push(
@@ -94,6 +106,12 @@ class NewRouteModal extends Component{
                         </div>
                         <div className="modal-body">
                             <form>
+                                <div className="row">
+                                    <h6 className="fw-bold mx-auto">Route Name</h6>
+                                </div>
+                                <div className="row padbot-10px">
+                                    <input type="text" onChange={this.updateNameValue} className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work" required="required" name="routeName" id="inputRouteName"/> 
+                                </div>
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto" onChange={this.updateTimeValue}>Time</h6>
                                 </div>
@@ -120,7 +138,7 @@ class NewRouteModal extends Component{
                                 </div>
                                 <MapWrapper/>
                                 <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                    <button onClick={this.handleAddRoute} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
                                         Add Route
                                     </button>
                                 </div>

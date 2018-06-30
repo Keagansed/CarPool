@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 import WeekdaySelector from './WeekdaySelector';
 
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
+// const display = {
+//     display: 'block'
+// };
+// const hide = {
+//     display: 'none'
+// };
 
 class NewTripModal extends Component{
     constructor(props){
