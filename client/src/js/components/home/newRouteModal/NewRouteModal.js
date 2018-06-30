@@ -20,8 +20,8 @@ class NewRouteModal extends Component{
             toggle: false,
             token: this.props.token,
             routeName: '',
-            startLocation: '',
-            endLocation: '',
+            // startLocation: '',
+            // endLocation: '',
             time: '00:00',
             repeat: false,
         }
@@ -66,18 +66,18 @@ class NewRouteModal extends Component{
         })
     }
 
-    updateRepeatValue = (event) => {
-        event.preventDefault();
+    // updateRepeatValue = (event) => {
+    //     event.preventDefault();
 
-        let value = false;
+    //     let value = false;
 
-        if(event.target.value === 'on')
-            value = true;
+    //     if(event.target.value === 'on')
+    //         value = true;
 
-        this.setState({
-            repeat: value
-        })
-    }
+    //     this.setState({
+    //         repeat: value
+    //     })
+    // }
 
     handleAddRoute = (event) => {
         event.preventDefault();
@@ -87,7 +87,7 @@ class NewRouteModal extends Component{
             routeName,
             time
         } = this.state;
-
+        
         this.props.store.newRoute(token, time, routeName);
     }
 
@@ -110,13 +110,13 @@ class NewRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Route Name</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" onChange={this.updateNameValue} className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work" required="required" name="routeName" id="inputRouteName"/> 
+                                    <input type="text" onChange={this.updateNameValue} className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work"/> 
                                 </div>
                                 <div className="row">
-                                    <h6 className="fw-bold mx-auto" onChange={this.updateTimeValue}>Time</h6>
+                                    <h6 className="fw-bold mx-auto">Time</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="time" className="col-5 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputRouteTime"/> 
+                                    <input type="time" onChange={this.updateTimeValue} className="col-5 form-control mx-auto brad-2rem" placeholder="Time"/> 
                                     {/* <input type="date" className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate"/> */}
                                 </div>
                                 {/* <div className="row">
@@ -138,7 +138,7 @@ class NewRouteModal extends Component{
                                 </div>
                                 <MapWrapper/>
                                 <div className="row">
-                                    <button onClick={this.handleAddRoute} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                    <button onClick={this.handleAddRoute} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold">
                                         Add Route
                                     </button>
                                 </div>

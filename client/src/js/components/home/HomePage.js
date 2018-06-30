@@ -41,8 +41,7 @@ import Trips from './tripsPage/Trips';
     setTab = () => {
         const { store } = this.props;
 
-        if(!this.state.loading)
-        {
+        if(!this.state.loading){
             if(store.routeTab === true)
             {
                 return <Routes store={RoutesStore} token={this.props.store.token}/>;            
@@ -56,20 +55,37 @@ import Trips from './tripsPage/Trips';
                 return <Trips/>;
             }
         }
+        else{
+            return(
+                <div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
+            );
+        }
 
     }
 
+    renderNavTabs = () => {
+        if(!this.state.loading){
+            return <NavTabs store={this.props.store}/>;
+        }
+    }
+
+    renderNavBar = () => {
+        if(!this.state.loading){
+            return <Navbar token={this.props.store.token}/>;
+        }
+    }
+
     render(){
-        const { token } = this.props.store;
-        
         return(
             <div className="size-100 bg-purple">
-                    <NavTabs store={this.props.store} token={token}/>
-                    {/* Padding is there for top and bottom navs*/}
-                    <div className="padtop-50px padbot-50px">
-                        {this.setTab()}
-                    </div>
-                    <Navbar token={token}/>
+                {this.renderNavTabs()}
+                <div className="padtop-50px padbot-50px">
+                    {this.setTab()}
+                </div>
+                {this.renderNavBar()}
             </div>
         );
     }

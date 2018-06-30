@@ -24,7 +24,7 @@ class routesStore {
     @action setGoogleDestinationResult = (result) =>
     {
         this.destinationResult = result;
-        this.destinationName = result.formatted_name;
+        this.destinationName = result.formatted_address;
     }
     
     @action setOrigin = (origin) => {
