@@ -6,15 +6,21 @@ var RouteSchema = new mongoose.Schema({
 		required:true
 	},
 	startLocation:{
-		type:String,
+		type:Object,
 		required:true
 	},
 	endLocation:{
-		type:String,
+		type:Object,
 		required:true
 	},
+	waypoints:{
+		type:Array,
+		default: [],
+		require:true
+	},
 	days: { 
-		type:Object, 
+		type:Object,
+		default: {}, 
         required: true
 	},
 	time:{

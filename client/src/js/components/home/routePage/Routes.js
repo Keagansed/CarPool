@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 
+import  "../../../../css/components/Spinner.css"
+
 import Route from './Route'
 import RouteStore from '../../../stores/RouteStore';
 
@@ -26,21 +28,49 @@ import RouteStore from '../../../stores/RouteStore';
         this.props.store.getRoutes(this.props.token);
     }
 
-    render(){
-        // Temporarily commented out to prevent warnings, uncomment when using 'Routes' instead of dummy route
-        // const Routes = this.props.store.routes.map(route => 
-        //     <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
-        // )
+    renderRoutes = () => {
+        const Routes = this.props.store.routes.map(route =>             
+            <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
+        )
+        
+        if(Routes.length > 0) {
+            return Routes;
+        }else {
+            return(
+                <h5 className="txt-center mtop-50px txt-white">
+                    No Routes
+                </h5>
+            );
+        }
+    }
 
+    renderLoading = () => {
         return(
-            <div className="scroll-vert">
-                {/*What will come here -> {Routes} */}
-                
-                {/*Just an example... */}
-                <Route key={1} store={new RouteStore("Home to Work", "91 Jagluiperd Street", "South Street", this.state.daysOne, "08:00", true)}/>
-                <Route key={2} store={new RouteStore("Work to Home", "South Street", "91 Jagluiperd Street", this.state.daysOne, "16:30", true)}/>                                                                
+            <div>
+                <div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
             </div>
-        );
+        )
+    }
+
+    render(){
+        
+        if(this.props.store.loadingRoutes) {
+            return(
+                <div className="scroll-vert">
+                    {this.renderLoading()}
+                </div>
+            );
+        }
+        else{
+            return(
+                <div className="scroll-vert">
+                    {this.renderRoutes()}
+                </div>
+            );
+        }
     }
 }
 

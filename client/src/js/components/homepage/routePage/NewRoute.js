@@ -1,22 +1,95 @@
+import '../../../../css/components/NewRoute.css';
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
+import { Redirect, Link } from 'react-router-dom';
+import RoutesStore from '../../../stores/RoutesStore';
 
-class WeekdaySelector  extends Component {
+import MapWrapper from '../../home/newRouteModal/MapWrapper';
+
+import LocationSearchInput from '../../home/newRouteModal/GoogleAuto';
+
+@observer class NewRoute extends Component{
     constructor(){
         super()
 
         this.state = {
+            token: '',
+            routeName: '',
+            startLocation: 'Pretoria',
+            endLocation: 'Joburg',
             days: {
                 monday: false,
-                tuesday: false,
+                tuesday: false, 
                 wednesday: false,
                 thursday: false,
                 friday: false,
                 saturday: false,
                 sunday: false,
-            }
+            },
+            time: '00:00',
+            repeat: false,
+            reRender: true,
+
         }
     }
 
+    componentWillMount(){
+
+        RoutesStore.routeSuccess = false;
+
+        this.setState({
+            token: this.props.location.token
+        })
+    }
+
+    //HANDLING FORM INFORMATION
+
+    updateNameValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            routeName: event.target.value
+        })
+    }
+
+    updateStartValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            startLocation: event.target.value
+        })
+    }
+
+    updateEndValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            endLocation: event.target.value
+        })
+    }
+
+    updateTimeValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            time: event.target.value
+        })
+    }
+
+    updateRepeatValue = (event) => {
+        event.preventDefault();
+
+        let value = false;
+
+        if(event.target.value === 'on')
+            value = true;
+
+        this.setState({
+            repeat: value
+        })
+    }
+
+    //HANDLING WHICH DAYS THE ROUTE WILL TAKE PLACE ON
 
     toggleMonday = (event) => {
         event.preventDefault();
@@ -249,27 +322,86 @@ class WeekdaySelector  extends Component {
         }
     }
 
+    //SENDING FORM INFORMATION TO ROUTES STORE TO CREATE A NEW ROUTE
+
+    handleAddRoute = (event) => {
+        event.preventDefault();
+        
+        const {
+            token,
+            startLocation,
+            endLocation,
+            days,
+            time,
+            repeat,
+            routeName
+        } = this.state;
+
+        RoutesStore.newRoute(token, startLocation, endLocation, days, time, routeName, repeat)
+    
+    }
 
     render(){
-        return(
-            <div className="weekDays-selector">
-                <input type="checkbox" id="weekday-mon" className="weekday" />
-                <label htmlFor="weekday-mon">M</label>
-                <input type="checkbox" id="weekday-tue" className="weekday" />
-                <label htmlFor="weekday-tue">T</label>
-                <input type="checkbox" id="weekday-wed" className="weekday" />
-                <label htmlFor="weekday-wed">W</label>
-                <input type="checkbox" id="weekday-thu" className="weekday" />
-                <label htmlFor="weekday-thu">T</label>
-                <input type="checkbox" id="weekday-fri" className="weekday" />
-                <label htmlFor="weekday-fri">F</label>
-                <input type="checkbox" id="weekday-sat" className="weekday" />
-                <label htmlFor="weekday-sat">S</label>
-                <input type="checkbox" id="weekday-sun" className="weekday" />
-                <label htmlFor="weekday-sun">S</label>
-            </div>
-        );
+        
+        if(RoutesStore.routeSuccess){
+            return(
+                <Redirect to="/HomePage"/>    
+            )
+        }
+        else{
+            return(
+                <div className="bg-purple size-100">      
+                             
+                    <p className="m-2 font-weight-bold h1">  
+                        <Link className="text-white" to="/Homepage">                    
+                            &lt;
+                        </Link>                     
+                    </p>
+                    
+                    <form className="m-5" action="">
+                        <div className="form-group">
+                            <input type="text" placeholder="Name" onChange={this.updateNameValue}/>
+                        </div>
+
+                        <div className="form-group">
+                            <LocationSearchInput placeholder='Origin' onChange={this.updateStartValue}/>
+                        </div>
+
+                        <div className="form-group">
+                            <LocationSearchInput placeholder='Destination' onChange={this.updateEndValue}/>
+                        </div>
+
+                        <MapWrapper/>
+                        
+                        <div className="form-group">
+                            <label className="txt-white">Days: </label>
+                            <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>
+                            <input className={"button-" + this.state.days.tuesday} type="button" value="T" onClick={this.toggleTuesday}/>
+                            <input className={"button-" + this.state.days.wednesday} type="button" value="W" onClick={this.toggleWednesday}/>
+                            <input className={"button-" + this.state.days.thursday} type="button" value="T" onClick={this.toggleThursday}/>
+                            <input className={"button-" + this.state.days.friday} type="button" value="F" onClick={this.toggleFriday}/>
+                            <input className={"button-" + this.state.days.saturday} type="button" value="S" onClick={this.toggleSaturday}/>
+                            <input className={"button-" + this.state.days.sunday} type="button" value="S" onClick={this.toggleSunday}/>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="txt-white">Time: </label>
+                            <input type="time" onChange={this.updateTimeValue}/>
+                        </div>
+
+                        <div className="form-group"> 
+                            <label className="txt-white">Repeat: </label>
+                            <input type="checkbox" onChange={this.updateRepeatValue}/>
+                        </div> 
+
+                        <div>
+                            <input className="btn btn-success" type="button" value="Create Route" onClick={this.handleAddRoute}/>
+                        </div> 
+                    </form>
+                </div>
+            );
+        }
     }
 }
 
-export default WeekdaySelector;
+export default NewRoute;
