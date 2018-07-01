@@ -9,7 +9,6 @@ import Routes from './routePage/Routes';
 import RoutesStore from './../../stores/RoutesStore';
 import Trips from './tripsPage/Trips';
 
-import { waypointGenerator } from './../../utils/waypointGenerator';
 @observer class HomePage extends Component{
 
     constructor(){
@@ -22,7 +21,7 @@ import { waypointGenerator } from './../../utils/waypointGenerator';
 
     //========= Fetch Session Token ===========
     componentWillMount(){
-        waypointGenerator();
+    
         const obj = getFromStorage('sessionKey');
         if(obj && obj.token){
             const { token } = obj;

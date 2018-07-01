@@ -59,80 +59,83 @@ class routesStore {
         })
     }
     
+/* 
+Nature of code due to asynchronicity. The asynchronous callbacks of Googles geocoding library 
+Detailed description: https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call/14220323#14220323
+General solution: https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function 
+*/
     
-    
-    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/) => {
+    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/, routeSuccess = this.routeSuccess, routes = this.routes) => {
         
-        var waypoints = [{"lat":54,"lng":45},{"lat":54,"lng":45},{"lat":54,"lng":45}];
-        console.log(waypoints);
-        waypoints = waypointGenerator(this.origin.lat,this.origin.lng,this.destination.lat,this.destination.lng)
-        .then(result =>{
-            // waypoints = result;
-            console.log(result);
-            console.log(waypoints);
+        waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
+                function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints){
+
+            const route = {
+                userId: token,
+                startLocation: {
+                    name: originName,
+                    lat: origin.lat,
+                    lng: origin.lng
+                },
+                endLocation: {
+                    name: destinationName,
+                    lat: destination.lat,
+                    lng: destination.lng
+                },
+                waypoints: waypoints,
+                // days: days,
+                time: Rtime,
+                routeName: RrouteName,
+                // repeat: repeat
+                _id: Date.now
+            }
+            
+            fetch('/api/system/route/newRoute',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    userId: token,
+                    // startLocation: startLocation,
+                    startLocation: {
+                        name: originName,
+                        lat: origin.lat,
+                        lng: origin.lng
+                    },
+                    // endLocation: endLocation,
+                    endLocation: {
+                        name: destinationName,
+                        lat: destination.lat,
+                        lng: destination.lng
+                    },
+                    waypoints: waypoints,
+                    // days: days,
+                    time: Rtime,
+                    routeName: RrouteName,
+                    // repeat: repeat
+                })
+            }) 
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                console.log(json);
+                if(json.success === true) {
+                    routeSuccess = true;
+                    routes.push(route);
+                }
+                else{
+                    window.alert("Failed to create new route");
+                }
+                
+            }) 
+
         })
+      
 
    
 
-        // const route = {
-        //     userId: token,
-        //     startLocation: {
-        //         name: this.originName,
-        //         lat: this.origin.lat,
-        //         lng: this.origin.lng
-        //     },
-        //     endLocation: {
-        //         name: this.destinationName,
-        //         lat: this.destination.lat,
-        //         lng: this.destination.lng
-        //     },
-        //     waypoints: waypoints,
-        //     // days: days,
-        //     time: time,
-        //     routeName: routeName,
-        //     // repeat: repeat
-        //     _id: Date.now
-        // }
-        
-        // fetch('/api/system/route/newRoute',{
-        //     method:'POST',
-        //     headers:{
-        //         'Content-Type':'application/json'
-        //     },
-        //     body:JSON.stringify({
-        //         userId: token,
-        //         // startLocation: startLocation,
-        //         startLocation: {
-        //             name: this.originName,
-        //             lat: this.origin.lat,
-        //             lng: this.origin.lng
-        //         },
-        //         // endLocation: endLocation,
-        //         endLocation: {
-        //             name: this.destinationName,
-        //             lat: this.destination.lat,
-        //             lng: this.destination.lng
-        //         },
-        //         waypoints: waypoints,
-        //         // days: days,
-        //         time: time,
-        //         routeName: routeName,
-        //         // repeat: repeat
-        //     })
-        // }) 
-        // .then(res=>res.json())
-        // .catch(error => console.error('Error:', error))
-        // .then(json=>{
-        //     console.log(json);
-        //     if(json.success === true) {
-        //         this.routeSuccess = true;
-        //         this.routes.push(route);
-        //     }
-        //     else{
-        //         window.alert("Failed to create new route");
-        //     }
-            
-        // })  
+         
         
     }
     

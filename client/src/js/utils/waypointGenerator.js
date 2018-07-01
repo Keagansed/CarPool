@@ -1,17 +1,27 @@
 // Code adapted from : https://stackoverflow.com/questions/9594598/add-markers-along-a-route
+/* 
+Nature of code due to asynchronicity
+Detailed description: https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call/14220323#14220323
+General solution: https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function 
+*/
 var polyline = new window.google.maps.Polyline({});
-var pointsArr = [];
-export async function waypointGenerator(oriLat=-25.864029,oriLng=28.088857800000028, destLat=-25.7818819,destLng=28.276781099999994){   
-    var origin= oriLat+","+oriLng;
-    var destination= destLat +","+destLng;
-    var originObj= {'lat':oriLat,'lng':oriLng};
-    var destObj= {'lat':destLat,'lng':destLng}; 
+
+export function waypointGenerator(oriName, destName, ori, dest, time, routeName, myFunc){  
+
+    var pointsArr = [];
+    var origin= ori.lat+","+ori.lng;
+    var destination= dest.lat +","+dest.lng;
+    var originObj= {'lat':ori.lat,'lng':ori.lng};
+    var destObj= {'lat':dest.lat,'lng':dest.lng}; 
+
     var directionsService = new window.google.maps.DirectionsService();
-    directionsService.route({
+    var request={
         origin: origin,
         destination: destination,
         travelMode: 'DRIVING'
-    }, function(response, status) {
+    }
+
+    directionsService.route(request, function(response, status) {
         if (status === window.google.maps.DirectionsStatus.OK) {
             var route = response.routes[0];
             var legs = route.legs;
@@ -22,30 +32,21 @@ export async function waypointGenerator(oriLat=-25.864029,oriLng=28.088857800000
                 for(let j = 0 ; j < steps.length ; j++){
                     var nextSegment = steps[j].path;
                     for(let k = 0; k < nextSegment.length ; k++){
-                        polyline.getPath().push(nextSegment[k]);                    }
+                        polyline.getPath().push(nextSegment[k]);                    
+                    }
                 }
             }
 
             pointsArr.push(originObj);
             var points = polyline.GetPointsAtDistance(2000);
-            for(let i = 0 ; i<points.length;i++){
-                var lat = points[i].lat();
-                var lng = points[i].lng()
-                var pointObj = {'lat':lat,'lng':lng};
-                pointsArr.push(pointObj)
-            }
-            pointsArr.push(destObj);      
-
-        } else {
-            alert("directions response " + status);
-        }
-    });
-    console.log(pointsArr);
-    var rv = {};
-    for (var i = 0; i < pointsArr.length; ++i)
-        rv[i] = pointsArr[i];
-    console.log(rv);
-    return pointsArr; 
+            for(let i = 0 ; i<points.length;i++){ 
+                var pointObj = {'lat':points[i].lat(),'lng':points[i].lng()};
+                pointsArr.push(pointObj) 
+            }  
+            pointsArr.push(destObj);
+            myFunc(oriName, destName, ori, dest, time, routeName, pointsArr);
+        } else { alert("directions response " + status); }
+    })
 }
 
 
@@ -71,3 +72,4 @@ window.google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
         }
     return points;
 }
+
