@@ -16,8 +16,24 @@ class UserMatch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
+            userName: '',
             toggle: false
         }
+    }
+
+    componentWillMount(){
+        fetch('/api/account/getProfile?_id=' + this.props.userId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            const temp = json[0]['firstName'] + ' ' + json[0]['lastName'];
+            this.setState({userName : temp});
+        })
     }
 
     toggle(event) {
@@ -78,7 +94,7 @@ class UserMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>Myron Ouyang</h5>
+                                <h5>{this.state.userName}</h5>
                             </div>
                             <div className="col-12">
                                 1.2km Further

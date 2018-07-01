@@ -8,14 +8,16 @@ class RouteStore {
     @observable days = {};
     @observable time = '';
     @observable repeat = false;
+    @observable _id = '';
 
-    constructor(routeName, start, end, days, time, repeat){
+    constructor(routeName, start, end, days, time, repeat, _id){
         this.routeName = routeName;
         this.startLocation = start;
         this.endLocation = end;
         this.days = days;
         this.time = time;
         this.repeat = repeat;
+        this._id = _id;
     }
 
     @action setRouteName = (name) => {

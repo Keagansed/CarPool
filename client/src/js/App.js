@@ -32,7 +32,7 @@ class App extends Component {
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
-					<Route path={"/HomePage/RouteMatches"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
+					<Route path={"/HomePage/RouteMatches/:_id"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Trip"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <Messages {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
