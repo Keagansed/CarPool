@@ -6,7 +6,7 @@ import { getFromStorage } from './../../../../utils/localStorage.js';
 import Matches from './Matches';
 import RouteInfoModal from './routeInfoModal/RouteInfoModal';
 import EditRouteModal from './editRouteModal/EditRouteModal';
-import recRoutesStore from '../../../../stores/RecomendedRoutesStore';
+import MatchesStore from '../../../../stores/MatchesStore';
 
 @observer class MatchesPage extends Component{
 
@@ -54,7 +54,7 @@ import recRoutesStore from '../../../../stores/RecomendedRoutesStore';
                     </div>
                     {/* Padding is there for top and bottom navs*/}
                     <div className="padtop-50px">
-                        <Matches store={recRoutesStore} token={this.props.store.token} />
+                        <Matches store={MatchesStore} token={this.props.store.token} />
                     </div>
             </div>
         );

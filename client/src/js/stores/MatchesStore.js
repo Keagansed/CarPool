@@ -1,6 +1,6 @@
 import { action, observable  } from 'mobx';
 
-class RecRoutesStore {
+class matchesStore {
     
     @observable routes = [];
     @observable loadingRoutes = true;
@@ -29,6 +29,6 @@ class RecRoutesStore {
     }    
 }
 
-const  recRoutesStore = new RecRoutesStore();
-export default recRoutesStore;
+const  MatchesStore = new matchesStore();
+export default MatchesStore;
 

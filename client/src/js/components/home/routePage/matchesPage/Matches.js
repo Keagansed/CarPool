@@ -9,6 +9,7 @@ import RouteStore from '../../../../stores/RouteStore';
 @observer class Matches extends Component{
     componentWillMount(){
         this.props.store.getRoutes(this.props.token);
+        
     }
 
     renderRoutes = () => {
@@ -25,6 +26,7 @@ import RouteStore from '../../../../stores/RouteStore';
             );
         }
     }
+
     constructor(){
         super()
 
@@ -41,8 +43,6 @@ import RouteStore from '../../../../stores/RouteStore';
     handleCarpoolIDChange(e){
         this.setState({carpoolID: e.target.value})
     }
-        
-      
 
     renderLoading = () => {
         return(

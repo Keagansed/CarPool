@@ -61,7 +61,7 @@ class UserMatch  extends Component {
                                     <h6 className="fw-bold mx-auto">Offer Recipient</h6>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                    <div className="col-6">{this.state.userName}</div><div className="col-6 vertical-right">View Profile</div>
+                                    <div className="col-6">{this.state.userName}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+this.props.userId}>View Profile</a></div>
                                 </div>                           
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Route Comparison</h6>
