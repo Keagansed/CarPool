@@ -287,6 +287,10 @@ html, body{
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.padhor-5px{
+    padding-left: 5px;
+    padding-right: 5px;
+}
 
 /* ============================================================================ */
 /*Borders*/

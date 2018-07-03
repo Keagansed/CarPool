@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import ReviewTripModal from './reviewTripModal/ReviewTripModal';
+import MapWrapper from './MapWrapper';
 
 @observer class TripPage extends Component{
 
@@ -54,8 +55,47 @@ import ReviewTripModal from './reviewTripModal/ReviewTripModal';
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
-                    <div className="padtop-50px">
-                        
+                    <div className="padtop-50px container-fluid">
+                        <div className="row mtop-10px">
+                            <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
+                        </div>
+                        <div className="row">
+                            <div className="mx-auto txt-white">Mon 12 January @ 08:00</div>
+                        </div>
+                        <div className="row mtop-10px">
+                            <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
+                        </div>
+                        <div className="row">
+                            <div className="mx-auto padhor-5px txt-white txt-center">
+                                From 91 Jagluiperd Street, Pretoria, South Africa 
+                                To 1095 South Street, Pretoria, South Africa
+                            </div>
+                        </div>
+                        <MapWrapper/>
+                        <div className="row mtop-10px">
+                            <h6 className="fw-bold mx-auto txt-white">Your Pickup</h6>
+                        </div>
+                        <div className="row">
+                            <div className="mx-auto padhor-5px txt-white txt-center">08:05 @ 10 John Street, Pretoria, South Africa</div>
+                        </div>
+                        <div className="row mtop-10px bordbot-1px-dash-grey">
+                            <h6 className="fw-bold mx-auto txt-white">Driver</h6>
+                        </div>
+                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
+                            <div className="col-6 txt-left">Keagan Seddon</div>
+                            <div className="col-6 vertical-right"><a>View Profile</a></div>
+                        </div>
+                        <div className="row mtop-10px bordbot-1px-dash-grey">
+                            <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
+                        </div>
+                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
+                            <div className="col-6 txt-left">Leonardio Ianigro</div>
+                            <div className="col-6 vertical-right"><a>View Profile</a></div>
+                        </div>
+                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
+                            <div className="col-6 txt-left">Myron Ouyang</div>
+                            <div className="col-6 vertical-right"><a>View Profile</a></div>
+                        </div>
                     </div>
             </div>
         );
