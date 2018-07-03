@@ -35,7 +35,6 @@ import EditRouteModal from './editRouteModal/EditRouteModal';
             })
         }  
     }
-
     render(){
         //const { token } = this.props.store;
         
