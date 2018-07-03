@@ -53,6 +53,14 @@ class CarpoolOffer  extends Component {
                                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
                                     <div className="col-6">Leonardio Ianigro</div><div className="col-6 vertical-right">View Profile</div>
                                 </div>
+                                <div className="row mtop-10px ">
+                                    <button onClick={this.handleAddRoute} type="submit" className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-green txt-white fw-bold">
+                                        Accept
+                                    </button>
+                                    <button onClick={this.handleAddRoute} type="submit" className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-red txt-white fw-bold">
+                                        Decline
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
