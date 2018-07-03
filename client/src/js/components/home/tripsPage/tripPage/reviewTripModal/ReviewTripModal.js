@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import UserReview from './UserReview';
+import VouchStore from '../../../../../stores/vouchStore';
+
+import {
+    getFromStorage
+} from '../../../../../utils/localStorage.js'
 
 const display = {
     display: 'block'
@@ -17,10 +22,27 @@ class ReviewTripModal extends Component{
             toggle: false,
             rating: 1
         }
+
+        this.userReviews = [];
+
+        this.updateReview = this.updateReview.bind(this);
+        this.updateStars = this.updateStars.bind(this);
+        this.submitReviews = this.submitReviews.bind(this);
     }
 
-    onStarClick(nextValue, prevValue, name) {
-        this.setState({rating: nextValue});
+    updateReview(id, message){
+        this.userReviews[id].review = message;
+    }
+
+    updateStars(id, stars){
+        this.userReviews[id].stars = stars;
+    }
+
+    submitReviews(){
+        for(let user in this.userReviews){
+            VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review);
+        }
+        this.toggle();
     }
   
     toggle(event) {
@@ -30,7 +52,22 @@ class ReviewTripModal extends Component{
     }
 
     render(){
-        //const { rating } = this.state;
+        let userReviews = [];
+        try{
+            for(let user in this.props.trip.users){
+                if(user !== getFromStorage('sessionKey').token) {
+                    this.userReviews[user] = {};
+                    this.userReviews[user].stars = 1;
+                    userReviews.push(
+                        <UserReview id={user} key={Math.random()} updateReview={this.updateReview} updateStars={this.updateStars}/>
+                    );
+                }
+            }
+        }
+        catch (e){
+
+        }
+
         var modal = [];
         modal.push(
             // Modal
@@ -44,12 +81,9 @@ class ReviewTripModal extends Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            <UserReview/>
-                            <UserReview/>
-                            <UserReview/>
-                            <UserReview/>
+                            {userReviews}
                             <div className="row">
-                                <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnSubmitReview">
+                                <button type="submit" onClick={this.submitReviews} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnSubmitReview">
                                     Submit Review
                                 </button>
                             </div>
