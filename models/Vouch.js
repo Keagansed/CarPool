@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
 var VouchSchema = new mongoose.Schema({
+	tripID:{
+		type:String,
+		required:true
+	},
 	idBy:{
 		type:String,
 		required:true
@@ -16,11 +20,6 @@ var VouchSchema = new mongoose.Schema({
 	date: { 
 		type: Date, 
 		default: Date.now 
-	},
-	reviewTitle:{
-		type:String,
-		default:'',
-		required:true
 	},
 	reviewBody:{
 		type:String,

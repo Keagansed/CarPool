@@ -30,7 +30,7 @@ import RouteStore from '../../../stores/RouteStore';
 
     renderRoutes = () => {
         const Routes = this.props.store.routes.map(route =>             
-            <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat)}/>
+            <Route key={route._id} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
         )
         
         if(Routes.length > 0) {

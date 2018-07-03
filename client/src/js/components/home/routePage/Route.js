@@ -5,8 +5,7 @@ class Route  extends Component {
     render(){
         return(
             <div className="container-fluid bg-purple bordbot-2px-white">
-                {/* Linking to static matches page, in future matches page will be unique to route */}
-                <Link to={`/HomePage/RouteMatches`}>
+                <Link to={`/HomePage/RouteMatches/`+this.props.store._id}>
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
