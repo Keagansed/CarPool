@@ -12,6 +12,7 @@ import ReviewTripModal from './reviewTripModal/ReviewTripModal';
 
         this.state = {
             loading: true,
+            trip:[]
         }
     }
 
@@ -31,11 +32,22 @@ import ReviewTripModal from './reviewTripModal/ReviewTripModal';
                     })
                 }
             })
-        }  
+        }
+
+        fetch('/api/system/getTrip?_id='+this.props.match.params.tripID)
+            .then(res => res.json())
+            .then(json => this.setState({trip : json}));
     }
 
     render(){
         //const { token } = this.props.store;
+        let tripName;
+        try{
+            tripName = this.state.trip[0].tripName;
+        }
+        catch(E) {
+
+        }
         
         return(
             <div className="size-100 bg-purple">
@@ -47,10 +59,10 @@ import ReviewTripModal from './reviewTripModal/ReviewTripModal';
                                 </button>
                             </Link>
                             <div className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                Home To Work
+                                {tripName}
                             </div>
                             {/* If this trip is still upcoming the below component should be CancelTripModal **Still to be implemented */}
-                            <ReviewTripModal />
+                            <ReviewTripModal trip={this.state.trip[0]}/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}

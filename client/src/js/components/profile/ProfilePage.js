@@ -143,7 +143,7 @@ import { getFromStorage } from './../../utils/localStorage.js';
         {
             if(store.vouchTab === true)
             {
-                return <Vouches/>;            
+                return <Vouches _id={this.state._id}/>;
             }
             else if(store.trustTab === true)
             {

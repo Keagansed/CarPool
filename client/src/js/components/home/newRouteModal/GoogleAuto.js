@@ -46,11 +46,11 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
             >
                 {
                     ({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                    <div>
+                    <div className="col-11 mx-auto pad-0">
                         <input
                         {...getInputProps({
                             placeholder: this.props.placeholder,
-                            className: 'col-11 form-control mx-auto brad-2rem' // Class to change the input box
+                            className: 'form-control brad-2rem' // Class to change the input box
                         })}
                         />
                         <div className="autocomplete-dropdown-container"> {/*Class for the dropdown box that contains all the suggestions*/}

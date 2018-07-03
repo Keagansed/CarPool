@@ -36,7 +36,6 @@ import recRoutesStore from '../../../../stores/RecomendedRoutesStore';
             })
         }  
     }
-
     render(){
         //const { token } = this.props.store;
         

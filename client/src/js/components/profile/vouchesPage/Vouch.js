@@ -16,14 +16,58 @@ class Vouch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            user:[]
         }
+    }
+
+    componentWillMount(){
+        fetch('/api/account/getAllUsers')
+            .then(res => res.json())
+            .then(json => this.setState({user: json}))
     }
 
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    getUsername(_id) {
+        for (let x in this.state.user) {
+            if(this.state.user[x]._id === _id) {
+                return this.state.user[x].firstName;
+            }
+        }
+
+    }
+
+    getUsernameSurname(_id) {
+        for (let x in this.state.user) {
+            if(this.state.user[x]._id === _id) {
+                return this.state.user[x].firstName + " " + this.state.user[x].lastName;
+            }
+        }
+
+    }
+
+    printStars(numStars) {
+        let starElements = [],
+            n = numStars,
+            i;
+
+        for(i = 0; i < n; i = i + 1) {
+            starElements.push(
+                <i className="fa fa-star" key={Math.random()}></i>
+            );
+        }
+        for(i = 0; i < 5-n; i = i + 1) {
+            starElements.push(
+                <i className="fa fa-star-o" key={Math.random()}></i>
+            );
+        }
+
+        return starElements;
     }
 
     render(){
@@ -34,7 +78,7 @@ class Vouch  extends Component {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Michael's Review</h5>
+                            <h5 className="modal-title fw-bold">{this.getUsername(this.props.vouch.idBy)}'s Review</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -46,7 +90,7 @@ class Vouch  extends Component {
                                 </div>
                                 <div className="row padbot-10px">
                                     <div className="col-12 txt-gold txt-center">
-                                        <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star-o"></i>
+                                        {this.printStars(this.props.vouch.rating)}
                                     </div>
                                 </div>
                                 <div className="row">
@@ -55,7 +99,7 @@ class Vouch  extends Component {
                                 <div className="row">
                                     <div className="col-12">
                                         <p className="txt-center mbottom-0">
-                                            I had a great drive with Marcus. He was friendly and enjoyable to talk to.
+                                            {this.props.vouch.reviewBody}
                                         </p>
                                     </div>                                
                                 </div>
@@ -75,10 +119,10 @@ class Vouch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12 txt-gold">
-                                <h5><i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i></h5>
+                                <h5>{this.printStars(this.props.vouch.rating)}</h5>
                             </div>
                             <div className="col-12">
-                                Michael Yatrakos
+                                {this.getUsernameSurname(this.props.vouch.idBy)}
                             </div>
                         </div>
                         <div className="col-3 vertical-right">

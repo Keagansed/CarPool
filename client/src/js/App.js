@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './../css/AllPages.css'; 
 
-// import ChatPage from "./components/home/carpoolPage/chatPage/ChatPage";
 import HomePage from "./components/home/HomePage.js";
 import HomePageStore from './stores/HomePageStore';
 import LandingPage from "./components/landing/LandingPage.js";
@@ -33,7 +32,7 @@ class App extends Component {
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/RouteMatches/:_id"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
-					<Route path={"/HomePage/Trip"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
+					<Route path={"/HomePage/Trip/:tripID"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <Messages {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					<Route path={"/Settings"} exact render={(props) => <Settings {...props} store={SettingsPageStore}/>}/>

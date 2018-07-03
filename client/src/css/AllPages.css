@@ -187,7 +187,9 @@ html, body{
 .bg-whitelight{
     background-color: rgba(255, 255, 255, 0.349);
 }
-
+.bg-green{
+    background-color: green;
+}
 .bg-red{
     background-color: red;
 }

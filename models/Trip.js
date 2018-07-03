@@ -1,6 +1,10 @@
 let mongoose = require('mongoose');
 
 let TripSchema = new mongoose.Schema({
+    tripName:{
+        type:String,
+        required:true
+    },
     idBy:{
         type:String,
         required:true

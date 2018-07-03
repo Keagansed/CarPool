@@ -5,12 +5,19 @@ const Trip = require('../../models/Trip.js');
 router.post('/',(req,res,next)=>{
     const { body } = req;
     const{
+        tripName,
         idBy,
         dateTime,
         days,
         users
     } = body;
 
+    if(!tripName){
+        return res.send({
+            success:false,
+            message:"Error: Carpool name cannot be blank!"
+        });
+    }
     if(!dateTime){
         return res.send({
             success:false,
@@ -31,6 +38,7 @@ router.post('/',(req,res,next)=>{
     }
 
     const newTrip = new Trip();
+    newTrip.tripName = tripName;
     newTrip.idBy = idBy;
     newTrip.dateTime = dateTime;
     newTrip.days = days;

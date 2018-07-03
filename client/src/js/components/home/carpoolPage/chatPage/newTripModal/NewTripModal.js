@@ -40,6 +40,8 @@ const hide = {
             hours = hours < 10 ? "0" + hours : hours;
             TripsStore.dateTime.setHours(hours,minutes,0,0);
         }
+        TripsStore.tripName = this.props.carpoolName;
+
     };
 
     updateDate = event => {
