@@ -21,6 +21,7 @@ let getUserRouter = require('./routes/api/getUser.js');
 let routesRouter = require('./routes/api/Route');
 let tripsRouter = require('./routes/api/addTrip');
 let respondToTripRouter = require('./routes/api/respondToTrip');
+let getTripsRouter = require('./routes/api/getTrips');
 
 var app = express();
 
@@ -54,6 +55,7 @@ app.use('/api/account/getUser', getUserRouter)
 app.use('/api/system/route', routesRouter)
 app.use('/api/system/addTrip', tripsRouter)
 app.use('/api/system/respondToTrip', respondToTripRouter)
+app.use('/api/system/getTrips', getTripsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -126,7 +126,7 @@ class Messages extends Component {
                                 </button>
                             </Link>
                             <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
-                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip}/>
+                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip} carpoolName={this.props.match.params.carpoolName}/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}

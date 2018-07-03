@@ -9,6 +9,7 @@ router.post('/',(req,res,next)=>{
         _id,
         userID
     } = body;
+    let tripName;
     let idBy;
     let dateTime;
     let days;
@@ -18,6 +19,7 @@ router.post('/',(req,res,next)=>{
     Trip.find({
         _id:_id,
     },(err,data)=>{
+        tripName = data[0].tripName;
         idBy = data[0].idBy;
         dateTime = data[0].dateTime;
         days = data[0].days;
@@ -27,6 +29,7 @@ router.post('/',(req,res,next)=>{
         Trip.findOneAndUpdate(
             {"_id": _id},
             {$set:{
+                "tripName":tripName,
                 "idBy":idBy,
                 "dateTime":dateTime,
                 "days":days,
