@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { observer } from "mobx-react";
 
 import WeekdaySelector from './WeekdaySelector';
+import TripsStore from '../../../../../stores/TripsStore'
 
 import {
     getFromStorage
@@ -13,16 +15,61 @@ const hide = {
     display: 'none'
 };
 
-class NewTripModal extends Component{
+@observer class NewTripModal extends Component{
     constructor(props){
         super(props);
         this.toggle = this.toggle.bind(this);
+        this.updateTime = this.updateTime.bind(this);
+        this.updateDate = this.updateDate.bind(this);
+        this.updateDays = this.updateDays.bind(this);
+        this.updateUsers = this.updateUsers.bind(this);
 
         this.state ={
             user:[],
             toggle: false
         };
     }
+
+    updateTime = event => {
+        let time = document.getElementById("inputTripTime").value;
+        if(time)
+        {
+            let hours = time.split(":")[0];
+            let minutes = time.split(":")[1];
+            hours = hours % 12 || 12;
+            hours = hours < 10 ? "0" + hours : hours;
+            TripsStore.dateTime.setHours(hours,minutes,0,0);
+        }
+    };
+
+    updateDate = event => {
+        let date = new Date(document.getElementById("inputTripDate").value);
+        TripsStore.dateTime.setDate(date.getDate());
+        TripsStore.dateTime.setMonth(date.getMonth());
+        TripsStore.dateTime.setYear(date.getFullYear());
+    };
+
+    updateDays = event => {
+        TripsStore.days["mon"] = document.getElementById("weekday-mon").checked;
+        TripsStore.days["tue"] = document.getElementById("weekday-tue").checked;
+        TripsStore.days["wed"] = document.getElementById("weekday-wed").checked;
+        TripsStore.days["thu"] = document.getElementById("weekday-thu").checked;
+        TripsStore.days["fri"] = document.getElementById("weekday-fri").checked;
+        TripsStore.days["sat"] = document.getElementById("weekday-sat").checked;
+        TripsStore.days["sun"] = document.getElementById("weekday-sun").checked;
+    };
+
+    updateUsers = event =>
+    {
+        for(let user in this.props.users) {
+            if (document.getElementById(user).checked){
+                if (user === getFromStorage('sessionKey').token)
+                    TripsStore.users[user] = true;
+                else
+                    TripsStore.users[user] = false;
+            }
+        }
+    };
 
     toggle(event) {
         this.setState(prevState => ({
@@ -38,10 +85,8 @@ class NewTripModal extends Component{
 
     getUsername(_id)
     {
-        for (var x in this.state.user)
-        {
-            if(this.state.user[x]._id === _id)
-            {
+        for (let x in this.state.user) {
+            if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
             }
         }
@@ -95,18 +140,18 @@ class NewTripModal extends Component{
             document.getElementById(user).checked = false;
         }
 
-        this.props.suggestTrip(messageContent, getFromStorage('sessionKey').token, users);
         this.toggle();
+        TripsStore.addTrip(this.props.suggestTrip,messageContent,users);
+        // this.props.suggestTrip(messageContent, getFromStorage('sessionKey').token, users, TripsStore.tripID);
     }
 
     render(){
         let users = [];
 
-        for(let user in this.props.users)
-        {
+        for(let user in this.props.users) {
             users.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6 txt-left">{this.getUsername(user)}</div><div className="col-6 vertical-right"><input id={user} type="checkbox"/></div>
+                    <div className="col-6 txt-left">{this.getUsername(user)}</div><div className="col-6 vertical-right"><input id={user} onChange={this.updateUsers} type="checkbox"/></div>
                 </div>
             );
         }
@@ -130,15 +175,15 @@ class NewTripModal extends Component{
                                         <h6 className="fw-bold mx-auto">Time and Date</h6>
                                     </div>
                                     <div className="row padbot-10px">
-                                        <input type="time" className="col-5 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputTripTime"/>
-                                        <input type="date" className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputTripDate"/>
+                                        <input type="time" onChange={this.updateTime} className="col-5 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputTripTime"/>
+                                        <input type="date" onChange={this.updateDate} className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputTripDate"/>
                                     </div>
                                     <div className="row">
                                         <h6 className="fw-bold mx-auto">Repeat Weekly</h6>
                                     </div>
                                     <div className="row padbot-10px">
                                         <div className="mx-auto">
-                                            <WeekdaySelector/>
+                                            <WeekdaySelector updateDays={this.updateDays}/>
                                         </div>
                                     </div>
                                     <div className="row bordbot-1px-dash-grey">

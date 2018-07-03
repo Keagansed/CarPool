@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import WeekdaySelector from './WeekdaySelector';
+import LocationSearchInput from './GoogleAuto';
+import MapWrapper from './MapWrapper';
+// import WeekdaySelector from './WeekdaySelector';
 
 const display = {
     display: 'block'
@@ -15,14 +17,78 @@ class NewRouteModal extends Component{
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            token: this.props.token,
+            routeName: '',
+            // startLocation: '',
+            // endLocation: '',
+            time: '00:00',
+            repeat: false,
         }
     }
   
     toggle(event) {
+        event.preventDefault();
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    updateNameValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            routeName: event.target.value
+        })
+    }
+
+    // updateStartValue = (event) => {
+    //     event.preventDefault();
+
+    //     this.setState({
+    //         startLocation: event.target.value
+    //     })
+    // }
+
+    // updateEndValue = (event) => {
+    //     event.preventDefault();
+
+    //     this.setState({
+    //         endLocation: event.target.value
+    //     })
+    // }
+
+    updateTimeValue = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            time: event.target.value
+        })
+    }
+
+    // updateRepeatValue = (event) => {
+    //     event.preventDefault();
+
+    //     let value = false;
+
+    //     if(event.target.value === 'on')
+    //         value = true;
+
+    //     this.setState({
+    //         repeat: value
+    //     })
+    // }
+
+    handleAddRoute = (event) => {
+        event.preventDefault();
+
+        const {
+            token,
+            routeName,
+            time
+        } = this.state;
+        
+        this.props.store.newRoute(token, time, routeName);
     }
 
     render(){
@@ -44,34 +110,35 @@ class NewRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Route Name</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work" required="required" name="routeName" id="inputRouteName"/> 
+                                    <input type="text" onChange={this.updateNameValue} className="col-11 form-control mx-auto brad-2rem" placeholder="e.g. Home to Work"/> 
                                 </div>
                                 <div className="row">
-                                    <h6 className="fw-bold mx-auto">Time and Date</h6>
+                                    <h6 className="fw-bold mx-auto">Time</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="time" className="col-4 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputRouteTime"/> 
-                                    <input type="date" className="col-6 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate"/>
+                                    <input type="time" onChange={this.updateTimeValue} className="col-5 form-control mx-auto brad-2rem" placeholder="Time"/> 
+                                    {/* <input type="date" className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate"/> */}
                                 </div>
-                                <div className="row">
+                                {/* <div className="row">
                                     <h6 className="fw-bold mx-auto">Repeat Weekly</h6>
                                 </div>
                                 <div className="row padbot-10px">
                                     <div className="mx-auto">
                                         <WeekdaySelector/>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Start and End Locations</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="Start Location" required="required" name="StartLocation" id="inputRouteStart"/> 
+                                    <LocationSearchInput placeholder="Start Location"/> 
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="End Location" required="required" name="EndLocation" id="inputRouteEnd"/> 
+                                    <LocationSearchInput placeholder="End Location"/> 
                                 </div>
+                                <MapWrapper/>
                                 <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                    <button onClick={this.handleAddRoute} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold">
                                         Add Route
                                     </button>
                                 </div>

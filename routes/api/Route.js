@@ -9,35 +9,34 @@ router.post('/newRoute',(req,res,next) => {
         userId,
         startLocation,
         endLocation,
-        days,
+        //days,
         time,
         routeName,
-        repeat
+       // repeat
     } = body;
 
     const newRoute = new Route();
     newRoute.userId = userId;
     newRoute.startLocation = startLocation;
     newRoute.endLocation = endLocation;
-    newRoute.days = days;
+    //newRoute.days = days;
     newRoute.time = time;
     newRoute.routeName = routeName;
-    newRoute.repeat = repeat;
+    //newRoute.repeat = repeat;
  
     newRoute.save((err, route) => {
         if(err)
-        {
-            
+        {  
             return res.send({
-                success:false,
-                message:"Error: Server error"
+                success: false,
+                message: err
             });
             
         }
 
         return res.send({
-            success:true,
-            message:"Success: Route Created"
+            success: true,
+            message: "Success: Route Created"
         });
     })
 

@@ -5,21 +5,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './../css/AllPages.css'; 
 
-import LoginStore from './stores/LoginStore';
+// import ChatPage from "./components/home/carpoolPage/chatPage/ChatPage";
+import HomePage from "./components/home/HomePage.js";
 import HomePageStore from './stores/HomePageStore';
-import SettingsPageStore from './stores/SettingsPageStore';
-import ProfileStore from './stores/ProfileStore';
-
 import LandingPage from "./components/landing/LandingPage.js";
 import LoginPage from "./components/login/LoginPage.js";
-import RegisterPage from "./components/register/RegisterPage.js";
-import HomePage from "./components/home/HomePage.js";
-import ProfilePage from "./components/profile/ProfilePage.js";
+import LoginStore from './stores/LoginStore';
 import MatchesPage from "./components/home/routePage/matchesPage/MatchesPage";
 import TripPage from "./components/home/tripsPage/tripPage/TripPage";
 import Settings from "./components/settings/SettingsPage";
 import Messages from "./components/home/carpoolPage/chatPage/Messages";
 
+import NewRoute from "./components/homepage/routePage/NewRoute"
+import ProfilePage from "./components/profile/ProfilePage.js";
+import ProfileStore from './stores/ProfileStore';
+import RegisterPage from "./components/register/RegisterPage.js";
+import SettingsPageStore from "./stores/SettingsPageStore";
 
 class App extends Component {
 
@@ -39,8 +40,8 @@ class App extends Component {
 					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
 					<Route path={"/vouching/:_id"} exact component={Vouching}/>
-					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/>
-					<Route path={"/newRoute"} exact component={NewRoute}/> */}
+					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/>*/}
+					<Route path={"/newRoute"} exact component={NewRoute}/> 
 					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
 					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
 					{/* <Route path={"/newRoute"} exact component={NewRoute}/>*/}

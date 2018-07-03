@@ -2,7 +2,7 @@
   "name": "carpool-app-client",
   "version": "0.0.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
