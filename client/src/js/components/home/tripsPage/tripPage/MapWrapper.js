@@ -12,10 +12,10 @@ import GoogleMapComponent from './GoogleMap';
         );
         
         let coords = {
-            olat:0,
-            olng:0,
-            dlat:0,
-            dlng:0
+            olat:this.props.olat,
+            olng:this.props.olng,
+            dlat:this.props.dlat,
+            dlng:this.props.dlng
         };
         
         return(

@@ -17,6 +17,7 @@ class Messages extends Component {
     constructor(props){
         super(props);
         this.state = {
+            carpoolID:"",
             messages:[
             ],
             users:[
@@ -48,6 +49,13 @@ class Messages extends Component {
             this.setState({
                 messages: previousMessages
             });
+        });
+        this.database.on('child_added', snap =>{
+            if(snap.key==="carpoolID"){
+                this.setState({
+                    carpoolID: snap.val()
+                });
+            }
         });
         const previousUsers = this.state.users;
         this.users.on('child_added', snap =>{
@@ -126,7 +134,7 @@ class Messages extends Component {
                                 </button>
                             </Link>
                             <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
-                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip} carpoolName={this.props.match.params.carpoolName}/>
+                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip} carpoolID={this.state.carpoolID}  carpoolName={this.props.match.params.carpoolName}/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}

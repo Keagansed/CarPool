@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 // import Carpool from './Carpool';
 import CarpoolOffer from './CarpoolOffer';
+import CarpoolStore from '../../../stores/CarpoolStore'
 
-// class Carpools  extends Component {
-//     render(){
 //         return(
 //             <div className="scroll-vert">
 //                 <div className="pad-10px bg-whitelight txt-white">
@@ -46,6 +45,10 @@ class Carpools extends Component {
         this.addChat = this.addChat.bind(this);
 
         this.groupChats = app.database().ref().child('groupChats');
+        this.groupChatID = "";
+
+        this.pushToFirebase = this.pushToFirebase.bind(this);
+        this.users = {};
     }
 
     componentWillMount(){
@@ -111,11 +114,24 @@ class Carpools extends Component {
 
     addChat()
     {
-        let name = this.state.groupChatName;
-        let users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
+        // let name = this.state.groupChatName;
+        this.users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
             [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
             [this.state.user3]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()}};
-        this.groupChats.push().set({name: name, users: users});
+        CarpoolStore.carpoolName = this.state.groupChatName;
+        CarpoolStore.from = "38 Algar Crescent";
+        CarpoolStore.longFrom = "28.299980000000005";
+        CarpoolStore.latFrom = "-26.14141";
+        CarpoolStore.to = "1228 Prospect Street";
+        CarpoolStore.longTo = "28.241469999999936";
+        CarpoolStore.latTo = "-25.75123";
+        CarpoolStore.users = [[this.state.user1],[this.state.user2],[this.state.user3]];
+        CarpoolStore.addCarpool(this.pushToFirebase);
+
+    }
+
+    pushToFirebase(){
+        this.groupChats.push().set({name: CarpoolStore.carpoolName, users: this.users, carpoolID: CarpoolStore.carpoolID});
     }
 
     render() {
@@ -261,7 +277,7 @@ class Carpools extends Component {
                                     <label htmlFor="user3">User</label>
                                     <input type="text" className="form-control" id="user3" onChange={this.handle3Change.bind(this)} />
                                 </div>
-                                <button className="btn btn-secondary" onClick={this.addChat} >Submit</button>
+                                <a className="btn btn-secondary" onClick={this.addChat} >Submit</a>
                             </form>
                         </div>
                     </div>

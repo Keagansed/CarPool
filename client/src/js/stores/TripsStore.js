@@ -4,6 +4,7 @@ import { getFromStorage } from '../utils/localStorage.js'
 class tripsStore {
 
     @observable tripName;
+    @observable carpoolID;
     @observable idBy = getFromStorage('sessionKey').token;
     @observable dateTime = new Date();
     @observable days = {mon:false,tue:false,wed:false,thu:false,fri:false,sat:false,sun:false};
@@ -18,10 +19,12 @@ class tripsStore {
             },
             body:JSON.stringify({
                 tripName: this.tripName,
+                carpoolID: this.carpoolID,
                 idBy: this.idBy,
                 dateTime: this.dateTime,
                 days: this.days,
                 users: this.users,
+                driver: this.idBy,
             })
         })
             .then(res=>res.json())

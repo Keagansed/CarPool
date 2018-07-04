@@ -143,8 +143,8 @@ const hide = {
         }
 
         this.toggle();
+        TripsStore.carpoolID = this.props.carpoolID;
         TripsStore.addTrip(this.props.suggestTrip,messageContent,users);
-        // this.props.suggestTrip(messageContent, getFromStorage('sessionKey').token, users, TripsStore.tripID);
     }
 
     render(){
