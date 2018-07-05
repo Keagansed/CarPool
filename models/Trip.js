@@ -5,6 +5,10 @@ let TripSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    carpoolID:{
+        type:String,
+        required:true
+    },
     idBy:{
         type:String,
         required:true
@@ -19,6 +23,10 @@ let TripSchema = new mongoose.Schema({
     },
     users: {
         type: {},
+        required:true
+    },
+    driver:{
+        type:String,
         required:true
     }
 });

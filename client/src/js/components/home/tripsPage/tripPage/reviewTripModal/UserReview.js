@@ -7,8 +7,10 @@ class UserReview extends Component{
   
         this.state = {
             rating: 1,
-            user:[]
+            user:[],
         }
+
+        this.onStarClick = this.onStarClick.bind(this);
     }
 
     onStarClick(nextValue, prevValue, name) {
@@ -17,9 +19,7 @@ class UserReview extends Component{
     }
 
     componentWillMount(){
-        fetch('/api/account/getAllUsers')
-            .then(res => res.json())
-            .then(json => this.setState({user: json}));
+        this.setState({user: this.props.user});
     }
 
     getUsernameSurname(_id)
@@ -69,7 +69,7 @@ class UserReview extends Component{
                             name="rate1" 
                             starCount={5}
                             value={rating}
-                            onStarClick={this.onStarClick.bind(this)}
+                            onStarClick={this.onStarClick}
                         />
                     </div>
                 </div>

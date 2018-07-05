@@ -59,7 +59,7 @@ class ReviewTripModal extends Component{
                     this.userReviews[user] = {};
                     this.userReviews[user].stars = 1;
                     userReviews.push(
-                        <UserReview id={user} key={Math.random()} updateReview={this.updateReview} updateStars={this.updateStars}/>
+                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
                     );
                 }
             }
