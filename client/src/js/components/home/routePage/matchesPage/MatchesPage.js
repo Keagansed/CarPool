@@ -34,7 +34,7 @@ import recRoutesStore from '../../../../stores/RecomendedRoutesStore';
                     })
                 }
             })
-        }  
+        }
     }
     render(){
         //const { token } = this.props.store;
@@ -54,7 +54,7 @@ import recRoutesStore from '../../../../stores/RecomendedRoutesStore';
                     </div>
                     {/* Padding is there for top and bottom navs*/}
                     <div className="padtop-50px">
-                        <Matches store={recRoutesStore} token={this.props.store.token} />
+                        <Matches store={recRoutesStore} routeId={this.props.match.params._id} token={this.props.store.token} />
                     </div>
             </div>
         );

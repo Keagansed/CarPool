@@ -74,7 +74,7 @@ class CarpoolOffer  extends Component {
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
-                                <h5>Work to Home</h5>
+                                <h5>{this.props.store.CarpoolName}</h5>
                             </div>
                             <div className="col-12">
                                 5 Members

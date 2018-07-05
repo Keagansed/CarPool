@@ -13,7 +13,13 @@ import RouteStore from '../../../../stores/RouteStore';
 
     renderRoutes = () => {
         const Routes = this.props.store.routes.map(route =>             
-            <UserMatch key={route._id} userId={route.userId} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
+            <UserMatch 
+                key={route._id} 
+                token={this.props.token}
+                uRouteId={this.props.routeId} 
+                userId={route.userId} 
+                store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}
+            />
         )
         if(Routes.length > 0) {
             return Routes;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import Carpool from './Carpool';
-import CarpoolOffer from './CarpoolOffer';
+import CarpoolOffers from './CarpoolOffers';
 
 // class Carpools  extends Component {
 //     render(){
@@ -41,11 +41,15 @@ class Carpools extends Component {
             groupChats:[],
             loading: true,
             colours:{0:false,1:false,2:false,3:false,4:false,5:false,6:false},
+            offers:{},
         };
 
         this.addChat = this.addChat.bind(this);
 
         this.groupChats = app.database().ref().child('groupChats');
+    }
+    componentDidMount(){
+        this.setState({offers:<CarpoolOffers store={this.props.store} token={this.props.token}/>})
     }
 
     componentWillMount(){
@@ -109,8 +113,7 @@ class Carpools extends Component {
         }
     }
 
-    addChat()
-    {
+    addChat(){
         let name = this.state.groupChatName;
         let users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
             [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
@@ -166,7 +169,7 @@ class Carpools extends Component {
                         <h4 className="mbottom-0">Carpool Offers</h4>
                     </div>
                     {/*Just an example... */}
-                    <CarpoolOffer />
+                    {this.state.offers}
                     <div className="pad-10px bg-whitelight txt-white">
                         <h4 className="mbottom-0">Your Carpools</h4>
                     </div>
