@@ -42,14 +42,12 @@ class profileStore {
     @observable vouchTab = true;
     @observable trustTab = false;
 
-    @action toggleToVouch = () =>
-    {
+    @action toggleToVouch = () =>{
         this.vouchTab = true;
         this.trustTab = false;
     }
 
-    @action toggleToTrust = () =>
-    {
+    @action toggleToTrust = () =>{
         this.trustTab = true;
         this.vouchTab = false;
     }
@@ -88,8 +86,7 @@ class profileStore {
                 this.user.firstName = this.eFName;
                 this.user.lastName = this.eLName;
                 this.user.idNum = this.eID;
-                this.user.email = this.eEmail;
-                
+                this.user.email = this.eEmail;   
             }else{
                 alert(json.message);
             }
@@ -102,22 +99,19 @@ class profileStore {
     @observable vouchesTab = false;
     @observable detailsTab = false;
 
-    @action toggleToTrips = () =>
-    {
+    @action toggleToTrips = () =>{
         this.tripsTab = true;
         this.vouchesTab = false;
         this.detailsTab = false;
     }
 
-    @action toggleToVouches = () =>
-    {
+    @action toggleToVouches = () =>{
         this.tripsTab = false;
         this.vouchesTab = true;
         this.detailsTab = false;
     }
 
-    @action toggleToDetails = () =>
-    {
+    @action toggleToDetails = () =>{
         this.tripsTab = false;
         this.vouchesTab = false;
         this.detailsTab = true;

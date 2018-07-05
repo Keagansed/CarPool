@@ -16,14 +16,12 @@ class routesStore {
     @observable origin = {};
     @observable destination = {};
     
-    @action setGoogleOriginResult = (result) =>
-    {
+    @action setGoogleOriginResult = (result) =>{
         this.originResult = result;
         this.originName = result.formatted_address;
     }
     
-    @action setGoogleDestinationResult = (result) =>
-    {
+    @action setGoogleDestinationResult = (result) =>{
         this.destinationResult = result;
         this.destinationName = result.formatted_address;
     }
@@ -47,13 +45,10 @@ class routesStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             
-            if(json.success)
-            {
+            if(json.success){
                 this.routes = json.data;
                 this.loadingRoutes = false;
-            }
-            else
-            {
+            } else {
                 console.log("Unable to retrieve routes");
             }
         })
@@ -130,13 +125,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                 
             }) 
 
-        })
-      
-
-   
-
-         
-        
+        })       
     }
     
 }

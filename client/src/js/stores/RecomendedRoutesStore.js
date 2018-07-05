@@ -16,13 +16,10 @@ class RecRoutesStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             
-            if(json.success)
-            {
+            if(json.success){
                 this.routes = json.data;
                 this.loadingRoutes = false;
-            }
-            else
-            {
+            }else{
                 console.log("Unable to retrieve routes");
             }
         })

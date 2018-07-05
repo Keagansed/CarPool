@@ -6,13 +6,11 @@ class settingsPageStore {
     @observable profileTab = true;
     @observable alertsTab = false;
 
-    @action toggleToProfile = () =>
-    {
+    @action toggleToProfile = () =>{
         this.profileTab = true;
         this.alertsTab = false;
     }
-    @action toggleToAlerts = () =>
-    {
+    @action toggleToAlerts = () =>{
         this.profileTab = false;
         this.alertsTab = true;
     }

@@ -13,8 +13,7 @@ export const searchUsers = (_name) => {
     .catch(error => console.error('Error:', error))
     .then(json=>{
         let results = "";
-        if (json.length > 0)
-	{
+        if (json.length > 0){
             //~ var i;
 
             //~ for (i = 0; i < json.length; ++i) {

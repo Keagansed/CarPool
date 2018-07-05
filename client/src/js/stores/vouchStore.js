@@ -5,8 +5,7 @@ import {
 } from '../utils/localStorage.js'
 
 class vouchStore {
-    @action submitVouch(tripID, idFor, rating, reviewBody)
-    {
+    @action submitVouch(tripID, idFor, rating, reviewBody){
         const obj = getFromStorage('sessionKey');
         fetch('/api/account/submitVouch',{
             method:'POST',

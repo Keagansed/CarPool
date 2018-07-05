@@ -32,8 +32,7 @@ class loginStore {
     }
 
     @action signUp = () => {
-        if(this.sPassword1 !== this.sPassword2)
-        {
+        if(this.sPassword1 !== this.sPassword2){
             alert("Passwords do not match");
         }
         else{

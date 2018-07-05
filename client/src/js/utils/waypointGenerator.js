@@ -58,8 +58,7 @@ window.google.maps.Polyline.prototype.GetPointsAtDistance = function(metres) {
     if (metres <= 0) return points;
     var dist = 0;
     var olddist = 0;
-    for (var i = 1;
-        (i < this.getPath().getLength()); i++) {
+    for (var i = 1; (i < this.getPath().getLength()) ; i++) {
             olddist = dist;
             dist += window.google.maps.geometry.spherical.computeDistanceBetween(this.getPath().getAt(i), this.getPath().getAt(i - 1));
             while (dist > next) {
