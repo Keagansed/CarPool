@@ -1,4 +1,5 @@
 import { action, observable  } from 'mobx';
+import { waypointGenerator } from './../utils/waypointGenerator';
 
 class routesStore {
     
@@ -58,66 +59,83 @@ class routesStore {
         })
     }
     
+/* 
+Nature of code due to asynchronicity. The asynchronous callbacks of Googles geocoding library 
+Detailed description: https://stackoverflow.com/questions/14220321/how-do-i-return-the-response-from-an-asynchronous-call/14220323#14220323
+General solution: https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function 
+*/
     
-    
-    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/) => {
-        const route = {
-            userId: token,
-            startLocation: {
-                name: this.originName,
-                lat: this.origin.lat,
-                lng: this.origin.lng
-            },
-            endLocation: {
-                name: this.destinationName,
-                lat: this.destination.lat,
-                lng: this.destination.lng
-            },
-            // days: days,
-            time: time,
-            routeName: routeName,
-            // repeat: repeat
-            _id: Date.now
-        }
+    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/, routeSuccess = this.routeSuccess, routes = this.routes) => {
         
-        fetch('/api/system/route/newRoute',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
+        waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
+                function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints){
+
+            const route = {
                 userId: token,
-                // startLocation: startLocation,
                 startLocation: {
-                    name: this.originName,
-                    lat: this.origin.lat,
-                    lng: this.origin.lng
+                    name: originName,
+                    lat: origin.lat,
+                    lng: origin.lng
                 },
-                // endLocation: endLocation,
                 endLocation: {
-                    name: this.destinationName,
-                    lat: this.destination.lat,
-                    lng: this.destination.lng
+                    name: destinationName,
+                    lat: destination.lat,
+                    lng: destination.lng
                 },
+                waypoints: waypoints,
                 // days: days,
-                time: time,
-                routeName: routeName,
+                time: Rtime,
+                routeName: RrouteName,
                 // repeat: repeat
-            })
-        }) 
-        .then(res=>res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json=>{
-            console.log(json);
-            if(json.success === true) {
-                this.routeSuccess = true;
-                this.routes.push(route);
-            }
-            else{
-                window.alert("Failed to create new route");
+                _id: Date.now
             }
             
-        })  
+            fetch('/api/system/route/newRoute',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    userId: token,
+                    // startLocation: startLocation,
+                    startLocation: {
+                        name: originName,
+                        lat: origin.lat,
+                        lng: origin.lng
+                    },
+                    // endLocation: endLocation,
+                    endLocation: {
+                        name: destinationName,
+                        lat: destination.lat,
+                        lng: destination.lng
+                    },
+                    waypoints: waypoints,
+                    // days: days,
+                    time: Rtime,
+                    routeName: RrouteName,
+                    // repeat: repeat
+                })
+            }) 
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                console.log(json);
+                if(json.success === true) {
+                    routeSuccess = true;
+                    routes.push(route);
+                }
+                else{
+                    window.alert("Failed to create new route");
+                }
+                
+            }) 
+
+        })
+      
+
+   
+
+         
         
     }
     

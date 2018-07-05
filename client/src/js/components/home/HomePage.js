@@ -21,6 +21,7 @@ import Trips from './tripsPage/Trips';
 
     //========= Fetch Session Token ===========
     componentWillMount(){
+    
         const obj = getFromStorage('sessionKey');
         if(obj && obj.token){
             const { token } = obj;
