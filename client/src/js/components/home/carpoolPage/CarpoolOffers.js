@@ -1,8 +1,12 @@
+import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 import CarpoolOffer from './CarpoolOffer';
 import OfferStore from '../../../stores/OfferStore';
 
-class CarpoolOffers extends Component{
+@observer class CarpoolOffers extends Component{
+    constructor(){
+        super();
+    }
 
     componentDidMount(){
         this.props.store.getOffers(this.props.token);
@@ -19,17 +23,38 @@ class CarpoolOffers extends Component{
         }else {
             return(
                 <h5 className="txt-center mtop-50px txt-white">
-                    No Offers{console.log(Offers)}
+                    No Offers{console.log(this.props.token)}
                 </h5>
             );
         }
     }
-    render(){
+
+    renderLoading = () => {
         return(
             <div>
-                {this.renderOffers()}
+                <div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
             </div>
-        );
+        )
+    }
+
+    render(){
+        if (this.props.store.loadingOffers){
+            return(
+                <div className="scroll-vert">
+                    {this.renderLoading()}
+                </div>
+            );
+        }
+        else{
+            return(
+                <div>
+                    {this.renderOffers()}
+                </div>
+            );
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 import { action, observable  } from 'mobx';
 
-class offerStore {
+class OfferStore {
     
     @observable CarpoolName = '';
     @observable senderId = '';
@@ -9,7 +9,7 @@ class offerStore {
     @observable recieverRoute = '';
     @observable join = false;
     
-    constructor (CarpoolName, senderId, senderRoute, recieverId, recieverRoute, join){
+    constructor(CarpoolName, senderId, senderRoute, recieverId, recieverRoute, join){
         this.CarpoolName = CarpoolName;
         this.senderId = senderId;
         this.senderRoute = senderRoute;
@@ -19,5 +19,4 @@ class offerStore {
     }
 }
 
-const  OfferStore = new offerStore();
 export default OfferStore;

@@ -48,6 +48,7 @@ class Carpools extends Component {
 
         this.groupChats = app.database().ref().child('groupChats');
     }
+    
     componentDidMount(){
         this.setState({offers:<CarpoolOffers store={this.props.store} token={this.props.token}/>})
     }

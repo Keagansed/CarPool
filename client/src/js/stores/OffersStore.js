@@ -3,6 +3,7 @@ import { action, observable  } from 'mobx';
 class offersStore {
     
     @observable offers = [];
+    @observable loadingOffers = true;
     
     @action getOffers = (token) => {
         fetch('/api/system/offers/getOffers?userId=' + token,{
@@ -17,6 +18,7 @@ class offersStore {
             if(json.success)
             {
                 this.offers = json.data;
+                this.loadingOffers = false;
             }
             else
             {
