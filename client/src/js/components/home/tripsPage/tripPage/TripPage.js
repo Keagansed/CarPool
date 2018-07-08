@@ -9,14 +9,14 @@ import MapWrapper from './MapWrapper';
 @observer class TripPage extends Component{
 
     constructor(){
-        super()
+        super();
 
         this.state = {
             loading: true,
             trip:[],
             carpool:[],
             user:[]
-        }
+        };
 
         this.from = "";
         this.longFrom = "";
@@ -24,6 +24,7 @@ import MapWrapper from './MapWrapper';
         this.to = "";
         this.longTo = "";
         this.latTo = "";
+        this.reviewModal = [];
     }
 
     //========= Fetch Session Token ===========
@@ -132,6 +133,9 @@ import MapWrapper from './MapWrapper';
                     );
                 }
             }
+            if(new Date(this.state.trip[0].dateTime) < new Date()) {
+                this.reviewModal = (<ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>);
+            }
         }
         catch(E) {
 
@@ -150,7 +154,7 @@ import MapWrapper from './MapWrapper';
                                 {tripName}
                             </div>
                             {/* If this trip is still upcoming the below component should be CancelTripModal **Still to be implemented */}
-                            <ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>
+                            {this.reviewModal}
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
