@@ -27,10 +27,10 @@ Once the installation is complete, navigate to the `\CarPool\client\` folder and
 ## Documentation
 	
 	
-* [User Manual](https://drive.google.com/open?id=15Xil4pbk8T1k4epE6ULfLF9PqgrSDMiq)
-* [Requirements and Design document](https://drive.google.com/open?id=16S4-24a4RshAfKx4Jjp4z7Z1VlNEXQ_c6AF8KU2pOpI)
-* [Coding Standards document](https://drive.google.com/open?id=1L5UCMJzX3bENWo_TjIH5aXFxkfkO-MV8)
-* [Testing Policy document](https://drive.google.com/open?id=1FGpuaxpYKhTKCvPZ8lSglqVc8Ma-UdZL)
+* <a href="https://drive.google.com/open?id=1Bm0DS6Q2ma_6LgFtqEvHb00QAVKw4pVi" target="_blank">User manual</a>
+* <a href="https://drive.google.com/open?id=1eM-7meF5puDQnJiRQuKKxiiulo7DSO4w" target="_blank">Requirements and design document </a>
+* <a href="https://drive.google.com/open?id=1L5UCMJzX3bENWo_TjIH5aXFxkfkO-MV8" target="_blank">Coding standards document </a>
+* <a href="https://drive.google.com/open?id=1FGpuaxpYKhTKCvPZ8lSglqVc8Ma-UdZL" target="_blank">Testing policy document</a>
 
 ### Security Issues
 
