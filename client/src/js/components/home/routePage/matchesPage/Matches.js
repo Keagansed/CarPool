@@ -8,7 +8,7 @@ import RouteStore from '../../../../stores/RouteStore';
 
 @observer class Matches extends Component{
     componentWillMount(){
-        this.props.store.getRoutes(this.props.token);
+        this.props.store.getRoutes(this.props.token, this.props.routeId);
         
     }
 

@@ -38,7 +38,6 @@ import MatchesStore from '../../../../stores/MatchesStore';
     }
     render(){
         //const { token } = this.props.store;
-        
         return(
             <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -54,7 +53,7 @@ import MatchesStore from '../../../../stores/MatchesStore';
                     </div>
                     {/* Padding is there for top and bottom navs*/}
                     <div className="padtop-50px">
-                        <Matches store={MatchesStore} token={this.props.store.token} />
+                        <Matches store={MatchesStore} token={this.props.store.token} routeId={this.props.match.params._id}/>
                     </div>
             </div>
         );
