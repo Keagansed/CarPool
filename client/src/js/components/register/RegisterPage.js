@@ -86,7 +86,7 @@ import logo  from "./../../../css/images/logo.png";
         else{
             return(               
                 <Redirect to={{
-                    pathname: "/HomePage", 
+                    pathname: "/Login", 
                 }}/>
             );
         }
