@@ -7,6 +7,7 @@ import Navbar from './../navbar/Navbar';
 import NavTabs from './NavTabs';
 import Routes from './routePage/Routes';
 import RoutesStore from './../../stores/RoutesStore';
+import OffersStore from './../../stores/OffersStore'
 import Trips from './tripsPage/Trips';
 
 @observer class HomePage extends Component{
@@ -49,7 +50,7 @@ import Trips from './tripsPage/Trips';
             }
             else if(store.carpoolTab === true)
             {
-                return <Carpools/>;
+                return <Carpools store={OffersStore} token={this.props.store.token}/>;
             }
             else if(store.tripTab === true)
             {
