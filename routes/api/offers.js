@@ -6,6 +6,7 @@ router.post('/makeOffer',(req,res,next) => {
     const { body } = req;
 
     const {
+        carpoolName,
         senderId,
         senderRoute,
         recieverId,
@@ -14,7 +15,7 @@ router.post('/makeOffer',(req,res,next) => {
     } = body;
 
     const newOffer = new offer();
-    newOffer.CarpoolName = "test";
+    newOffer.CarpoolName = carpoolName;
     newOffer.SenderID = senderId;
     newOffer.SenderRoute = senderRoute;
     newOffer.RecieverID = recieverId;

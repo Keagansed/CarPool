@@ -4,10 +4,6 @@ import CarpoolOffer from './CarpoolOffer';
 import OfferStore from '../../../stores/OfferStore';
 
 @observer class CarpoolOffers extends Component{
-    constructor(){
-        super();
-    }
-
     componentDidMount(){
         this.props.store.getOffers(this.props.token);
     }
@@ -15,7 +11,7 @@ import OfferStore from '../../../stores/OfferStore';
 
     renderOffers(){
         const Offers = this.props.store.offers.map(offer =>             
-            <CarpoolOffer key={offer._id} store={new OfferStore(offer.CarpoolName, offer.senderId, offer.senderRoute, offer.recieverId, offer.recieverRoute, offer.join)}/>
+            <CarpoolOffer key={offer._id} store={new OfferStore(offer.CarpoolName, offer.SenderID, offer.SenderRoute, offer.RecieverID, offer.RecieverRoute, offer.JoinRequest)}/>
         )
         
         if(Offers.length > 0) {

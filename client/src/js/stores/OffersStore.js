@@ -29,13 +29,14 @@ class offersStore {
     
     
     
-    @action makeOffer = (senderId, senderRoute, recieverId, recieverRoute, join) => {        
+    @action makeOffer = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join) => {        
         fetch('/api/system/offers/makeOffer',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
+                carpoolName: carpoolName,
                 senderId: senderId,
                 senderRoute: senderRoute,
                 recieverId: recieverId,

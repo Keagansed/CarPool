@@ -18,11 +18,12 @@ class UserMatch  extends Component {
   
         this.state = {
             user: {},
-            toggle: false
+            toggle: false,
+            carpoolName:""
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         fetch('/api/account/getProfile?_id=' + this.props.userId,{
             method:'GET',
             headers:{
@@ -43,8 +44,12 @@ class UserMatch  extends Component {
     }
 
     makeOffer = () =>{
-        OffersStore.makeOffer(this.props.token, this.props.uRouteId, this.props.userId, this.props.uRouteId, false);
+        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.uRouteId, false);
         this.toggle();
+    }
+    
+    handleCarpoolNameChange(e){
+        this.setState({carpoolName: e.target.value});
     }
 
     render(){
@@ -76,6 +81,9 @@ class UserMatch  extends Component {
                                         ***Map to go here***
                                     </p>
                                 </div>                                
+                            </div>
+                            <div className="row">
+                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} />
                             </div>
                             <div className="row">
                                 <button type="submit" onClick={this.makeOffer} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
