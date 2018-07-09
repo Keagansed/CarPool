@@ -105,7 +105,7 @@ class UserMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>{this.state.user['firstName'] + ' ' + this.state.user['lastName']}</h5>
+                                <h5>{this.state.user['firstName']}</h5>
                             </div>
                             <div className="col-12">
                                 1.2km Further

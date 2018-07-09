@@ -195,7 +195,7 @@ const hide = {
                                     <div className="row padtop-20px">
                                         <div className="col-1"></div>
                                         <div className="col-10">
-                                            <a onClick={() => this.suggestTrip()} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnSuggestTrip">
+                                            <a onClick={() => this.suggestTrip()} className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold" id="btnSuggestTrip">
                                                 Suggest
                                             </a>
                                         </div>

@@ -3,14 +3,24 @@ import app from '../../../../stores/MessagingStore'
 
 import {
     getFromStorage
-} from '../../../../utils/localStorage.js'
+} from '../../../../utils/localStorage.js';
+
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
 
 class TripSuggest extends Component {
     constructor(props){
         super(props);
+        this.toggle = this.toggle.bind(this);
+
         this.state = {
             user:[],
             buttons: [],
+            toggle: false
         };
         this.messageContent = props.messageContent;
         this.messageID = props.messageID;
@@ -49,6 +59,12 @@ class TripSuggest extends Component {
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+    toggle(event) {
+        this.setState(prevState => ({
+            toggle: !prevState.toggle
+        }));
     }
 
     getUsername(_id)
@@ -169,6 +185,41 @@ class TripSuggest extends Component {
     }
 
     render(props) {
+        var modal = [];
+        modal.push(
+            // Modal
+            <div key={Math.random()} className="modal" tabIndex="-1" role="dialog" id="carpoolInfoModal" style={this.state.toggle ? display : hide}>
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header bg-aqua">
+                            <h5 className="modal-title fw-bold">Trip Suggestion</h5>
+                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="row txt-white padver-10px padtop-0">
+                                <div className="col-12">
+                                    <div className="col-12 tripSuggest">
+                                        <div className="txt-purple">
+                                            { this.messageContent }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row padtop-0">
+                                <div className="col-12">
+                                    <div className="col-12">
+                                        {this.buttons}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
         let dat = "";
         if(this.checkIfToday(this.props.dateTime)) {
             dat = this.getTime(this.props.dateTime);
@@ -247,13 +298,13 @@ class TripSuggest extends Component {
             return (
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
-                    <div className="row padver-10px padbot-0">
+                    <div className="row padver-10px padbot-10px" onClick={this.toggle}>
                         <div className="col-6">
                             <div className={"col-12 "+this.props.userColour}>
                                 <h5>You</h5>
                             </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
+                            <div className={this.props.userColour + " col-12"}>
+                                Suggested a trip.
                             </div>
                         </div>
                         <div className="col-6 vertical-right txt-grey">
@@ -265,23 +316,7 @@ class TripSuggest extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-12">
-                            <div className="col-12 tripSuggest">
-                                <div className={this.props.userColour}>
-                                    Suggested a trip:
-                                </div>
-                                { this.messageContent }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row padtop-0">
-                        <div className="col-12">
-                            <div className="col-12">
-                                {this.buttons}
-                            </div>
-                        </div>
-                    </div>
+                    {modal}
                 </div>
             );
         }
@@ -290,13 +325,13 @@ class TripSuggest extends Component {
             return (
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
-                    <div className="row padver-10px padbot-0">
+                    <div className="row padver-10px padbot-10px" onClick={this.toggle}>
                         <div className="col-6">
                             <div className={"col-12 "+this.props.userColour}>
                                 <h5>{this.getUsername(this.props.userID)}</h5>
                             </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
+                            <div className={this.props.userColour + " col-12"}>
+                                Suggested a trip.
                             </div>
                         </div>
                         <div className="col-6 vertical-right txt-grey">
@@ -308,23 +343,7 @@ class TripSuggest extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-12">
-                            <div className="col-12 tripSuggest">
-                                <div className={this.props.userColour}>
-                                    Suggested a trip:
-                                </div>
-                                { this.messageContent }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row padtop-0">
-                        <div className="col-12">
-                            <div className="col-12">
-                                {this.buttons}
-                            </div>
-                        </div>
-                    </div>
+                    {modal}
                 </div>
             );
         }

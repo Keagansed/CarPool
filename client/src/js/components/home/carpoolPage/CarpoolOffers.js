@@ -18,7 +18,7 @@ import OfferStore from '../../../stores/OfferStore';
             return Offers;
         }else {
             return(
-                <h5 className="txt-center mtop-50px txt-white">
+                <h5 className="txt-center mtop-10px txt-white">
                     No Offers{console.log(this.props.token)}
                 </h5>
             );
