@@ -8,12 +8,12 @@ import RouteStore from '../../../../stores/RouteStore';
 
 @observer class Matches extends Component{
     componentWillMount(){
-        this.props.store.getRoutes(this.props.token, this.props.routeId);
+        this.props.store.getAllRoutes(this.props.token, this.props.routeId);
         
     }
 
     renderRoutes = () => {
-        const Routes = this.props.store.routes.map(route =>             
+        const Routes = this.props.store.recommendedRoutes.map(route =>             
             <UserMatch key={route._id} userId={route.userId} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
         )
         if(Routes.length > 0) {

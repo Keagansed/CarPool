@@ -25,13 +25,20 @@ router.get('/getOtherRoutes',(req,res,next) => {
 router.get('/getUsersRoutes',(req,res,next) => {
 
     const { query } = req;
-    const { userId } = query;
+    const { userId, routeId } = query;
     Route.find(
         {
-            userId: userId
+            userId: userId,
+            _id: routeId
         },
         (err,data) => {
-            res.send({
+            if(err){
+                return res.send({
+                    success: false,
+                    message:"Failed to retrieve route"
+                })
+            }
+            return res.send({
                 success: true,
                 message: "Routes retrieved successfully",
                 data: data
