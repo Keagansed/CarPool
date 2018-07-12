@@ -35,6 +35,10 @@ class UserMatch  extends Component {
         .then(json => {
             this.setState({user : json[0]});
         });
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 2661d081440eb8ca970d74bc12117115c3cba09e
         fetch('/api/system/route/getRoute?_id=' + this.props.uRouteId,{
             method:'GET',
             headers:{
@@ -44,9 +48,13 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
+<<<<<<< HEAD
             console.log(json.data[0].routeName);
             // this.setState({carpoolName : json[0]['routeName']});
             // console.log(json.data[0]['routeName']);
+=======
+            this.setState({carpoolName : json.data[0].routeName});
+>>>>>>> 2661d081440eb8ca970d74bc12117115c3cba09e
         });
     }
 
