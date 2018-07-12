@@ -34,7 +34,19 @@ class UserMatch  extends Component {
         .catch(error => console.error('Error:', error))
         .then(json => {
             this.setState({user : json[0]});
+        });
+        fetch('/api/system/route/getRoute?_id=' + this.props.userId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
         })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({carpoolName : json[0]['routeName']});
+            console.log(json[0]['routeName']);
+        });
     }
 
     toggle(event) {
@@ -66,29 +78,35 @@ class UserMatch  extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <h6 className="fw-bold mx-auto">Offer Recipient</h6>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                    <div className="col-6">{this.state.userName}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+this.props.userId}>View Profile</a></div>
-                                </div>                           
-                                <div className="row">
-                                    <h6 className="fw-bold mx-auto">Route Comparison</h6>
-                                </div>
-                                <div className="row mbottom-10px">
-                                    <div className="col-12">
-                                        <p className="txt-center mbottom-0">
-                                            ***Map to go here***
-                                        </p>
-                                    </div>                                
-                                </div>
-                                <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
-                                        Make Offer
-                                    </button>
-                                </div>
-                            </form>
+                            <div className="row bordbot-1px-dash-grey">
+                                <h6 className="fw-bold mx-auto">Offer Recipient</h6>
+                            </div>
+                            <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
+                                <div className="col-6">{this.state.user['firstName'] + ' ' + this.state.user['lastName']}</div><div className="col-6 vertical-right">View Profile</div>
+                            </div>                           
+                            <div className="row">
+                                <h6 className="fw-bold mx-auto">Route Comparison</h6>
+                            </div>
+                            <div className="row mbottom-10px">
+                                <div className="col-12">
+                                    <p className="txt-center mbottom-0">
+                                        ***Map to go here***
+                                    </p>
+                                </div>                                
+                            </div>
+                            <div className="row">
+                                <div className="col-12">
+                                    <h6 className="txt-center mbottom-0">
+                                        Carpool Name
+                                    </h6>
+                                </div>     
+                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
+                            </div>
+                            <div className="row">
+                                <button type="submit" onClick={this.makeOffer} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                    Make Offer
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

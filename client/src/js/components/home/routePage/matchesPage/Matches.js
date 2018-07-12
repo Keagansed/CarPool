@@ -9,7 +9,6 @@ import RouteStore from '../../../../stores/RouteStore';
 @observer class Matches extends Component{
     componentWillMount(){
         this.props.store.getAllRoutes(this.props.token, this.props.routeId);
-        
     }
 
     renderRoutes = () => {

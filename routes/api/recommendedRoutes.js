@@ -21,8 +21,7 @@ router.get('/getOtherRoutes',(req,res,next) => {
 
 })
 
-// fucks out, doesn't return anything, must be because of routeId
-router.get('/getUsersRoutes',(req,res,next) => {
+router.get('/getUserRoutes',(req,res,next) => {
 
     const { query } = req;
     const { userId, routeId } = query;
@@ -44,7 +43,6 @@ router.get('/getUsersRoutes',(req,res,next) => {
                 data: data
             })
         });
-
 })
 
 module.exports = router;

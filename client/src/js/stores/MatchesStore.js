@@ -48,7 +48,7 @@ class matchesStore {
             }
         });
 
-        fetch('/api/system/recommendedRoutes/getUsersRoutes?userId=' + token +'&routeId='+routeId,{
+        fetch('/api/system/recommendedRoutes/getUserRoutes?userId=' + token +'&routeId='+routeId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
