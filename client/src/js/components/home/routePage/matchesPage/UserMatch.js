@@ -35,7 +35,8 @@ class UserMatch  extends Component {
         .then(json => {
             this.setState({user : json[0]});
         });
-        fetch('/api/system/route/getRoute?_id=' + this.props.userId,{
+        
+        fetch('/api/system/route/getRoute?_id=' + this.props.uRouteId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -44,8 +45,7 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({carpoolName : json[0]['routeName']});
-            console.log(json[0]['routeName']);
+            this.setState({carpoolName : json.data[0].routeName});
         });
     }
 

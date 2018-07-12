@@ -76,7 +76,6 @@ router.get('/getRoute',(req,res,next) => {
             message: "Route retrieved successfully",
             data: data
         })
-        console.log(data);
     });
 
 })
