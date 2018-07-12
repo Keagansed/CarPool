@@ -99,8 +99,12 @@ class UserMatch  extends Component {
                                     <h6 className="txt-center mbottom-0">
                                         Carpool Name
                                     </h6>
-                                </div>     
-                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-6"> 
+                                    <input className="txt-center mbottom-0" type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
+                                </div>
                             </div>
                             <div className="row">
                                 <button type="submit" onClick={this.makeOffer} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">

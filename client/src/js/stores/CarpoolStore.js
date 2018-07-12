@@ -3,12 +3,6 @@ import { observable, action } from 'mobx';
 class carpoolStore {
 
     @observable carpoolName;
-    @observable from;
-    @observable longFrom;
-    @observable latFrom;
-    @observable to;
-    @observable longTo;
-    @observable latTo;
     @observable users = [];
     @observable carpoolID;
 

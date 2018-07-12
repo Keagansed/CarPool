@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const offer = require('../../models/offer.js');
+const carpool = require('../../models/Carpool.js')
 
 router.post('/makeOffer',(req,res,next) => {
     const { body } = req;
@@ -54,6 +55,87 @@ router.get('/getOffers',(req,res,next) => {
             data: data
         })
     });    
+})
+
+router.get('/declineInvite',(req,res,next) =>{
+    const { query } = req;
+    const { offerId } = query;
+
+    offer.remove({
+        _id: offerId
+    },
+    (err) => {
+        if (err){
+            return res.send({
+                success: false,
+                message: err
+            });
+        }
+        else{
+            return res.send({
+                success: true,
+                message: "offer deleted"
+            });
+        }
+    });
+})
+
+router.get('/acceptInvite',(req,res,next) =>{
+    const { query } = req;
+    const { offerId } = query;
+    
+    offer.find({
+        _id: offerId
+    },
+    (err,data) =>{
+        if (err){
+            return res.send({
+                success: false,
+                message: err
+            });
+        }
+        else{
+            if(data[0].JoinRequest){
+                return res.send({
+                    success: true,
+                    message: "join existing carpool"
+                });
+            }
+            else{
+                const pool = new carpool();
+                pool.routes.push(data[0].SenderRoute);
+                pool.routes.push(data[0].RecieverRoute);
+                pool.carpoolName = data[0].CarpoolName;
+                pool.save((err) =>{
+                    if(err){
+                        return res.send({
+                            success: false,
+                            message: err
+                        });
+                    }
+                    else{
+                        offer.remove({
+                            _id: offerId
+                        },
+                        (err) => {
+                            if (err){
+                                return res.send({
+                                    success: false,
+                                    message: err
+                                });
+                            }
+                            else{
+                                return res.send({
+                                    success: true,
+                                    message: "carpool created and offer deleted"
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
 })
 
 module.exports = router;

@@ -124,12 +124,6 @@ class Carpools extends Component {
             [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
             [this.state.user3]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()}};
         CarpoolStore.carpoolName = this.state.groupChatName;
-        CarpoolStore.from = "38 Algar Crescent";
-        CarpoolStore.longFrom = "28.299980000000005";
-        CarpoolStore.latFrom = "-26.14141";
-        CarpoolStore.to = "1228 Prospect Street";
-        CarpoolStore.longTo = "28.241469999999936";
-        CarpoolStore.latTo = "-25.75123";
         CarpoolStore.users = [[this.state.user1],[this.state.user2],[this.state.user3]];
         CarpoolStore.addCarpool(this.pushToFirebase);
 
