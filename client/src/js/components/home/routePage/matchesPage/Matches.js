@@ -8,18 +8,13 @@ import RouteStore from '../../../../stores/RouteStore';
 
 @observer class Matches extends Component{
     componentWillMount(){
-        this.props.store.getRoutes(this.props.token);
+        this.props.store.getAllRoutes(this.props.token, this.props.routeId);
+        
     }
 
     renderRoutes = () => {
-        const Routes = this.props.store.routes.map(route =>             
-            <UserMatch 
-                key={route._id} 
-                token={this.props.token}
-                uRouteId={this.props.routeId} 
-                userId={route.userId} 
-                store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}
-            />
+        const Routes = this.props.store.recommendedRoutes.map(route =>             
+            <UserMatch key={route._id} userId={route.userId} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
         )
         if(Routes.length > 0) {
             return Routes;
@@ -31,6 +26,7 @@ import RouteStore from '../../../../stores/RouteStore';
             );
         }
     }
+
     constructor(){
         super()
 
@@ -47,8 +43,6 @@ import RouteStore from '../../../../stores/RouteStore';
     handleCarpoolIDChange(e){
         this.setState({carpoolID: e.target.value})
     }
-        
-      
 
     renderLoading = () => {
         return(
