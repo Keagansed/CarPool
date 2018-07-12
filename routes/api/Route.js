@@ -62,4 +62,41 @@ router.get('/getRoutes',(req,res,next) => {
 
 })
 
+router.get('/getRoute',(req,res,next) => {
+    
+    const { query } = req;
+    const { _id } = query;
+    Route.find(
+    {
+        _id: _id
+    },
+    (err,data) => {
+        res.send({
+            success: true,
+            message: "Route retrieved successfully",
+            data: data
+        })
+        console.log(data);
+    });
+
+})
+
+router.get('/RecomendedRoutes',(req,res,next) => {
+    
+    const { query } = req;
+    const { userId } = query;
+    Route.find(
+    {
+        userId: {$ne: userId}
+    },
+    (err,data) => {
+        res.send({
+            success: true,
+            message: "Routes retrieved successfully",
+            data: data
+        })
+    });
+
+})
+
 module.exports = router;

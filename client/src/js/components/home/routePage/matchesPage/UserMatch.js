@@ -34,7 +34,19 @@ class UserMatch  extends Component {
         .catch(error => console.error('Error:', error))
         .then(json => {
             this.setState({user : json[0]});
+        });
+        fetch('/api/system/route/getRoute?_id=' + this.props.userId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
         })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({carpoolName : json[0]['routeName']});
+            console.log(json[0]['routeName']);
+        });
     }
 
     toggle(event) {
@@ -83,7 +95,12 @@ class UserMatch  extends Component {
                                 </div>                                
                             </div>
                             <div className="row">
-                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} />
+                                <div className="col-12">
+                                    <h6 className="txt-center mbottom-0">
+                                        Carpool Name
+                                    </h6>
+                                </div>     
+                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
                             </div>
                             <div className="row">
                                 <button type="submit" onClick={this.makeOffer} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
