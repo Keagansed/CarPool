@@ -137,6 +137,9 @@ import MapWrapper from './MapWrapper';
             if(new Date(this.state.trip[0].dateTime) < new Date()) {
                 this.reviewModal = (<ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>);
             }
+            else{
+                this.reviewModal = (<CancelTripModal trip={this.state.trip[0]} user={this.state.user}/>);
+            }
         }
         catch(E) {
 
