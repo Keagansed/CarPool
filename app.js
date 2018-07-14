@@ -21,7 +21,6 @@ let getUserRouter = require('./routes/api/getUser.js');
 let routesRouter = require('./routes/api/Route');
 let tripsRouter = require('./routes/api/addTrip');
 let respondToTripRouter = require('./routes/api/respondToTrip');
-let recommendedRoutesRouter = require('./routes/api/recommendedRoutes')
 let getTripsRouter = require('./routes/api/getTrips');
 let getTripRouter = require('./routes/api/getTrip');
 let carpoolsRouter = require('./routes/api/addCarpool');
@@ -60,7 +59,6 @@ app.use('/api/account/getUser', getUserRouter)
 app.use('/api/system/route', routesRouter)
 app.use('/api/system/addTrip', tripsRouter)
 app.use('/api/system/respondToTrip', respondToTripRouter)
-app.use('/api/system/recommendedRoutes', recommendedRoutesRouter)
 app.use('/api/system/getTrips', getTripsRouter)
 app.use('/api/system/getTrip', getTripRouter)
 app.use('/api/system/addCarpool', carpoolsRouter)

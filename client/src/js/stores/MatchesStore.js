@@ -1,5 +1,5 @@
 import { action, observable, toJS } from 'mobx';
-import { arrayCheckDuplicate, generateDifferenceArray } from './../utils/arrayCheck';
+import { generateDifferenceArray } from './../utils/arrayCheck';
 
 class matchesStore {
     
@@ -9,7 +9,7 @@ class matchesStore {
     @observable maxRadius = 2;
   
     @action getAllRoutes = (token, routeId) => {
-        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{
+        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ //Get all OtherRoutes that are not the users
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -20,13 +20,13 @@ class matchesStore {
         .then(json => {   
             if(json.success){
                 this.routes = json.data;
-                this.loadingRoutes = false;
+                // this.loadingRoutes = false;
             }else{
                 console.log("Unable to retrieve routes");
             }
         });
 
-        fetch('/api/system/Route/getRoute?_id='+routeId,{
+        fetch('/api/system/Route/getRoute?_id='+routeId,{ //Get current route and compare with OtherRoutes
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -35,12 +35,11 @@ class matchesStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            if(json.success){
+            if(json.success && json.data.length === 1){
+                this.filterRoutesByRadius(json.data[0]);   
                 this.loadingRoutes = false;
-                if(json.data.length === 1){
-                    this.filterRoutesByRadius(json.data[0]);
-                }
             }else{
+                // this.loadingRoutes = false;
                 console.log(json.message);
             }
         });
@@ -54,9 +53,8 @@ class matchesStore {
 
         differenceArray = generateDifferenceArray(routeObj.routesCompared, toJS(this.routes), false);
         this.recommendedRoutes = generateDifferenceArray(routeObj.recommended, toJS(this.routes), true);
-        console.log(differenceArray);
 
-        differenceArray.map(route => {
+        differenceArray.forEach(route => {
             routeStartLat = route.startLocation.lat;
             routeStartLng = route.startLocation.lng;
             routeEndtLat = route.endLocation.lat;
@@ -88,6 +86,7 @@ class matchesStore {
         if(differenceArray.length > 0){
             this.updateRoutesCompared(differenceArray, routeObj._id);
         }
+
     }
 
     @action updateRecommendedRoutes = (recommendedArray, routeId) => { 
@@ -109,6 +108,7 @@ class matchesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
+            // if(!json.success)
             console.log(json.message);
         }) 
     }
@@ -132,6 +132,7 @@ class matchesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
+            // if(!json.success)
             console.log(json.message);
         }) 
     }
