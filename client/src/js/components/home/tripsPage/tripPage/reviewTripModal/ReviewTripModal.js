@@ -53,50 +53,52 @@ class ReviewTripModal extends Component{
 
     updateUserReviewsDisplay(){
         for(let user in this.props.trip.users) {
-            fetch('/api/account/getVouches?idFor=' + user)
-                .then(res => res.json())
-                .then(vouches => {
-                    let previousVouches = this.state.vouches;
-                    previousVouches[user] = vouches;
-                    this.setState({vouches:previousVouches});
-                }).then(() => {
-                let userReviews = [];
-                try{
-                    for(let user in this.props.trip.users){
-                        if(this.state.vouches[user].length === 0){
-                            if(user !== getFromStorage('sessionKey').token) {
-                                this.userReviews[user] = {};
-                                this.userReviews[user].stars = 1;
-                                userReviews.push(
-                                    <UserReview id={user} key={Math.random()} user={this.props.user}
-                                                updateReview={this.updateReview} updateStars={this.updateStars}/>
-                                );
+            if(this.props.trip.users[user] === true){
+                fetch('/api/account/getVouches?idFor=' + user)
+                    .then(res => res.json())
+                    .then(vouches => {
+                        let previousVouches = this.state.vouches;
+                        previousVouches[user] = vouches;
+                        this.setState({vouches:previousVouches});
+                    }).then(() => {
+                    let userReviews = [];
+                    try{
+                        for(let user in this.props.trip.users){
+                            if(this.state.vouches[user].length === 0){
+                                if(user !== getFromStorage('sessionKey').token) {
+                                    this.userReviews[user] = {};
+                                    this.userReviews[user].stars = 1;
+                                    userReviews.push(
+                                        <UserReview id={user} key={Math.random()} user={this.props.user}
+                                                    updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                    );
+                                }
                             }
-                        }
-                        else{
-                            let hasVouch = false;
-                            for(let vouch in this.state.vouches[user]){
-                                if(this.state.vouches[user][vouch].idBy === getFromStorage('sessionKey').token &&
-                                    this.state.vouches[user][vouch].idFor === user &&
-                                    this.state.vouches[user][vouch].tripID === this.props.trip._id)
-                                    hasVouch = true;
-                            }
-                            if(user !== getFromStorage('sessionKey').token && !hasVouch) {
-                                this.userReviews[user] = {};
-                                this.userReviews[user].stars = 1;
-                                userReviews.push(
-                                    <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
-                                );
-                            }
+                            else{
+                                let hasVouch = false;
+                                for(let vouch in this.state.vouches[user]){
+                                    if(this.state.vouches[user][vouch].idBy === getFromStorage('sessionKey').token &&
+                                        this.state.vouches[user][vouch].idFor === user &&
+                                        this.state.vouches[user][vouch].tripID === this.props.trip._id)
+                                        hasVouch = true;
+                                }
+                                if(user !== getFromStorage('sessionKey').token && !hasVouch) {
+                                    this.userReviews[user] = {};
+                                    this.userReviews[user].stars = 1;
+                                    userReviews.push(
+                                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                    );
+                                }
 
+                            }
                         }
                     }
-                }
-                catch (e){
+                    catch (e){
 
-                }
-                this.setState({userReviews: userReviews});
-            });
+                    }
+                    this.setState({userReviews: userReviews});
+                });
+            }
         }
     }
   
