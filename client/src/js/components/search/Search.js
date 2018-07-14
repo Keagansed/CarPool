@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { searchUsers } from "../utils/searchQuery.js";
-import SearchResultList from './search/SearchResultList.js'
+//import { searchUsers } from "../utils/searchQuery.js";
+import SearchResultList from './SearchResultList.js'
 
 class Search extends Component {
 	goPro(){
@@ -18,9 +18,11 @@ class Search extends Component {
 
 	handleChange = (event) =>
 	{
-		searchUsers(event.target.value).then(res => {
-			this.setState({searchResults : res});
-		});
+		// searchQuery is missing... might have been deleted during file clean up
+
+		// searchUsers(event.target.value).then(res => {
+		// 	this.setState({searchResults : res});
+		// });
 	}
 	
 	render(){

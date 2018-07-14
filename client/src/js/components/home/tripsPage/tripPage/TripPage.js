@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import ReviewTripModal from './reviewTripModal/ReviewTripModal';
+import CancelTripModal from './cancelTripModal/CancelTripModal';
 import MapWrapper from './MapWrapper';
 
 @observer class TripPage extends Component{
@@ -150,8 +151,10 @@ import MapWrapper from './MapWrapper';
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <div className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                {tripName}
+                            <div className="col-8 txt-center">
+                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                    {tripName}
+                                </button>
                             </div>
                             {/* If this trip is still upcoming the below component should be CancelTripModal **Still to be implemented */}
                             {this.reviewModal}

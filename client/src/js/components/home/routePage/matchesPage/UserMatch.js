@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //Just using temporarily for demonstration purposes
 import tempProPic from './../../../../../css/images/profile_default.png';
+import OffersStore from './../../../../stores/OffersStore'
 
 const display = {
     display: 'block'
@@ -16,12 +17,13 @@ class UserMatch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            userName: '',
-            toggle: false
+            user: {},
+            toggle: false,
+            carpoolName:""
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         fetch('/api/account/getProfile?_id=' + this.props.userId,{
             method:'GET',
             headers:{
@@ -31,15 +33,35 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            const temp = json[0]['firstName'] + ' ' + json[0]['lastName'];
-            this.setState({userName : temp});
+            this.setState({user : json[0]});
+        });
+        
+        fetch('/api/system/route/getRoute?_id=' + this.props.uRouteId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
         })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({carpoolName : json.data[0].routeName});
+        });
     }
 
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    makeOffer = () =>{
+        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.uRouteId, false);
+        this.toggle();
+    }
+    
+    handleCarpoolNameChange(e){
+        this.setState({carpoolName: e.target.value});
     }
 
     render(){
@@ -56,29 +78,35 @@ class UserMatch  extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="row bordbot-1px-dash-grey">
-                                    <h6 className="fw-bold mx-auto">Offer Recipient</h6>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                    <div className="col-6">{this.state.userName}</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>                           
-                                <div className="row">
-                                    <h6 className="fw-bold mx-auto">Route Comparison</h6>
-                                </div>
-                                <div className="row mbottom-10px">
-                                    <div className="col-12">
-                                        <p className="txt-center mbottom-0">
-                                            ***Map to go here***
-                                        </p>
-                                    </div>                                
-                                </div>
-                                <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
-                                        Make Offer
-                                    </button>
-                                </div>
-                            </form>
+                            <div className="row bordbot-1px-dash-grey">
+                                <h6 className="fw-bold mx-auto">Offer Recipient</h6>
+                            </div>
+                            <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
+                                <div className="col-6">{this.state.user['firstName'] + ' ' + this.state.user['lastName']}</div><div className="col-6 vertical-right">View Profile</div>
+                            </div>                           
+                            <div className="row">
+                                <h6 className="fw-bold mx-auto">Route Comparison</h6>
+                            </div>
+                            <div className="row mbottom-10px">
+                                <div className="col-12">
+                                    <p className="txt-center mbottom-0">
+                                        ***Map to go here***
+                                    </p>
+                                </div>                                
+                            </div>
+                            <div className="row">
+                                <div className="col-12">
+                                    <h6 className="txt-center mbottom-0">
+                                        Carpool Name
+                                    </h6>
+                                </div>     
+                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
+                            </div>
+                            <div className="row">
+                                <button type="submit" onClick={this.makeOffer} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                    Make Offer
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,7 +122,7 @@ class UserMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>{this.state.userName}</h5>
+                                <h5>{this.state.user['firstName']}</h5>
                             </div>
                             <div className="col-12">
                                 1.2km Further
