@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserReview from './UserReview';
-import VouchStore from '../../../../../stores/vouchStore';
+import VouchStore from '../../../../../stores/VouchStore';
 
 import {
     getFromStorage
