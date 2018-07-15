@@ -63,69 +63,65 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
     @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/, routeSuccess = this.routeSuccess, routes = this.routes) => {
         
         waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
-                function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints){
+                function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints,){
 
-            const route = {
-                userId: token,
-                startLocation: {
-                    name: originName,
-                    lat: origin.lat,
-                    lng: origin.lng
-                },
-                endLocation: {
-                    name: destinationName,
-                    lat: destination.lat,
-                    lng: destination.lng
-                },
-                waypoints: waypoints,
-                // days: days,
-                time: Rtime,
-                routeName: RrouteName,
-                // repeat: repeat
-                _id: Date.now
-            }
-            
-            fetch('/api/system/route/newRoute',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    userId: token,
-                    // startLocation: startLocation,
-                    startLocation: {
-                        name: originName,
-                        lat: origin.lat,
-                        lng: origin.lng
+                fetch('/api/system/route/newRoute',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
                     },
-                    // endLocation: endLocation,
-                    endLocation: {
-                        name: destinationName,
-                        lat: destination.lat,
-                        lng: destination.lng
-                    },
-                    waypoints: waypoints,
-                    // days: days,
-                    time: Rtime,
-                    routeName: RrouteName,
-                    // repeat: repeat
-                })
-            }) 
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
-                console.log(json);
-                if(json.success === true) {
-                    routeSuccess = true;
-                    routes.push(route);
-                }
-                else{
-                    window.alert("Failed to create new route");
-                }
-                
-            }) 
+                    body:JSON.stringify({
+                        userId: token,
+                        // startLocation: startLocation,
+                        startLocation: {
+                            name: originName,
+                            lat: origin.lat,
+                            lng: origin.lng
+                        },
+                        // endLocation: endLocation,
+                        endLocation: {
+                            name: destinationName,
+                            lat: destination.lat,
+                            lng: destination.lng
+                        },
+                        waypoints: waypoints,
+                        // days: days,
+                        time: Rtime,
+                        routeName: RrouteName,
+                        // repeat: repeat
+                    })
+                }) 
+                .then(res=>res.json())
+                .catch(error => console.error('Error:', error))
+                .then(json=>{
+                    console.log(json);
+                    if(json.success === true) {
+                        routeSuccess = true;
 
-        })       
+                        fetch('/api/system/route/getRoutes?userId=' + token,{
+                            method:'GET',
+                            headers:{
+                                'Content-Type':'application/json'
+                            },
+                        })
+                        .then(res => res.json())
+                        .catch(error => console.error('Error:', error))
+                        .then(json => {
+                            
+                            if(json.success){
+                                routes.push(json.data[json.data.length - 1]);
+                            } else {
+                                console.log("Unable to retrieve routes");
+                            }
+                        })
+
+                    }
+                    else{
+                        window.alert("Failed to create new route");
+                    } 
+                }) 
+        })
+        
     }
     
 }

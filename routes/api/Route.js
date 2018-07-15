@@ -64,6 +64,12 @@ router.get('/getRoute',(req,res,next) => {
         _id: _id
     },
     (err,data) => {
+        if(err){
+            return res.send({
+                success: false,
+                message: "error, Route not found"
+            })
+        }
         res.send({
             success: true,
             message: "Route retrieved successfully",

@@ -9,6 +9,7 @@ class matchesStore {
     @observable maxRadius = 2;
   
     @action getAllRoutes = (token, routeId) => {
+        // console.log("token: "+token+" Route ID:"+routeId);
         fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ //Get all OtherRoutes that are not the users
             method:'GET',
             headers:{
@@ -35,7 +36,7 @@ class matchesStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            if(json.success && json.data.length === 1){
+            if(json.success){
                 this.filterRoutesByRadius(json.data[0]);   
                 this.loadingRoutes = false;
             }else{
@@ -108,8 +109,9 @@ class matchesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            // if(!json.success)
-            console.log(json.message);
+            if(!json.success){
+                console.log(json.message);
+            }
         }) 
     }
 
@@ -132,8 +134,9 @@ class matchesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            // if(!json.success)
-            console.log(json.message);
+            if(!json.success){
+                console.log(json.message);
+            }
         }) 
     }
 
