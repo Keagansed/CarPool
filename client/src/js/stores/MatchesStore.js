@@ -8,9 +8,9 @@ class matchesStore {
     @observable recommendedRoutes = [];
     @observable maxRadius = 2;
   
+    //Get all OtherRoutes that are not the users
     @action getAllRoutes = (token, routeId) => {
-        // console.log("token: "+token+" Route ID:"+routeId);
-        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ //Get all OtherRoutes that are not the users
+        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -27,7 +27,8 @@ class matchesStore {
             }
         });
 
-        fetch('/api/system/Route/getRoute?_id='+routeId,{ //Get current route and compare with OtherRoutes
+        //Get current route and compare with OtherRoutes
+        fetch('/api/system/Route/getRoute?_id='+routeId,{ 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -36,7 +37,7 @@ class matchesStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            if(json.success){
+            if(json.success && json.data.length === 1){
                 this.filterRoutesByRadius(json.data[0]);   
                 this.loadingRoutes = false;
             }else{
@@ -78,7 +79,7 @@ class matchesStore {
             if(startWithinRadius && endWithinRadius){
                 this.recommendedRoutes.push(route);
                 recRoutes.push(route);
-            }    
+            }
         });
 
         if(recRoutes.length > 0){
@@ -87,7 +88,6 @@ class matchesStore {
         if(differenceArray.length > 0){
             this.updateRoutesCompared(differenceArray, routeObj._id);
         }
-
     }
 
     @action updateRecommendedRoutes = (recommendedArray, routeId) => { 
@@ -109,9 +109,8 @@ class matchesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            if(!json.success){
-                console.log(json.message);
-            }
+            // if(!json.success)
+            console.log(json.message);
         }) 
     }
 
@@ -134,9 +133,8 @@ class matchesStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            if(!json.success){
-                console.log(json.message);
-            }
+            // if(!json.success)
+            console.log(json.message);
         }) 
     }
 
