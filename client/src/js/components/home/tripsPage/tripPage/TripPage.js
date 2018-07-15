@@ -4,19 +4,20 @@ import { Link } from 'react-router-dom';
 
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import ReviewTripModal from './reviewTripModal/ReviewTripModal';
+import CancelTripModal from './cancelTripModal/CancelTripModal';
 import MapWrapper from './MapWrapper';
 
 @observer class TripPage extends Component{
 
     constructor(){
-        super()
+        super();
 
         this.state = {
             loading: true,
             trip:[],
             carpool:[],
             user:[]
-        }
+        };
 
         this.from = "";
         this.longFrom = "";
@@ -24,6 +25,7 @@ import MapWrapper from './MapWrapper';
         this.to = "";
         this.longTo = "";
         this.latTo = "";
+        this.reviewModal = [];
     }
 
     //========= Fetch Session Token ===========
@@ -132,6 +134,12 @@ import MapWrapper from './MapWrapper';
                     );
                 }
             }
+            if(new Date(this.state.trip[0].dateTime) < new Date()) {
+                this.reviewModal = (<ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>);
+            }
+            else{
+                this.reviewModal = (<CancelTripModal trip={this.state.trip[0]} user={this.state.user}/>);
+            }
         }
         catch(E) {
 
@@ -146,11 +154,13 @@ import MapWrapper from './MapWrapper';
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <div className="col-8 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                {tripName}
+                            <div className="col-8 txt-center">
+                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                    {tripName}
+                                </button>
                             </div>
                             {/* If this trip is still upcoming the below component should be CancelTripModal **Still to be implemented */}
-                            <ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>
+                            {this.reviewModal}
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}

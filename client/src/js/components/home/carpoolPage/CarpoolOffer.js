@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 const display = {
     display: 'block'
@@ -13,7 +14,8 @@ class CarpoolOffer  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            sender: []
         }
     }
 
@@ -21,6 +23,53 @@ class CarpoolOffer  extends Component {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    componentDidMount(){
+        fetch('/api/account/getProfile?_id=' + this.props.store.senderId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({sender : json[0]});
+        })
+    }
+    
+    renderOtherMembers(){
+        let temp = [];
+        if (this.props.store.join){
+            temp.push(
+                <div className="row bordbot-1px-dash-grey">
+                    <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
+                </div>
+            );
+            temp.push(
+                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                    <div className="col-6">this is an existing carpool</div>
+                    <div className="col-6 vertical-right">
+                        <Link to={"/ProfilePage/" + this.props.store.recieverId}>View Profile</Link>
+                    </div>
+                </div>
+            );
+        }
+        else
+            temp.push(
+                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                    <div className="col-6">This is an invite to create a new carpool</div>
+                </div>
+            );
+        return(temp);
+    }
+
+    getCarpoolSize(){
+        if (this.props.store.join)
+            return 5;
+        else
+            return 1;
     }
 
     render(){
@@ -42,17 +91,12 @@ class CarpoolOffer  extends Component {
                                     <h6 className="fw-bold mx-auto">Offer Sent By</h6>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                    <div className="col-6">Vernon Francis</div><div className="col-6 vertical-right">View Profile</div>
+                                    <div className="col-6">{this.state.sender.firstName +" "+ this.state.sender.lastName}</div>
+                                    <div className="col-6 vertical-right">
+                                        <Link to={"/ProfilePage/" + this.props.store.senderId}>View Profile</Link>
+                                    </div>
                                 </div>                           
-                                <div className="row bordbot-1px-dash-grey">
-                                    <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                                    <div className="col-6">Myron Ouyang</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                                    <div className="col-6">Leonardio Ianigro</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>
+                                {this.renderOtherMembers()}
                                 <div className="row mtop-10px ">
                                     <button onClick={this.handleAddRoute} type="submit" className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-green txt-white fw-bold">
                                         Accept
@@ -74,10 +118,10 @@ class CarpoolOffer  extends Component {
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
-                                <h5>Work to Home</h5>
+                                <h5>{this.props.store.CarpoolName}</h5>
                             </div>
                             <div className="col-12">
-                                5 Members
+                                {this.getCarpoolSize()} Members
                             </div>
                         </div>
                         <div className="col-3 vertical-right">

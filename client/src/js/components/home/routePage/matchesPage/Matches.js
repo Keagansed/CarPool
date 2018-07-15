@@ -5,26 +5,43 @@ import  "../../../../../css/components/Spinner.css"
 import UserMatch from './UserMatch';
 import CarpoolMatch from './CarpoolMatch';
 import RouteStore from '../../../../stores/RouteStore';
+import { getFromStorage } from './../../../../utils/localStorage.js';
 
 @observer class Matches extends Component{
     componentWillMount(){
-        this.props.store.getRoutes(this.props.token);
+        const obj = getFromStorage('sessionKey');
+        if(obj && obj.token){
+            const { token } = obj;
+            fetch('/api/account/verify?token='+token)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success){
+                    this.props.store.getAllRoutes(token, this.props.routeId);
+                }
+            })
+        }    
     }
 
     renderRoutes = () => {
-        const Routes = this.props.store.routes.map(route =>             
-            <UserMatch key={route._id} userId={route.userId} store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
+        const Routes = this.props.store.recommendedRoutes.map(route =>             
+            <UserMatch 
+                key={route._id} 
+                token={this.props.token}
+                uRouteId={this.props.routeId}
+                userId={route.userId} 
+                store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
         )
         if(Routes.length > 0) {
             return Routes;
         }else {
             return(
-                <h5 className="txt-center mtop-50px txt-white">
-                    No Routes
+                <h5 className="txt-center mtop-10px txt-white">
+                    No matches yet...
                 </h5>
             );
         }
     }
+
     constructor(){
         super()
 
@@ -41,8 +58,6 @@ import RouteStore from '../../../../stores/RouteStore';
     handleCarpoolIDChange(e){
         this.setState({carpoolID: e.target.value})
     }
-        
-      
 
     renderLoading = () => {
         return(
@@ -68,53 +83,10 @@ import RouteStore from '../../../../stores/RouteStore';
             return(
                 <div className="scroll-vert">
                     {this.renderRoutes()}
-                    {/* TEMPORARY >>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
-                    <button id="addUserMatch" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#userMatchModal">New User Match</button>
-                    <div className="modal fade" id="userMatchModal">
-                        <div className="modal-dialog">
-                            <div className="modal-content bubble-more-visible">
-                                <form id="userMatchSubmit">
-                                    <div className="form-group">
-                                        <label htmlFor="userID">User ID</label>
-                                        <input type="text" className="form-control" id="userID" onChange={this.handleUserIDChange.bind(this)} />
-                                    </div>
-                                    <button className="btn btn-secondary">Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button id="addCarpoolMatch" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#carpoolMatchModal">New Carpool Match</button>
-                    <div className="modal fade" id="carpoolMatchModal">
-                        <div className="modal-dialog">
-                            <div className="modal-content bubble-more-visible">
-                                <form id="carpoolMatchSubmit">
-                                    <div className="form-group">
-                                        <label htmlFor="userID">Carpool ID</label>
-                                        <input type="text" className="form-control" id="userID" onChange={this.handleCarpoolIDChange.bind(this)} />
-                                    </div>
-                                    <button className="btn btn-secondary">Submit</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {/* TEMPORARY <<<<<<<<<<<<<<<<<<<<<<<<<<<<< */}
                 </div>
             );
         }
     }
-    
-    // render(){
-    //     // const { token } = this.props.store;
-        
-    //     return(
-    //         <div>
-    //             {/* dummy static matches */}
-    //             <UserMatch />
-    //             <CarpoolMatch/>
-    //         </div>
-    //     );
-    // }
 }
 
 export default Matches;

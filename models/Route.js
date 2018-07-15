@@ -37,7 +37,17 @@ var RouteSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required:true
-    }
+	},
+	recommended:{
+		type:Array,
+		default:[],
+		required:true
+	},
+	routesCompared:{
+		type:Array,
+		default:[],
+		required:true
+	}
 });
 
 module.exports = mongoose.model('routes', RouteSchema);

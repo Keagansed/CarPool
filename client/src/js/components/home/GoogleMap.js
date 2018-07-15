@@ -24,7 +24,23 @@ const GoogleMapComponent = compose(
             let DirectionsService = new window.google.maps.DirectionsService();
             let numRoutes = this.props.coordsArray.coords.length;
 
-            // let waypts = [{'location': "Centurion Mall",'stopover':true},{'location': "3 Ploughmans lane, Eldoraigne",'stopover':true}];
+            // let waypts = [{'location': new google.maps.LatLng(45.658197,-73.636333),'stopover':true},{'location': "3 Ploughmans lane, Eldoraigne",'stopover':true}];
+
+            // if(combined){
+            //     for(let i=1; i<numRoutes; i++){
+            //         let wayptsOriObj = {
+            //             'location': new window.google.maps.LatLng(this.props.coordsArray.coords[i].olat, this.props.coordsArray.coords[i].olng),
+            //             'stopover':true
+            //         }
+            //         let wayptsDestObj = {
+            //             'location': new window.google.maps.LatLng(this.props.coordsArray.coords[i].dlat, this.props.coordsArray.coords[i].dlng),
+            //             'stopover':true
+            //         }
+            //         waypts.push(wayptsOriObj);
+            //         waypts.push(wayptsDestObj);
+            //     }
+            // }
+
             DirectionsService.route(
             {
                 origin: new window.google.maps.LatLng(this.props.coordsArray.coords[0].olat, this.props.coordsArray.coords[0].olng),
@@ -129,6 +145,5 @@ const GoogleMapComponent = compose(
         draggableCursor: 'default',
         draggingCursor: 'move'
     };
-
     
     export default GoogleMapComponent;

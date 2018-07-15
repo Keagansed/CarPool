@@ -37,7 +37,7 @@ import RouteStore from '../../../stores/RouteStore';
             return Routes;
         }else {
             return(
-                <h5 className="txt-center mtop-50px txt-white">
+                <h5 className="txt-center mtop-10px txt-white">
                     No Routes
                 </h5>
             );
