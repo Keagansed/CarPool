@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserReview from './UserReview';
-import VouchStore from '../../../../../stores/vouchStore';
+import VouchStore from '../../../../../stores/VouchStore';
 
 import {
     getFromStorage
@@ -20,7 +20,8 @@ class ReviewTripModal extends Component{
   
         this.state = {
             toggle: false,
-            rating: 1
+            rating: 1,
+            vouches: []
         }
 
         this.userReviews = [];
@@ -28,6 +29,11 @@ class ReviewTripModal extends Component{
         this.updateReview = this.updateReview.bind(this);
         this.updateStars = this.updateStars.bind(this);
         this.submitReviews = this.submitReviews.bind(this);
+        this.updateUserReviewsDisplay = this.updateUserReviewsDisplay.bind(this);
+    }
+
+    componentWillMount(){
+        this.updateUserReviewsDisplay();
     }
 
     updateReview(id, message){
@@ -44,30 +50,66 @@ class ReviewTripModal extends Component{
         }
         this.toggle();
     }
+
+    updateUserReviewsDisplay(){
+        for(let user in this.props.trip.users) {
+            if(this.props.trip.users[user] === true){
+                fetch('/api/account/getVouches?idFor=' + user)
+                    .then(res => res.json())
+                    .then(vouches => {
+                        let previousVouches = this.state.vouches;
+                        previousVouches[user] = vouches;
+                        this.setState({vouches:previousVouches});
+                    }).then(() => {
+                    let userReviews = [];
+                    try{
+                        for(let user in this.props.trip.users){
+                            if(this.state.vouches[user].length === 0){
+                                if(user !== getFromStorage('sessionKey').token) {
+                                    this.userReviews[user] = {};
+                                    this.userReviews[user].stars = 1;
+                                    userReviews.push(
+                                        <UserReview id={user} key={Math.random()} user={this.props.user}
+                                                    updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                    );
+                                }
+                            }
+                            else{
+                                let hasVouch = false;
+                                for(let vouch in this.state.vouches[user]){
+                                    if(this.state.vouches[user][vouch].idBy === getFromStorage('sessionKey').token &&
+                                        this.state.vouches[user][vouch].idFor === user &&
+                                        this.state.vouches[user][vouch].tripID === this.props.trip._id)
+                                        hasVouch = true;
+                                }
+                                if(user !== getFromStorage('sessionKey').token && !hasVouch) {
+                                    this.userReviews[user] = {};
+                                    this.userReviews[user].stars = 1;
+                                    userReviews.push(
+                                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                    );
+                                }
+
+                            }
+                        }
+                    }
+                    catch (e){
+
+                    }
+                    this.setState({userReviews: userReviews});
+                });
+            }
+        }
+    }
   
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+        this.updateUserReviewsDisplay();
     }
 
     render(){
-        let userReviews = [];
-        try{
-            for(let user in this.props.trip.users){
-                if(user !== getFromStorage('sessionKey').token) {
-                    this.userReviews[user] = {};
-                    this.userReviews[user].stars = 1;
-                    userReviews.push(
-                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
-                    );
-                }
-            }
-        }
-        catch (e){
-
-        }
-
         var modal = [];
         modal.push(
             // Modal
@@ -81,7 +123,7 @@ class ReviewTripModal extends Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            {userReviews}
+                            {this.state.userReviews}
                             <div className="row">
                                 <button type="submit" onClick={this.submitReviews} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnSubmitReview">
                                     Submit Review
