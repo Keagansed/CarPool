@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import LocationSearchInput from './GoogleAuto';
 import MapWrapper from './MapWrapper';
 // import WeekdaySelector from './WeekdaySelector';
@@ -89,6 +88,7 @@ class NewRouteModal extends Component{
         } = this.state;
         
         this.props.store.newRoute(token, time, routeName);
+        this.toggle(event);
     }
 
     render(){
@@ -138,8 +138,11 @@ class NewRouteModal extends Component{
                                 </div>
                                 <MapWrapper/>
                                 <div className="row">
-                                    <button onClick={this.handleAddRoute} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold">
+                                    {/* <button onClick={this.handleAddRoute} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold">
                                         Add Route
+                                    </button> */}
+                                     <button onClick={this.handleAddRoute} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold">
+                                        <b>Add Route</b>
                                     </button>
                                 </div>
                             </form>

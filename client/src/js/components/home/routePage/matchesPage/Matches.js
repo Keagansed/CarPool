@@ -5,10 +5,21 @@ import  "../../../../../css/components/Spinner.css"
 import UserMatch from './UserMatch';
 import CarpoolMatch from './CarpoolMatch';
 import RouteStore from '../../../../stores/RouteStore';
+import { getFromStorage } from './../../../../utils/localStorage.js';
 
 @observer class Matches extends Component{
     componentWillMount(){
-        this.props.store.getAllRoutes(this.props.token, this.props.routeId);
+        const obj = getFromStorage('sessionKey');
+        if(obj && obj.token){
+            const { token } = obj;
+            fetch('/api/account/verify?token='+token)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success){
+                    this.props.store.getAllRoutes(token, this.props.routeId);
+                }
+            })
+        }    
     }
 
     renderRoutes = () => {
@@ -25,7 +36,7 @@ import RouteStore from '../../../../stores/RouteStore';
         }else {
             return(
                 <h5 className="txt-center mtop-10px txt-white">
-                    No Matches
+                    No matches yet...
                 </h5>
             );
         }
