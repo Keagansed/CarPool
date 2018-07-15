@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import {
+    getFromStorage
+} from '../../../../../utils/localStorage.js';
 
 const display = {
     display: 'block'
@@ -15,12 +20,57 @@ class CancelTripModal extends Component{
         this.state = {
             toggle: false
         }
+
+        this.cancelTrip = this.cancelTrip.bind(this);
+        this.deleteTrip = this.deleteTrip.bind(this);
+        this.cancelOrDelete = this.cancelOrDelete.bind(this);
     }
   
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    cancelOrDelete(){
+        if(this.props.trip.driver === getFromStorage('sessionKey').token){
+            this.deleteTrip();
+        }
+        else{
+            this.cancelTrip();
+        }
+    }
+
+    cancelTrip(){
+        fetch('/api/system/cancelTrip',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                _id: this.props.trip._id,
+                userID: getFromStorage('sessionKey').token
+            })
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success){
+                    // this.tripID = json._id;
+                    // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
+                }else{
+                    alert(json.message);
+                }
+            });
+        this.toggle();
+    }
+
+    deleteTrip(){
+        fetch('/api/system/deleteTrip?_id='+this.props.trip._id)
+            .then(res => res.json())
+            .then(json => {
+            });
+        this.toggle();
     }
 
     render(){
@@ -41,10 +91,12 @@ class CancelTripModal extends Component{
                                 <h6 className="fw-bold mx-auto">Are you sure you want to cancel this trip?</h6>
                             </div>
                             <div className="row">
-                                <button type="submit" className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnYesCancel">
-                                    Yes
-                                </button>
-                                <button type="submit" className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNoCancel">
+                                <Link to={`/HomePage`} onClick={this.cancelOrDelete} className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold">
+                                    <button type="submit" id="btnYesCancel">
+                                        Yes
+                                    </button>
+                                </Link>
+                                <button type="submit" onClick={this.toggle} className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNoCancel">
                                     No
                                 </button>
                             </div>
