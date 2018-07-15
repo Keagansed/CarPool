@@ -122,9 +122,10 @@ const hide = {
             }
         }
 
-        let messageContent = document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
-        "Days: " + days + "\r\n" +
-        "Members: " +  userNames;
+        let messageContent = 
+            document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
+            "Days: " + days + "\r\n" +
+            "Members: " +  userNames;
 
         document.getElementById("inputTripTime").value = "";
         document.getElementById("inputTripDate").value = "";
@@ -174,7 +175,7 @@ const hide = {
                             <div className="modal-body">
                                 <form>
                                     <div className="row">
-                                        <h6 className="fw-bold mx-auto">Time and Date</h6>
+                                        <h6 className="fw-bold mx-auto">First Time and Date</h6>
                                     </div>
                                     <div className="row padbot-10px">
                                         <input type="time" onChange={this.updateTime} className="col-5 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputTripTime"/>
