@@ -24,4 +24,42 @@ router.get('/getCarpool', function(req, res, next) {
         });
 });
 
+router.post('/addCarpool',(req,res,next)=>{
+    const { body } = req;
+    const{
+        carpoolName,
+        routes
+    } = body;
+
+    if(!carpoolName){
+        return res.send({
+            success:false,
+            message:"Error: Carpool name cannot be blank!"
+        });
+    }
+    if(!routes){
+        return res.send({
+            success:false,
+            message:"Error: Routes cannot be blank!"
+        });
+    }
+
+    const newCarpool = new Carpool();
+    newCarpool.carpoolName = carpoolName;
+    newCarpool.routes = routes;
+    newCarpool.save((err,carpool)=>{
+        if(err){
+            return res.send({
+                success:false,
+                message:"Error: Server error"
+            });
+        }
+        return res.send({
+            _id:newCarpool._id,
+            success:true,
+            message:"Success: Added Carpool"
+        });
+    });
+});
+
 module.exports = router;

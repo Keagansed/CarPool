@@ -119,14 +119,14 @@ class Carpools extends Component {
 
     addChat()
     {
-        // let name = this.state.groupChatName;
-        // this.users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
-        //     [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
-        //     [this.state.user3]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()}};
-        // CarpoolStore.carpoolName = this.state.groupChatName;
-        // CarpoolStore.users = [[this.state.user1],[this.state.user2],[this.state.user3]];
-        // CarpoolStore.addCarpool(this.pushToFirebase);
-        CarpoolStore.getCarpool("5b47534eb34d4a044c6d4b42");
+        let name = this.state.groupChatName;
+        this.users = {[this.state.user1]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
+            [this.state.user2]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()},
+            [this.state.user3]:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()}};
+        CarpoolStore.carpoolName = this.state.groupChatName;
+        CarpoolStore.users = [[this.state.user1],[this.state.user2],[this.state.user3]];
+        CarpoolStore.addCarpool(this.pushToFirebase);
+        // CarpoolStore.getCarpool("5b47534eb34d4a044c6d4b42");
     }
 
     pushToFirebase(){

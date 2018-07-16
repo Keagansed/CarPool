@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import CarpoolStore from '../../../stores/CarpoolStore'
+import app from '../../../stores/MessagingStore'
 
 const display = {
     display: 'block'
@@ -18,6 +20,8 @@ class CarpoolOffer  extends Component {
             sender: [],
             deleted: false
         }
+        this.groupChats = app.database().ref().child('groupChats');
+        this.pushToFirebase = this.pushToFirebase.bind(this);
     }
 
     toggle(event) {
@@ -74,19 +78,48 @@ class CarpoolOffer  extends Component {
     }
 
     handleAcceptInvite(){
-        fetch('/api/system/offers/acceptInvite?offerId=' + this.props.offerId,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            console.log(json);
-        });
+        // fetch('/api/system/offers/acceptInvite?offerId=' + this.props.offerId,{
+        //     method:'GET',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     },
+        // })
+        // .then(res => res.json())
+        // .catch(error => console.error('Error:', error))
+        // .then(json => {
+        //     console.log(json);
+        // });
+        CarpoolStore.addCarpool(this.pushToFirebase, this.props.offerId);
         this.setState({deleted: true});
         this.toggle();
+    }
+
+    getRandomColour(){
+        let colours = {0:"txt-yellow",1:"txt-red",2:"txt-orange",3:"txt-lightBlue",4:"txt-pink",5:"txt-mediumPurple",6:"txt-lime"};
+        let number = Math.floor(Math.random() * 7);
+        if(!this.state.colours[number])
+        {
+            let temp = this.state.colours;
+            temp[number] = true;
+            this.setState({colours: temp});
+            return colours[number];
+        }
+        else
+        {
+            return this.getRandomColour();
+        }
+    }
+
+    pushToFirebase(){
+        let users = "{";
+        CarpoolStore.users.forEach((user) => {
+            users = users + user + ":{lastRefresh:" + JSON.stringify(new Date()) + ",colour:" + this.getRandomColour() + "}";
+            //{efhjbfweew89eywf:{lastRefresh:JSON.stringify(new Date()),colour:this.getRandomColour()}};
+        });
+        users = users + "}";
+        // this.users = JSON.parse(this.users);
+        console.log(users);
+        // this.groupChats.push().set({name: CarpoolStore.carpoolName, users: this.users, carpoolID: CarpoolStore.carpoolID});
     }
 
     handleDeclineInvite(){

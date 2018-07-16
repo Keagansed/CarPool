@@ -56,7 +56,7 @@ class UserMatch  extends Component {
     }
 
     makeOffer = () =>{
-        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.uRouteId, false);
+        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.store._id, false);
         this.toggle();
     }
     

@@ -126,6 +126,9 @@ router.get('/acceptInvite',(req,res,next) =>{
                             }
                             else{
                                 return res.send({
+                                    _id:pool._id,
+                                    carpoolName:pool.carpoolName,
+                                    routes:pool.routes,
                                     success: true,
                                     message: "carpool created and offer deleted"
                                 });
