@@ -96,11 +96,11 @@ class RouteInfoModal extends Component{
                                 </div>
                                 <div className="row">
                                     <div className="col-12">
-                                        <p className="txt-center mbottom-0">
+                                        <div className="txt-center mbottom-0">
                                             <p>{start}</p>
                                             <p>To</p>
                                             <p>{end}</p>
-                                        </p>
+                                        </div>
                                     </div>                                
                                 </div>
                                 <div className="row">
