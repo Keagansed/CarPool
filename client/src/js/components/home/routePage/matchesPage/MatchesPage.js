@@ -47,7 +47,7 @@ import MatchesStore from '../../../../stores/MatchesStore';
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <RouteInfoModal/>
+                            <RouteInfoModal _id={this.props.match.params._id} MatchesStore={MatchesStore}/>
                             <EditRouteModal/>
                         </div>
                     </div>
