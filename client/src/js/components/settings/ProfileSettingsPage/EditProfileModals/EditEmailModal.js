@@ -13,7 +13,8 @@ class EditEmailModal extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            email: this.props.token
         }
     }
   
@@ -22,7 +23,15 @@ class EditEmailModal extends Component {
             toggle: !prevState.toggle
         }));
     }
-  
+    
+    handleEmailChange(e){
+        this.setState({email: e.target.value})
+    }
+
+    changeEmail(){
+
+    }
+
     render() {
         var modal = [];
         modal.push(
@@ -37,16 +46,14 @@ class EditEmailModal extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="row">
-                                    <input type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Email" required="required" name="email" id="changeEmail"/> 
-                                </div>
-                                <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
-                                        Submit Change
-                                    </button>
-                                </div>
-                            </form>
+                            <div className="row">
+                                <input type="text" value={this.state.email} onChange={this.handleEmailChange.bind(this)} className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Email" required="required" name="email" id="changeEmail"/> 
+                            </div>
+                            <div className="row">
+                                <button type="submit" onClick={this.changeEmail.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
+                                    Submit Change
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
