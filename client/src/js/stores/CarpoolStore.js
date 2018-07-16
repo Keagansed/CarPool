@@ -4,6 +4,7 @@ class carpoolStore {
 
     @observable carpoolName;
     @observable users = [];
+    @observable routes = [];
     @observable carpoolID;
 
     @action addCarpool = (pushToFirebase) => {
@@ -33,6 +34,47 @@ class carpoolStore {
                     alert(json.message);
                 }
             })
+    }
+
+    @action getCarpool(id){
+        fetch('/api/system/carpool/getCarpool?_id='+ id,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success){
+                
+                this.routes = json.data[0].routes;
+                this.carpoolName = json.data[0].carpoolName;
+                this.carpoolID = id;
+                console.log(json.data[0].routes);
+                this.routes.forEach(route => {
+                    fetch('api/system/route/getRoute?_id='+ route,{
+                        method:'GET',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                    })
+                    .then(res => res.json())
+                    .catch(error => console.error('Error:', error))
+                    .then(json => {
+                        if(json.success){
+                            this.users.push(json.data[0].userId);
+                        }
+                        else{
+                            console.log("Unable to retrieve route");
+                        }
+                    })
+                });
+            }
+            else{
+                console.log("Unable to retrieve carpool");
+            }
+        })
     }
 
 }

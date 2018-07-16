@@ -24,7 +24,7 @@ let respondToTripRouter = require('./routes/api/respondToTrip');
 let recomendedRoutesRouter = require('./routes/api/recomendedRoutes')
 let getTripsRouter = require('./routes/api/getTrips');
 let getTripRouter = require('./routes/api/getTrip');
-let getCarpoolRouter = require('./routes/api/getCarpool');
+let carpoolRouter = require('./routes/api/carpool');
 let offerRouter = require('./routes/api/offers');
 
 var app = express();
@@ -62,7 +62,7 @@ app.use('/api/system/respondToTrip', respondToTripRouter)
 app.use('/api/system/recomendedRoutes', recomendedRoutesRouter)
 app.use('/api/system/getTrips', getTripsRouter)
 app.use('/api/system/getTrip', getTripRouter)
-app.use('/api/system/getCarpool', getCarpoolRouter)
+app.use('/api/system/carpool', carpoolRouter)
 app.use('/api/system/offers', offerRouter)
 
 // catch 404 and forward to error handler
