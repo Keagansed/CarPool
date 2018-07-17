@@ -11,7 +11,7 @@ import OfferStore from '../../../stores/OfferStore';
 
     renderOffers(){
         const Offers = this.props.store.offers.map(offer =>             
-            <CarpoolOffer key={offer._id} store={new OfferStore(offer.CarpoolName, offer.SenderID, offer.SenderRoute, offer.RecieverID, offer.RecieverRoute, offer.JoinRequest)}/>
+            <CarpoolOffer key={offer._id} offerId={offer._id} store={new OfferStore(offer.CarpoolName, offer.SenderID, offer.SenderRoute, offer.RecieverID, offer.RecieverRoute, offer.JoinRequest)}/>
         )
         
         if(Offers.length > 0) {
@@ -19,7 +19,7 @@ import OfferStore from '../../../stores/OfferStore';
         }else {
             return(
                 <h5 className="txt-center mtop-10px txt-white">
-                    No Offers{console.log(this.props.token)}
+                    No Offers
                 </h5>
             );
         }

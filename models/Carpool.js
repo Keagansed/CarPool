@@ -5,31 +5,7 @@ let CarpoolSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    from:{
-        type:String,
-        required:true
-    },
-    longFrom:{
-        type:String,
-        required:true
-    },
-    latFrom:{
-        type:String,
-        required:true
-    },
-    to:{
-        type:String,
-        required:true
-    },
-    longTo:{
-        type:String,
-        required:true
-    },
-    latTo:{
-        type:String,
-        required:true
-    },
-    users: {
+    routes: {
         type: [],
         required:true
     }
