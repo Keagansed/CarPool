@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MapComponent from './InfoModalMapWrapper';
+import MapComponent from './../../../GeneralMapWrapper';
 
 const display = {
     display: 'block'
@@ -17,10 +17,7 @@ class RouteInfoModal extends Component{
             route:{},
             originName:"",
             destinationName:"",
-            olat:0,
-            olng:0,
-            dlat:0,
-            dlng:0,
+            routeArr:[],
             toggle: false
         };
     }
@@ -41,8 +38,11 @@ class RouteInfoModal extends Component{
                         route:json.data[0],
                         originName:json.data[0].startLocation.name,
                         destinationName:json.data[0].endLocation.name,
-                        originObj: json.data[0].startLocation,
-                        destinationObj: json.data[0].endLocation
+                        routeArr:[{
+                            origin : json.data[0].startLocation,
+                            destination : json.data[0].endLocation
+                        }]
+
                     });
                 }else{
                     console.log(json.message);
@@ -104,7 +104,7 @@ class RouteInfoModal extends Component{
                                 </div>
                                 <div className="row">
                                     <div className="col-12">
-                                        <MapComponent origin={this.state.originObj} destination={this.state.destinationObj}/>
+                                        <MapComponent routeArr={this.state.routeArr}/>
                                     </div>                                
                                 </div>
                         </div>

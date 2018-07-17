@@ -3,37 +3,35 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 
-import GoogleMapComponent from './../../../GoogleMap';
+import GoogleMapComponent from './GoogleMap';
 
 @observer class MapWrapper extends Component{
     render(){
         let coordsArray=[];
-        let coords ;
         let GoogleMap = (coordsArray) => ( 
             <GoogleMapComponent coordsArray = {coordsArray} />
         );
+
+        if(this.props.routeArr){ //If statement to ensure routes aren't null due to asynchronousity 
+            this.props.routeArr.forEach(routeObj => {
+                let coords = {
+                    olat:routeObj.origin.lat,
+                    olng:routeObj.origin.lng,
+                    dlat:routeObj.destination.lat,
+                    dlng:routeObj.destination.lng
+                };
+                coordsArray.push(coords);
+            });
+        }
         
-        if(this.props.origin && this.props.destination){
-            coords = {
-                olat:this.props.origin.lat,
-                olng:this.props.origin.lng,
-                dlat:this.props.destination.lat,
-                dlng:this.props.destination.lng
-            };
-            coordsArray.push(coords);
+        if(coordsArray.length){
             return(
                 <GoogleMap coords={coordsArray}/>
             ); 
-        }else{
+        } else {
             return("");
         }
-        
 
-        // console.log(this.props.origin);
-
-       
-
-        
     }
 }
 
