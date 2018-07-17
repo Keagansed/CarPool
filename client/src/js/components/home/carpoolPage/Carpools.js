@@ -64,14 +64,24 @@ class Carpools extends Component {
         {
             return(
                 <div>
-                    <div className="spinner">
-                        <div className="double-bounce1"></div>
-                        <div className="double-bounce2"></div>
+                    <div className="pad-10px bg-whitelight txt-white">
+                        <h4 className="mbottom-0">Carpool Offers</h4>
                     </div>
+                    <h5 className="txt-center mtop-10px txt-white">
+                        No Offers
+                    </h5>
+                    <div className="pad-10px bg-whitelight txt-white">
+                        <h4 className="mbottom-0">Your Carpools</h4>
+                    </div>
+                    <h5 className="txt-center mtop-10px txt-white">
+                        No Carpools
+                    </h5>
                 </div>
             )
         }
 
+        let verifyUser = false;
+        let hasShown = false;
         return (
             <div>
                 <div className="scroll-vert">
@@ -84,7 +94,6 @@ class Carpools extends Component {
                     </div>
                     {
                         this.state.groupChats.map((groupChat) => {
-                            let verifyUser = false;
                             for (let user in this.state.groupChats[groupChat.id].users)
                             {
                                 if(user === getFromStorage('sessionKey').token)
@@ -143,7 +152,14 @@ class Carpools extends Component {
                             }
                             else
                             {
-                                return (<div key={Math.random()}></div>);
+                                if(!hasShown){
+                                    hasShown = true;
+                                    return (<div key={Math.random()}>
+                                        <h5 className="txt-center mtop-10px txt-white">
+                                            No Carpools
+                                        </h5>
+                                    </div>);
+                                }
                             }
                         })
                     }
