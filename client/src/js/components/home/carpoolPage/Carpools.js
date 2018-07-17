@@ -81,7 +81,6 @@ class Carpools extends Component {
         }
 
         let verifyUser = false;
-        let hasShown = false;
         return (
             <div>
                 <div className="scroll-vert">
@@ -152,14 +151,7 @@ class Carpools extends Component {
                             }
                             else
                             {
-                                if(!hasShown){
-                                    hasShown = true;
-                                    return (<div key={Math.random()}>
-                                        <h5 className="txt-center mtop-10px txt-white">
-                                            No Carpools
-                                        </h5>
-                                    </div>);
-                                }
+                                return (<div key={Math.random()}></div>);
                             }
                         })
                     }
