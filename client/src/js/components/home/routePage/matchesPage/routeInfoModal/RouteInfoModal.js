@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MapComponent from './../../../GeneralMapWrapper';
 
 const display = {
     display: 'block'
@@ -13,15 +14,15 @@ class RouteInfoModal extends Component{
         this.toggle = this.toggle.bind(this);
 
         this.state ={
-            route:[],
+            route:{},
+            originName:"",
+            destinationName:"",
+            routeArr:[],
             toggle: false
         };
     }
 
-    componentDidMount(){
-        fetch('/api/account/getAllUsers')
-            .then(res => res.json())
-            .then(json => this.setState({user: json}));
+    componentWillMount(){
 
         fetch('/api/system/Route/getRoute?_id='+this.props._id,{ //Get current route and compare with OtherRoutes
             method:'GET',
@@ -33,7 +34,16 @@ class RouteInfoModal extends Component{
             .catch(error => console.error('Error:', error))
             .then(json => {
                 if(json.success){
-                    this.setState({route:json.data[0]});
+                    this.setState({
+                        route:json.data[0],
+                        originName:json.data[0].startLocation.name,
+                        destinationName:json.data[0].endLocation.name,
+                        routeArr:[{
+                            origin : json.data[0].startLocation,
+                            destination : json.data[0].endLocation
+                        }]
+
+                    });
                 }else{
                     console.log(json.message);
                 }
@@ -47,17 +57,6 @@ class RouteInfoModal extends Component{
     }
 
     render(){
-        let start = "";
-        let end = "";
-
-        try{
-            start = this.state.route.startLocation.name;
-            end = this.state.route.endLocation.name;
-        }
-        catch (e){
-
-        }
-
         var modal = [];
         modal.push(
             // Modal
@@ -97,17 +96,15 @@ class RouteInfoModal extends Component{
                                 <div className="row">
                                     <div className="col-12">
                                         <div className="txt-center mbottom-0">
-                                            <p>{start}</p>
+                                            <p>{this.state.originName}</p>
                                             <p>To</p>
-                                            <p>{end}</p>
+                                            <p>{this.state.destinationName}</p>
                                         </div>
                                     </div>                                
                                 </div>
                                 <div className="row">
                                     <div className="col-12">
-                                        <p className="txt-center mbottom-0">
-                                            ***Map to go here***
-                                        </p>
+                                        <MapComponent routeArr={this.state.routeArr}/>
                                     </div>                                
                                 </div>
                         </div>
