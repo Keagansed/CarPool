@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MapComponent from './../../GeneralMapWrapper';
 
 //Just using temporarily for demonstration purposes
 import tempProPic from './../../../../../css/images/profile_default.png';
@@ -18,6 +19,7 @@ class UserMatch  extends Component {
   
         this.state = {
             user: {},
+            routeArr:[],
             toggle: false,
             carpoolName:""
         }
@@ -33,10 +35,10 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({user : json[0]});
+            this.setState({ user : json[0] });
         });
         
-        fetch('/api/system/route/getRoute?_id=' + this.props.uRouteId,{
+        fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -45,8 +47,33 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({carpoolName : json.data[0].routeName});
+            this.setState({
+                carpoolName : json.data[0].routeName,
+                routeArr:[...this.state.routeArr,{
+                    origin : json.data[0].startLocation,
+                    destination : json.data[0].endLocation
+                }]
+            });
         });
+
+        fetch('/api/system/Route/getRoute?_id=' + this.props.routeId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({
+                carpoolName : json.data[0].routeName,
+                routeArr:[...this.state.routeArr,{
+                    origin : json.data[0].startLocation,
+                    destination : json.data[0].endLocation
+                }]
+            });
+        });
+
     }
 
     toggle(event) {
@@ -89,9 +116,7 @@ class UserMatch  extends Component {
                             </div>
                             <div className="row mbottom-10px">
                                 <div className="col-12">
-                                    <p className="txt-center mbottom-0">
-                                        ***Map to go here***
-                                    </p>
+                                    <MapComponent routeArr={this.state.routeArr}/>
                                 </div>                                
                             </div>
                             <div className="row">
