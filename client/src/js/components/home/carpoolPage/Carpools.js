@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CarpoolStore from '../../../stores/CarpoolStore'
 import CarpoolOffers from './CarpoolOffers';
 import 'firebase/database';
 import app from '../../../stores/MessagingStore'
