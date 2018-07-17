@@ -50,16 +50,21 @@ import MapWrapper from './MapWrapper';
             .then(res => res.json())
             .then(json => {
                 this.setState({trip : json});
-                fetch('/api/system/getCarpool?_id='+this.state.trip[0].carpoolID)
+                fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
                     .then(res => res.json())
                     .then(json => {
-                        this.from = json[0].from;
-                        this.longFrom = json[0].longFrom;
-                        this.latFrom = json[0].latFrom;
-                        this.to = json[0].to;
-                        this.longTo = json[0].longTo;
-                        this.latTo = json[0].latTo;
-                        this.setState({carpool : json});
+                        fetch('/api/system/route/getRoute?_id='+json.data[0].routes[0])
+                            .then(res => res.json())
+                            .then(json => {
+                                // console.log(json.data[0]);
+                                this.from = json.data[0].startLocation.name;
+                                this.longFrom = json.data[0].startLocation.lng;
+                                this.latFrom = json.data[0].startLocation.lat;
+                                this.to = json.data[0].startLocation.name;
+                                this.longTo = json.data[0].endLocation.lng;
+                                this.latTo = json.data[0].endLocation.lat;
+                                this.setState({carpool : json});
+                            });
                     });
             });
 
