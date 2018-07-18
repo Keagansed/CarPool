@@ -15,7 +15,8 @@ class EditRouteModal extends Component{
         this.toggle = this.toggle.bind(this);
 
         this.state ={
-            toggle: false
+            toggle: false,
+            routeObj: {}
         };
     }
 
@@ -23,6 +24,18 @@ class EditRouteModal extends Component{
         fetch('/api/account/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
+        
+        fetch('/api/system/route/getRoute?_id=' + this.props.routeId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({routeObj : json.data[0]});
+        });
     }
 
     toggle(event) {
@@ -50,24 +63,24 @@ class EditRouteModal extends Component{
                                     <h6 className="fw-bold mx-auto">Route Name</h6>
                                 </div>
                                 <div className="row padbot-10px">
-                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder="Home to Work" required="required" name="routeName" id="inputRouteName"/> 
+                                    <input type="text" className="col-11 form-control mx-auto brad-2rem" placeholder={this.state.routeObj.routeName} required="required" name="routeName" id="inputRouteName"/> 
                                 </div>
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Time and Date</h6>
                                 </div>
                                 <div className="row padbot-10px">
                                     {/* Default values should be current details of trip */}
-                                    <input type="time" className="col-4 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputRouteTime" defaultValue="08:00"/> 
-                                    <input type="date" className="col-6 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate" defaultValue="2018-06-20"/>
+                                    <input type="time" className="col-4 form-control mx-auto brad-2rem" placeholder={"Time"} required="required" name="Time" id="inputRouteTime" defaultValue={this.state.routeObj.time}/> 
+                                    {/* <input type="date" className="col-6 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputRouteDate" defaultValue="2018-06-20"/> */}
                                 </div>
-                                <div className="row">
+                                {/* <div className="row">
                                     <h6 className="fw-bold mx-auto">Repeat Weekly</h6>
                                 </div>
                                 <div className="row padbot-10px">
                                     <div className="mx-auto">
                                         <WeekdaySelector/>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="row">
                                     <h6 className="fw-bold mx-auto">Start and End Locations</h6>
                                 </div>

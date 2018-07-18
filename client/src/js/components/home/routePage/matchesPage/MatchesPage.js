@@ -48,7 +48,7 @@ import MatchesStore from '../../../../stores/MatchesStore';
                                 </button>
                             </Link>
                             <RouteInfoModal/>
-                            <EditRouteModal/>
+                            <EditRouteModal token={this.props.store.token} routeId={this.props.match.params._id}/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
