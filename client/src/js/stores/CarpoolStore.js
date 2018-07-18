@@ -39,7 +39,7 @@ class carpoolStore {
                     alert(json.message);
                 }
             })
-    }
+    }  
 
 }
 

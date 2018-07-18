@@ -85,9 +85,6 @@ router.post('/updateName', (req,res,next) =>{
 router.post('/updatePassword', (req,res,next) =>{
 	const { body } = req;
 	let { id, password, newPassword } = body;
-	const generator = new User();
-	password = generator.generateHash(password);
-	newPassword = generator.generateHash(newPassword);
 	User.find({
 		_id: id
 	},(err, users) =>{
@@ -97,13 +94,14 @@ router.post('/updatePassword', (req,res,next) =>{
 				message:"Error:Server error"+err
 			});
 		}
-		else if(users.length < 1){
+		else if(!users[0].validPassword(password)){
 			return res.send({
 				success:false,
 				message:"Incorrect password"
 			});
 		}
 		else{
+			newPassword = users[0].generateHash(newPassword);
 			User.findOneAndUpdate({
 				_id: id
 			},
