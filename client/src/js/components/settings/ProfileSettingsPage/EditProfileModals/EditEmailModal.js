@@ -29,7 +29,26 @@ class EditEmailModal extends Component {
     }
 
     changeEmail(){
-
+        fetch('/api/account/getProfile/updateEmail',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                id: this.props.token,
+                email: this.state.email
+            })
+        }).then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if (json.success){
+                alert("Email changed");
+                this.toggle();
+            }
+            else{
+                alert("Email was not changed "+ json.message);
+            }
+        });
     }
 
     render() {
@@ -47,7 +66,7 @@ class EditEmailModal extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <input type="text" value={this.state.email} onChange={this.handleEmailChange.bind(this)} className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Email" required="required" name="email" id="changeEmail"/> 
+                                <input type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)} className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Email" required="required" name="email" id="changeEmail"/> 
                             </div>
                             <div className="row">
                                 <button type="submit" onClick={this.changeEmail.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
