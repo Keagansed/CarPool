@@ -162,7 +162,7 @@ class UserMatch  extends Component {
                                 <h5><i className="fa fa-handshake-o"></i></h5>
                             </div>
                             <div className="col-12">
-                                {/* Empty for now */}
+                                {this.props.store.time}
                             </div>
                         </div>
                     </div>
