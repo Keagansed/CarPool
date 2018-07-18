@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import MapComponent from './../../GeneralMapWrapper';
 
 //Just using temporarily for demonstration purposes
 import tempGroupPic from './../../../../../css/images/group_default.png';
@@ -16,8 +17,70 @@ class CarpoolMatch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            carpoolMembers:[],
+            routeArr:[]
         }
+    }
+
+    componentWillMount(){
+        fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({
+                carpoolName : json.data[0].routeName,
+                routeArr:[...this.state.routeArr,{
+                    origin : json.data[0].startLocation,
+                    destination : json.data[0].endLocation
+                }]
+            });
+        });
+
+        this.props.routeArr.forEach(routeId => {
+            fetch('/api/system/Route/getRoute?_id=' + routeId,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+            })
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json => {
+                this.setState({
+                    routeArr:[...this.state.routeArr,{
+                        origin : json.data[0].startLocation,
+                        destination : json.data[0].endLocation
+                    }]
+                });
+
+                fetch('/api/account/getProfile?_id=' + json.data[0].userId,{
+                    method:'GET',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                })
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(json => {
+                    let memberComponent = 
+                    (<div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                        <div className="col-6">{json[0].firstName+' '+json[0].lastName}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+json[0]._id}>View Profile</a></div>
+                    </div>)
+                    this.setState({ 
+                        carpoolMembers : [...this.state.carpoolMembers,memberComponent]
+                    });
+                });
+
+            });
+        });
+
+        
     }
 
     toggle(event) {
@@ -41,29 +104,22 @@ class CarpoolMatch  extends Component {
                         </div>
                         <div className="modal-body">
                             <form>
-                                <div className="row bordbot-1px-dash-grey">
+                                {/* <div className="row bordbot-1px-dash-grey">
                                     <h6 className="fw-bold mx-auto">Carpool Creator</h6>
                                 </div>
                                 <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
                                     <div className="col-6">Vernon Francis</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>                           
+                                </div>                            */}
                                 <div className="row bordbot-1px-dash-grey">
                                     <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
                                 </div>
-                                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                                    <div className="col-6">Myron Ouyang</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                                    <div className="col-6">Leonardio Ianigro</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>                       
+                                    {this.state.carpoolMembers}
                                 <div className="row mtop-10px">
                                     <h6 className="fw-bold mx-auto">Route Comparison</h6>
                                 </div>
                                 <div className="row mbottom-10px">
                                     <div className="col-12">
-                                        <p className="txt-center mbottom-0">
-                                            ***Map to go here***
-                                        </p>
+                                        <MapComponent routeArr={this.state.routeArr}/>
                                     </div>                                
                                 </div>
                                 <div className="row">
@@ -87,7 +143,7 @@ class CarpoolMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>Carpool</h5>
+                                <h5>{"Carpool: "+this.props.carpoolName}</h5>
                             </div>
                             <div className="col-12">
                                 1.5km Further
