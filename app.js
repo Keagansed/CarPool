@@ -16,7 +16,6 @@ let getProfileRouter = require('./routes/api/getProfile.js');
 let uploadRouter = require('./routes/api/uploadFile.js');
 let getImageRouter = require('./routes/api/getImage.js');
 let getAllUsersRouter = require('./routes/api/getAllUsers.js');
-let updateProfileRouter = require('./routes/api/updateProfile.js');
 let getUserRouter = require('./routes/api/getUser.js');
 let routesRouter = require('./routes/api/Route');
 let tripsRouter = require('./routes/api/addTrip');
@@ -55,7 +54,6 @@ app.use('/api/account/getProfile', getProfileRouter)
 app.use('/api/account/uploadFile', uploadRouter)
 app.use('/api/account/getImage', getImageRouter)
 app.use('/api/account/getAllUsers', getAllUsersRouter)
-app.use('/api/account/updateProfile', updateProfileRouter)
 app.use('/api/account/getUser', getUserRouter)
 app.use('/api/system/route', routesRouter)
 app.use('/api/system/addTrip', tripsRouter)
