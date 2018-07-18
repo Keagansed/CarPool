@@ -90,20 +90,22 @@ class matchesStore {
         }
 
     }
+    
     @action filterRoutesByTime = (routeObj) => {
         let timeDifferences = [];   // time difference between routeObj and recRoute in minutes
         let size = this.recommendedRoutes.length;
+        let temp, i, j;
         // console.log('Route TIme ' + routeObj.time);
 
         this.recommendedRoutes.forEach(route => {
             timeDifferences.push(this.calcTimeDifference(routeObj.time, route.time));
         });
 
-        for (let i = 0; i < size - 1; i++) {
-            for (let j = 0; j < (size - i - 1); j++) {
+        for (i = 0; i < size - 1; i++) {
+            for (j = 0; j < (size - i - 1); j++) {
                 if (timeDifferences[j] > timeDifferences[j + 1]) {
                     // swap the time differences of the routes
-                    let temp = timeDifferences[j];
+                    temp = timeDifferences[j];
                     timeDifferences[j] = timeDifferences[j + 1];
                     timeDifferences[j + 1] = temp;
 
@@ -115,10 +117,10 @@ class matchesStore {
             }
         }
 
-        this.recommendedRoutes.forEach(route => {
-            let count = 0;
-            console.log("RecRoute " + count + ': ' + route.routeName + " @ " + route.time);
-        });
+        // this.recommendedRoutes.forEach(route => {
+        //     let count = 0;
+        //     console.log("RecRoute " + count + ': ' + route.routeName + " @ " + route.time);
+        // });
     }
 
     @action updateRecommendedRoutes = (recommendedArray, routeId) => { 
