@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getFromStorage } from './../../../../utils/localStorage' ;
 
 const display = {
     display: 'block'

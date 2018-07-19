@@ -26,7 +26,7 @@ class Carpools extends Component {
     }
     
     componentDidMount(){
-        this.setState({offers:<CarpoolOffers store={this.props.store} token={this.props.token}/>})
+        this.setState({offers:<CarpoolOffers store={this.props.store} token={this.props.token}/>});
     }
 
     componentWillMount(){
@@ -154,7 +154,7 @@ class Carpools extends Component {
                                 }
                             }
                             catch (e){
-
+                                return (<div key={Math.random()}></div>)
                             }
                         })
                     }

@@ -36,7 +36,7 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({ userName : json[0].firstName +" "+ json[0] .lastName});
+            this.setState({ userName : (json[0].firstName +" "+ json[0].lastName)});
         });
         
         fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId,{

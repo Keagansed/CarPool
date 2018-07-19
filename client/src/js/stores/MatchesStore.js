@@ -121,6 +121,7 @@ class matchesStore {
     //================================================
 
     @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
+        this.allCarpools = []; //reset carpool
         fetch('/api/system/Route/getRoutes?userId='+userId,{
             method:'GET',
             headers:{

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import WeekdaySelector from './WeekdaySelector';
+// import WeekdaySelector from './WeekdaySelector';
 
 const display = {
     display: 'block'

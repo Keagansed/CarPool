@@ -59,7 +59,7 @@ import MapComponent from './../../GeneralMapWrapper';
                             .then(json => {
                                 // console.log(json.data[0]);
                                 this.from = json.data[0].startLocation.name;
-                                this.to = json.data[0].startLocation.name;
+                                this.to = json.data[0].endLocation.name;
                                 this.setState({
                                     routeArr:[...this.state.routeArr,{
                                         origin : json.data[0].startLocation,
