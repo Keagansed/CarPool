@@ -11,7 +11,6 @@ class matchesStore {
     @observable maxRadius = 2;
   
     @action getAllRoutes = (token, routeId) => {
-        // console.log("token: "+token+" Route ID:"+routeId);
         fetch('/api/system/carpool/getAllOtherCarpools?routeId='+routeId,{//Get all Carpools that the user isn't in
             method:'GET',
             headers:{
@@ -22,9 +21,8 @@ class matchesStore {
         .catch(error => console.error('Error:', error))
         .then(json =>{
             if(json.success){
-                // console.log(routeId );
-                // console.log(json.data);
-                this.allCarpools = json.data;
+                let carpools = json.data;
+                this.filterCarpools(carpools,token);
             }else{
                 console.log("Unable to retrieve Carpools:" + json.message );
             }
@@ -117,8 +115,43 @@ class matchesStore {
         }
 
     }
-    
 
+    //================================================
+    //=============== HELPER FUNCTIONS ===============
+    //================================================
+
+    @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
+        this.allCarpools = [];
+        let contains = false;
+
+        carpoolArr.forEach(carpoolObj => {
+            contains = false;
+
+            carpoolObj.routes.forEach(routeId => {
+                fetch('/api/system/Route/getRoute?_id='+routeId,{
+                    method:'GET',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                })
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then(json => {
+                    if(json.success){
+                        if(json.data[0].userId === userId){ 
+                            contains = true;
+                        }
+                    }else{
+                        console.log(json.message);
+                    }
+                });
+            });
+
+            if(!contains){
+                this.allCarpools.push(carpoolObj);
+            }
+        });
+    }
 
     @action filterRoutesByTime = (routeObj) => {
         let timeDifferences = [];   // time difference between routeObj and recRoute in minutes
