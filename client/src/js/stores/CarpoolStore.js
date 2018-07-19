@@ -64,6 +64,7 @@ class carpoolStore {
                 this.carpoolID = id;
                 this.users = "{";
                 let count = 0;
+                let date = JSON.stringify(new Date());
                 this.routes.forEach(route => {
                     fetch('api/system/route/getRoute?_id='+ route,{
                         method:'GET',
@@ -76,7 +77,7 @@ class carpoolStore {
                     .then(json => {
                         if(json.success){
                             count++;
-                            this.users = this.users + "\""  + json.data[0].userId + "\":{\"lastRefresh\":" + JSON.stringify(new Date()) + ",\"colour\":\"" + this.getRandomColour() ;
+                            this.users = this.users + "\""  + json.data[0].userId + "\":{\"lastRefresh\":" + date + ",\"colour\":\"" + this.getRandomColour() ;
                             if(count === this.routes.length){
                                 this.users = this.users + "\"}";
                             }

@@ -85,8 +85,9 @@ class Messages extends Component {
     }
 
     updateLastRefresh(){
+        let date = JSON.stringify(new Date());
         app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
-            .update({lastRefresh:JSON.stringify(new Date())}).then(() => {
+            .update({lastRefresh:date}).then(() => {
             return {};
         }).catch(error => {
             return {
