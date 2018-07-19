@@ -103,7 +103,6 @@ class CarpoolMatch  extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
                                 {/* <div className="row bordbot-1px-dash-grey">
                                     <h6 className="fw-bold mx-auto">Carpool Creator</h6>
                                 </div>
@@ -127,7 +126,6 @@ class CarpoolMatch  extends Component {
                                         Send Request
                                     </button>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>
