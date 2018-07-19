@@ -11,7 +11,7 @@ class matchesStore {
     @observable maxRadius = 2;
   
     @action getAllRoutes = (token, routeId) => {
-        fetch('/api/system/carpool/getAllOtherCarpools?routeId='+routeId,{//Get all Carpools that the user isn't in
+        fetch('/api/system/carpool/getAllOtherCarpools?routeId='+routeId,{//Get all Carpools that current route isn't in
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -22,7 +22,7 @@ class matchesStore {
         .then(json =>{
             if(json.success){
                 let carpools = json.data;
-                this.filterCarpools(carpools,token);
+                this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
             }else{
                 console.log("Unable to retrieve Carpools:" + json.message );
             }
@@ -121,34 +121,31 @@ class matchesStore {
     //================================================
 
     @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
-        this.allCarpools = [];
-        let contains = false;
-
-        carpoolArr.forEach(carpoolObj => {
-            contains = false;
-
-            carpoolObj.routes.forEach(routeId => {
-                fetch('/api/system/Route/getRoute?_id='+routeId,{
-                    method:'GET',
-                    headers:{
-                        'Content-Type':'application/json'
-                    },
-                })
-                .then(res => res.json())
-                .catch(error => console.error('Error:', error))
-                .then(json => {
-                    if(json.success){
-                        if(json.data[0].userId === userId){ 
-                            contains = true;
-                        }
-                    }else{
-                        console.log(json.message);
+        fetch('/api/system/Route/getRoutes?userId='+userId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success){
+                carpoolArr.forEach(carpoolObj => {
+                    let contains = false;
+                    carpoolObj.routes.forEach(routId => {
+                        json.data.forEach(routeObj => {
+                            if(routeObj._id === routId){
+                                contains = true;
+                            }
+                        });
+                    })
+                    if(!contains){
+                        this.allCarpools.push(carpoolObj);
                     }
-                });
-            });
-
-            if(!contains){
-                this.allCarpools.push(carpoolObj);
+                })    
+            }else{
+                console.log(json.message);
             }
         });
     }
