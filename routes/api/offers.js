@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const offer = require('../../models/offer.js');
+const offer = require('../../models/Offer.js');
 const carpool = require('../../models/Carpool.js')
 
 router.post('/makeOffer',(req,res,next) => {
