@@ -62,9 +62,10 @@ class carpoolStore {
                 this.routes = json.data[0].routes;
                 this.carpoolName = json.data[0].carpoolName;
                 this.carpoolID = id;
-                this.users = "{";
+                let users = "{";
                 let count = 0;
-                let date = JSON.stringify(new Date());
+                let dateStr = JSON.stringify(new Date());
+                let date = "\\\"" +  dateStr.substr(1,dateStr.length-2) + "\\\"";
                 this.routes.forEach(route => {
                     fetch('api/system/route/getRoute?_id='+ route,{
                         method:'GET',
@@ -77,12 +78,12 @@ class carpoolStore {
                     .then(json => {
                         if(json.success){
                             count++;
-                            this.users = this.users + "\""  + json.data[0].userId + "\":{\"lastRefresh\":" + date + ",\"colour\":\"" + this.getRandomColour() ;
+                            users = users + "\""  + json.data[0].userId + "\":{\"lastRefresh\":\"" + date + "\",\"colour\":\"" + this.getRandomColour() ;
                             if(count === this.routes.length){
-                                this.users = this.users + "\"}";
+                                users = users + "\"}";
                             }
                             else{
-                                this.users = this.users + "\"},";
+                                users = users + "\"},";
                             }
                         }
                         else{
@@ -90,10 +91,10 @@ class carpoolStore {
                         }
 
                         if(count === this.routes.length){
-                            this.users = this.users + "}";
-                            this.users = JSON.parse(this.users);
+                            users = users + "}";
+                            users = JSON.parse(users);
                             this.groupChats = app.database().ref().child('groupChats');
-                            this.groupChats.push().set({name: this.carpoolName, users: this.users, carpoolID: this.carpoolID});
+                            this.groupChats.push().set({name: this.carpoolName, users: users, carpoolID: this.carpoolID});
                         }
                     });
                 });
