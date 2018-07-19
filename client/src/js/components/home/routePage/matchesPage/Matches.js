@@ -36,11 +36,11 @@ import { getFromStorage } from './../../../../utils/localStorage.js';
         if(Carpools.length){
             return Carpools;
         }else{
-            return(
-                <h5 className="txt-center mtop-10px txt-white">
-                    No carpools found
-                </h5>
-            );
+            // return(
+            //     <h5 className="txt-center mtop-10px txt-white">
+            //         No carpools found
+            //     </h5>
+            // );
         }
     }
 
