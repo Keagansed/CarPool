@@ -3,6 +3,7 @@ import MapComponent from './../../GeneralMapWrapper';
 
 //Just using temporarily for demonstration purposes
 import tempGroupPic from './../../../../../css/images/group_default.png';
+import OffersStore from './../../../../stores/OffersStore'
 
 const display = {
     display: 'block'
@@ -89,6 +90,25 @@ class CarpoolMatch  extends Component {
         }));
     }
 
+    makeOffer(){
+        fetch('/api/system/route/getRoute?_id=' + this.props.routeArr[0],{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success) {
+                OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, json.data[0].userId, this.props.carpoolId, true);
+                this.toggle();
+            }else{
+                console.log("error: "+ json.message);
+            }
+        });
+    }
+
     render(){
         var modal = [];
         modal.push(
@@ -103,29 +123,23 @@ class CarpoolMatch  extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                                {/* <div className="row bordbot-1px-dash-grey">
-                                    <h6 className="fw-bold mx-auto">Carpool Creator</h6>
-                                </div>
-                                <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                    <div className="col-6">Vernon Francis</div><div className="col-6 vertical-right">View Profile</div>
-                                </div>                            */}
-                                <div className="row bordbot-1px-dash-grey">
-                                    <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
-                                </div>
-                                    {this.state.carpoolMembers}
-                                <div className="row mtop-10px">
-                                    <h6 className="fw-bold mx-auto">Route Comparison</h6>
-                                </div>
-                                <div className="row mbottom-10px">
-                                    <div className="col-12">
-                                        <MapComponent routeArr={this.state.routeArr}/>
-                                    </div>                                
-                                </div>
-                                <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
-                                        Send Request
-                                    </button>
-                                </div>
+                            <div className="row bordbot-1px-dash-grey">
+                                <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
+                            </div>
+                                {this.state.carpoolMembers}
+                            <div className="row mtop-10px">
+                                <h6 className="fw-bold mx-auto">Route Comparison</h6>
+                            </div>
+                            <div className="row mbottom-10px">
+                                <div className="col-12">
+                                    <MapComponent routeArr={this.state.routeArr}/>
+                                </div>                                
+                            </div>
+                            <div className="row">
+                                <button onClick={this.makeOffer.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
+                                    Send Request
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

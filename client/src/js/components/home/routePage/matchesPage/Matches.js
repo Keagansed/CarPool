@@ -26,6 +26,7 @@ import { getFromStorage } from './../../../../utils/localStorage.js';
         const Carpools = this.props.store.recommendedCarpools.map(carpool =>
             <CarpoolMatch
                 key={carpool._id}
+                carpoolId={carpool._id}
                 token={this.props.token}
                 routeArr={carpool.routes}
                 carpoolName={carpool.carpoolName}
