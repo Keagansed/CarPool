@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MapComponent from './../../GeneralMapWrapper';
+import { Link } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import tempProPic from './../../../../../css/images/profile_default.png';
@@ -18,7 +19,7 @@ class UserMatch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            user: {},
+            userName: "",
             routeArr:[],
             toggle: false,
             carpoolName:""
@@ -35,7 +36,7 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({ user : json[0] });
+            this.setState({ userName : json[0].firstName +" "+ json[0] .lastName});
         });
         
         fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId,{
@@ -109,7 +110,9 @@ class UserMatch  extends Component {
                                 <h6 className="fw-bold mx-auto">Offer Recipient</h6>
                             </div>
                             <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                <div className="col-6">{this.state.user['firstName'] + ' ' + this.state.user['lastName']}</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-6">{this.state.userName}</div><div className="col-6 vertical-right">
+                                    <Link to={"/ProfilePage/"+this.props.userId}>View Profile</Link>
+                                </div>
                             </div>                           
                             <div className="row">
                                 <h6 className="fw-bold mx-auto">Route Comparison</h6>
@@ -151,7 +154,7 @@ class UserMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>{this.state.user['firstName']}</h5>
+                                <h5>{this.state.userName}</h5>
                             </div>
                             <div className="col-12">
                                 1.2km Further

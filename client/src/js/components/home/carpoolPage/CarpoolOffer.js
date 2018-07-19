@@ -45,25 +45,17 @@ class CarpoolOffer  extends Component {
         let temp = [];
         if (this.props.store.join){
             temp.push(
-                <div className="row bordbot-1px-dash-grey">
-                    <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
-                </div>
-            );
-            temp.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">this is an existing carpool</div>
-                    <div className="col-6 vertical-right">
-                        <Link to={"/ProfilePage/" + this.props.store.recieverId}>View Profile</Link>
-                    </div>
+                    <div className="col-6">Asking to join your existing carpool</div>
                 </div>
             );
-        }
-        else
+        }else{
             temp.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
                     <div className="col-6">This is an invite to create a new carpool</div>
                 </div>
             );
+        }
         return(temp);
     }
 

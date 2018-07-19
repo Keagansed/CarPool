@@ -58,7 +58,6 @@ class carpoolStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success){
-                
                 this.routes = json.data[0].routes;
                 this.carpoolName = json.data[0].carpoolName;
                 this.carpoolID = id;
@@ -97,7 +96,7 @@ class carpoolStore {
                             this.groupChats.push().set({name: this.carpoolName, users: users, carpoolID: this.carpoolID});
                         }
                     });
-                });
+                });                     
             }
             else{
                 console.log("Unable to retrieve carpool");

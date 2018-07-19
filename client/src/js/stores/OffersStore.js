@@ -55,7 +55,6 @@ class offersStore {
         })  
         
     }
-    
 }
 
 const  OffersStore = new offersStore();

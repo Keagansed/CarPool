@@ -3,6 +3,27 @@ var router = express.Router();
 
 const Carpool = require('../../models/Carpool.js');
 
+router.get('/getAllOtherCarpools',function(req,res,next){
+    const { query } = req;
+    const { routeId } = query;
+    id="5b4b5383e3c2610c048=37b3a"; //TEMP REMOVE ASAP!!!!!!
+    Carpool.find({routes:{$nin:[routeId]}},
+        (err,data)=>{
+            if(err){
+                return res.send({
+                    success: false,
+                    message: err
+                });
+            }else{
+                res.send({
+                    success: true,
+                    message: "Carpools retrieved successfully",
+                    data: data
+                })
+            }
+        });
+});
+
 router.get('/getCarpool', function(req, res, next) {
     const { query } = req;
     const { _id } = query;
@@ -13,8 +34,7 @@ router.get('/getCarpool', function(req, res, next) {
                     success: false,
                     message: err
                 });
-            }
-            else{
+            }else{
                 res.send({
                     success: true,
                     message: "Carpool retrieved successfully",

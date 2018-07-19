@@ -1,15 +1,33 @@
 import { action, observable, toJS } from 'mobx';
-import { generateDifferenceArray } from './../utils/arrayCheck';
+import { generateDifferenceArray, generateCarpoolArr } from './../utils/arrayCheck';
 
 class matchesStore {
     
     @observable routes = [];
+    @observable allCarpools = [];
     @observable loadingRoutes = true;
     @observable recommendedRoutes = [];
+    @observable recommendedCarpools = [];
     @observable maxRadius = 2;
   
     @action getAllRoutes = (token, routeId) => {
-        // console.log("token: "+token+" Route ID:"+routeId);
+        fetch('/api/system/carpool/getAllOtherCarpools?routeId='+routeId,{//Get all Carpools that current route isn't in
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json =>{
+            if(json.success){
+                let carpools = json.data;
+                this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
+            }else{
+                console.log("Unable to retrieve Carpools:" + json.message );
+            }
+        });
+
         fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ //Get all OtherRoutes that are not the users
             method:'GET',
             headers:{
@@ -79,9 +97,16 @@ class matchesStore {
             if(startWithinRadius && endWithinRadius){
                 this.recommendedRoutes.push(route);
                 recRoutes.push(route);
+                
             }    
         });
 
+        if(this.allCarpools.length){
+            this.recommendedCarpools = generateCarpoolArr(this.allCarpools, this.recommendedRoutes);
+            // console.log(toJS(this.recommendedCarpools));
+        }
+
+        // console.log(toJS(this.recommendedRoutes));
         if(recRoutes.length > 0){
             this.updateRecommendedRoutes(recRoutes, routeObj._id);
         }
@@ -90,7 +115,41 @@ class matchesStore {
         }
 
     }
-    
+
+    //================================================
+    //=============== HELPER FUNCTIONS ===============
+    //================================================
+
+    @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
+        fetch('/api/system/Route/getRoutes?userId='+userId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success){
+                carpoolArr.forEach(carpoolObj => {
+                    let contains = false;
+                    carpoolObj.routes.forEach(routId => {
+                        json.data.forEach(routeObj => {
+                            if(routeObj._id === routId){
+                                contains = true;
+                            }
+                        });
+                    })
+                    if(!contains){
+                        this.allCarpools.push(carpoolObj);
+                    }
+                })    
+            }else{
+                console.log(json.message);
+            }
+        });
+    }
+
     @action filterRoutesByTime = (routeObj) => {
         let timeDifferences = [];   // time difference between routeObj and recRoute in minutes
         let size = this.recommendedRoutes.length;
