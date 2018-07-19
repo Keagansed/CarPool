@@ -13,14 +13,48 @@ class EditPasswordModal extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            password: "",
+            newPassword: ""
         }
     }
   
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
-        }));
+        })); 
+    }
+
+    handlePasswordChange(e){
+        this.setState({password: e.target.value})
+    }
+
+    handleNewPasswordChange(e){
+        this.setState({newPassword: e.target.value})
+    }
+
+    changePassword(){
+        fetch('/api/account/getProfile/updatePassword',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                id: this.props.token,
+                password: this.state.password,
+                newPassword: this.state.newPassword
+            })
+        }).then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if (json.success){
+                alert("password changed");
+                this.toggle();
+            }
+            else{
+                alert("Password was not changed. "+ json.message);
+            }
+        });
     }
   
     render() {
@@ -37,19 +71,17 @@ class EditPasswordModal extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form>
-                                <div className="row">
-                                    <input type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Current Password" required="required" name="currentPassword" id="changePasswordCurrent"/> 
-                                </div>
-                                <div className="row">
-                                    <input type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="New Password" required="required" name="newPassword" id="changePasswordNew"/> 
-                                </div>
-                                <div className="row">
-                                    <button type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangePassword">
-                                        Submit Change
-                                    </button>
-                                </div>
-                            </form>
+                            <div className="row">
+                                <input onChange={this.handlePasswordChange.bind(this)} type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Current Password" required="required" name="currentPassword" id="changePasswordCurrent"/> 
+                            </div>
+                            <div className="row">
+                                <input onChange={this.handleNewPasswordChange.bind(this)} type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="New Password" required="required" name="newPassword" id="changePasswordNew"/> 
+                            </div>
+                            <div className="row">
+                                <button onClick={this.changePassword.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangePassword">
+                                    Submit Change
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

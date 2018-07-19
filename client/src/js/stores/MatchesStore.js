@@ -37,7 +37,8 @@ class matchesStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success){
-                this.filterRoutesByRadius(json.data[0]);   
+                this.filterRoutesByRadius(json.data[0]);  
+                this.filterRoutesByTime(json.data[0]); 
                 this.loadingRoutes = false;
             }else{
                 // this.loadingRoutes = false;
@@ -88,6 +89,38 @@ class matchesStore {
             this.updateRoutesCompared(differenceArray, routeObj._id);
         }
 
+    }
+    
+    @action filterRoutesByTime = (routeObj) => {
+        let timeDifferences = [];   // time difference between routeObj and recRoute in minutes
+        let size = this.recommendedRoutes.length;
+        let temp, i, j;
+        // console.log('Route TIme ' + routeObj.time);
+
+        this.recommendedRoutes.forEach(route => {
+            timeDifferences.push(this.calcTimeDifference(routeObj.time, route.time));
+        });
+
+        for (i = 0; i < size - 1; i++) {
+            for (j = 0; j < (size - i - 1); j++) {
+                if (timeDifferences[j] > timeDifferences[j + 1]) {
+                    // swap the time differences of the routes
+                    temp = timeDifferences[j];
+                    timeDifferences[j] = timeDifferences[j + 1];
+                    timeDifferences[j + 1] = temp;
+
+                    // swap the corresponding recommended routes
+                    temp = this.recommendedRoutes[j];
+                    this.recommendedRoutes[j] = this.recommendedRoutes[j + 1];
+                    this.recommendedRoutes[j + 1] = temp;
+                }
+            }
+        }
+
+        // this.recommendedRoutes.forEach(route => {
+        //     let count = 0;
+        //     console.log("RecRoute " + count + ': ' + route.routeName + " @ " + route.time);
+        // });
     }
 
     @action updateRecommendedRoutes = (recommendedArray, routeId) => { 
@@ -158,6 +191,22 @@ class matchesStore {
 
     @action degreesToRadians = (degrees) => {
         return degrees * Math.PI / 180;
+    }
+
+    // calculates the difference between the times in minutes
+    @action calcTimeDifference = (objRouteTime, routeTime) => {
+        let currRouteTime = this.convertTime(objRouteTime);
+        let recRouteTime = this.convertTime(routeTime);
+        
+        return Math.abs(recRouteTime - currRouteTime);
+    }
+    
+    // returns the time of the route converted into minutes
+    @action convertTime = (sTime) => {
+        let arrTime = sTime.split(':');
+        arrTime[0] = parseInt(arrTime[0], 10);
+        arrTime[1] = parseInt(arrTime[1], 10);
+        return ((arrTime[0] * 60) + arrTime[1]);
     }
 }
 

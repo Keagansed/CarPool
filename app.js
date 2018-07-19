@@ -16,7 +16,6 @@ let getProfileRouter = require('./routes/api/getProfile.js');
 let uploadRouter = require('./routes/api/uploadFile.js');
 let getImageRouter = require('./routes/api/getImage.js');
 let getAllUsersRouter = require('./routes/api/getAllUsers.js');
-let updateProfileRouter = require('./routes/api/updateProfile.js');
 let getUserRouter = require('./routes/api/getUser.js');
 let routesRouter = require('./routes/api/Route');
 let tripsRouter = require('./routes/api/addTrip');
@@ -25,8 +24,7 @@ let getTripsRouter = require('./routes/api/getTrips');
 let getTripRouter = require('./routes/api/getTrip');
 let cancelTripRouter = require('./routes/api/cancelTrip');
 let deleteTripRouter = require('./routes/api/deleteTrip');
-let carpoolsRouter = require('./routes/api/addCarpool');
-let getCarpoolRouter = require('./routes/api/getCarpool');
+let carpoolRouter = require('./routes/api/carpool');
 let offerRouter = require('./routes/api/offers');
 
 var app = express();
@@ -56,7 +54,6 @@ app.use('/api/account/getProfile', getProfileRouter)
 app.use('/api/account/uploadFile', uploadRouter)
 app.use('/api/account/getImage', getImageRouter)
 app.use('/api/account/getAllUsers', getAllUsersRouter)
-app.use('/api/account/updateProfile', updateProfileRouter)
 app.use('/api/account/getUser', getUserRouter)
 app.use('/api/system/route', routesRouter)
 app.use('/api/system/addTrip', tripsRouter)
@@ -65,8 +62,7 @@ app.use('/api/system/getTrips', getTripsRouter)
 app.use('/api/system/getTrip', getTripRouter)
 app.use('/api/system/cancelTrip', cancelTripRouter)
 app.use('/api/system/deleteTrip', deleteTripRouter)
-app.use('/api/system/addCarpool', carpoolsRouter)
-app.use('/api/system/getCarpool', getCarpoolRouter)
+app.use('/api/system/carpool', carpoolRouter)
 app.use('/api/system/offers', offerRouter)
 
 // catch 404 and forward to error handler

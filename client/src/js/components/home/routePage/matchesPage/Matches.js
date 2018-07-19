@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 
 import  "../../../../../css/components/Spinner.css"
 import UserMatch from './UserMatch';
-import CarpoolMatch from './CarpoolMatch';
+// import CarpoolMatch from './CarpoolMatch';
 import RouteStore from '../../../../stores/RouteStore';
 import { getFromStorage } from './../../../../utils/localStorage.js';
 
@@ -27,7 +27,8 @@ import { getFromStorage } from './../../../../utils/localStorage.js';
             <UserMatch 
                 key={route._id} 
                 token={this.props.token}
-                uRouteId={this.props.routeId}
+                routeId={route._id}// matched route ID
+                uRouteId={this.props.routeId} //Own route ID
                 userId={route.userId} 
                 store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
         )
