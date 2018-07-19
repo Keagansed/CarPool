@@ -76,7 +76,7 @@ class carpoolStore {
                     .then(json => {
                         if(json.success){
                             count++;
-                            this.users = this.users + "\""  + [json.data[0].userId] + "\":{\"lastRefresh\":" + JSON.stringify(new Date()) + ",\"colour\":\"" + this.getRandomColour() ;
+                            this.users = this.users + "\""  + json.data[0].userId + "\":{\"lastRefresh\":" + JSON.stringify(new Date()) + ",\"colour\":\"" + this.getRandomColour() ;
                             if(count === this.routes.length){
                                 this.users = this.users + "\"}";
                             }
