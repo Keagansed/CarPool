@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register Component captures snapshot 1`] = `
+<div
+  className="vertical-center bg-purple"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row"
+    >
+      <img
+        alt="carpool_logo"
+        className="img-fluid d-block mx-auto mbottom-2rem"
+        id="imgLogo"
+        src="logo.png"
+      />
+    </div>
+    <form>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputFirstName"
+          name="FirstName"
+          onChange={[Function]}
+          placeholder="First Name"
+          required="required"
+          type="text"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputLastName"
+          name="LastName"
+          onChange={[Function]}
+          placeholder="Last Name"
+          required="required"
+          type="text"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputID"
+          name="ID"
+          onChange={[Function]}
+          placeholder="ID Number"
+          required="required"
+          type="text"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputEmail"
+          name="Email"
+          onChange={[Function]}
+          placeholder="Email"
+          required="required"
+          type="email"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputPassword"
+          name="Password"
+          onChange={[Function]}
+          placeholder="Password"
+          required="required"
+          type="password"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputConfirmPassword"
+          name="ConfirmPassword"
+          onChange={[Function]}
+          placeholder="Confirm Password"
+          required="required"
+          type="password"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <button
+          className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+          id="btnLogin"
+          onClick={[Function]}
+          type="submit"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

@@ -33,6 +33,30 @@ var UserSchema = new mongoose.Schema({
 		type:String,
 		default:'default.jpg',
 		required:false
+	},
+	driversLicense:
+	{
+		type:String,
+		default:'',
+		required:false
+	},
+	IdDocument:
+	{
+		type:String,
+		default:'',
+		required:false
+	},
+	CarPic:
+	{
+		type:String,
+		default:'',
+		required:false
+	},
+	CarRegistration:
+	{
+		type:String,
+		default:'',
+		required:false
 	}
 });
 

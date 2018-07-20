@@ -8,19 +8,14 @@ router.get('/', function(req, res, next) {
   const { query } = req;
   const { token } = query;
 
-  UserSession.findOneAndUpdate({
+  UserSession.remove({
   	userId:token,
-  	isDeleted: false
-  },{
-  	$set:{
-  		isDeleted:true
-  	}
   },(err,sessions)=>{
   	if(err){
-		return res.send({ 
-			success:false,
-			message:"Error: Server Error"
-		});
+  		return res.send({ 
+  			success:false,
+  			message:"Error: Server Error"
+  		});
 	}
 	
 	return res.send({ 

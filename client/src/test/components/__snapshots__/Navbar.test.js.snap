@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar Component captures snapshot 1`] = `
+<div
+  className="height-50px fixed-bottom container-fluid pad-10px bg-aqua"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-4 txt-center"
+    >
+      <a
+        href="/Settings"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-cog txt-purple txt-30px"
+        />
+      </a>
+    </div>
+    <div
+      className="col-4 txt-center"
+    >
+      <a
+        href="/HomePage"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-home txt-purple txt-30px"
+        />
+      </a>
+    </div>
+    <div
+      className="col-4 txt-center"
+    >
+      <a
+        href="/ProfilePage/undefined"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-user txt-purple txt-30px"
+        />
+      </a>
+    </div>
+  </div>
+</div>
+`;

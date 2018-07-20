@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Landing Page Component captures snapshot 1`] = `
+<div
+  className="vertical-center bg-purple"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row"
+    >
+      <img
+        alt="carpool_logo"
+        className="img-fluid d-block mx-auto mbottom-2rem"
+        src="logo.png"
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <a
+        className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+        href="/Login"
+        id="btnLogin"
+        onClick={[Function]}
+      >
+        Login
+      </a>
+    </div>
+    <div
+      className="row"
+    >
+      <a
+        className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold"
+        href="/Register"
+        id="btnRegister"
+        onClick={[Function]}
+      >
+        Register
+      </a>
+    </div>
+  </div>
+</div>
+`;

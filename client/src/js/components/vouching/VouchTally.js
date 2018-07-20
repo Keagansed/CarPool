@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import '../../../css/App.css';
 
@@ -78,7 +78,7 @@ class VouchAverage extends Component {
                         </div>
                         <div className="col-md-10 col-8 no-padding-margin">
                             <div className="progress">
-                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.fivePerc + "%" }}>
+                                <div className="progress-bar bg-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.fivePerc + "%" }}>
                                     <span className="sr-only">80% Complete (danger)</span>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@ class VouchAverage extends Component {
                         </div>
                         <div className="col-md-10 col-8 no-padding-margin">
                             <div className="progress">
-                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.fourPerc + "%" }}>
+                                <div className="progress-bar" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.fourPerc + "%" }}>
                                     <span className="sr-only">80% Complete (danger)</span>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@ class VouchAverage extends Component {
                         </div>
                         <div className="col-md-10 col-8 no-padding-margin">
                             <div className="progress">
-                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.threePerc + "%" }}>
+                                <div className="progress-bar bg-info" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.threePerc + "%" }}>
                                     <span className="sr-only">80% Complete (danger)</span>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ class VouchAverage extends Component {
                         </div>
                         <div className="col-md-10 col-8 no-padding-margin">
                             <div className="progress">
-                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.twoPerc + "%" }}>
+                                <div className="progress-bar bg-warning" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.twoPerc + "%" }}>
                                     <span className="sr-only">80% Complete (danger)</span>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@ class VouchAverage extends Component {
                         </div>
                         <div className="col-md-10 col-8 no-padding-margin">
                             <div className="progress">
-                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.threePerc + "%" }}>
+                                <div className="progress-bar bg-danger" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="1000" style={{ width: this.onePerc + "%" }}>
                                     <span className="sr-only">80% Complete (danger)</span>
                                 </div>
                             </div>

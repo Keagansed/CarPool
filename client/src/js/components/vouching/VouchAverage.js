@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import 'bootstrap/dist/css/bootstrap.min.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../../../css/App.css';
+// import '../../../css/style.css';
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -80,15 +80,18 @@ class VouchAverage extends Component {
 
   render() {
     return (
-      <div>
-            <div className="container-fluid">
-              <div key={+new Date()} className="rating-breakdown">
-              <h4 className="review-info">Average rating</h4>
-                  <h1>{this.averageRating()}<small>/ 5</small></h1>
-                  {this.printStars()}
-              </div>
-            </div>
-      </div>
+      <font>
+        {this.averageRating().toFixed(1)}
+      </font>
+      // <div>
+      //       <div className="container-fluid">
+      //         <div key={+new Date()} className="rating-breakdown">
+      //         <h4 className="review-info">Average rating</h4>
+      //             <h1>{this.averageRating()}<small>/ 5</small></h1>
+      //             {this.printStars()}
+      //         </div>
+      //       </div>
+      // </div>
     );
   }
 }

@@ -8,10 +8,14 @@ router.get('/', function(req, res, next) {
   const { query } = req;
   const { token } = query;
 
+  let date = new Date();
+  let currentDate = date.toDateString();
+
   UserSession.find({
   	userId:token,
-  	isDeleted: false
+  	timestamp: currentDate
   }, (err,sessions)=>{
+
   	if(err){
 		return res.send({ 
 			success:false,
