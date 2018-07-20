@@ -47,8 +47,8 @@ import MatchesStore from '../../../../stores/MatchesStore';
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <RouteInfoModal/>
-                            <EditRouteModal/>
+                            <RouteInfoModal _id={this.props.match.params._id} MatchesStore={MatchesStore}/>
+                            <EditRouteModal  token={this.props.store.token} routeId={this.props.match.params._id}/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}

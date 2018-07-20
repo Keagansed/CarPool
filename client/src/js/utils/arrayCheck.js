@@ -28,3 +28,21 @@ export function generateDifferenceArray(arrRouteId, arrRouteObj, containsFlag){
 
     return newArr;
 }
+
+export function generateCarpoolArr(arrCarpools,arrRecRoutes){
+    let newArr=[];
+    arrCarpools.forEach(function(carpoolObj){
+        let contains = false;
+        arrRecRoutes.forEach(function(routeObj){
+            if(carpoolObj.routes.includes(routeObj._id)){
+                contains = true;
+            }
+        });
+
+        if(contains){
+            newArr.push(carpoolObj);
+        }
+    });
+
+    return newArr;
+}

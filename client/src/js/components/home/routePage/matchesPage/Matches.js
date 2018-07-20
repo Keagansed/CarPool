@@ -21,13 +21,37 @@ import { getFromStorage } from './../../../../utils/localStorage.js';
             })
         }    
     }
+    
+    renderCarpools = () => {
+        const Carpools = this.props.store.recommendedCarpools.map(carpool =>
+            <CarpoolMatch
+                key={carpool._id}
+                carpoolId={carpool._id}
+                token={this.props.token}
+                routeArr={carpool.routes}
+                carpoolName={carpool.carpoolName}
+                uRouteId={this.props.routeId} //Own route ID
+            />
+        )
+
+        if(Carpools.length){
+            return Carpools;
+        }else{
+            // return(
+            //     <h5 className="txt-center mtop-10px txt-white">
+            //         No carpools found
+            //     </h5>
+            // );
+        }
+    }
 
     renderRoutes = () => {
         const Routes = this.props.store.recommendedRoutes.map(route =>             
             <UserMatch 
                 key={route._id} 
                 token={this.props.token}
-                uRouteId={this.props.routeId}
+                routeId={route._id}// matched route ID
+                uRouteId={this.props.routeId} //Own route ID
                 userId={route.userId} 
                 store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}/>
         )
@@ -82,7 +106,8 @@ import { getFromStorage } from './../../../../utils/localStorage.js';
         else{
             return(
                 <div className="scroll-vert">
-                    {this.renderRoutes()}
+                    <div> {this.renderCarpools()}</div>
+                    <div> {this.renderRoutes()}</div>
                 </div>
             );
         }

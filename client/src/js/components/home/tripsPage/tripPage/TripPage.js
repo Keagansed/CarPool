@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { getFromStorage } from './../../../../utils/localStorage.js';
 import ReviewTripModal from './reviewTripModal/ReviewTripModal';
 import CancelTripModal from './cancelTripModal/CancelTripModal';
-import MapWrapper from './MapWrapper';
+import MapComponent from './../../GeneralMapWrapper';
 
 @observer class TripPage extends Component{
 
@@ -41,6 +41,7 @@ import MapWrapper from './MapWrapper';
 
                     this.setState({
                         loading: false,
+                        routeArr:[]
                     })
                 }
             })
@@ -50,16 +51,22 @@ import MapWrapper from './MapWrapper';
             .then(res => res.json())
             .then(json => {
                 this.setState({trip : json});
-                fetch('/api/system/getCarpool?_id='+this.state.trip[0].carpoolID)
+                fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
                     .then(res => res.json())
                     .then(json => {
-                        this.from = json[0].from;
-                        this.longFrom = json[0].longFrom;
-                        this.latFrom = json[0].latFrom;
-                        this.to = json[0].to;
-                        this.longTo = json[0].longTo;
-                        this.latTo = json[0].latTo;
-                        this.setState({carpool : json});
+                        fetch('/api/system/route/getRoute?_id='+json.data[0].routes[0])
+                            .then(res => res.json())
+                            .then(json => {
+                                // console.log(json.data[0]);
+                                this.from = json.data[0].startLocation.name;
+                                this.to = json.data[0].endLocation.name;
+                                this.setState({
+                                    routeArr:[...this.state.routeArr,{
+                                        origin : json.data[0].startLocation,
+                                        destination : json.data[0].endLocation
+                                    }]
+                                });
+                            });
                     });
             });
 
@@ -180,14 +187,14 @@ import MapWrapper from './MapWrapper';
                                 <div><span className="fw-bold mx-auto txt-white">To: </span>{this.to}</div>
                             </div>
                         </div>
-                        <MapWrapper olong={this.longFrom} olat={this.latFrom} dlong={this.longTo} dlat={this.latTo}/>
-                        <div className="row mtop-10px">
+                        <MapComponent routeArr={this.state.routeArr}/>
+                        {/* <div className="row mtop-10px">
                             <h6 className="fw-bold mx-auto txt-white">Your Pickup</h6>
                         </div>
                         <div className="row">
                             <div className="mx-auto padhor-5px txt-white txt-center">08:05 @ 10 John Street, Pretoria, South Africa </div>
                             <div className="mx-auto padhor-5px txt-white txt-center">*** not sure how to do this</div>
-                        </div>
+                        </div> */}
                         <div className="row mtop-10px bordbot-1px-dash-grey">
                             <h6 className="fw-bold mx-auto txt-white">Driver</h6>
                         </div>

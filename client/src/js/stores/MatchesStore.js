@@ -1,16 +1,35 @@
 import { action, observable, toJS } from 'mobx';
-import { generateDifferenceArray } from './../utils/arrayCheck';
+import { generateDifferenceArray, generateCarpoolArr } from './../utils/arrayCheck';
 
 class matchesStore {
     
     @observable routes = [];
+    @observable allCarpools = [];
     @observable loadingRoutes = true;
     @observable recommendedRoutes = [];
+    @observable recommendedCarpools = [];
     @observable maxRadius = 2;
   
     //Get all OtherRoutes that are not the users
     @action getAllRoutes = (token, routeId) => {
-        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ 
+        fetch('/api/system/carpool/getAllOtherCarpools?routeId='+routeId,{//Get all Carpools that current route isn't in
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json =>{
+            if(json.success){
+                let carpools = json.data;
+                this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
+            }else{
+                console.log("Unable to retrieve Carpools:" + json.message );
+            }
+        });
+
+        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ //Get all OtherRoutes that are not the users
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -37,8 +56,9 @@ class matchesStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            if(json.success && json.data.length === 1){
-                this.filterRoutesByRadius(json.data[0]);   
+            if(json.success){
+                this.filterRoutesByRadius(json.data[0]);  
+                this.filterRoutesByTime(json.data[0]); 
                 this.loadingRoutes = false;
             }else{
                 // this.loadingRoutes = false;
@@ -79,15 +99,89 @@ class matchesStore {
             if(startWithinRadius && endWithinRadius){
                 this.recommendedRoutes.push(route);
                 recRoutes.push(route);
-            }
+                
+            }    
         });
 
+        if(this.allCarpools.length){
+            this.recommendedCarpools = generateCarpoolArr(this.allCarpools, this.recommendedRoutes);
+            // console.log(toJS(this.recommendedCarpools));
+        }
+
+        // console.log(toJS(this.recommendedRoutes));
         if(recRoutes.length > 0){
             this.updateRecommendedRoutes(recRoutes, routeObj._id);
         }
         if(differenceArray.length > 0){
             this.updateRoutesCompared(differenceArray, routeObj._id);
         }
+    }
+
+    //================================================
+    //=============== HELPER FUNCTIONS ===============
+    //================================================
+
+    @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
+        this.allCarpools = []; //reset carpool
+        fetch('/api/system/Route/getRoutes?userId='+userId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success){
+                carpoolArr.forEach(carpoolObj => {
+                    let contains = false;
+                    carpoolObj.routes.forEach(routId => {
+                        json.data.forEach(routeObj => {
+                            if(routeObj._id === routId){
+                                contains = true;
+                            }
+                        });
+                    })
+                    if(!contains){
+                        this.allCarpools.push(carpoolObj);
+                    }
+                })    
+            }else{
+                console.log(json.message);
+            }
+        });
+    }
+
+    @action filterRoutesByTime = (routeObj) => {
+        let timeDifferences = [];   // time difference between routeObj and recRoute in minutes
+        let size = this.recommendedRoutes.length;
+        let temp, i, j;
+        // console.log('Route TIme ' + routeObj.time);
+
+        this.recommendedRoutes.forEach(route => {
+            timeDifferences.push(this.calcTimeDifference(routeObj.time, route.time));
+        });
+
+        for (i = 0; i < size - 1; i++) {
+            for (j = 0; j < (size - i - 1); j++) {
+                if (timeDifferences[j] > timeDifferences[j + 1]) {
+                    // swap the time differences of the routes
+                    temp = timeDifferences[j];
+                    timeDifferences[j] = timeDifferences[j + 1];
+                    timeDifferences[j + 1] = temp;
+
+                    // swap the corresponding recommended routes
+                    temp = this.recommendedRoutes[j];
+                    this.recommendedRoutes[j] = this.recommendedRoutes[j + 1];
+                    this.recommendedRoutes[j + 1] = temp;
+                }
+            }
+        }
+
+        // this.recommendedRoutes.forEach(route => {
+        //     let count = 0;
+        //     console.log("RecRoute " + count + ': ' + route.routeName + " @ " + route.time);
+        // });
     }
 
     @action updateRecommendedRoutes = (recommendedArray, routeId) => { 
@@ -156,6 +250,22 @@ class matchesStore {
 
     @action degreesToRadians = (degrees) => {
         return degrees * Math.PI / 180;
+    }
+
+    // calculates the difference between the times in minutes
+    @action calcTimeDifference = (objRouteTime, routeTime) => {
+        let currRouteTime = this.convertTime(objRouteTime);
+        let recRouteTime = this.convertTime(routeTime);
+        
+        return Math.abs(recRouteTime - currRouteTime);
+    }
+    
+    // returns the time of the route converted into minutes
+    @action convertTime = (sTime) => {
+        let arrTime = sTime.split(':');
+        arrTime[0] = parseInt(arrTime[0], 10);
+        arrTime[1] = parseInt(arrTime[1], 10);
+        return ((arrTime[0] * 60) + arrTime[1]);
     }
 }
 

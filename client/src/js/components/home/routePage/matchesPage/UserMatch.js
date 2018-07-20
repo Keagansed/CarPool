@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MapComponent from './../../GeneralMapWrapper';
+import { Link } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import tempProPic from './../../../../../css/images/profile_default.png';
@@ -17,7 +19,8 @@ class UserMatch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
-            user: {},
+            userName: "",
+            routeArr:[],
             toggle: false,
             carpoolName:""
         }
@@ -33,10 +36,10 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({user : json[0]});
+            this.setState({ userName : (json[0].firstName +" "+ json[0].lastName)});
         });
         
-        fetch('/api/system/route/getRoute?_id=' + this.props.uRouteId,{
+        fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -45,8 +48,33 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({carpoolName : json.data[0].routeName});
+            this.setState({
+                carpoolName : json.data[0].routeName,
+                routeArr:[...this.state.routeArr,{
+                    origin : json.data[0].startLocation,
+                    destination : json.data[0].endLocation
+                }]
+            });
         });
+
+        fetch('/api/system/Route/getRoute?_id=' + this.props.routeId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            this.setState({
+                carpoolName : json.data[0].routeName,
+                routeArr:[...this.state.routeArr,{
+                    origin : json.data[0].startLocation,
+                    destination : json.data[0].endLocation
+                }]
+            });
+        });
+
     }
 
     toggle(event) {
@@ -56,7 +84,7 @@ class UserMatch  extends Component {
     }
 
     makeOffer = () =>{
-        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.uRouteId, false);
+        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.store._id, false);
         this.toggle();
     }
     
@@ -82,16 +110,16 @@ class UserMatch  extends Component {
                                 <h6 className="fw-bold mx-auto">Offer Recipient</h6>
                             </div>
                             <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                <div className="col-6">{this.state.user['firstName'] + ' ' + this.state.user['lastName']}</div><div className="col-6 vertical-right">View Profile</div>
+                                <div className="col-6">{this.state.userName}</div><div className="col-6 vertical-right">
+                                    <Link to={"/ProfilePage/"+this.props.userId}>View Profile</Link>
+                                </div>
                             </div>                           
                             <div className="row">
                                 <h6 className="fw-bold mx-auto">Route Comparison</h6>
                             </div>
                             <div className="row mbottom-10px">
                                 <div className="col-12">
-                                    <p className="txt-center mbottom-0">
-                                        ***Map to go here***
-                                    </p>
+                                    <MapComponent routeArr={this.state.routeArr}/>
                                 </div>                                
                             </div>
                             <div className="row">
@@ -99,8 +127,12 @@ class UserMatch  extends Component {
                                     <h6 className="txt-center mbottom-0">
                                         Carpool Name
                                     </h6>
-                                </div>     
-                                <input type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-6"> 
+                                    <input className="txt-center mbottom-0" type="text" onChange={this.handleCarpoolNameChange.bind(this)} value={this.state.carpoolName} />
+                                </div>
                             </div>
                             <div className="row">
                                 <button type="submit" onClick={this.makeOffer} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNewRoute">
@@ -122,7 +154,7 @@ class UserMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>{this.state.user['firstName']}</h5>
+                                <h5>{this.state.userName}</h5>
                             </div>
                             <div className="col-12">
                                 1.2km Further
@@ -133,7 +165,7 @@ class UserMatch  extends Component {
                                 <h5><i className="fa fa-handshake-o"></i></h5>
                             </div>
                             <div className="col-12">
-                                {/* Empty for now */}
+                                {this.props.store.time}
                             </div>
                         </div>
                     </div>
