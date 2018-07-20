@@ -51,8 +51,3 @@ module.exports.ValidateIDNumber = function(idNumber) {
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
-
-module.exports.workyoushit = (idNumber)=>{
-    
-    return true;
-};

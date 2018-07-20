@@ -1,0 +1,423 @@
+\documentclass[12pt]{report}
+
+\usepackage[a4paper]{geometry}
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage{siunitx} % Required for alignment
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\sisetup{
+  round-mode          = places, % Rounds numbers
+  round-precision     = 2, % to 2 places
+}
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter
+  	\ifx\csname c@#1\endcsname\c@section
+    \else
+    \expandafter
+    \ifx\csname c@#1\endcsname\c@subsection
+    \else
+    \expandafter
+    \ifx\csname c@#1\endcsname\c@subsubsection
+    \else
+  	\csname the#1\endcsname\quad
+  \fi\fi\fi}
+  
+  \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+   {-3.25ex\@plus -1ex \@minus -.5ex}%
+   {1.5ex \@plus .2ex}%
+   {\large\bfseries}}
+  
+  
+\makeatother
+
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\arabic{\thesection.\arabic{subsubsection}}}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+
+
+\titleformat*{\section}{\huge\bfseries}
+\titleformat*{\subsection}{\LARGE\bfseries}
+\titleformat*{\subsubsection}{\Large\bfseries}
+\titleformat*{\paragraph}{\large\bfseries}
+
+
+%-------------------------------------------------------------------------------
+% HEADER & FOOTER
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\setlength\headheight{15pt}
+\fancyhead[L]{Brogrammers}
+\fancyhead[R]{Coding Standards}
+\fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}
+\begin{document}
+
+
+\title{ \normalsize \textsc{COS 301}
+        \\ [2.0cm]
+        \HRule{0.5pt} \\
+        \LARGE \textbf{\uppercase{General Software Development Standards and Guidelines}}
+        \HRule{2pt} \\ [0.5cm]
+        \normalsize \today \vspace*{5\baselineskip}}
+
+\date{}
+
+\author{
+        Brogrammers \\
+        Imagine Interactive Systems Carpool App }
+
+
+
+\maketitle
+
+%-------------------------------------------------------------------------------
+
+\section*{Revision History}
+
+    \begin{center}
+		
+        \begin{tabular}{ | m{6em} | m{4em} | m{30em} | }
+        
+        \hline
+         \textbf{Date} & \textbf{Version} & \textbf{Description} \\        
+         \hline
+         09/04/2018 & 1.0 & Initial Version \\ 
+         \hline
+         31/05/2018 & 1.1 & Updated standards to be more in line with our current framework \\ 
+         \hline
+         
+        \end{tabular}
+        
+    \end{center}
+    \newpage
+
+
+%-------------------------------------------------------------------------------
+
+
+\tableofcontents
+\newpage
+
+%-------------------------------------------------------------------------------
+% Section title formatting
+\sectionfont{\scshape}
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+% BODY
+%-------------------------------------------------------------------------------
+
+\section{Introduction}
+
+\begin{flushleft}
+
+Well written software offers many advantages. It will contain fewer bugs and will run
+more efficiently than poorly written programs. Since software has a life cycle and much
+of which revolves around maintenance, it will be easier for the original developers and
+future keepers of the code to maintain and modify the software as needed. This will lead
+to increased productivity of the developers. The overall cost of the software is greatly
+reduced when the code is developed and maintained according to software standards.\\
+
+\end{flushleft}
+
+\begin{flushleft}
+
+Following a consistent coding standard helps improve the quality of the overall software system. The key to a good coding standard is consistency. This consistency needs to be found within the standard itself (in other words, you need to make sure that guidelines don't contradict one another) but also within the source code that uses the standard. Completed source code should reflect a harmonized style, as if a single developer wrote the code in one session.
+
+\end{flushleft}
+
+\pagebreak
+
+\section{Coding Standards}
+
+\subsection{General Standards}
+
+\subsubsection{File Header}
+
+A header to be included in each file that specifies useful information regarding that file, this information consists of, but is not limited to:
+
+\begin{itemize}[noitemsep]
+	\item \textbf{File Type} - A comment to indicate what the file is (\textit{Component, Store, Stylesheet, Test Script, API endpoint, etc...}) and should be written in the format "\textit{// File Type: ?}" (where the '?' represents the corresponding file type) followed by a blank line.
+
+	\item \textbf{Imports} - All file imports should be listed at the head of a file with the NPM imports appearing first, followed by a blank line and all relative imports, followed by another blank line and all 'No-Object' imports. These imports should be listed in ascending alphabetical order. Example: \\
+    \\
+    \textit{import React from 'react';}\\
+    \\
+    \textit{import LoginPage from "./components/landing/LoginPage";\\
+    import SettingsPage from "./components/Settings";}\\
+    \\
+    \textit{import './../css/style.css';}\\
+    \\
+    If more than one object is imported from a single source, these should be listed in ascending alphabetical order on that line. Example:\\
+    \\
+    \textit{import \{ BrowserRouter, Route, Switch \} from 'react-router-dom';}
+\end{itemize}
+
+\pagebreak
+\subsubsection{Descriptions}
+
+\paragraph{Purpose}
+A statement of the purpose of the Class/React Component/API Endpoint/etc... that should appear just above it's declaration and should be written in a multi-line comment.
+
+\paragraph{Description of Methods}
+A brief description of the purpose of each method, the parameters, return type, and other input and output such as files, database tables and text fields accessed and updated by the method that should appear just above it's declaration and should be written in a multi-line comment.
+
+
+\paragraph{Description of Fields}
+A brief description of each field that indicates it's purpose and data-type that should appear just above it's declaration and should be written in a single-line comment.
+
+
+\paragraph{In-code comments}
+Comments should be inserted in places where the purpose of the code cannot be easily discerned, as well as to facilitate understanding to complex areas of code.
+
+\subsubsection{Naming Conventions}
+  \begin{itemize}[noitemsep]
+      \item Variable names should be descriptive, make use of multi-word identifiers if necessary
+      \item Spaces in variable names should be indicated with underscores
+      \item Avoid variable name collision
+      \item Variable naming should make use of camel casing
+      \item File names should be descriptive
+      \item Component names should start with capital letters
+      \item Class names should start with capital letters
+  \end{itemize}
+  \pagebreak
+\subsubsection{Formatting Conventions}
+	\begin{itemize}[noitemsep]
+		\item There should be a blank line after the file header
+        \item Tab spacing should be size 4
+        \item Child Elements should be indented once more than their parent elements. Example:\\    
+          \textit{<div>\\
+                      \hspace*{4ex}<h1> Hello World </h1>\\
+                  </div>}
+        \item Child elements should have no blank line between themselves and their parents.
+        \item Conventional operators surrounded by a white space \textit{e.g. a = (b + c) * d;}
+        \item Commas followed by a white space \textit{e.g. someFunction(a, b, c);}
+        \item Semicolons followed by a space character, if there is more on a line \textit{e.g. for (int a = 0; b < c; d++)}
+        \item Reserved words separated from opening parentheses by a white space \textit{e.g. while (true) }
+        \item Have a space before a leading brace \textit{e.g. function test() \{\} }
+        \item Braces and parentheses should always use the following format:\\
+          \textit{
+            function() \{ \\
+            \\
+            \}  \\
+            \\
+            if() \{ \\
+            \\
+            \}else\{ \\
+            \\
+            \} 
+          }
+        \item Variable declarations should be grouped together and followed by a blank line.
+        \item Conditional statements, Loops and Function/Class calls/declarations should always be preceded and followed by a blank line. Example: 
+        \\
+        \textit{ var x = ""; \\
+        \\
+          if(x) \{ \\
+          \hspace*{4ex}x = "Hello World";\\
+          \} \\
+          \\
+          return x; 
+        }
+    \end{itemize}
+    
+\subsubsection{In-code comment Conventions}
+	\begin{itemize}[noitemsep]
+    	\item Start all comments with a space to make it easier to read
+    	\item All comments should be complete sentences
+        \item The first word should be capitalized, unless it is an identifier that begins with a lower case letter
+		\item Large comments, should be commented out using block format (/* == */)
+        \item Comments should be applied when the purpose of functions/methods cannot be immediately discerned
+        \item If the comment is to explain a function/method, it should be placed just above the line of the function declaration
+        \item Multi-line comments must be vertically aligned
+    \end{itemize}
+
+\pagebreak
+\subsection{JavaScript(ES6) Standards}
+\subsubsection{References}
+\begin{itemize}[noitemsep]
+\item Use 'const' for all your references and avoid using var.
+\item If you need to reassign values, make use of let instead of var.
+\end{itemize}
+
+\subsubsection{Objects}
+\begin{itemize}[noitemsep]
+\item Use the literal syntax for object creation: \\
+	\textit{\hspace*{4ex}const item = \{\}; }
+\item Use property shorthand when listing object properties: \\
+	\textit{
+      const item = "Hello";\\
+      \\
+      const object = \{ \\ 
+      \hspace*{4ex}item, \hspace*{4ex}//Not item: item,\\
+      \};
+    }
+    \item Group shorthand properties at the beginning of the object declaration.
+\end{itemize}
+
+\subsubsection{Arrays}
+\begin{itemize}[noitemsep]
+\item Use "Array.push()" instead of direct assignment to add items to the array.
+\item Use array spreads "..." to copy arrays: \\
+\textit{
+	\hspace*{4ex}const itemsCopy = [...items];
+}
+\item Use line breaks after open and before close array brackets if an array has multiple lines: \\
+\textit{
+	const objectInArray = [\\
+    \hspace*{2ex}\{ \\
+    	\hspace*{4ex}id: 1, \\
+    \hspace*{2ex}\}, \\
+    \hspace*{2ex}\{ \\
+    	\hspace*{4ex}id: 2, \\
+    \hspace*{2ex}\}, \\
+    ];
+}
+\end{itemize}
+
+\subsubsection{Destructuring}
+\begin{itemize}[noitemsep]
+\item Use object destructuring when accessing and using multiple properties of an object. Use a white space after the first brace and before the last brace to better indicate destructuring: \\
+\textit{
+	\hspace*{4ex}const \{ firstName, lastName \} = user;
+}
+\item Use array destructuring:\\
+\textit{
+	const arr = [1, 2, 3, 4]; \\
+    \\
+    const [ first, second ] = arr;
+}
+\end{itemize}
+
+\subsubsection{Functions}
+\begin{itemize}[noitemsep]
+\item Use arrow functions wherever possible so that the function is correctly bound within it's context: \\
+	\textit{
+    	const someFunction = (parameter) => \{ \\
+        	\hspace*{4ex} //implementation\\
+        \}
+    }
+\item If the  function body consists of only a single return statement, omit the braces and use the implicit return: \\
+    \textit{
+        \hspace*{4ex} [1, 2, 3].map(number => 'The number is: ' + number);
+    }
+\end{itemize}
+
+\pagebreak
+\subsection{React Standards}
+\subsubsection{Naming}
+\begin{itemize}[noitemsep]
+\item Use PascalCase for filenames \textit{e.g. LoginPage.js}
+\item Use camelCase for instances of React components \textit{e.g. const loginPage = <LoginPage />}
+\item Always include a single space in your self-closing tag
+\item Methods that return components are prefixed with 'render' \textit{e.g. renderProfileHeader()}
+\end{itemize}
+
+\subsubsection{Props}
+\begin{itemize}[noitemsep]
+\item Always use camelCase for prop names
+\item Avoid using DOM elements like class/style as prop names when their function is for a purpose not related to that DOM element
+\item Do not add a space before or after the '=' when declaring a prop
+\end{itemize}
+
+\subsubsection{Tags}
+\begin{itemize}[noitemsep]
+\item Always self close tags that have no children
+\item If your component has multi-line properties, close it's tag on  new line. Example: \\
+	\textit{
+    	<LoginPage\\
+        \hspace*{4ex}bar="bar"\\
+        \hspace*{4ex}foo="foo"\\
+        />
+    }
+\end{itemize}
+
+\subsubsection{Ordering}
+\begin{enumerate}[noitemsep]
+\item Constructor
+\item componentWillMount
+\item componentDidMount
+\item componentWillUnmount
+\item Optional methods
+\item clickHandlers or eventHandlers like onClickSubmit() or onChangeDescription()
+\item Optional render methods like renderProfileHeader()
+\item render
+\end{enumerate}
+
+\pagebreak
+\subsection{CSS Standards}
+\subsubsection{Naming}
+\begin{itemize}[noitemsep]
+\item Always use hyphens in class names. Do not use underscores or camelCase.
+\end{itemize}
+
+\subsubsection{Selectors}
+\begin{itemize}[noitemsep]
+\item Selectors should be on a single line, with a space after the selector, followed by an opening brace. A selector should end with a closing brace on the next line. Next selector related the the previous one should be on the next line with one additional line space between them. Example: \\
+    \textit{
+        .nav li \{\\
+    \}\\
+    \\
+    .nav a \{\\
+    \}\\
+    }
+\item Multiple selectors should each be on a single line, with no space after each comma.Example:
+	\textit{
+    	.nav a.open, \\
+        .nav a.close \{ \\
+        \}
+    }
+\end{itemize}
+
+\subsubsection{Properties}
+\begin{itemize}[noitemsep]
+\item Each property should appear on it's own line prefixed by one soft tab and a single space before the property value. Example: \\
+	\textit{
+    	.nav \{\\
+        \hspace*{4ex} position: absolute;\\
+        \hspace*{4ex} top: 0;\\
+      \}
+    }
+\item Properties should be ordered in ascending alphabetical order
+\item Properties with multiple values should have those values separated by a space
+\end{itemize}
+
+\pagebreak
+\section{Git Repository Structure}
+
+\includegraphics[width=\textwidth]{Git_Structure.png}
+
+\begin{flushleft}
+
+The git structure is made up of 5 levels of branching, the first level being all new features that are being added to the system. A new feature should be branched off of the staging branch so that the developer of the new feature is using the latest iteration of all components in the system, as the staging branch is where all completed features get merged to once they are completed.
+
+\end{flushleft}
+
+\begin{flushleft}
+
+The next level of branching is the testing branch, this is where a stable version of staging that is going to go into a release is pushed to. This is to allow development of new features to still continue while not interfering with a release. This is also the level where extensive testing for bugs occurs. 
+
+\end{flushleft}
+
+\begin{flushleft}
+
+The production branch is where stable code from the testing branch is put into a production state, once this is done and the system is running it can be put into a full release and pushed to the master branch.
+
+\end{flushleft}
+
+\end{document}

@@ -1,10 +1,12 @@
 import { observable, action } from 'mobx';
 import { setInStorage, getFromStorage } from '../utils/localStorage.js'
+//import register from '../registerServiceWorker.js';
 
 class loginStore {
 
     @observable token = null;
     @observable loggedIn = false;
+    @observable registered = false;
 
     @observable lEmail = '';
     @observable lPassword = '';
@@ -21,11 +23,16 @@ class loginStore {
     }
     @action setLoggedIn = (success) => {
         this.loggedIn = success;
+        this.lEmail = '';
+        this.lPassword = '';
+    }
+
+    @action setRegistered = (value) => {
+        this.registered = value;
     }
 
     @action signUp = () => {
-        if(this.sPassword1 !== this.sPassword2)
-        {
+        if(this.sPassword1 !== this.sPassword2){
             alert("Passwords do not match");
         }
         else{
@@ -47,6 +54,7 @@ class loginStore {
             .then(json=>{
                 if(json.success){
                     alert("Successfully signed up!!");
+                    this.setRegistered(true);                    
                 }else{
                     alert(json.message);
                 }
@@ -56,6 +64,7 @@ class loginStore {
 
     @action authenticate = () => {  
 
+        this.setRegistered(false);
         fetch('/api/account/signin',{
             method:'POST',
             headers:{

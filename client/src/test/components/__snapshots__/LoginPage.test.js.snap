@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Page Component captures snapshot 1`] = `
+<div
+  className="vertical-center bg-purple"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="row"
+    >
+      <img
+        alt="carpool_logo"
+        className="img-fluid d-block mx-auto mbottom-2rem"
+        id="imgLogo"
+        src="logo.png"
+      />
+    </div>
+    <form>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputEmail"
+          name="Email"
+          onChange={[Function]}
+          placeholder="Email"
+          required="required"
+          type="email"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <input
+          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          id="inputPassword"
+          name="Password"
+          onChange={[Function]}
+          placeholder="Password"
+          required="required"
+          type="password"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <button
+          className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+          id="btnLogin"
+          onClick={[Function]}
+          type="submit"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+    <div
+      className="row"
+    >
+      <div
+        className="mx-auto"
+      >
+        <a
+          className="txt-white fw-100"
+          onClick={[Function]}
+        >
+          Forgot Password?
+        </a>
+        <div
+          className="modal"
+          id="myModal"
+          role="dialog"
+          style={
+            Object {
+              "display": "none",
+            }
+          }
+          tabIndex="-1"
+        >
+          <div
+            className="modal-dialog"
+            role="document"
+          >
+            <div
+              className="modal-content"
+            >
+              <div
+                className="modal-header"
+              >
+                <h5
+                  className="modal-title"
+                >
+                  Forgot Password?
+                </h5>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-hidden="true"
+                  >
+                    ×
+                  </span>
+                </button>
+              </div>
+              <div
+                className="modal-body"
+              >
+                <form>
+                  <div
+                    className="row"
+                  >
+                    <input
+                      className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+                      id="inputForgotEmail"
+                      name="Email"
+                      placeholder="Email"
+                      required="required"
+                      type="email"
+                    />
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <button
+                      className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+                      id="btnForgotPassword"
+                      onClick={undefined}
+                      type="submit"
+                    >
+                      Send Me My Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

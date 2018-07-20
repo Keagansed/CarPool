@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Settings Page Component captures snapshot 1`] = `
+<div
+  className="size-100 bg-purple"
+>
+  <div
+    className="fixed-top container-fluid height-50px bg-aqua"
+  >
+    <div
+      className="row font-20px height-100p"
+    >
+      <button
+        className="btnTab  col-6 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px active"
+        onClick={[Function]}
+      >
+        Profile
+      </button>
+      <button
+        className="btnTab  col-6 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px "
+        onClick={[Function]}
+      >
+        Alerts
+      </button>
+    </div>
+  </div>
+  <div
+    className="padtop-50px padbot-50px"
+  />
+  <div
+    className="height-50px fixed-bottom container-fluid pad-10px bg-aqua"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-4 txt-center"
+      >
+        <a
+          href="/Settings"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-cog txt-purple txt-30px"
+          />
+        </a>
+      </div>
+      <div
+        className="col-4 txt-center"
+      >
+        <a
+          href="/HomePage"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-home txt-purple txt-30px"
+          />
+        </a>
+      </div>
+      <div
+        className="col-4 txt-center"
+      >
+        <a
+          href="/ProfilePage/undefined"
+          onClick={[Function]}
+        >
+          <i
+            className="fa fa-user txt-purple txt-30px"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
