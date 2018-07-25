@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 
 // import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'bootstrap/dist/js/bootstrap.min.js';
-import '../../css/App.css';
+import '../../../css/App.css';
 
-import VouchList from './vouching/VouchList';
-import VouchAverage from './vouching/VouchAverage';
-import VouchTally from './vouching/VouchTally';
+import VouchList from './VouchList';
+import VouchAverage from './VouchAverage';
+import VouchTally from './VouchTally';
 
-import { submitVouch } from '../utils/vouchQuery'
+import { submitVouch } from '../../utils/vouchQuery'
 
 import {
     getFromStorage
