@@ -1,5 +1,5 @@
 import React from 'react';
-import Register from '../../js/components/register/RegisterPage';
+import Register from '../../js/containers/RegisterPage';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer'
 import configureStore from 'redux-mock-store'

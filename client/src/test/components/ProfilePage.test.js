@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfilePage from '../../js/components/profile/ProfilePage';
+import ProfilePage from '../../js/containers/ProfilePage';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import configureStore from 'redux-mock-store';

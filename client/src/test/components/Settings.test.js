@@ -1,5 +1,5 @@
 import React from 'react';
-import Settings from '../../js/components/settings/SettingsPage';
+import Settings from '../../js/containers/SettingsPage';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router-dom'

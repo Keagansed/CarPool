@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../js/components/navbar/Navbar';
+import Navbar from '../../js/components/navigation/Navbar';
 import { MemoryRouter } from 'react-router-dom'
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
