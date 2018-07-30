@@ -1,9 +1,19 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Navbar extends Component{
+/*
+* The purpose of the Navbar class is to provide a navbar that is available throughout the application.
+* This Navbar provides links to the home page, the user's profile page, and the settings page.
+*/
+class Navbar extends Component {
 
-    render(){
+    /*
+    * The purpose of the render method is to enable the rendering of this component.
+    * It returns react elements using JSX.
+    */
+    render() {
         return(
             <div className="height-50px fixed-bottom container-fluid pad-10px bg-aqua">
                 <div className="row">
@@ -18,10 +28,7 @@ class Navbar extends Component{
                         </Link>
                     </div>
                     <div className="col-4 txt-center">
-                        <Link to={{
-                        pathname: "/ProfilePage/" + this.props.token,
-                        state: { token: this.props.token }
-                        }}>
+                        <Link to={{pathname: "/ProfilePage/" + this.props.token, state: { token: this.props.token }}}>
                             <i className="fa fa-user txt-purple txt-30px"></i>
                         </Link>
                     </div>
@@ -31,4 +38,4 @@ class Navbar extends Component{
     }
 }
 
-export default Navbar
+export default Navbar;
