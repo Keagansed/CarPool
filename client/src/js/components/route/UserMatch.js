@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import MapComponent from '../google/GeneralMapWrapper';
-import tempProPic from '../../../css/images/profile_default.png';
 import OffersStore from '../../stores/OffersStore'
 
 const display = {
@@ -22,7 +21,8 @@ class UserMatch  extends Component {
             userName: "",
             routeArr:[],
             toggle: false,
-            carpoolName:""
+            carpoolName:"",
+            profilePic:""
         }
     }
 
@@ -36,7 +36,10 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({ userName : (json[0].firstName +" "+ json[0].lastName)});
+            this.setState({ 
+                userName : (json[0].firstName +" "+ json[0].lastName),
+                profilePic : json[0].profilePic
+            });
         });
         
         fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId,{
@@ -93,6 +96,8 @@ class UserMatch  extends Component {
     }
 
     render(){
+        const profilePicture = "./../../api/account/getImage?filename="+this.state.profilePic;
+    
         var modal = [];
         modal.push(
             // Modal
@@ -150,7 +155,7 @@ class UserMatch  extends Component {
                 <div className="container-fluid bg-purple bordbot-2px-white" onClick={this.toggle}>
                     <div className="row txt-white padver-10px">
                         <div className="col-2">
-                                <img src={tempProPic} className="mx-auto my-auto rounded-circle bord-2px-white" height="60" width="60" alt="s" />
+                                <img src={profilePicture} className="mx-auto my-auto rounded-circle bord-2px-white" height="60" width="60" alt="s" />
                         </div>
                         <div className="col-7">
                             <div className="col-12">

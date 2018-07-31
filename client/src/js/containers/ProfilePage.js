@@ -157,7 +157,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 	render() {
 		const { firstName, lastName, profilePic, secLvl } = this.props.store;
 		const profilePicture = "./../api/account/getImage?filename=" + profilePic;
-
+		
 		if (this.props.store.profileFound)
 		{
 			const token = this.state._id;
