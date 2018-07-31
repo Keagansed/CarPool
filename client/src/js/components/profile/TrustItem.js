@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 class TrustItem  extends Component {
     /*
     * The purpose of the render method is to enable the rendering of this component.
-    * It returns react elements using JSX.
+    * It returns react elements and HTML using JSX.
     */
     render(){
         return(

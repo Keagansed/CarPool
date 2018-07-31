@@ -55,7 +55,7 @@ import { observer } from 'mobx-react';
 
     /*
     * The purpose of the render method is to enable the rendering of this component.
-    * It returns react elements using JSX.
+    * It returns react elements and HTML using JSX.
     */
     render(){
         return(
