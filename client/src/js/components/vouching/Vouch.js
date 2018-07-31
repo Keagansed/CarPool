@@ -1,3 +1,5 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
 //Just using temporarily for demonstration purposes
@@ -10,11 +12,14 @@ const hide = {
     display: 'none'
 };
 
+
+/**
+ * Purpose: Interface to display the various vouches/ ratings the user has received
+ */
 class Vouch  extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-  
+
         this.state = {
             toggle: false,
             user:[]
@@ -27,13 +32,13 @@ class Vouch  extends Component {
             .then(json => this.setState({user: json}))
     }
 
-    toggle(event) {
+    toggle = (event)=> {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
 
-    getUsername(_id) {
+    getUsername = (_id)=> {
         for (let x in this.state.user) {
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
@@ -42,7 +47,7 @@ class Vouch  extends Component {
 
     }
 
-    getUsernameSurname(_id) {
+    getUsernameSurname = (_id)=> {
         for (let x in this.state.user) {
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName + " " + this.state.user[x].lastName;
@@ -51,7 +56,7 @@ class Vouch  extends Component {
 
     }
 
-    printStars(numStars) {
+    printStars = (numStars)=> {
         let starElements = [],
             n = numStars,
             i;
@@ -71,7 +76,7 @@ class Vouch  extends Component {
     }
 
     render(){
-        var modal = [];
+        let modal = [];
         modal.push(
             // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
