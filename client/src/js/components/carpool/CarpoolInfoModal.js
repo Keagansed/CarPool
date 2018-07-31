@@ -16,7 +16,7 @@ const hide = {
 class CarpoolInfoModal extends Component {
 
     /*
-     * Purpose: call constructor of parent class and instantiate the fields. 'state' contains 
+     * Purpose: call constructor of parent class and instantiates the fields. 'state' contains 
      * the users that are in the carpool as well as a 'toggle' field which is a boolean 
      * that controls whether the modal is visible or not.
      */
@@ -45,7 +45,7 @@ class CarpoolInfoModal extends Component {
      */
     getUsername(_id) {
 
-        for (var x in this.state.user) { 
+        for(var x in this.state.user) { 
 
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
@@ -67,7 +67,7 @@ class CarpoolInfoModal extends Component {
     }
 
     /*
-     * Purpose: renders the component tree in the DOM.
+     * Purpose: renders the component in the DOM.
      */
     render() {
         let users = [];

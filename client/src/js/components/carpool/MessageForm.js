@@ -1,11 +1,20 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
-import {
-    getFromStorage
-} from '../../utils/localStorage.js'
+import { getFromStorage } from '../../utils/localStorage.js'
 
+/*
+ * Purpose: provides the message form which allows the user to enter a message that they would like to send in the
+ * carpool chat
+ */
 class MessageForm extends Component {
-    constructor(props){
+    
+    /*
+     * Purpose: calls the constructor of the parent class and instantiates the fields. 'newMessageContent' will contain
+     * the actual message that the user wants to send to carpool chat. 
+     */
+    constructor(props) {
         super(props);
         this.state = {
             newMessageContent : ''
@@ -13,25 +22,30 @@ class MessageForm extends Component {
         this.handleUserInput = this.handleUserInput.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
     }
-
-    handleUserInput(e)
-    {
+    
+    /*
+     * Purpose:  sets the 'newMessageContent' field to the text from the corresponding input element in the form
+     */
+    handleUserInput(e) {
         this.setState({
-            newMessageContent: e.target.value,
+            newMessageContent: e.target.value
         })
     }
 
-    sendMessage()
-    {
+    /*
+     * Purpose: adds the message to the 'message' field in the Messages component
+     */
+    sendMessage() {
         this.props.addMessage(this.state.newMessageContent, getFromStorage('sessionKey').token, false);
         this.setState({
-            newMessageContent: '',
+            newMessageContent: ''
         })
     }
 
-
+    /*
+     * Purpose: renders the component in the DOM.
+     */
     render() {
-
         return (
             <div>
                 {/*<input className="messageInput" placeholder="Write a message..." value={this.state.newMessageContent}*/}

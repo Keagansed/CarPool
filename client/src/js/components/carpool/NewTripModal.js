@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+// File Type: Component
+
 import { observer } from "mobx-react";
+import React, { Component } from 'react';
 
-import WeekdaySelector from './WeekdaySelector';
 import TripsStore from '../../stores/TripsStore'
-
-import {
-    getFromStorage
-} from '../../utils/localStorage.js'
+import WeekdaySelector from './WeekdaySelector';
+import { getFromStorage } from '../../utils/localStorage.js'
 
 const display = {
     display: 'block'
@@ -15,8 +14,15 @@ const hide = {
     display: 'none'
 };
 
-@observer class NewTripModal extends Component{
-    constructor(props){
+/*
+ * Purpose: modal component that provides an interface for a user to suggest a new trip for the carpool members
+ */
+@observer class NewTripModal extends Component {
+    /*
+     * Purpose: calls the constructor of the parent class and instantiates the fields. 'toggle' is the visibility of the modal.
+     * 'user' contains all the users.
+     */
+    constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
         this.updateTime = this.updateTime.bind(this);
@@ -30,20 +36,28 @@ const hide = {
         };
     }
 
+    /*
+     * Purpose: acquires the provided time from the corresponding html element and updates the time of the suggested 
+     * trip in the store.
+     */
     updateTime = event => {
         let time = document.getElementById("inputTripTime").value;
-        if(time)
-        {
+       
+        if(time) {
             let hours = time.split(":")[0];
             let minutes = time.split(":")[1];
             hours = hours % 12 || 12;
             hours = hours < 10 ? "0" + hours : hours;
             TripsStore.dateTime.setHours(hours,minutes,0,0);
         }
-        TripsStore.tripName = this.props.carpoolName;
 
+        TripsStore.tripName = this.props.carpoolName;
     };
 
+    /*
+     * Purpose: acquires the provided date from the corresponding html element and updates the date of the suggested trip
+     * in the store.
+     */
     updateDate = event => {
         let date = new Date(document.getElementById("inputTripDate").value);
         TripsStore.dateTime.setDate(date.getDate());
@@ -51,6 +65,9 @@ const hide = {
         TripsStore.dateTime.setYear(date.getFullYear());
     };
 
+    /*
+     * Purpose: acquires the days that the trip will take place on and updates these days in the store.
+     */
     updateDays = event => {
         TripsStore.days["mon"] = document.getElementById("weekday-mon").checked;
         TripsStore.days["tue"] = document.getElementById("weekday-tue").checked;
@@ -61,6 +78,9 @@ const hide = {
         TripsStore.days["sun"] = document.getElementById("weekday-sun").checked;
     };
 
+    /*
+     * Purpose: acquires the users that are to partake in the suggested trip and updates the store.
+     */
     updateUsers = event =>
     {
         for(let user in this.props.users) {
@@ -73,53 +93,85 @@ const hide = {
         }
     };
 
+    /*
+     * Purpose: toggles the visibility of this modal component
+     */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
 
-    componentDidMount(){
+    /*
+     * Purpose: performs an API call to acquire all the users
+     */
+    componentDidMount() {
         fetch('/api/account/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }
 
-    getUsername(_id)
-    {
-        for (let x in this.state.user) {
+    /*
+     * Purpose: uses the _id arguement to find the specific user in the 'user' field and acquire that users name
+     */
+    getUsername(_id) {
+
+        for(let x in this.state.user) {
+
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
             }
+
         }
 
     }
 
-    suggestTrip(){
-        let days = "";
-        if(document.getElementById("weekday-mon").checked)
+    /*
+     * Purpose: aqcuires the information provided in the html form elements and creates a new message and trip
+     * suggestion with the information. Resets the modal form elements once the information has been acquired and
+     * renders the modal invisible.
+     */
+    suggestTrip() {
+        let days = ""; 
+
+        if(document.getElementById("weekday-mon").checked) {
             days = days + "Mon ";
-        if(document.getElementById("weekday-tue").checked)
+        }
+
+        if(document.getElementById("weekday-tue").checked) {
             days = days + "Tue ";
-        if(document.getElementById("weekday-wed").checked)
+        }
+
+        if(document.getElementById("weekday-wed").checked) {
             days = days + "Wed ";
-        if(document.getElementById("weekday-thu").checked)
+        }
+
+        if(document.getElementById("weekday-thu").checked) {
             days = days + "Thu ";
-        if(document.getElementById("weekday-fri").checked)
+        }
+
+        if(document.getElementById("weekday-fri").checked) {
             days = days + "Fri ";
-        if(document.getElementById("weekday-sat").checked)
+        }
+
+        if(document.getElementById("weekday-sat").checked) {
             days = days + "Sat ";
-        if(document.getElementById("weekday-sun").checked)
+        }
+
+        if(document.getElementById("weekday-sun").checked) {
             days = days + "Sun ";
+        }
 
         let userNames = "";
         let users = [];
-        for(let user in this.props.users)
-        {
-            if(document.getElementById(user).checked){
+
+        for(let user in this.props.users) {
+
+            if(document.getElementById(user).checked) {
                 userNames = userNames + this.getUsername(user) + " ";
                 users[user]=true;
             }
+
         }
 
         let messageContent = 
@@ -138,8 +190,7 @@ const hide = {
         document.getElementById("weekday-sat").checked = false;
         document.getElementById("weekday-sun").checked = false;
 
-        for(let user in this.props.users)
-        {
+        for(let user in this.props.users) {
             document.getElementById(user).checked = false;
         }
 
@@ -148,6 +199,9 @@ const hide = {
         TripsStore.addTrip(this.props.suggestTrip,messageContent,users);
     }
 
+    /*
+     * Purpose: renders the component in the DOM.
+     */
     render(){
         let users = [];
 

@@ -1,27 +1,34 @@
-import React, { Component } from 'react';
+//File Type: Component
+
 import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
-import Message from './Message';
-import TripSuggest from './TripSuggest';
-import MessageForm from './MessageForm';
 import app from '../../stores/MessagingStore'
-import "../../../css/components/Spinner.css"
 import CarpoolInfoModal from './CarpoolInfoModal';
+import { getFromStorage } from '../../utils/localStorage.js'
+import Message from './Message';
+import MessageForm from './MessageForm';
 import NewTripModal from './NewTripModal';
+import TripSuggest from './TripSuggest';
 
-import {
-    getFromStorage
-} from '../../utils/localStorage.js'
+import "../../../css/components/Spinner.css"
 
+/*
+ * Purpose: container for the messages that are sent within a carpool chat
+ */
 class Messages extends Component {
-    constructor(props){
+
+    /*
+     * Purpose: calls the constructor of the parent class and instantiates the fields. 'carpoolID' contains the 
+     * ID of the carpool chat. 'messages' contains all the messages that were/are sent in the chat. 'users' contains
+     * the users that are in the carpool.
+     */
+    constructor(props) {
         super(props);
         this.state = {
             carpoolID:"",
-            messages:[
-            ],
-            users:[
-            ],
+            messages:[],
+            users:[],
         };
 
         this.addMessage = this.addMessage.bind(this);
@@ -32,8 +39,13 @@ class Messages extends Component {
         this.users = app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users");
     }
 
-    componentWillMount(){
-        const previousMessages = this.state.messages;
+    /*
+     * Purpose: adds all messages to previous messages, sets 'carpoolID' and updates users.
+     */
+    componentWillMount() {
+        const previousUsers = this.state.users;
+        let previousMessages = this.state.messages;
+
         this.messages.on('child_added', snap =>{
             previousMessages.push({
                 id: snap.key,
@@ -50,6 +62,7 @@ class Messages extends Component {
                 messages: previousMessages
             });
         });
+
         this.database.on('child_added', snap =>{
             if(snap.key==="carpoolID"){
                 this.setState({
@@ -57,7 +70,7 @@ class Messages extends Component {
                 });
             }
         });
-        const previousUsers = this.state.users;
+        
         this.users.on('child_added', snap =>{
             previousUsers[snap.key] = snap.val();
             this.setState({
@@ -65,7 +78,7 @@ class Messages extends Component {
             });
         });
 
-        let date = JSON.stringify(new Date());
+        const date = JSON.stringify(new Date());
         app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:date}).then(() => {
             return {};
@@ -77,15 +90,24 @@ class Messages extends Component {
         });
     }
 
+    /*
+     * Purpose: adds a new message to the current messages
+     */
     addMessage(message, userID) {
         this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:false});
     }
 
+    /*
+     * Purpose:  adds a trip suggestion to the messages
+     */
     suggestTrip(message, userID, users, tripID) {
         this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users, tripID:tripID, usersResponded:{[getFromStorage('sessionKey').token]:true}});
     }
 
-    updateLastRefresh(){
+    /*
+     * Purpose: updates the last refresh which is used to be able to determine if a message is new.
+     */
+    updateLastRefresh() {
         let date = JSON.stringify(new Date());
         app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:date}).then(() => {
@@ -99,20 +121,22 @@ class Messages extends Component {
         return false;
     }
 
+    /*
+     * Purpose: renders the component in the DOM.
+     */
     render() {
 
         let verify = false;
 
-        for(let user in this.state.users)
-        {
-            if (user === getFromStorage('sessionKey').token)
-            {
+        for(let user in this.state.users) {
+
+            if(user === getFromStorage('sessionKey').token) {
                 verify = true;
             }
+
         }
 
-        if(this.state.loading)
-        {
+        if(this.state.loading) {
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -125,7 +149,7 @@ class Messages extends Component {
             )
         }
 
-        if (verify){
+        if(verify) {
             return (
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -148,20 +172,20 @@ class Messages extends Component {
                                     let userColour;
                                     try {
                                         userColour = this.state.users[message.userID].colour;
-                                    }
-                                    catch (e) {
+                                    }catch (e){
                                         userColour = "txt-white";
                                     }
-                                    if(message.tripSuggest){
+
+                                    if(message.tripSuggest) {
                                         return(
                                             <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} tripID={message.tripID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                         );
-                                    }
-                                    else{
+                                    }else{
                                         return(
                                             <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                         );
                                     }
+
                                 })
                             }
                         </div>
@@ -169,9 +193,7 @@ class Messages extends Component {
                     </div>
                 </div>
             );
-        }
-        else
-        {
+        }else{
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -183,7 +205,6 @@ class Messages extends Component {
                 </div>
             );
         }
-
 
     }
 }

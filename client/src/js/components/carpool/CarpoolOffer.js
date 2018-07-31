@@ -18,7 +18,7 @@ const hide = {
  */
 class CarpoolOffer extends Component {
     /*
-     * Purpose: calls the constructor of the parents class and instantiates the fields. 'state' 
+     * Purpose: calls the constructor of the parent class and instantiates the fields. 'state' 
      * contains the toggle field which is a boolean that determines the visibility of the modal
      * , sender which is the user the that sent the object, and deleted which is boolean that 
      * shows if the offer has been deleted or not.
@@ -70,7 +70,7 @@ class CarpoolOffer extends Component {
     renderOtherMembers() {
         let temp = [];
 
-        if (this.props.store.join) {
+        if(this.props.store.join) {
             temp.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
                     <div className="col-6">Asking to join your existing carpool</div>
@@ -92,7 +92,7 @@ class CarpoolOffer extends Component {
      */
     getCarpoolSize() {
 
-        if (this.props.store.join) {
+        if(this.props.store.join) {
             return 5;
         }else{
             return 1;
@@ -110,10 +110,10 @@ class CarpoolOffer extends Component {
         this.toggle();
     }
 
-   /*
-    * Purpose: does an api call to decline the carpool offer. Sets the deleted state to true
-    * and closes the modal.
-    */
+    /*
+     * Purpose: does an api call to decline the carpool offer. Sets the deleted state to true
+     * and closes the modal.
+     */
     handleDeclineInvite() {
         fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId, {
             method:'GET',
@@ -131,9 +131,9 @@ class CarpoolOffer extends Component {
         this.toggle();
     }
 
-   /*
-    * Purpose: renders the component in the DOM.
-    */
+    /*
+     * Purpose: renders the component in the DOM.
+     */
     render() {
         var modal = [];
 
@@ -173,7 +173,7 @@ class CarpoolOffer extends Component {
             </div>
         );
 
-        if (this.state.deleted){
+        if(this.state.deleted){
             return(<div></div>);
         }else{
             return(
@@ -202,7 +202,7 @@ class CarpoolOffer extends Component {
                 </div>
             );
         }
-        
+
     }
 }
 
