@@ -18,7 +18,7 @@ const hide = {
  */
 class CarpoolOffer extends Component {
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'state' 
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'state' 
      * contains the toggle field which is a boolean that determines the visibility of the modal
      * , sender which is the user the that sent the object, and deleted which is boolean that 
      * shows if the offer has been deleted or not.
@@ -132,7 +132,8 @@ class CarpoolOffer extends Component {
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the component in the DOM. What is rendered is dependant on the 'deleted' field and the visibility of the modal
+     * is dependant on the 'toggle' field.
      */
     render() {
         var modal = [];
@@ -174,8 +175,11 @@ class CarpoolOffer extends Component {
         );
 
         if(this.state.deleted){
+           
             return(<div></div>);
+
         }else{
+            
             return(
                 <div>
                     <div className="container-fluid bg-purple bordbot-2px-white" onClick={this.toggle}>

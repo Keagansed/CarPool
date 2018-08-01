@@ -29,13 +29,17 @@ import OfferStore from '../../stores/OfferStore';
         )
         
         if(Offers.length > 0) {
+            
             return Offers;
+
         }else{
+           
             return(
                 <h5 className="txt-center mtop-10px txt-white">
                     No Offers
                 </h5>
             );
+
         }
     }
 
@@ -43,6 +47,7 @@ import OfferStore from '../../stores/OfferStore';
     * Purpose: displays a spinner while the carpools are loading.
     */
     renderLoading = () => {
+
         return(
             <div>
                 <div className="spinner">
@@ -54,23 +59,29 @@ import OfferStore from '../../stores/OfferStore';
     }
 
     /*
-    * Purpose: renders the component in the DOM.
+    * Purpose: renders the loading spinner if the carpool offers have not yet been loaded. Once the
+    * offers have been loaded then they are rendered.
     */
     render() {
 
-        if(this.props.store.loadingOffers){
+        if(this.props.store.loadingOffers) {
+
             return(
                 <div className="scroll-vert">
                     {this.renderLoading()}
                 </div>
             );
+
         }else{
+
             return(
                 <div>
                     {this.renderOffers()}
                 </div>
             );
+            
         }
+
     }
 }
 

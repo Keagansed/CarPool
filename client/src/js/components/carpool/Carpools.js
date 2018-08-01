@@ -19,7 +19,7 @@ import "../../../css/components/Spinner.css"
 class Carpools extends Component {
 
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'groupChats'
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'groupChats'
      * is an array that contains all the group chats in firebase. 'loading' is a boolean which
      * represents whether the carpools are loading or not. 'offers' is all the offers that a user has.
      */
@@ -75,11 +75,13 @@ class Carpools extends Component {
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the component in the DOM which shows the carpool offers and current carpools that
+     * the user is apart of. Also shows if there are any new messages in any carpools that the user is in.
      */
     render() {
 
         if(this.state.loading) {
+
             return(
                 <div>
                     <div className="pad-10px bg-whitelight txt-white">
@@ -96,10 +98,12 @@ class Carpools extends Component {
                     </h5>
                 </div>
             )
+
         }
 
         let verifyUser = false;
-        return (
+
+        return(
             <div>
                 <div className="scroll-vert">
                     <div className="pad-10px bg-whitelight txt-white">
@@ -153,7 +157,7 @@ class Carpools extends Component {
                                         messageString = "Message";
                                     }
 
-                                    return (
+                                    return(
                                         <div key={Math.random()}>
                                             <Link
                                                 to={`/HomePage/Chat/` + groupChat.id + '/' + this.state.groupChats[groupChat.id].name}>
@@ -181,11 +185,15 @@ class Carpools extends Component {
                                         </div>
                                     )
                                 }else{
-                                    return (<div key={Math.random()}></div>);
+
+                                    return(<div key={Math.random()}></div>);
+
                                 }
 
-                            }catch (e){
-                                return (<div key={Math.random()}></div>)
+                            }catch(e) {
+
+                                return(<div key={Math.random()}></div>)
+                                
                             }
 
                         })

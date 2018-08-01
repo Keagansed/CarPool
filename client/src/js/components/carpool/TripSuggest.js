@@ -18,7 +18,7 @@ const hide = {
 class TripSuggest extends Component {
 
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'user' contains all the users.
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'user' contains all the users.
      * 'buttons' contains the html button elements for the modal interface. 'toggle' represents the visibility of the
      *  modal. 'messageContent' is the text of the message, and the messages ID is contained within 'messageID'.
      */
@@ -153,13 +153,15 @@ class TripSuggest extends Component {
     accept() {
         app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID+"/usersResponded")
             .update({[getFromStorage('sessionKey').token]:true}).then(() => {
-            return {};
-        }).catch(error => {
-            return {
-                errorCode: error.code,
-                errorMessage: error.message
-            }
-        });
+                return{};
+            }).catch(error => {
+
+                return{
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+                
+            });
 
         this.setState({buttons : (
                 <div className="row txt-white padtop-0" key={Math.random()}>
@@ -182,18 +184,18 @@ class TripSuggest extends Component {
                 userID: getFromStorage('sessionKey').token
             })
         })
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
 
-                if(json.success) {
-                    // this.tripID = json._id;
-                    // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
-                }else{
-                    alert(json.message);
-                }
+            if(json.success) {
+                // this.tripID = json._id;
+                // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
+            }else{
+                alert(json.message);
+            }
 
-            })
+        })
     }
 
     /*
@@ -203,13 +205,13 @@ class TripSuggest extends Component {
     reject() {
         app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID+"/usersResponded")
             .update({[getFromStorage('sessionKey').token]:false}).then(() => {
-            return {};
-        }).catch(error => {
-            return {
-                errorCode: error.code,
-                errorMessage: error.message
-            }
-        });
+                return{};
+            }).catch(error => {
+                return{
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+            });
 
         this.setState({buttons : (
             <div className="row txt-white padtop-0" key={Math.random()}>
@@ -224,7 +226,7 @@ class TripSuggest extends Component {
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
     render(props) {
         var modal = [];
@@ -280,7 +282,7 @@ class TripSuggest extends Component {
             );
         }else{
             
-            try {
+            try{
 
                 if(this.props.usersResponded[getFromStorage('sessionKey').token] === undefined) {
                     throw new Error();
@@ -303,6 +305,7 @@ class TripSuggest extends Component {
                         </div>
                     );
                 }
+
             }catch(e) {
 
                 try {
@@ -334,7 +337,8 @@ class TripSuggest extends Component {
         }
 
         if(this.props.userID === getFromStorage('sessionKey').token) {
-            return (
+
+            return(
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
                     <div className="row padver-10px padbot-10px" onClick={this.toggle}>
@@ -358,8 +362,10 @@ class TripSuggest extends Component {
                     {modal}
                 </div>
             );
+
         }else{
-            return (
+
+            return(
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     <div  onClick={this.toggle}>
                         <div className="row padver-10px padbot-0">
@@ -391,6 +397,7 @@ class TripSuggest extends Component {
                     {modal}
                 </div>
             );
+
         }
 
     }

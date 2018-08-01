@@ -19,7 +19,7 @@ import "../../../css/components/Spinner.css"
 class Messages extends Component {
 
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'carpoolID' contains the 
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'carpoolID' contains the 
      * ID of the carpool chat. 'messages' contains all the messages that were/are sent in the chat. 'users' contains
      * the users that are in the carpool.
      */
@@ -81,12 +81,14 @@ class Messages extends Component {
         const date = JSON.stringify(new Date());
         app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:date}).then(() => {
-            return {};
-        }).catch(error => {
-            return {
-                errorCode: error.code,
-                errorMessage: error.message
-            }
+                return {};
+            }).catch(error => {
+
+                return {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+
         });
     }
 
@@ -111,18 +113,20 @@ class Messages extends Component {
         let date = JSON.stringify(new Date());
         app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:date}).then(() => {
-            return {};
-        }).catch(error => {
-            return {
-                errorCode: error.code,
-                errorMessage: error.message
-            }
-        });
+                return {};
+            }).catch(error => {
+                return {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+            });
+
         return false;
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the component in the DOM. Displays a spinner if the messages are still loading or if the user cannot be verified.
+     * The colour of the senders name is also different for each person. 
      */
     render() {
 
@@ -137,6 +141,7 @@ class Messages extends Component {
         }
 
         if(this.state.loading) {
+
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -147,10 +152,12 @@ class Messages extends Component {
                     </div>
                 </div>
             )
+            
         }
 
-        if(verify) {
-            return (
+        if(verify) { 
+
+            return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
                         <div className="row height-100p">
@@ -170,20 +177,25 @@ class Messages extends Component {
                             {
                                 this.state.messages.map((message) => {
                                     let userColour;
-                                    try {
+
+                                    try{
                                         userColour = this.state.users[message.userID].colour;
-                                    }catch (e){
+                                    }catch(e) {
                                         userColour = "txt-white";
                                     }
 
                                     if(message.tripSuggest) {
+
                                         return(
                                             <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} tripID={message.tripID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                         );
+
                                     }else{
+
                                         return(
                                             <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                         );
+
                                     }
 
                                 })
@@ -193,7 +205,9 @@ class Messages extends Component {
                     </div>
                 </div>
             );
+
         }else{
+
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -204,6 +218,7 @@ class Messages extends Component {
                     </div>
                 </div>
             );
+
         }
 
     }

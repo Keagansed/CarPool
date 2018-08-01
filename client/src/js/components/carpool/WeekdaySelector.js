@@ -10,6 +10,7 @@ class WeekdaySelector  extends Component {
      * Purpose: renders the component in the DOM.
      */
     render() {
+
         return(
             <div className="weekDays-selector">
                 <input type="checkbox" id="weekday-mon" onChange={this.props.updateDays} className="weekday" />
@@ -28,6 +29,7 @@ class WeekdaySelector  extends Component {
                 <label htmlFor="weekday-sun">S</label>
             </div>
         );
+        
     }
 }
 

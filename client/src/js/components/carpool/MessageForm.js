@@ -11,7 +11,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
 class MessageForm extends Component {
     
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'newMessageContent' will contain
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'newMessageContent' will contain
      * the actual message that the user wants to send to carpool chat. 
      */
     constructor(props) {
@@ -43,10 +43,11 @@ class MessageForm extends Component {
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the messageForm component in the DOM.
      */
     render() {
-        return (
+
+        return(
             <div>
                 {/*<input className="messageInput" placeholder="Write a message..." value={this.state.newMessageContent}*/}
                 {/*onChange={this.handleUserInput}/>*/}

@@ -19,7 +19,7 @@ const hide = {
  */
 @observer class NewTripModal extends Component {
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'toggle' is the visibility of the modal.
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'toggle' is the visibility of the modal.
      * 'user' contains all the users.
      */
     constructor(props) {
@@ -81,16 +81,22 @@ const hide = {
     /*
      * Purpose: acquires the users that are to partake in the suggested trip and updates the store.
      */
-    updateUsers = event =>
-    {
+    updateUsers = event => {
+
         for(let user in this.props.users) {
-            if (document.getElementById(user).checked){
-                if (user === getFromStorage('sessionKey').token)
-                    TripsStore.users[user] = true;
-                else
+
+            if(document.getElementById(user).checked) {
+
+                if(user === getFromStorage('sessionKey').token) {
+                    TripsStore.users[user] = true;  
+                }else{
                     TripsStore.users[user] = false;
+                }
+
             }
+
         }
+
     };
 
     /*
@@ -200,7 +206,7 @@ const hide = {
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
     render(){
         let users = [];

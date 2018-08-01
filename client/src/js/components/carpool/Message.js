@@ -11,7 +11,7 @@ import { getFromStorage } from '../../utils/localStorage'
  */
 class Message extends Component {
     /*
-     * Purpose: calls the constructor of the parent class and instantiates the fields. 'user'
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'user'
      * contains all the users. 'messageContent' is the actual message that the user sends and
      * 'messageID' is the ID for the message.
      */
@@ -103,7 +103,8 @@ class Message extends Component {
     }
 
     /*
-     * Purpose: renders the component in the DOM.
+     * Purpose: renders the message component in the DOM which have different formats depending on who sent the
+     * message in the chat and when the message was sent.
      */
     render(props) {
         let dat = "";
@@ -115,7 +116,8 @@ class Message extends Component {
         }
 
         if(this.props.userID === getFromStorage('sessionKey').token) {
-            return (
+           
+            return(
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
                     <div className="row padver-10px padbot-0">
@@ -146,7 +148,8 @@ class Message extends Component {
                 </div>
             );
         }else{
-            return (
+           
+            return(
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
                     <div className="row padver-10px padbot-0">
