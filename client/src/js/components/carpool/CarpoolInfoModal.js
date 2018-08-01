@@ -1,3 +1,6 @@
+// File Type: Component
+
+import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
 const display = {
@@ -7,54 +10,78 @@ const hide = {
     display: 'none'
 };
 
-class CarpoolInfoModal extends Component{
-    constructor(props){
+/*
+ * Purpose: an interface that displays the members of the carpool and a link to their profile.
+ */
+class CarpoolInfoModal extends Component {
+
+    /*
+     * Purpose: call constructor of parent class and initializes the fields. 'state' contains 
+     * the users that are in the carpool as well as a 'toggle' field which is a boolean 
+     * that controls whether the modal is visible or not.
+     */
+    constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
 
-        this.state ={
+        this.state = {
             user:[],
             toggle: false
         };
     }
 
-    componentDidMount(){
+    /*
+     * Purpose: acquires the users that are in the carpool and sets them to the state.
+     */
+    componentDidMount() {
         fetch('/api/account/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }
 
-    getUsername(_id)
-    {
-        for (var x in this.state.user)
-        {
-            if(this.state.user[x]._id === _id)
-            {
+    /*
+     * Purpose: acquires the name of the user by iterating through the 'user' array in state
+     * and matching the ID that is passed through to the function.
+     */
+    getUsername(_id) {
+
+        for(var x in this.state.user) { 
+
+            if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
             }
+
         }
 
     }
 
+    /*
+     * Purpose: toggles whether the modal is visible or not by setting the 'toggle' field the 
+     * opposite of the previous value. It called when the carpool name or the modal close button
+     * is clicked.
+     */
     toggle(event) {
-        this.setState(prevState => ({
+        this.setState(prevState => {
             toggle: !prevState.toggle
-        }));
+        });
     }
 
-    render(){
+    /*
+     * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
+     */
+    render() {
         let users = [];
 
-        for(let user in this.props.users)
-        {
+        for(let user in this.props.users) {
             users.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6 txt-left">{this.getUsername(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
+                    <div className="col-6 txt-left">{this.getUsername(user)}</div><div className="col-6 vertical-right"><Link to={"/ProfilePage/"+user}>View Profile</Link></div>
                 </div>
             );
         }
 
         var modal = [];
+
         modal.push(
             // Modal
             <div key={Math.random()} className="modal" tabIndex="-1" role="dialog" id="carpoolInfoModal" style={this.state.toggle ? display : hide}>
@@ -77,7 +104,7 @@ class CarpoolInfoModal extends Component{
             </div>
         );
 
-        return (
+        return(
             <div className="col-8 txt-center">
                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.toggle}>
                     {/* *** */}

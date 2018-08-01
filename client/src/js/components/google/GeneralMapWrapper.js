@@ -1,18 +1,27 @@
-/* Wrapper class around GoogleMapComponent (High Order Component) to allow for easy rerender of component when state variable changes */
+// File Type: Component
 
-import React, { Component } from 'react';
 import { observer } from "mobx-react";
+import React, { Component } from 'react';
 
 import GoogleMapComponent from './GoogleMap';
 
-@observer class MapWrapper extends Component{
-    render(){
-        let coordsArray=[];
-        let GoogleMap = (coordsArray) => ( 
-            <GoogleMapComponent coordsArray = {coordsArray} />
-        );
+/*  
+ * Purpose: wrapper class around GoogleMapComponent (High Order Component) to allow for easy rerender 
+ * of component when state variable changes.
+ */
+@observer class MapWrapper extends Component {
 
-        if(this.props.routeArr){ //If statement to ensure routes aren't null due to asynchronousity 
+    /*
+     * Purpose: renders the component in the DOM. 
+     */
+    render() {
+        let coordsArray = [];
+        let GoogleMap = (coordsArray) => ( 
+            <GoogleMapComponent coordsArray={coordsArray} />
+        );
+        
+        // If statement to ensure routes aren't null due to asynchronousity.
+        if(this.props.routeArr) {
             this.props.routeArr.forEach(routeObj => {
                 let coords = {
                     olat:routeObj.origin.lat,
@@ -24,12 +33,16 @@ import GoogleMapComponent from './GoogleMap';
             });
         }
         
-        if(coordsArray.length){
+        if(coordsArray.length) {
+
             return(
                 <GoogleMap coords={coordsArray}/>
             ); 
-        } else {
+
+        }else{
+
             return("");
+            
         }
 
     }
