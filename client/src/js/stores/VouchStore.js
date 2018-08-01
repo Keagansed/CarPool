@@ -8,7 +8,7 @@ class vouchStore {
     @action submitVouch(tripID, idFor, rating, reviewBody){
         if(reviewBody!== undefined){
             const obj = getFromStorage('sessionKey');
-            fetch('/api/account/submitVouch',{
+            fetch('/api/account/vouch/submitVouch',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

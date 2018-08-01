@@ -29,7 +29,7 @@ class EditEmailModal extends Component {
     }
 
     changeEmail(){
-        fetch('/api/account/getProfile/updateEmail',{
+        fetch('/api/account/profile/updateEmail',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

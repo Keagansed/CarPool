@@ -34,7 +34,7 @@ class EditPasswordModal extends Component {
     }
 
     changePassword(){
-        fetch('/api/account/getProfile/updatePassword',{
+        fetch('/api/account/profile/updatePassword',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

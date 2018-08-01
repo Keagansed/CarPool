@@ -29,7 +29,7 @@ class CarpoolOffer  extends Component {
     }
 
     componentDidMount(){
-        fetch('/api/account/getProfile?_id=' + this.props.store.senderId,{
+        fetch('/api/account/profile?_id=' + this.props.store.senderId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

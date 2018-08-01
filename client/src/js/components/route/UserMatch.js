@@ -27,7 +27,7 @@ class UserMatch  extends Component {
     }
 
     componentDidMount(){
-        fetch('/api/account/getProfile?_id=' + this.props.userId,{
+        fetch('/api/account/profile?_id=' + this.props.userId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

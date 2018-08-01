@@ -34,7 +34,7 @@ class EditNameModal extends Component {
     }
 
     changeName(){
-        fetch('/api/account/getProfile/updateName',{
+        fetch('/api/account/profile/updateName',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

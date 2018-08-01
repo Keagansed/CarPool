@@ -55,7 +55,7 @@ class ReviewTripModal extends Component{
         for(let user in this.props.trip.users) {
 
             if(this.props.trip.users[user] === true){
-                fetch('/api/account/getVouches?idFor=' + user)
+                fetch('/api/account/vouch/getVouches?idFor=' + user)
                     .then(res => res.json())
                     .then(vouches => {
                         let previousVouches = this.state.vouches;

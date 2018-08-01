@@ -16,11 +16,11 @@ class Message extends Component {
 
     componentDidMount(){
         const idFor = this.props._id;
-        fetch('/api/account/getVouches?idFor='+idFor)
+        fetch('/api/account/vouch/getVouches?idFor='+idFor)
             .then(res => res.json())
             .then(vouches => this.setState({vouches}));
 
-        fetch('/api/account/getAllUsers')
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
 

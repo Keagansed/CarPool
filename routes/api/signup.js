@@ -1,15 +1,24 @@
-var express = require('express');
-var router = express.Router();
-var util = require('./Util/idCheck.js');
+// File Type: API endpoint
+
+const express = require('express');
+
 const User = require('../../models/User.js');
-//Sign up
+const util = require('./Util/idCheck.js');
 
-// router.get('/', function(req, res, next) {
-//   User.find((err,data)=>{
-//     res.json(data);
-//   });
-// });
+// This router handles the signup of a new user
+const router = express.Router();
 
+// This method creates a document in the User collection.
+// Parameters: 
+//		firstName: String;  First name of the new user.
+//		lastName: String;  Last name of the new user.
+//		id: String;  South African ID number of the new user.
+//      email: String;  This is the email of the new user.
+//		password: String;  This is the password of the new user.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
 router.post('/',(req,res,next)=>{
 	const { body } = req;
 	const{
@@ -20,43 +29,41 @@ router.post('/',(req,res,next)=>{
 	} = body;
 	let { email } = body;
 	
-	//error check data
-	//====== Use return res.send to stop if err occurs
-	if(!firstName){
+	if(!firstName) {
 		return res.send({ 
 			success:false,
 			message:"Error:Firstname cannot be blank!"
 		});
 	}
-	if(!lastName){
+	if(!lastName) {
 		return res.send({ 
 			success:false,
 			message:"Error: Last Name cannot be blank!"
 		});
 	}
-	if(!email){
+	if(!email) {
 		return res.send({ 
 			success:false,
 			message:"Error: Email cannot be blank!"
 		});
 	}
-	if(!id){
+	if(!id) {
 		return res.send({ 
 			success:false,
 			message:"Error: ID cannot be blank!"
 		});
-	}else if(!util.ValidateIDNumber(id)){ 
+	}else if(!util.ValidateIDNumber(id)) {
 		return res.send({ 
 			success:false,
 			message:"Error: ID invalid!"
 		});
-	}else if(!util.ValidateEmail(email)){
+	}else if(!util.ValidateEmail(email)) {
 		return res.send({ 
 			success:false,
 			message:"Error: Email invalid!"
 		});
 	}
-	if(!password){
+	if(!password) {
 		return res.send({ 
 			success:false,
 			message:"Error: Password cannot be blank!"
@@ -67,40 +74,35 @@ router.post('/',(req,res,next)=>{
 	//check id
 	User.find({
 		id:id
-	},(err,previousUsers) =>{
+	},(err,previousUsers) => {
 		//verify
-		if(err){
+		if(err) {
 			return res.send({
 				success:false,
 				message:"Error:Server error"
 			});
-		}
-		else if(previousUsers.length>0){
+		}else if(previousUsers.length>0) {
 			return res.send({
 				success:false,
 				message:"Error:Account already exists"
 			});
-		}
-		else{
-
+		}else{
 			//check email
 			User.find({
 				email:email
-			},(err,previousUsers) =>{
+			},(err,previousUsers) => {
 				//verify
-				if(err){
+				if(err) {
 					return res.send({
 						success:false,
 						message:"Error:Server error"
 					});
-				}
-				else if(previousUsers.length>0){
+				}else if(previousUsers.length>0) {
 					return res.send({
 						success:false,
 						message:"Error: Email already exists"
 					});
-				}
-				else{
+				}else{
 					//save user
 					const newUser = new User();
 					newUser.firstName = firstName;
@@ -109,7 +111,7 @@ router.post('/',(req,res,next)=>{
 					newUser.id = id;
 					newUser.password = newUser.generateHash(password);
 					newUser.save((err,user)=>{
-						if(err){
+						if(err) {
 							return res.send({
 								success:false,
 								message:"Error: Server error"
@@ -122,10 +124,8 @@ router.post('/',(req,res,next)=>{
 					});
 				}
 			});
-
 		}
 	});
-	
 });
 
 module.exports = router;

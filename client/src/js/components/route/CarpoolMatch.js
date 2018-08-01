@@ -60,7 +60,7 @@ class CarpoolMatch  extends Component {
                     }]
                 });
 
-                fetch('/api/account/getProfile?_id=' + json.data[0].userId,{
+                fetch('/api/account/profile?_id=' + json.data[0].userId,{
                     method:'GET',
                     headers:{
                         'Content-Type':'application/json'
