@@ -80,7 +80,7 @@ const hide = {
     }
 
     componentDidMount(){
-        fetch('/api/account/getAllUsers')
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }
