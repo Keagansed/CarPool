@@ -1,16 +1,21 @@
-import React, { Component } from 'react';
+// File Type: Component
+
 import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
 import LoginStore from '../stores/LoginStore'
+
 import logo  from "../../css/images/logo.png";
 
-
-class LandingPage extends Component{
-    componentWillMount(){
+/*
+* Purpose: Landing page compenent is the first page the user sees when opening the app
+*/
+class LandingPage extends Component {
+    componentWillMount() {
         LoginStore.setRegistered(false);
     }
 
-    render(){
+    render() {
         return(
             <div className="vertical-center bg-purple">
                 <div className="container-fluid">

@@ -1,15 +1,23 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
+// Used as a css prop
 const display = {
     display: 'block'
 };
+// Used as a css prop
 const hide = {
     display: 'none'
 };
-  
+
+/*
+* Purpose: Popup modal that allows you to enter a new email address for your account
+*/
 class EditEmailModal extends Component {
     constructor(props) {
         super(props);
+
         this.toggle = this.toggle.bind(this);
   
         this.state = {
@@ -17,19 +25,29 @@ class EditEmailModal extends Component {
             email: this.props.token
         }
     }
-  
+    
+    /*
+    * Purpose: Toggles the 'state.toggle' variable between true and false
+    */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
     
+    /*
+    * Purpose: Sets the 'state.email' variable to senders current value
+    */
     handleEmailChange(e){
         this.setState({email: e.target.value})
     }
 
-    changeEmail(){
-        fetch('/api/account/getProfile/updateEmail',{
+    /*
+    * Purpose: API call to the backend that updates the users email and returns whether or not
+    * the update was successful
+    */
+    changeEmail() {
+        fetch('/api/account/getProfile/updateEmail', {
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -38,14 +56,15 @@ class EditEmailModal extends Component {
                 id: this.props.token,
                 email: this.state.email
             })
-        }).then(res=>res.json())
+        })
+        .then(res=>res.json())
         .catch(error => console.error('Error:', error))
-        .then(json=>{
-            if (json.success){
+        .then(json => {
+            if (json.success) {
                 alert("Email changed");
                 this.toggle();
             }
-            else{
+            else {
                 alert("Email was not changed "+ json.message);
             }
         });
@@ -53,15 +72,15 @@ class EditEmailModal extends Component {
 
     render() {
         var modal = [];
+
         modal.push(
-            // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
                             <h5 className="modal-title fw-bold">Edit Email</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
@@ -84,12 +103,16 @@ class EditEmailModal extends Component {
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
-                                <h5 className="mbottom-0">Edit Email</h5>
+                                <h5 className="mbottom-0">
+                                    Edit Email
+                                </h5>
                             </div>
                         </div>
                         <div className="col-3 vertical-right">
                             <div className="col-12">
-                                <h5 className="mbottom-0"><i className="fa fa-at"></i></h5>
+                                <h5 className="mbottom-0">
+                                    <i className="fa fa-at"/>
+                                </h5>
                             </div>
                         </div>
                     </div>

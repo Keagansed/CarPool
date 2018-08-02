@@ -1,15 +1,23 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
+// Used as a css prop
 const display = {
     display: 'block'
 };
+// Used as a css prop
 const hide = {
     display: 'none'
 };
   
+/*
+* Purpose: Popup modal that allows you to enter a new password for your account
+*/
 class EditPasswordModal extends Component {
     constructor(props) {
         super(props);
+
         this.toggle = this.toggle.bind(this);
   
         this.state = {
@@ -18,23 +26,36 @@ class EditPasswordModal extends Component {
             newPassword: ""
         }
     }
-  
+    
+    /*
+    * Purpose: Toggles the 'state.toggle' variable between true and false
+    */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         })); 
     }
 
-    handlePasswordChange(e){
+    /*
+    * Purpose: Sets the 'state.password' variable to senders current value
+    */
+    handlePasswordChange(e) {
         this.setState({password: e.target.value})
     }
 
-    handleNewPasswordChange(e){
+    /*
+    * Purpose: Sets the 'state.newPassword' variable to senders current value
+    */
+    handleNewPasswordChange(e) {
         this.setState({newPassword: e.target.value})
     }
 
-    changePassword(){
-        fetch('/api/account/getProfile/updatePassword',{
+    /*
+    * Purpose: API call to the backend that updates the users password and returns whether or not
+    * the update was successful
+    */
+    changePassword() {
+        fetch('/api/account/getProfile/updatePassword', {
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -44,30 +65,33 @@ class EditPasswordModal extends Component {
                 password: this.state.password,
                 newPassword: this.state.newPassword
             })
-        }).then(res=>res.json())
+        })
+        .then(res=>res.json())
         .catch(error => console.error('Error:', error))
-        .then(json=>{
+        .then(json => {
             if (json.success){
-                alert("password changed");
+                alert("Password changed");
                 this.toggle();
             }
             else{
-                alert("Password was not changed. "+ json.message);
+                alert("Password was not changed. " + json.message);
             }
         });
     }
   
     render() {
         var modal = [];
+
         modal.push(
-            // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Edit Password</h5>
+                            <h5 className="modal-title fw-bold">
+                                Edit Password
+                            </h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
@@ -98,7 +122,9 @@ class EditPasswordModal extends Component {
                         </div>
                         <div className="col-3 vertical-right">
                             <div className="col-12">
-                                <h5 className="mbottom-0"><i className="fa fa-lock"></i></h5>
+                                <h5 className="mbottom-0">
+                                    <i className="fa fa-lock"/>
+                                </h5>
                             </div>
                         </div>
                     </div>
