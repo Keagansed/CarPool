@@ -1,53 +1,69 @@
+// File Type: Component
+
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import logo  from "../../css/images/logo.png";
 
-
+/*
+* Purpose: Register page where the user enters their details to register for the app
+*/
 @observer class Register extends Component {
-
-    updateSignUpfNameValue = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.sFName' variable to senders current value
+    */
+    updateSignUpfNameValue = event => {
         this.props.store.sFName = event.target.value;
     }
 
-    updateSignUplNameValue = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.sLName' variable to senders current value
+    */
+    updateSignUplNameValue = event => {
         this.props.store.sLName = event.target.value;
     }
 
-    updateSignUpEmailValue = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.sEmail' variable to senders current value
+    */
+    updateSignUpEmailValue = event => {
         this.props.store.sEmail = event.target.value;
     }
 
-    updateSignUpIDValue = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.sId' variable to senders current value
+    */
+    updateSignUpIDValue = event => {
         this.props.store.sId = event.target.value;
     }
 
-    updateSignUpPasswordValue1 = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.sPassword1' variable to senders current value
+    */
+    updateSignUpPasswordValue1 = event => {
         this.props.store.sPassword1 = event.target.value;
     }
 
-    updateSignUpPasswordValue2 = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.sPassword2' variable to senders current value
+    */
+    updateSignUpPasswordValue2 = event => {
         this.props.store.sPassword2 = event.target.value;
     }
 
+    /*
+    * Purpose: Calls the store.signUp() function
+    */
     handleSignup = event => {
         event.preventDefault();
         this.props.store.signUp();
     }
 
     render() {
-
         const { registered } = this.props.store; 
 
-        if(!registered)
-        {
+        if(!registered) {
             return(
                 <div className="vertical-center bg-purple">
                     <div className="container-fluid">
@@ -82,8 +98,7 @@ import logo  from "../../css/images/logo.png";
                     </div>
                 </div>
             );
-        }
-        else{
+        }else {
             return(               
                 <Redirect to={{
                     pathname: "/Login", 

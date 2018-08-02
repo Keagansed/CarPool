@@ -1,15 +1,23 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
+// Used as a css prop
 const display = {
     display: 'block'
 };
+// Used as a css prop
 const hide = {
     display: 'none'
 };
 
+/*
+* Purpose: Popup modal that allows you to upload a picture of your car for your account
+*/
 class UploadCarPictureSetting extends Component {
     constructor(props) {
         super(props);
+
         this.toggle = this.toggle.bind(this);
   
         this.state = {
@@ -18,14 +26,22 @@ class UploadCarPictureSetting extends Component {
         }
     }
 
+    /*
+    * Purpose: Toggles the 'state.toggle' variable between true and false
+    */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
 
+    /*
+    * Purpose: API call to the backend that updates the users car picture and returns whether or not
+    * the update was successful
+    */
     upload(){
         const formData = new FormData();
+        
         formData.append('id', this.props.token);
         formData.append('file', this.state.file);
 
@@ -43,21 +59,26 @@ class UploadCarPictureSetting extends Component {
         this.toggle();
     }
 
-    handleFileChange(e){
+    /*
+    * Purpose: Sets the 'state.file' variable to senders current value
+    */
+    handleFileChange(e) {
         this.setState({file: e.target.files[0]});
     }
   
     render() {
         var modal = [];
+
         modal.push(
-            // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Car picture</h5>
+                            <h5 className="modal-title fw-bold">
+                                Car picture
+                            </h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
@@ -80,12 +101,16 @@ class UploadCarPictureSetting extends Component {
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
-                                <h5 className="mbottom-0">Upload Car Picture</h5>
+                                <h5 className="mbottom-0">
+                                    Upload Car Picture  
+                                </h5>
                             </div>
                         </div>
                         <div className="col-3 vertical-right">
                             <div className="col-12">
-                                <h5 className="mbottom-0"><i className="fa fa-camera"></i></h5>
+                                <h5 className="mbottom-0">
+                                    <i className="fa fa-camera"/>
+                                </h5>
                             </div>
                         </div>
                     </div>

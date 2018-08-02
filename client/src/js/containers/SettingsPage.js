@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
-import { observer } from "mobx-react";
+// File Type: Component
 
-import { getFromStorage } from '../utils/localStorage.js';
+import { observer } from "mobx-react";
+import React, { Component } from 'react';
+
+import AlertsSettings from '../components/settings/AlertsSettings';
 import Navbar from '../components/navigation/Navbar';
 import NavTabs from '../components/settings/NavTabs';
 import ProfileSettings from '../components/settings/ProfileSettings';
-import AlertsSettings from '../components/settings/AlertsSettings';
 
-@observer class SettingsPage extends Component{
+import { getFromStorage } from '../utils/localStorage.js';
 
-    constructor(){
+/*
+* Purpose: Container page for all the settings components
+*/
+@observer class SettingsPage extends Component {
+    constructor() {
         super()
 
         this.state = {
@@ -17,15 +22,18 @@ import AlertsSettings from '../components/settings/AlertsSettings';
         }
     }
 
-    //========= Fetch Session Token ===========
-    componentWillMount(){
+    /*
+    * Purpose: Verifies the users token before component mounting to make sure the user is authorised
+    */
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
+
+        if(obj && obj.token) {
             const { token } = obj;
             fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
-                if(json.success){
+                if(json.success) {
                     this.props.store.token = token;
 
                     this.setState({
@@ -36,30 +44,28 @@ import AlertsSettings from '../components/settings/AlertsSettings';
         }  
     }
 
+    /*
+    * Purpose: Changes the component rendered based on which tab from NavTabs has been selected
+    */
     setTab = () => {
         const { store } = this.props;
 
-        if(!this.state.loading)
-        {
-            if(store.profileTab === true)
-            {
+        if(!this.state.loading) {
+            if(store.profileTab === true) {
                 return <ProfileSettings/>;            
             }
-            else if(store.alertsTab === true)
-            {
+            else if(store.alertsTab === true) {
                 return <AlertsSettings/>;
             }
         }
-
     }
 
-    render(){
+    render() {
         const { token } = this.props.store;
         
         return(
             <div className="size-100 bg-purple">
                     <NavTabs store={this.props.store} token={token}/>
-                    {/* Padding is there for top and bottom navs*/}
                     <div className="padtop-50px padbot-50px">
                         {this.setTab()}
                     </div>

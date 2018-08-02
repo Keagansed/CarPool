@@ -1,32 +1,43 @@
-import React, { Component } from 'react';
-import { observer } from "mobx-react";
-import { Link } from 'react-router-dom';
+// File Type: Component
 
-import { getFromStorage } from '../../utils/localStorage.js';
-import Matches from './Matches';
-import RouteInfoModal from './RouteInfoModal';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { observer } from "mobx-react";
+
 import EditRouteModal from './EditRouteModal';
+import Matches from './Matches';
 import MatchesStore from '../../stores/MatchesStore';
+import RouteInfoModal from './RouteInfoModal';
+import { getFromStorage } from '../../utils/localStorage.js';
 
 @observer class MatchesPage extends Component{
 
-    constructor(){
+    /*
+    * The purpose of the constructor method is to instantiate fields to relevant values. loading is set
+    * to true by default until the page is finished loading.
+    */
+    constructor() {
         super()
 
         this.state = {
+            //The loading field represents the load state of the page
             loading: true,
         }
     }
 
-    //========= Fetch Session Token ===========
-    componentWillMount(){
+    /*
+    * The purpose of the componentWillMount method is to perform all programming tasks
+    * that need to take place before the component is rendered on the screen. Here
+    * it is used to fetch the session token.
+    */
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
+        if(obj && obj.token) {
             const { token } = obj;
             fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
-                if(json.success){
+                if(json.success) {
                     this.props.store.token = token;
 
                     this.setState({
@@ -36,25 +47,43 @@ import MatchesStore from '../../stores/MatchesStore';
             })
         }
     }
-    render(){
+
+    /*
+    * The purpose of the render method is to enable the rendering of this component.
+    * It returns react elements and HTML using JSX.
+    */
+    render() {
         //const { token } = this.props.store;
         return(
             <div className="size-100 bg-purple">
-                    <div className="fixed-top container-fluid height-50px bg-aqua">
-                        <div className="row height-100p">
-                            <Link to={`/HomePage`} className="col-2 txt-center">
-                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                    <i className="fa fa-chevron-circle-left txt-center"></i>
-                                </button>
-                            </Link>
-                            <RouteInfoModal _id={this.props.match.params._id} MatchesStore={MatchesStore}/>
-                            <EditRouteModal  token={this.props.store.token} routeId={this.props.match.params._id}/>
-                        </div>
+                <div className="fixed-top container-fluid height-50px bg-aqua">
+                    <div className="row height-100p">
+                        <Link 
+                            to={`/HomePage`} 
+                            className="col-2 txt-center"
+                        >
+                            <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                <i className="fa fa-chevron-circle-left txt-center"></i>
+                            </button>
+                        </Link>
+                        <RouteInfoModal 
+                            _id={this.props.match.params._id} 
+                            MatchesStore={MatchesStore}
+                        />
+                        <EditRouteModal  
+                            token={this.props.store.token} 
+                            routeId={this.props.match.params._id}
+                        />
                     </div>
-                    {/* Padding is there for top and bottom navs*/}
-                    <div className="padtop-50px">
-                        <Matches store={MatchesStore} token={this.props.store.token} routeId={this.props.match.params._id}/>
-                    </div>
+                </div>
+                {/* Padding is there for top and bottom navs*/}
+                <div className="padtop-50px">
+                    <Matches 
+                        store={MatchesStore} 
+                        token={this.props.store.token} 
+                        routeId={this.props.match.params._id}
+                    />
+                </div>
             </div>
         );
     }

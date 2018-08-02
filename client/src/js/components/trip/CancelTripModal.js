@@ -1,9 +1,9 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-    getFromStorage
-} from '../../utils/localStorage.js';
+import { getFromStorage } from '../../utils/localStorage.js';
 
 const display = {
     display: 'block'
@@ -12,37 +12,37 @@ const hide = {
     display: 'none'
 };
 
+/**
+ * Purpose: An interface to allow the user to cancel a trip they are currently in 
+ */
 class CancelTripModal extends Component{
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
   
         this.state = {
             toggle: false
         }
 
-        this.cancelTrip = this.cancelTrip.bind(this);
-        this.deleteTrip = this.deleteTrip.bind(this);
-        this.cancelOrDelete = this.cancelOrDelete.bind(this);
     }
   
-    toggle(event) {
-        this.setState(prevState => ({
+    toggle = (event)=> {
+        this.setState(prevState => ( {
             toggle: !prevState.toggle
         }));
     }
+ 
+    cancelOrDelete = ()=> {
 
-    cancelOrDelete(){
         if(this.props.trip.driver === getFromStorage('sessionKey').token){
             this.deleteTrip();
-        }
-        else{
+        }else{
             this.cancelTrip();
         }
+
     }
 
-    cancelTrip(){
-        fetch('/api/system/cancelTrip',{
+    cancelTrip = ()=> {
+        fetch('/api/system/cancelTrip', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -54,18 +54,20 @@ class CancelTripModal extends Component{
         })
             .then(res=>res.json())
             .catch(error => console.error('Error:', error))
-            .then(json=>{
-                if(json.success){
+            .then(json=> {
+
+                if(json.success) {
                     // this.tripID = json._id;
                     // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
                 }else{
                     alert(json.message);
                 }
+
             });
         this.toggle();
     }
 
-    deleteTrip(){
+    deleteTrip = ()=> {
         fetch('/api/system/deleteTrip?_id='+this.props.trip._id)
             .then(res => res.json())
             .then(json => {
@@ -74,7 +76,7 @@ class CancelTripModal extends Component{
     }
 
     render(){
-        var modal = [];
+        let modal = [];
         modal.push(
             // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
@@ -110,7 +112,7 @@ class CancelTripModal extends Component{
                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px"  onClick={this.toggle}>
                     <i className="fa fa-trash"></i>
                 </button>
-                {modal}
+                { modal }
             </div>
         );
     }

@@ -1,16 +1,25 @@
+// File Type: Component
+
 import React, { Component } from 'react';
+
 import { getFromStorage } from '../../utils/localStorage' ;
 
+// Used as a css prop
 const display = {
     display: 'block'
 };
+// Used as a css prop
 const hide = {
     display: 'none'
 };
 
+/*
+* Purpose: Popup modal that allows you to upload a ID document for your account
+*/
 class UploadIDSetting extends Component {
     constructor(props) {
         super(props);
+
         this.toggle = this.toggle.bind(this);
   
         this.state = {
@@ -20,29 +29,35 @@ class UploadIDSetting extends Component {
         }
     }
     
-    componentWillMount(){
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
         this.setState({token: obj.token});
     }
 
+    /*
+    * Purpose: Toggles the 'state.toggle' variable between true and false
+    */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
 
-    upload(){
+    /*
+    * Purpose: API call to the backend that updates the users ID document and returns whether or not
+    * the update was successful
+    */
+    upload() {
         const formData = new FormData();
+
         formData.append('id', this.state.token);
         formData.append('file', this.state.file);
 
         const xhr = new XMLHttpRequest();
 
         xhr.open('POST', '/api/account/uploadFile/IdDocument', true);
-        xhr.onreadystatechange = res =>
-        {            
-            if(xhr.readyState === XMLHttpRequest.DONE)
-            {
+        xhr.onreadystatechange = res => {            
+            if(xhr.readyState === XMLHttpRequest.DONE) {
                 alert("Successfully uploaded");
             }
         }
@@ -50,21 +65,26 @@ class UploadIDSetting extends Component {
         this.toggle();
     }
 
-    handleFileChange(e){
+    /*
+    * Purpose: Sets the 'state.file' variable to senders current value
+    */
+    handleFileChange(e) {
         this.setState({file: e.target.files[0]});
     }
   
     render() {
         var modal = [];
+
         modal.push(
-            // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Identity document picture</h5>
+                            <h5 className="modal-title fw-bold">
+                                Identity document picture
+                            </h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
@@ -87,12 +107,16 @@ class UploadIDSetting extends Component {
                     <div className="row txt-white padver-10px">
                         <div className="col-9">
                             <div className="col-12">
-                                <h5 className="mbottom-0">Upload ID Picture</h5>
+                                <h5 className="mbottom-0">
+                                    Upload ID Picture
+                                </h5>
                             </div>
                         </div>
                         <div className="col-3 vertical-right">
                             <div className="col-12">
-                                <h5 className="mbottom-0"><i className="fa fa-camera"></i></h5>
+                                <h5 className="mbottom-0">
+                                    <i className="fa fa-camera"/>
+                                </h5>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,11 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Purpose: An interface to allow the user to set up a Trip
+ */
 class Trip  extends Component {
     render(){
         let dateTime = new Date(this.props.trip.dateTime);
@@ -18,7 +23,7 @@ class Trip  extends Component {
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
         ];
-        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         let day = dateTime.getDate();
         let dayNameNumber = dateTime.getDay();
         let month = dateTime.getMonth();

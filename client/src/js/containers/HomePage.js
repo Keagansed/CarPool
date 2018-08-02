@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
+// File Type: Component
+
 import { observer } from "mobx-react";
+import React, { Component } from 'react';
 
 import Carpools from '../components/carpool/Carpools';
-import { getFromStorage } from '../utils/localStorage.js';
 import Navbar from '../components/navigation/Navbar';
 import NavTabs from '../components/navigation/NavTabs';
+import OffersStore from '../stores/OffersStore'
 import Routes from '../components/route/Routes';
 import RoutesStore from '../stores/RoutesStore';
-import OffersStore from '../stores/OffersStore'
 import Trips from '../components/trip/Trips';
 
-@observer class HomePage extends Component{
+import { getFromStorage } from '../utils/localStorage.js';
 
-    constructor(){
+/*
+* Purpose: Container compenent for the application HomePage, only takes care of tab switching all data
+* is in sub-components
+*/
+@observer class HomePage extends Component{
+    constructor() {
         super()
 
         this.state = {
@@ -20,16 +26,17 @@ import Trips from '../components/trip/Trips';
         }
     }
 
-    //========= Fetch Session Token ===========
-    componentWillMount(){
-  
+    /*
+    * Purpose: Verifies the users token before component mounting to make sure the user is authorised
+    */
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
+        if(obj && obj.token) {
             const { token } = obj;
             fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
-                if(json.success){
+                if(json.success) {
                     this.props.store.token = token;
 
                     this.setState({
@@ -46,24 +53,24 @@ import Trips from '../components/trip/Trips';
         store.tripTab = false;
     }
 
+    /*
+    * Purpose: Changes the component rendered based on which tab from NavTabs has been selected
+    */
     setTab = () => {
         const { store } = this.props;
 
-        if(!this.state.loading){
-            if(store.routeTab === true)
-            {
+        if(!this.state.loading) {
+            if(store.routeTab === true) {
                 return <Routes store={RoutesStore} token={this.props.store.token}/>;            
             }
-            else if(store.carpoolTab === true)
-            {
+            else if(store.carpoolTab === true) {
                 return <Carpools store={OffersStore} token={this.props.store.token}/>;
             }
-            else if(store.tripTab === true)
-            {
+            else if(store.tripTab === true) {
                 return <Trips/>;
             }
         }
-        else{
+        else {
             return(
                 <div className="spinner">
                     <div className="double-bounce1"></div>
@@ -74,19 +81,25 @@ import Trips from '../components/trip/Trips';
 
     }
 
+    /*
+    * Purpose: Returns the JSX for the NavTabs component
+    */
     renderNavTabs = () => {
-        if(!this.state.loading){
+        if(!this.state.loading) {
             return <NavTabs store={this.props.store}/>;
         }
     }
 
+    /*
+    * Purpose: Returns the JSX for the Navbar component
+    */
     renderNavBar = () => {
-        if(!this.state.loading){
+        if(!this.state.loading) {
             return <Navbar token={this.props.store.token}/>;
         }
     }
 
-    render(){
+    render() {
         return(
             <div className="size-100 bg-purple">
                 {this.renderNavTabs()}

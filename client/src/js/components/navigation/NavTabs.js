@@ -8,7 +8,7 @@ import RoutesStore from "../../stores/RoutesStore";
 
 /*
 * The purpose of this NavTabs class is to provide a tabular menu that is available on the Home page.
-* This tabbed menu provides access to the "Routes", "Carpools", and "Trips" tabs on the Home page2.
+* This tabbed menu provides access to the "Routes", "Carpools", and "Trips" tabs on the Home page.
 */
 @observer class NavTabs extends Component {
 
@@ -85,27 +85,27 @@ import RoutesStore from "../../stores/RoutesStore";
                 <div className="row font-20px height-100p">
                     <div className="col-10 pad-0">
                         <button 
-                            className = {"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} 
-                            onClick = {this.handleRouteToggle}
+                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} 
+                            onClick={this.handleRouteToggle}
                         >
                             Routes
                         </button>
                         <button 
-                            className = {"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} 
-                            onClick = {this.handleCarPoolToggle}
+                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} 
+                            onClick={this.handleCarPoolToggle}
                         >
                             Carpools
                         </button>
                         <button 
-                            className = {"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} 
-                            onClick = {this.handleTripToggle}
+                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} 
+                            onClick={this.handleTripToggle}
                         >
                             Trips
                         </button>
                     </div>
                     <NewRouteModal 
-                        store = {RoutesStore} 
-                        token = {this.props.store.token}
+                        store={RoutesStore} 
+                        token={this.props.store.token}
                     />
                 </div>
             </div>

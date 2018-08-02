@@ -1,22 +1,25 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
 // import 'bootstrap/dist/css/bootstrap.min.css'; 
-import 'bootstrap/dist/js/bootstrap.min.js';
-import '../../../css/App.css';
+// import 'bootstrap/dist/js/bootstrap.min.js';
+// import '../../../css/App.css';
 
 import VouchList from './VouchList';
 import VouchAverage from './VouchAverage';
 import VouchTally from './VouchTally';
 
+import { getFromStorage } from '../utils/localStorage.js'
 import { submitVouch } from '../../utils/vouchQuery'
 
-import {
-    getFromStorage
-} from '../utils/localStorage.js'
-
+/**
+ * Purpose: Interface to allow the user to vouch/ rate another carpool member
+ */
 class Vouching extends Component {
 	constructor(props){
-		super(props);
+        super(props);
+        
 		this.state = {
 		    changeRating: false,
 			_id: ""
@@ -34,8 +37,7 @@ class Vouching extends Component {
 
 	rating = 1;
 
-    oneStarClick()
-    {
+    oneStarClick(){
         this.rating = 1;
         this.twoClass = this.greyStar;
         this.threeClass = this.greyStar;
@@ -44,8 +46,7 @@ class Vouching extends Component {
         this.setState({changeRating: !this.state.changeRating});
     }
 
-    twoStarClick()
-    {
+    twoStarClick(){
         this.rating = 2;
         this.twoClass = this.yellowStar;
         this.threeClass = this.greyStar;
@@ -54,8 +55,7 @@ class Vouching extends Component {
         this.setState({changeRating: !this.state.changeRating});
     }
 
-    threeStarClick()
-    {
+    threeStarClick(){
         this.rating = 3;
         this.twoClass = this.yellowStar;
         this.threeClass = this.yellowStar;
@@ -64,8 +64,7 @@ class Vouching extends Component {
         this.setState({changeRating: !this.state.changeRating});
     }
 
-    fourStarClick()
-    {
+    fourStarClick(){
         this.rating = 4;
         this.twoClass = this.yellowStar;
         this.threeClass = this.yellowStar;
@@ -74,8 +73,7 @@ class Vouching extends Component {
         this.setState({changeRating: !this.state.changeRating});
     }
 
-    fiveStarClick()
-    {
+    fiveStarClick(){
         this.rating = 5;
         this.twoClass = this.yellowStar;
         this.threeClass = this.yellowStar;
@@ -84,84 +82,83 @@ class Vouching extends Component {
         this.setState({changeRating: !this.state.changeRating});
     }
 
-    submitVouch()
-    {
+    submitVouch(){
         submitVouch(this.rating);
     }
 
-  componentWillMount(){
-	this.setState({_id: this.props._id});
-  }
+    componentWillMount(){
+	    this.setState({_id: this.props._id});
+    }
 
-  render() {
-      const obj = getFromStorage('sessionKey');
-      var vouchButton = (<span/>);
+    render() {
+        const obj = getFromStorage('sessionKey');
+        let vouchButton = (<span/>);
 
-      if(this.state._id !== obj.token)
-      {
-          vouchButton = (<button id="addReview" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#vouchModal">Vouch</button>);
-      }
+        if(this.state._id !== obj.token){
+        vouchButton = (<button id="addReview" className="btn btn-primary margin-top" type="submit" data-toggle="modal" data-target="#vouchModal">Vouch</button>);
+        }
 
 
-    return (
-        <div className="center_container vouching_center_container">
-            <div className="row">
-                <div className="col-md-5 bubble no-padding-margin">
+        return (
+            <div className="center_container vouching_center_container">
+                <div className="row">
+                    <div className="col-md-5 bubble no-padding-margin">
                         <VouchAverage _id={this.state._id}/>
                         <VouchTally _id={this.state._id} />
                         {vouchButton}
-                </div>
+                    </div>
 
-                <div className="col-sm-5 offset-md-2 bubble">
-                    <div className="info-div">
-                        <VouchList _id={this.state._id} />
+                    <div className="col-sm-5 offset-md-2 bubble">
+                        <div className="info-div">
+                            <VouchList _id={this.state._id} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="modal fade" id="vouchModal" data-id={this.state._id}>
-                <div className="modal-dialog">
-                    <div className="modal-content bubble-more-visible">
-                <form id="vouchSubmit">
-                          <div className="form-group">
-                              <label>Rating</label>
-                              <div>
-                                <button id="star1" key={Math.random()} type="button" className={this.oneClass} onClick={this.oneStarClick.bind(this)} aria-label="Left Align">
-                                  <i className="fa fa-star" aria-hidden="true"/>
-                                </button>
-                                <button id="star2" key={Math.random()} type="button" className={this.twoClass} onClick={this.twoStarClick.bind(this)} aria-label="Left Align">
-                                  <i className="fa fa-star" aria-hidden="true"/>
-                                </button>
-                                <button id="star3" key={Math.random()} type="button" className={this.threeClass} onClick={this.threeStarClick.bind(this)} aria-label="Left Align">
-                                  <i className="fa fa-star" aria-hidden="true"/>
-                                </button>
-                                <button id="star4" key={Math.random()} type="button" className={this.fourClass} onClick={this.fourStarClick.bind(this)} aria-label="Left Align">
-                                  <i className="fa fa-star" aria-hidden="true"/>
-                                </button>
-                                <button id="star5" key={Math.random()} type="button" className={this.fiveClass} onClick={this.fiveStarClick.bind(this)} aria-label="Left Align">
-                                  <i className="fa fa-star" aria-hidden="true"/>
-                                </button>
-                              </div>
-                              
+                <div className="modal fade" id="vouchModal" data-id={this.state._id}>
+                    <div className="modal-dialog">
+                        <div className="modal-content bubble-more-visible">
+                            <form id="vouchSubmit">
 
-                          </div>
-                          <div className="form-group">
-                              <label htmlFor="title">Title</label>
-                              <input type="text" className="form-control" id="title" placeholder="Title"/>
-                          </div>
-                          <div className="form-group">
-                              <label htmlFor="review">Review</label>
-                              <input type="text" className="form-control" id="review" placeholder="Review"/>
-                          </div>
-                          <button className="btn btn-secondary" onClick={this.submitVouch.bind(this)} >Submit</button>
-                        </form>
-              </div>
-            </div>
-          </div>
+                                <div className="form-group">
+                                    <label>Rating</label>    
+                                    <div>
+                                        <button id="star1" key={Math.random()} type="button" className={this.oneClass} onClick={this.oneStarClick.bind(this)} aria-label="Left Align">
+                                            <i className="fa fa-star" aria-hidden="true"/>
+                                        </button>
+                                        <button id="star2" key={Math.random()} type="button" className={this.twoClass} onClick={this.twoStarClick.bind(this)} aria-label="Left Align">
+                                            <i className="fa fa-star" aria-hidden="true"/>
+                                        </button>
+                                        <button id="star3" key={Math.random()} type="button" className={this.threeClass} onClick={this.threeStarClick.bind(this)} aria-label="Left Align">
+                                            <i className="fa fa-star" aria-hidden="true"/>
+                                        </button>
+                                        <button id="star4" key={Math.random()} type="button" className={this.fourClass} onClick={this.fourStarClick.bind(this)} aria-label="Left Align">
+                                            <i className="fa fa-star" aria-hidden="true"/>
+                                        </button>
+                                        <button id="star5" key={Math.random()} type="button" className={this.fiveClass} onClick={this.fiveStarClick.bind(this)} aria-label="Left Align">
+                                            <i className="fa fa-star" aria-hidden="true"/>
+                                        </button>
+                                    </div>        
+                                </div>
 
-      </div>
-    );
-  }
+                                <div className="form-group">
+                                    <label htmlFor="title">Title</label>
+                                    <input type="text" className="form-control" id="title" placeholder="Title"/>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="review">Review</label>
+                                    <input type="text" className="form-control" id="review" placeholder="Review"/>
+                                </div>
+
+                                <button className="btn btn-secondary" onClick={this.submitVouch.bind(this)} >Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        );
+    }
 }
 
 export default Vouching;
