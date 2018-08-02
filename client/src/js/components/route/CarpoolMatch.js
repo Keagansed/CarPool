@@ -8,11 +8,11 @@ import OffersStore from '../../stores/OffersStore'
 //Just using temporarily for demonstration purposes - remove when not needed anymore
 import tempGroupPic from '../../../css/images/profile_default.png';
 
-//'display' is used to show and hide the modal
+//'display' is used to show the modal
 const display = {
     display: 'block'
 };
-//'display' is used to show and hide the modal
+//'hide' is used to hide the modal
 const hide = {
     display: 'none'
 };
