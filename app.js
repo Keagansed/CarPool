@@ -10,20 +10,12 @@ let signUpRouter = require('./routes/api/signup.js');
 let signInRouter = require('./routes/api/signin.js');
 let verifyRouter = require('./routes/api/verify.js');
 let logoutRouter = require('./routes/api/logout.js');
-let submitVouchRouter = require('./routes/api/submitVouch.js');
-let getVouchesRouter = require('./routes/api/getVouches.js');
-let getProfileRouter = require('./routes/api/getProfile.js');
+let vouchRouter = require('./routes/api/vouch.js');
+let profileRouter = require('./routes/api/profile.js');
 let uploadRouter = require('./routes/api/uploadFile.js');
 let getImageRouter = require('./routes/api/getImage.js');
-let getAllUsersRouter = require('./routes/api/getAllUsers.js');
-let getUserRouter = require('./routes/api/getUser.js');
-let routesRouter = require('./routes/api/Route');
-let tripsRouter = require('./routes/api/addTrip');
-let respondToTripRouter = require('./routes/api/respondToTrip');
-let getTripsRouter = require('./routes/api/getTrips');
-let getTripRouter = require('./routes/api/getTrip');
-let cancelTripRouter = require('./routes/api/cancelTrip');
-let deleteTripRouter = require('./routes/api/deleteTrip');
+let routesRouter = require('./routes/api/route');
+let tripsRouter = require('./routes/api/trip.js');
 let carpoolRouter = require('./routes/api/carpool');
 let offerRouter = require('./routes/api/offers');
 
@@ -48,20 +40,12 @@ app.use('/api/account/signup', signUpRouter)
 app.use('/api/account/signin', signInRouter)
 app.use('/api/account/verify', verifyRouter)
 app.use('/api/account/logout', logoutRouter)
-app.use('/api/account/submitVouch', submitVouchRouter)
-app.use('/api/account/getVouches', getVouchesRouter)
-app.use('/api/account/getProfile', getProfileRouter)
+app.use('/api/account/vouch', vouchRouter)
+app.use('/api/account/profile', profileRouter)
 app.use('/api/account/uploadFile', uploadRouter)
 app.use('/api/account/getImage', getImageRouter)
-app.use('/api/account/getAllUsers', getAllUsersRouter)
-app.use('/api/account/getUser', getUserRouter)
 app.use('/api/system/route', routesRouter)
-app.use('/api/system/addTrip', tripsRouter)
-app.use('/api/system/respondToTrip', respondToTripRouter)
-app.use('/api/system/getTrips', getTripsRouter)
-app.use('/api/system/getTrip', getTripRouter)
-app.use('/api/system/cancelTrip', cancelTripRouter)
-app.use('/api/system/deleteTrip', deleteTripRouter)
+app.use('/api/system/trip', tripsRouter)
 app.use('/api/system/carpool', carpoolRouter)
 app.use('/api/system/offers', offerRouter)
 

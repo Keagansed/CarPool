@@ -33,8 +33,8 @@ class CarpoolInfoModal extends Component {
     /*
      * Purpose: acquires the users that are in the carpool and sets them to the state.
      */
-    componentDidMount() {
-        fetch('/api/account/getAllUsers')
+    componentDidMount(){
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }

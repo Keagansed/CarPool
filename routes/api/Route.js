@@ -1,7 +1,24 @@
-var express = require('express');
-var router = express.Router();
+// File Type: API endpoint
+
+const express = require('express');
+
 const Route = require('../../models/Route.js');
 
+// This router handles all API calls that only rely on the Route collection.
+const router = express.Router();
+
+// This method creates a document in the Route collection.
+// Parameters: 
+//      userId: String;  Object id of a document in the User collection.
+//      startLocation: String;  Coordinates of the start of the route.
+//      endLocation: String;  Coordinates of the end of the route.
+//      waypoints: Array;  List of coordinates along the route.
+//      time: Time;  The time that you would normally travel the route.
+//      routeName; String;  The name of the route.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
 router.post('/newRoute',(req,res,next) => {
     const { body } = req;
     const {
@@ -9,10 +26,8 @@ router.post('/newRoute',(req,res,next) => {
         startLocation,
         endLocation,
         waypoints,
-        //days,
         time,
-        routeName,
-       // repeat
+        routeName
     } = body;
 
     const newRoute = new Route();
@@ -25,41 +40,66 @@ router.post('/newRoute',(req,res,next) => {
     newRoute.routeName = routeName;
     //newRoute.repeat = repeat;
  
-    newRoute.save((err, route) => {
-        if(err){  
+    newRoute.save((err) => {
+        if(err) {  
             return res.send({
                 success: false,
                 message: err
             });    
+        }else{
+            return res.send({
+                success: true,
+                message: "Success: Route Created"
+            });
         }
-
-        return res.send({
-            success: true,
-            message: "Success: Route Created"
-        });
     })
 
 })
 
+// This method gets all documents from the Route collection are for a particular user.
+// Parameters: 
+//      userId: String;  This is the object id of a document from the Route collection.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+//          data: JSON object; Contains the data from the DB query.
 router.get('/getRoutes',(req,res,next) => {
     const { query } = req;
     const { userId } = query;
+
     Route.find({
         userId: userId
     },
     (err,data) => {
-        res.send({
-            success: true,
-            message: "Routes retrieved successfully",
-            data: data
-        })
+        if(err) {
+            res.send({
+                success: false,
+                message: err
+            });
+        }else{
+            res.send({
+                success: true,
+                message: "Routes retrieved successfully",
+                data: data
+            });
+        }
     });
 
 })
 
+// This method gets a specific carpool document from the Route collection.
+// Parameters: 
+//      _id: String;  This is the object id of a document from the Route collection.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+//          data: JSON object; Contains the data from the DB query.
 router.get('/getRoute',(req,res,next) => { 
     const { query } = req;
     const { _id } = query;
+
     Route.find({
         _id: _id
     },
@@ -69,35 +109,60 @@ router.get('/getRoute',(req,res,next) => {
                 success: false,
                 message: "error, Route not found"
             })
+        }else{
+            res.send({
+                success: true,
+                message: "Route retrieved successfully",
+                data: data
+            });
         }
-        res.send({
-            success: true,
-            message: "Route retrieved successfully",
-            data: data
-        })
     });
 
 })
 
+// This method gets all documents from the Route collection that were not created by a user.
+// Parameters: 
+//      userId: String;  This is the object id of a document from the User collection.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+//          data: JSON object; Contains the data from the DB query.
 router.get('/getOtherRoutes',(req,res,next) => {  
     const { query } = req;
     const { userId } = query;
+
     Route.find({
         userId: {$ne: userId}
     },
     (err,data) => {
-        res.send({
-            success: true,
-            message: "Routes retrieved successfully",
-            data: data
-        })
+        if(err) {
+            res.send({
+                success: false,
+                message: err
+            });
+        }else{
+            res.send({
+                success: true,
+                message: "Routes retrieved successfully",
+                data: data
+            });
+        }
     });
 })
 
-
+// This method updates the routesCompared field of a document in the Route collection.
+// Parameters: 
+//      _id: String;  This is an object id of a document in the Route collection.
+//		arrRouteId: Array;  This is a list of object ids of documents in the Route collection values that should be added to the field.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
 router.post('/updateRoutesCompared',(req,res,next) => {  
     const { body } = req;
     const { arrRouteId, _id } = body;
+
     Route.update({
         _id: _id 
     },{
@@ -106,23 +171,32 @@ router.post('/updateRoutesCompared',(req,res,next) => {
         }
     },
     (err) => {
-        if(err){
+        if(err) {
             res.send({
                 success: false,
                 message: "Could not update Routes Compared",
-            })
-        } else{
+            });
+        }else{
             res.send({
                 success: true,
                 message: "Successfully updated Routes Compared",
-            })
+            });
         }
     });
 })
 
+// This method updates the recommendedRoutes field of a document in the Route collection.
+// Parameters: 
+//      _id: String;  This is an object id of a document in the Route collection.
+//		arrRouteId: Array;  This is a list of object ids of documents in the Route collection values that should be added to the field.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
 router.post('/updateRecommendedRoutes',(req,res,next) => {  
     const { body } = req;
     const { arrRouteId, _id } = body;
+
     Route.update({
         _id: _id 
     },{
@@ -131,16 +205,16 @@ router.post('/updateRecommendedRoutes',(req,res,next) => {
         }
     },
     (err) => {
-        if(err){
+        if(err) {
             res.send({
                 success: false,
                 message: "Could not update Recommended Routes",
-            })
-        } else{
+            });
+        }else{
             res.send({
                 success: true,
                 message: "Successfully updated Recommended Routes",
-            })
+            });
         }
     });
 })

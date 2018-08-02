@@ -55,7 +55,7 @@ class EditNameModal extends Component {
     * the update was successful
     */
     changeName(){
-        fetch('/api/account/getProfile/updateName', {
+        fetch('/api/account/profile/updateName',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

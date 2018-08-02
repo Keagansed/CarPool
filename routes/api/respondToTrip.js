@@ -3,7 +3,15 @@ var router = express.Router();
 
 const Trip = require('../../models/Trip.js');
 
-router.post('/',(req,res,next)=>{
+// This method handles a users respons to a trip.
+// Parameters: 
+//      _id: String;  This is an object id of a Trip collection.
+//      userID: String;  This is the user who is responding to the trip.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+router.post('/',(req,res,next) => {
     const { body } = req;
     let {
         _id,
@@ -14,7 +22,6 @@ router.post('/',(req,res,next)=>{
     let dateTime;
     let days;
     let users = [];
-
 
     Trip.find({
         _id:_id,
@@ -37,14 +44,15 @@ router.post('/',(req,res,next)=>{
             }
             },
             {upsert: true},
-            function(err){
-                if (err)
+            function(err) {
+                if(err) {
                     return res.send({
                         success:false,
                         message:"Error did not respond"
                     });
-                else
+                }else{
                     return res.send({success:true});
+                }
             }
         );
     });

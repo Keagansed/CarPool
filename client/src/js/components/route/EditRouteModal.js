@@ -41,7 +41,7 @@ class EditRouteModal extends Component{
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        fetch('/api/account/getAllUsers')
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
         

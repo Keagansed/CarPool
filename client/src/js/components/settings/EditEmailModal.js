@@ -46,8 +46,8 @@ class EditEmailModal extends Component {
     * Purpose: API call to the backend that updates the users email and returns whether or not
     * the update was successful
     */
-    changeEmail() {
-        fetch('/api/account/getProfile/updateEmail', {
+    changeEmail(){
+        fetch('/api/account/profile/updateEmail',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

@@ -15,7 +15,7 @@ class Vouches  extends Component {
 
     componentDidMount() {
         const idFor = this.props._id;
-        fetch('/api/account/getVouches?idFor=' + idFor)
+        fetch('/api/account/vouch/getVouches?idFor=' + idFor)
             .then(res => res.json())
             .then(vouches => this.setState({vouches}));
     }

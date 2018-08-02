@@ -54,8 +54,8 @@ class EditPasswordModal extends Component {
     * Purpose: API call to the backend that updates the users password and returns whether or not
     * the update was successful
     */
-    changePassword() {
-        fetch('/api/account/getProfile/updatePassword', {
+    changePassword(){
+        fetch('/api/account/profile/updatePassword',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

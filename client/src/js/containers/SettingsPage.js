@@ -3,7 +3,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
-import AlertsSettings from '../components/settings/AlertsSettings';
+import AlertsSettings from './AlertsSettings';
 import Navbar from '../components/navigation/Navbar';
 import NavTabs from '../components/settings/NavTabs';
 import ProfileSettings from '../components/settings/ProfileSettings';

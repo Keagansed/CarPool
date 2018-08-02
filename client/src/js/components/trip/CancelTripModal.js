@@ -42,7 +42,7 @@ class CancelTripModal extends Component{
     }
 
     cancelTrip = ()=> {
-        fetch('/api/system/cancelTrip', {
+        fetch('/api/system/trip/cancelTrip', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -68,7 +68,7 @@ class CancelTripModal extends Component{
     }
 
     deleteTrip = ()=> {
-        fetch('/api/system/deleteTrip?_id='+this.props.trip._id)
+        fetch('/api/system/trip/deleteTrip?_id='+this.props.trip._id)
             .then(res => res.json())
             .then(json => {
             });

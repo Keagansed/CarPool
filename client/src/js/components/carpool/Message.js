@@ -27,8 +27,13 @@ class Message extends Component {
     /*
      * Purpose: gets all the users in order to obtain the name of the sender of the message.
      */
-    componentDidMount() {
-        fetch('/api/account/getAllUsers')
+    componentDidMount(){
+        const idFor = this.props._id;
+        fetch('/api/account/vouch/getVouches?idFor='+idFor)
+            .then(res => res.json())
+            .then(vouches => this.setState({vouches}));
+
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
 

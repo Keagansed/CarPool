@@ -51,7 +51,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
             })
         }
 
-        fetch('/api/system/getTrip?_id='+this.props.match.params.tripID)
+        fetch('/api/system/trip/getTrip?_id='+this.props.match.params.tripID)
             .then(res => res.json())
             .then(json => {
                 this.setState({trip : json});
@@ -74,7 +74,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
                     });
             });
 
-        fetch('/api/account/getAllUsers')
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }

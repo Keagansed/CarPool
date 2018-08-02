@@ -62,8 +62,13 @@ class TripSuggest extends Component {
     /*
      * Purpose: acquires all the users and stores them in the 'user' field.
      */
-    componentDidMount() {
-        fetch('/api/account/getAllUsers')
+    componentDidMount(){
+        const idFor = this.props._id;
+        fetch('/api/account/vouch/getVouches?idFor='+idFor)
+            .then(res => res.json())
+            .then(vouches => this.setState({vouches}));
+
+        fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
             .then(json => this.setState({user: json}));
 
@@ -173,8 +178,7 @@ class TripSuggest extends Component {
         });
 
         this.buttons = this.state.buttons;
-
-        fetch('/api/system/respondToTrip',{
+        fetch('/api/system/trip/respondToTrip',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

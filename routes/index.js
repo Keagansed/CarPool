@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+// File Type: API endpoint
 
-/* GET home page. */
+const express = require('express');
+
+// This router starts the render process.
+const router = express.Router();
+
+// This returns the frontend components.
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express' });
 });
 
 module.exports = router;

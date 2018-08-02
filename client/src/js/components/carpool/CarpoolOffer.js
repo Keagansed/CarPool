@@ -49,8 +49,8 @@ class CarpoolOffer extends Component {
      * Purpose: acquires the user that sent the carpool offer through an api call and sets
      * the user to the sender field in the state.
      */
-    componentDidMount() {
-        fetch('/api/account/getProfile?_id=' + this.props.store.senderId, {
+    componentDidMount(){
+        fetch('/api/account/profile?_id=' + this.props.store.senderId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

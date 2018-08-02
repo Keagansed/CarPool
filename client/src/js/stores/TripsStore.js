@@ -15,7 +15,7 @@ class tripsStore {
     @observable tripID;
 
     @action addTrip = (suggestTrip,messageContent,users) => {
-        fetch('/api/system/addTrip',{
+        fetch('/api/system/trip/addTrip',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

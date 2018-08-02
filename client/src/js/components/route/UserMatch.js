@@ -50,7 +50,7 @@ class UserMatch  extends Component {
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        fetch('/api/account/getProfile?_id=' + this.props.userId, {
+        fetch('/api/account/profile?_id=' + this.props.userId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
