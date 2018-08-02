@@ -1,8 +1,14 @@
-import '../../../css/components/NewRoute.css'
-import { observer } from "mobx-react";
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// FILE NO LONGER IN USE - TO BE DELETED AFTER ALL FUNCTIONALITY HAS BEEN TRANSFERRED
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 import React, { Component } from 'react';
+import { observer } from "mobx-react";
 import { Redirect, Link } from 'react-router-dom';
-import RoutesStore from '../../stores/RoutesStore'
+
+import RoutesStore from '../../stores/RoutesStore';
+
+import '../../../css/components/NewRoute.css';
 
 @observer class NewRoute extends Component{
     constructor(){
