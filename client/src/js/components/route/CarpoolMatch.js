@@ -8,11 +8,11 @@ import OffersStore from '../../stores/OffersStore'
 //Just using temporarily for demonstration purposes - remove when not needed anymore
 import tempGroupPic from '../../../css/images/profile_default.png';
 
-//'display' is used to show and hide the modal
+//'display' is used to show the modal
 const display = {
     display: 'block'
 };
-//'display' is used to show and hide the modal
+//'hide' is used to hide the modal
 const hide = {
     display: 'none'
 };
@@ -46,7 +46,7 @@ class CarpoolMatch  extends Component {
     * The purpose of the componentWillMount method is to perform all programming tasks
     * that need to take place before the component is rendered on the screen.
     */
-    componentWillMount(){
+    componentWillMount() {
         fetch(
             '/api/system/Route/getRoute?_id=' + this.props.uRouteId, {
                 method:'GET',
@@ -129,7 +129,7 @@ class CarpoolMatch  extends Component {
     /*
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
-    makeOffer(){
+    makeOffer() {
         fetch('/api/system/route/getRoute?_id=' + this.props.routeArr[0], {
             method:'GET',
             headers:{
@@ -152,7 +152,7 @@ class CarpoolMatch  extends Component {
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
     */
-    render(){
+    render() {
         var modal = [];
         // Push the content of the modal to the array
         modal.push(
