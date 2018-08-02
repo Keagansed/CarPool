@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+// File Type: Component
+
 import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
 import CarpoolStore from '../../stores/CarpoolStore'
 
@@ -10,7 +12,17 @@ const hide = {
     display: 'none'
 };
 
-class CarpoolOffer  extends Component {
+/*
+ * Purpose: a modal interface that displays an offer to a carpool. It shows the user who sent the
+ * invite and allows you to accept or decline the offer.
+ */
+class CarpoolOffer extends Component {
+    /*
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'state' 
+     * contains the toggle field which is a boolean that determines the visibility of the modal
+     * , sender which is the user the that sent the object, and deleted which is boolean that 
+     * shows if the offer has been deleted or not.
+     */
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
@@ -22,14 +34,23 @@ class CarpoolOffer  extends Component {
         }
     }
 
+    /*
+     * Purpose: toggles whether the modal is visible or not by setting the 'toggle' field the 
+     * opposite of the previous value. It called when the carpool offer, the modal close button,
+     * or the accept/decline buttons are clicked.
+     */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
 
-    componentDidMount(){
-        fetch('/api/account/getProfile?_id=' + this.props.store.senderId,{
+    /*
+     * Purpose: acquires the user that sent the carpool offer through an api call and sets
+     * the user to the sender field in the state.
+     */
+    componentDidMount() {
+        fetch('/api/account/getProfile?_id=' + this.props.store.senderId, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -41,10 +62,15 @@ class CarpoolOffer  extends Component {
             this.setState({sender : json[0]});
         })
     }
-    
-    renderOtherMembers(){
+
+    /*
+     * Purpose: selects the appropriate the output text for the modal based on whether the
+     * carpool already exists or not
+     */    
+    renderOtherMembers() {
         let temp = [];
-        if (this.props.store.join){
+
+        if(this.props.store.join) {
             temp.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
                     <div className="col-6">Asking to join your existing carpool</div>
@@ -57,24 +83,39 @@ class CarpoolOffer  extends Component {
                 </div>
             );
         }
+
         return(temp);
     }
 
-    getCarpoolSize(){
-        if (this.props.store.join)
+    /*
+     * Purpose: returns the size of the carpool based on the value of 'join' in the carpool store
+     */
+    getCarpoolSize() {
+
+        if(this.props.store.join) {
             return 5;
-        else
+        }else{
             return 1;
+        }
+
     }
 
-    handleAcceptInvite(){
+    /*
+     * Purpose: calls the 'addCarpool' function in the store using the carpool offer ID. Changes
+     * the deleted state to true and closes the modal.
+     */
+    handleAcceptInvite() {
         CarpoolStore.addCarpool(this.props.offerId);
         this.setState({deleted: true});
         this.toggle();
     }
 
-    handleDeclineInvite(){
-        fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId,{
+    /*
+     * Purpose: does an api call to decline the carpool offer. Sets the deleted state to true
+     * and closes the modal.
+     */
+    handleDeclineInvite() {
+        fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -85,12 +126,18 @@ class CarpoolOffer  extends Component {
         .then(json => {
             console.log(json);
         });
+
         this.setState({deleted: true});
         this.toggle();
     }
 
-    render(){
+    /*
+     * Purpose: renders the component in the DOM. What is rendered is dependant on the 'deleted' field and the visibility of the modal
+     * is dependant on the 'toggle' field.
+     */
+    render() {
         var modal = [];
+
         modal.push(
             // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
@@ -127,9 +174,12 @@ class CarpoolOffer  extends Component {
             </div>
         );
 
-        if (this.state.deleted)
+        if(this.state.deleted){
+           
             return(<div></div>);
-        else{
+
+        }else{
+            
             return(
                 <div>
                     <div className="container-fluid bg-purple bordbot-2px-white" onClick={this.toggle}>
@@ -156,6 +206,7 @@ class CarpoolOffer  extends Component {
                 </div>
             );
         }
+
     }
 }
 

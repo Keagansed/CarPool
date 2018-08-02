@@ -1,6 +1,11 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 
+/**
+ * Purpose: An interface to allow the user to review other members of the Carpool after the Trip has concluded
+ */
 class UserReview extends Component{
     constructor(props) {
         super(props);
@@ -9,40 +14,33 @@ class UserReview extends Component{
             rating: 1,
             user:[],
         }
-
-        this.onStarClick = this.onStarClick.bind(this);
-    }
-
-    onStarClick(nextValue, prevValue, name) {
-        this.setState({rating: nextValue});
-        this.props.updateStars(this.props.id,nextValue);
+        // this.onStarClick = this.onStarClick.bind(this);
     }
 
     componentWillMount(){
         this.setState({user: this.props.user});
     }
 
-    getUsernameSurname(_id)
-    {
-        for (var x in this.state.user)
-        {
-            if(this.state.user[x]._id === _id)
-            {
+    onStarClick = (nextValue, prevValue, name)=> {
+        this.setState({rating: nextValue});
+        this.props.updateStars(this.props.id,nextValue);
+    }
+
+    getUsernameSurname = (_id)=> {
+        for (var x in this.state.user){
+            if(this.state.user[x]._id === _id){
                 return this.state.user[x].firstName + " " + this.state.user[x].lastName;
             }
         }
     }
 
-    updateReview(){
+    updateReview = ()=> {
         this.props.updateReview(this.props.id,document.getElementById(this.props.id).value);
     }
 
-    getUsername(_id)
-    {
-        for (var x in this.state.user)
-        {
-            if(this.state.user[x]._id === _id)
-            {
+    getUsername = (_id)=> {
+        for (var x in this.state.user){
+            if(this.state.user[x]._id === _id){
                 return this.state.user[x].firstName;
             }
         }

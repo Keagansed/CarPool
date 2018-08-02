@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
+// File Type: Component
+
 import { observer } from "mobx-react";
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getFromStorage } from '../../utils/localStorage.js';
-import ReviewTripModal from './ReviewTripModal';
 import CancelTripModal from './CancelTripModal';
 import MapComponent from '../google/GeneralMapWrapper';
+import ReviewTripModal from './ReviewTripModal';
+import { getFromStorage } from '../../utils/localStorage.js';
 
+/**
+ * Purpose: An interface to allow the user to set up a Trip with members inside a Carpool
+ */
 @observer class TripPage extends Component{
-
     constructor(){
         super();
 
@@ -75,19 +79,15 @@ import MapComponent from '../google/GeneralMapWrapper';
             .then(json => this.setState({user: json}));
     }
 
-    getUsernameSurname(_id)
-    {
-        for (var x in this.state.user)
-        {
-            if(this.state.user[x]._id === _id)
-            {
+    getUsernameSurname = (_id)=> {
+        for (let x in this.state.user) {
+            if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName + " " + this.state.user[x].lastName;
             }
         }
-
     }
 
-    getDateTime(){
+    getDateTime = ()=> {
         try{
             let dateTime = new Date(this.state.trip[0].dateTime);
 
@@ -104,7 +104,7 @@ import MapComponent from '../google/GeneralMapWrapper';
             const monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
             ];
-            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
             let day = dateTime.getDate();
             let dayNameNumber = dateTime.getDay();
             let month = dateTime.getMonth();
@@ -112,9 +112,7 @@ import MapComponent from '../google/GeneralMapWrapper';
             let date = days[dayNameNumber] + " " + day + " " + monthNames[month] + " " + year;
             return date + " @ " + time;
         }
-        catch (e){
-
-        }
+        catch (e){}
     }
 
     render(){
@@ -123,8 +121,7 @@ import MapComponent from '../google/GeneralMapWrapper';
         let driver = [];
         try{
             tripName = this.state.trip[0].tripName;
-            for(let user in this.state.trip[0].users)
-            {
+            for(let user in this.state.trip[0].users){
                 if(user !== this.state.trip[0].driver){
                     if(this.state.trip[0].users[user] === true)
                         carpoolers.push(
@@ -132,8 +129,7 @@ import MapComponent from '../google/GeneralMapWrapper';
                                 <div className="col-6 txt-left">{this.getUsernameSurname(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
                             </div>
                         );
-                }
-                else{
+                }else{
                     driver.push(
                         <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
                             <div className="col-6 txt-left">{this.getUsernameSurname(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
@@ -141,16 +137,15 @@ import MapComponent from '../google/GeneralMapWrapper';
                     );
                 }
             }
+
             if(new Date(this.state.trip[0].dateTime) < new Date()) {
                 this.reviewModal = (<ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>);
-            }
-            else{
+            }else{
                 this.reviewModal = (<CancelTripModal trip={this.state.trip[0]} user={this.state.user}/>);
             }
-        }
-        catch(E) {
 
         }
+        catch(E) {}
         
         return(
             <div className="size-100 bg-purple">

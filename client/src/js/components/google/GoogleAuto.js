@@ -1,25 +1,42 @@
-/* Googles autocomplete input box */
+// File Type: Component
 
-import React from 'react'
 import { observer } from "mobx-react";
-import RoutesStore from '../../stores/RoutesStore';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import React from 'react'
 
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import RoutesStore from '../../stores/RoutesStore';
+
+/*
+ * Purpose: provides the google start and end location input boxes that autocomplete.
+ */
 @observer class LocationSearchInput extends React.Component {
+    
+    /*
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'address' is
+     * the actual address that the user enters or selects from the dropdown.
+     */
     constructor(props) {
         super(props);  
         this.state = { address: '' }
     }
     
+    /*
+     * Purpose: sets the address to the value of the input box when the user edits the input box.
+     */
     handleChange = (address) => {
         this.setState({ address })
     }
     
+    /*
+     * Purpose: sets the address value to the selected address and also sets the google origin and 
+     * destination in the 'RoutesStore'.
+     */ 
     handleSelect = (address) => {
         this.setState({ address });
         geocodeByAddress(address)
         .then(results => {
-            if(this.props.placeholder === 'Start Location'){
+
+            if(this.props.placeholder === 'Start Location') {
                 RoutesStore.setGoogleOriginResult(results[0]);
             }else{
                 RoutesStore.setGoogleDestinationResult(results[0]);
@@ -27,18 +44,24 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
             
             getLatLng(results[0])
             .then(latLng => {
-                if(this.props.placeholder === 'Start Location'){ 
+
+                if(this.props.placeholder === 'Start Location') { 
                     RoutesStore.setOrigin(latLng);
                 }else{
                     RoutesStore.setdestination(latLng);
                 }
+
             })
         })
         .catch(error => console.error('Error', error))
     }
     
+    /*
+     * Purpose: renders the component in the DOM.
+     */ 
     render() {
-        return (
+        
+        return(
             <PlacesAutocomplete
                 value={this.state.address}
                 onChange={this.handleChange}
@@ -46,32 +69,34 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
             >
                 {
                     ({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                    <div className="col-11 mx-auto pad-0">
-                        <input
-                        {...getInputProps({
-                            placeholder: this.props.placeholder,
-                            className: 'form-control brad-2rem' // Class to change the input box
-                        })}
-                        />
-                        <div className="autocomplete-dropdown-container"> {/*Class for the dropdown box that contains all the suggestions*/}
-                            {suggestions.map(suggestion => {
-                                const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
-                                // inline style for demonstration purpose
-                                const style = suggestion.active
-                                ? { backgroundColor: '#fafafa', cursor: 'pointer', color:'#000' } //Styling for selected suggestion
-                                : { backgroundColor: '#ffffff', cursor: 'pointer', color:'#000' }; //Styling for all other suggestions
-                                return (
-                                    <div {...getSuggestionItemProps(suggestion, { className, style })}>
-                                        <span>{suggestion.description}</span>
-                                    </div>
-                                )
-                            })}
+                        <div className="col-11 mx-auto pad-0">
+                            <input
+                                {...getInputProps({
+                                    placeholder: this.props.placeholder,
+                                    className: 'form-control brad-2rem' // Class to change the input box
+                                })}
+                            />
+                            <div className="autocomplete-dropdown-container"> {/* Class for the dropdown box that contains all the suggestions*/}
+                                {suggestions.map(suggestion => {
+                                    const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+                                    // Inline style for demonstration purpose
+                                    const style = suggestion.active
+                                    ? { backgroundColor: '#fafafa', cursor: 'pointer', color:'#000' } // Styling for selected suggestion
+                                    : { backgroundColor: '#ffffff', cursor: 'pointer', color:'#000' }; // Styling for all other suggestions
+                                    
+                                    return (
+                                        <div {...getSuggestionItemProps(suggestion, { className, style })}>
+                                            <span>{suggestion.description}</span>
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
-                    </div>
                     )
                 }
             </PlacesAutocomplete>
         );
+        
     }
 }
 export default LocationSearchInput;

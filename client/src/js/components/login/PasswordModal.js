@@ -1,3 +1,5 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
 const display = {
@@ -7,7 +9,15 @@ const hide = {
     display: 'none'
 };
   
+/*
+ * Purpose: provides a modal interface for when a user has forgotten their password. 
+ */
 class Modal extends Component {
+
+    /*
+     * Purpose: calls the constructor of the parent class and initializes the fields. 'toggle' represents the 
+     * visibility of the modal component. 
+     */
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
@@ -17,12 +27,18 @@ class Modal extends Component {
         }
     }
   
+    /*
+     * Purpose: toggles the visibility of the component.  
+     */
     toggle(event) {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
   
+    /*
+     * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
+     */
     render() {
         var modal = [];
         modal.push(
@@ -52,7 +68,8 @@ class Modal extends Component {
                 </div>
             </div>
         );
-        return (
+        
+        return(
             <div className="mx-auto">
                 <a className="txt-white fw-100" onClick={this.toggle}>
                     Forgot Password?
@@ -60,6 +77,7 @@ class Modal extends Component {
                 {modal}
             </div>
         );
+        
     }
 }
 

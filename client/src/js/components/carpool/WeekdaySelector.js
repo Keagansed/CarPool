@@ -1,7 +1,16 @@
+//File Type: Component
+
 import React, { Component } from 'react';
 
+/*
+ * Purpose: provides an interface for selecting the days on which the trip will take place.
+ */
 class WeekdaySelector  extends Component {
-    render(){
+    /*
+     * Purpose: renders the component in the DOM.
+     */
+    render() {
+
         return(
             <div className="weekDays-selector">
                 <input type="checkbox" id="weekday-mon" onChange={this.props.updateDays} className="weekday" />
@@ -20,6 +29,7 @@ class WeekdaySelector  extends Component {
                 <label htmlFor="weekday-sun">S</label>
             </div>
         );
+        
     }
 }
 

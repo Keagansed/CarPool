@@ -1,6 +1,11 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 import Vouch from './Vouch'
 
+/**
+ * Purpose: Container to store and display various Vouch components for the user
+ */
 class Vouches  extends Component {
     constructor(props){
         super(props);
@@ -14,13 +19,14 @@ class Vouches  extends Component {
             .then(res => res.json())
             .then(vouches => this.setState({vouches}));
     }
-    render(){
+
+    render() {
         return(
             <div className="scroll-vert">
-                {/*Just an example... */}
-                {this.state.vouches.map((vouch) =>{
-                    return (<Vouch vouch={vouch} key={Math.random()}/>);
-                })
+                {
+                    this.state.vouches.map((vouch) => {
+                        return (<Vouch vouch={vouch} key={Math.random()}/>);
+                    })
                 }
             </div>
         );

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+// File Type: Component
 
-//Just using temporarily for demonstration purposes
-import tempProPic from '../../../css/images/profile_default.png';
+import React, { Component } from 'react';
 
 const display = {
     display: 'block'
@@ -10,11 +9,14 @@ const hide = {
     display: 'none'
 };
 
+
+/**
+ * Purpose: Interface to display the various vouches/ ratings the user has received
+ */
 class Vouch  extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-  
+
         this.state = {
             toggle: false,
             user:[]
@@ -27,13 +29,13 @@ class Vouch  extends Component {
             .then(json => this.setState({user: json}))
     }
 
-    toggle(event) {
+    toggle = (event)=> {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
     }
 
-    getUsername(_id) {
+    getUsername = (_id)=> {
         for (let x in this.state.user) {
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
@@ -42,16 +44,23 @@ class Vouch  extends Component {
 
     }
 
-    getUsernameSurname(_id) {
+    getUsernameSurname = (_id)=> {
         for (let x in this.state.user) {
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName + " " + this.state.user[x].lastName;
             }
         }
-
     }
 
-    printStars(numStars) {
+    getUserProfilePic = (_id)=> {
+        for (let x in this.state.user) {
+            if(this.state.user[x]._id === _id) {
+                return this.state.user[x].profilePic;
+            }
+        }
+    }
+
+    printStars = (numStars)=> {
         let starElements = [],
             n = numStars,
             i;
@@ -71,7 +80,10 @@ class Vouch  extends Component {
     }
 
     render(){
-        var modal = [];
+        let profilePic = this.getUserProfilePic(this.props.vouch.idBy);
+        const profilePicture = "./../api/account/getImage?filename=" + profilePic;
+        
+        let modal = [];
         modal.push(
             // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
@@ -115,7 +127,7 @@ class Vouch  extends Component {
                 <div className="container-fluid bg-white bordbot-2px-purple"  onClick={this.toggle}>
                     <div className="row txt-purple padver-10px">
                         <div className="col-2">
-                                <img src={tempProPic} className="mx-auto my-auto rounded-circle bord-2px-purple" height="60" width="60" alt="s" />
+                                <img src={profilePicture} className="mx-auto my-auto rounded-circle bord-2px-purple" height="60" width="60" alt="s" />
                         </div>
                         <div className="col-7">
                             <div className="col-12 txt-gold">

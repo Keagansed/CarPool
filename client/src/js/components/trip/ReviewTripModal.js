@@ -1,10 +1,10 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
-import UserReview from './UserReview';
 import VouchStore from '../../stores/VouchStore';
-import {
-    getFromStorage
-} from '../../utils/localStorage'
+import UserReview from './UserReview';
+import { getFromStorage } from '../../utils/localStorage'
 
 const display = {
     display: 'block'
@@ -13,11 +13,14 @@ const hide = {
     display: 'none'
 };
 
+/**
+ * Purpose: An interface to allow the user to review other members of the Carpool after the Trip has concluded
+ * This is a container component that holds and displays UserReview components
+ */
 class ReviewTripModal extends Component{
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-  
+    
         this.state = {
             toggle: false,
             rating: 1,
@@ -25,34 +28,32 @@ class ReviewTripModal extends Component{
         }
 
         this.userReviews = [];
-
-        this.updateReview = this.updateReview.bind(this);
-        this.updateStars = this.updateStars.bind(this);
-        this.submitReviews = this.submitReviews.bind(this);
-        this.updateUserReviewsDisplay = this.updateUserReviewsDisplay.bind(this);
     }
 
     componentWillMount(){
         this.updateUserReviewsDisplay();
     }
 
-    updateReview(id, message){
+    updateReview = (id, message)=> {
         this.userReviews[id].review = message;
     }
 
-    updateStars(id, stars){
+    updateStars = (id, stars)=> {
         this.userReviews[id].stars = stars;
     }
 
-    submitReviews(){
+    submitReviews = ()=>{
         for(let user in this.userReviews){
             VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review);
         }
         this.toggle();
     }
 
-    updateUserReviewsDisplay(){
+    updateUserReviewsDisplay = ()=> {
+        let sessionKey = getFromStorage('sessionKey').token;
+
         for(let user in this.props.trip.users) {
+
             if(this.props.trip.users[user] === true){
                 fetch('/api/account/getVouches?idFor=' + user)
                     .then(res => res.json())
@@ -65,24 +66,22 @@ class ReviewTripModal extends Component{
                     try{
                         for(let user in this.props.trip.users){
                             if(this.state.vouches[user].length === 0){
-                                if(user !== getFromStorage('sessionKey').token) {
+                                if(user !== sessionKey) {
                                     this.userReviews[user] = {};
                                     this.userReviews[user].stars = 1;
                                     userReviews.push(
-                                        <UserReview id={user} key={Math.random()} user={this.props.user}
-                                                    updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
                                     );
                                 }
-                            }
-                            else{
+                            }else{
                                 let hasVouch = false;
+
                                 for(let vouch in this.state.vouches[user]){
-                                    if(this.state.vouches[user][vouch].idBy === getFromStorage('sessionKey').token &&
-                                        this.state.vouches[user][vouch].idFor === user &&
-                                        this.state.vouches[user][vouch].tripID === this.props.trip._id)
+                                    if(this.state.vouches[user][vouch].idBy === sessionKey && this.state.vouches[user][vouch].idFor === user && this.state.vouches[user][vouch].tripID === this.props.trip._id){
                                         hasVouch = true;
+                                    }
                                 }
-                                if(user !== getFromStorage('sessionKey').token && !hasVouch) {
+                                if(user !== sessionKey && !hasVouch) {
                                     this.userReviews[user] = {};
                                     this.userReviews[user].stars = 1;
                                     userReviews.push(
@@ -93,16 +92,15 @@ class ReviewTripModal extends Component{
                             }
                         }
                     }
-                    catch (e){
-
-                    }
+                    catch (e){}
                     this.setState({userReviews: userReviews});
                 });
             }
+
         }
     }
   
-    toggle(event) {
+    toggle = (event)=> {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
@@ -110,7 +108,7 @@ class ReviewTripModal extends Component{
     }
 
     render(){
-        var modal = [];
+        let modal = [];
         modal.push(
             // Modal
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
