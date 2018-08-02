@@ -35,6 +35,7 @@ exports[`Search Component captures snapshot 1`] = `
         </div>
       </form>
       <div />
+       
     </div>
   </div>
 </div>
