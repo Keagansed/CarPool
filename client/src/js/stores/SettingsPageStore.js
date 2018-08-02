@@ -1,3 +1,5 @@
+// File Type: Store
+
 import { observable, action } from 'mobx';
 
 class settingsPageStore {

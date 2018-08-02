@@ -1,69 +1,84 @@
+// File Type: Component
+
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import logo  from "../../css/images/logo.png";
-import { getFromStorage } from '../utils/localStorage.js';
 import Modal from '../components/login/PasswordModal';
 
+import { getFromStorage } from '../utils/localStorage.js';
+import logo  from "../../css/images/logo.png";
+
+/*
+* Purpose: Login page where the user enters login details to proceed to the HomePage
+*/
 @observer class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        // ========= Properties ===========
+        
         this.state ={
           token:'',
         }; 
     }
 
-    //========= Render Component ===========
-    componentWillMount(){
+    /*
+    * Purpose: Check to see whether the user is already logged in
+    */
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
-            //verify token
+        if(obj && obj.token) {
             const { token } = obj;
+
             fetch('/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
-                if(json.success){
+                if(json.success) {
                     this.props.store.setToken(token);
                     this.props.store.setLoggedIn(true);
                 }
             })
         }
     }
-    componentDidMount(){}
 
-    updateLoginEmailValue = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.lEmail' variable to senders current value
+    */
+    updateLoginEmailValue = (event) => {
         this.props.store.lEmail = event.target.value;
     }
 
-    updateLoginPasswordValue = event =>
-    {
+    /*
+    * Purpose: Sets the 'store.lPassword' variable to senders current value
+    */
+    updateLoginPasswordValue = (event) => {
         this.props.store.lPassword = event.target.value;
     }
 
-    handleLogin = event => {
+    /*
+    * Purpose: Calls the store.authenticate() function
+    */
+    handleLogin = (event) => {
         event.preventDefault();
         this.props.store.authenticate(this.state.email, this.state.password);
     }
 
-    openModal = event =>{
+    /*
+    * Purpose: Toggles the modal to display
+    */
+    openModal = (event) => {
         event.preventDefault();
-        console.log("link clicked");
         this.modal.open();
     }
 
     render() {
-
         const { loggedIn } = this.props.store;
     
-        if(!loggedIn){
+        if(!loggedIn) {
             return(
                 <div className="vertical-center bg-purple">
                     <div className="container-fluid">
                         <div className="row">
-                                <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} id="imgLogo" alt="carpool_logo"/> 
+                            <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} id="imgLogo" alt="carpool_logo"/> 
                         </div>
                         <form>
                             <div className="row">
@@ -84,7 +99,7 @@ import Modal from '../components/login/PasswordModal';
                     </div>
                 </div>
             );
-        }else{
+        }else {
 
             return(               
                  <Redirect to={{

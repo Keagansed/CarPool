@@ -1,5 +1,10 @@
-import { observable, action } from 'mobx';
+// File Type: Store
 
+import { action, observable } from 'mobx';
+
+/*
+ Provides a store for variables and methods for the homepages's tabs
+ */
 class homePageStore {
 
     @observable token = '';

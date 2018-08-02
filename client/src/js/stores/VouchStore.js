@@ -1,8 +1,8 @@
+// File Type: Store
+
 import { action } from 'mobx';
 
-import {
-    getFromStorage
-} from '../utils/localStorage.js'
+import { getFromStorage } from '../utils/localStorage.js'
 
 class vouchStore {
     @action submitVouch(tripID, idFor, rating, reviewBody){

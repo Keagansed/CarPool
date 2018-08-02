@@ -1,16 +1,22 @@
+// File Type: Component
+
 import React, { Component } from 'react';
 
-import { getFromStorage } from '../../utils/localStorage';
 import EditNameModal from './EditNameModal';
 import EditEmailModal from './EditEmailModal';
 import EditPasswordModal from './EditPasswordModal';
 import EditProfilePictureSetting from './EditProfilePictureModal'
+import LogoutSetting from './LogoutSetting';
 import UploadIDSetting from './UploadIDModal';
 import UploadDriversSetting from './UploadDriversModal';
 import UploadCarPicatureSetting from './UploadCarPicture';
 import UploadCarRegistrationSetting from './UploadCarRegistration';
-import LogoutSetting from './LogoutSetting';
 
+import { getFromStorage } from '../../utils/localStorage';
+
+/*
+* Purpose: This is a container component that holds all the relevant settings components
+*/
 class ProfileSettings  extends Component {
     constructor(){
         super();
