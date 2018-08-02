@@ -1,9 +1,14 @@
+// File Type: API Endpoint
+
 let express = require('express');
 let router = express.Router();
 const Trip = require('../../models/Trip.js');
 
 router.post('/',(req,res,next)=>{
+    // Variable to store the body of the API call
     const { body } = req;
+
+    // Variables to store incoming data from the API call
     const{
         tripName,
         carpoolID,
@@ -14,37 +19,37 @@ router.post('/',(req,res,next)=>{
         driver
     } = body;
 
-    if(!tripName){
+    if(!tripName) {
         return res.send({
             success:false,
             message:"Error: Carpool name cannot be blank!"
         });
     }
-    if(!carpoolID){
+    if(!carpoolID) {
         return res.send({
             success:false,
             message:"Error: CarpoolID cannot be blank!"
         });
     }
-    if(!dateTime){
+    if(!dateTime) {
         return res.send({
             success:false,
             message:"Error: Date cannot be blank!"
         });
     }
-    if(!days){
+    if(!days) {
         return res.send({
             success:false,
             message:"Error: Days cannot be blank!"
         });
     }
-    if(!users){
+    if(!users) {
         return res.send({
             success:false,
             message:"Error: Users cannot be blank!"
         });
     }
-    if(!driver){
+    if(!driver) {
         return res.send({
             success:false,
             message:"Error: Driver cannot be blank!"
@@ -60,7 +65,7 @@ router.post('/',(req,res,next)=>{
     newTrip.users = users;
     newTrip.driver = driver;
     newTrip.save((err,trip)=>{
-        if(err){
+        if(err) {
             return res.send({
                 success:false,
                 message:"Error: Server error"

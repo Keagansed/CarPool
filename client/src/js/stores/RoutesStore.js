@@ -1,4 +1,7 @@
+// File Type: Store
+
 import { action, observable  } from 'mobx';
+
 import { waypointGenerator } from './../utils/waypointGenerator';
 
 class routesStore {

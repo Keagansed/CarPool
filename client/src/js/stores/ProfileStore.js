@@ -1,4 +1,7 @@
-import { observable, action, computed } from 'mobx';
+// File Type: Store
+
+import {  action, computed, observable } from 'mobx';
+
 import { calcSecLvl } from '../utils/trustFactor.js'
 
 class profileStore {

@@ -1,4 +1,6 @@
-import { observable, action } from 'mobx';
+// File Type: Store
+
+import { action, observable } from 'mobx';
 
 class RouteStore {
 

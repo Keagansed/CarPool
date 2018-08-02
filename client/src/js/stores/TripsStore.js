@@ -1,4 +1,7 @@
-import { observable, action } from 'mobx';
+// File Type: Store
+
+import { action, observable } from 'mobx';
+
 import { getFromStorage } from '../utils/localStorage.js'
 
 class tripsStore {
