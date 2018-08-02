@@ -61,9 +61,10 @@ class CarpoolInfoModal extends Component {
      * is clicked.
      */
     toggle(event) {
-        this.setState(prevState => {
+        event.preventDefault();
+        this.setState(prevState => ({
             toggle: !prevState.toggle
-        });
+        }));
     }
 
     /*
