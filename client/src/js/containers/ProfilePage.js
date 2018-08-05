@@ -25,15 +25,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 	}
 	
 	componentDidMount() {
-		this.props.store.getProfile(this.props.match.params._id);
 
-		fetch('/api/account/verify?token='+this.props.match.params._id)
-		.then(res => res.json())
-		.then(json => {
-			if(!json.success) {
-				this.disableEditBut();
-			}
-		});
 	}
 	
 	/*
@@ -46,23 +38,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 			_id: params._id,
 		})
 
-		this.props.store.getProfile(params._id);		
-		const obj = getFromStorage('sessionKey');
-
-        if(obj && obj.token) {
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.token = token;
-
-                    this.setState({
-                        loading: false,
-                    })
-                }
-            })
-        }
+		this.props.store.getProfile(params._id);
 	}
 	
 	/*

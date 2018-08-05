@@ -1,0 +1,39 @@
+const UserSession = require('../../models/UserSessions.js');
+
+let verify = function(req, res, next) {
+    const { query } = req;
+    const { token } = query;
+    
+    
+
+    let date = new Date();
+    let currentDate = date.toDateString();
+    
+    UserSession.find({
+        userId:token,
+        timestamp: currentDate
+    }, (err,sessions) => {
+        if(err) {
+            return res.send({ 
+                success:false,
+                message:"Error: Server Error"
+            });
+        }
+        
+        if(sessions.length != 1) {
+            return res.send({ 
+                success:false,
+                message:"Error: Invalid session"
+            });
+        }else {
+            console.log("Verifying:", token)
+            res.send({ 
+                success:true,
+                message:"Good session"
+            });
+            next();
+        }
+    });
+}
+
+module.exports = verify;

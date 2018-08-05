@@ -6,6 +6,7 @@ const User = require('../../models/User.js');
 
 // The router handles all API calls that rely only on the User collection in the DB.
 var router = express.Router();
+let verify = require('../middleware/verify.js');
 
 // This method gets a user document from the User collection.
 // Parameters: 
@@ -15,19 +16,21 @@ var router = express.Router();
 //          message: String;  Contains the error message or completion message.
 //			or
 //          data: JSON object; Contains the data from the DB query.
-router.get('/',(req,res,next)=>
-{
+router.use(verify);
+
+router.get('/',(req,res,next) => {
 	const { query } = req;
-	const { _id } = query;
+	const { token } = query;
 
 	User.find({
-		_id:_id,
+		_id : token,
 	},(err,data) => {
-		if(err) {
-			res.send({
+		if(err) {			
+			res.send({				
 				message: err
 			});
 		}else{
+			console.log("Success:", data)
 			res.json(data);
 		}
 	});
@@ -37,8 +40,7 @@ router.get('/',(req,res,next)=>
 // Return Value:
 //      Response containing: 
 //          data: JSON object;  Contains the result of the DB query.
-router.get('/getAllUsers',(req,res,next)=>
-{
+router.get('/getAllUsers',(req,res,next) => {
 	User.find({
 	},(err,data) => {
 		res.json(data);
@@ -106,7 +108,7 @@ router.post('/getUserByName', (req,res,next) => {
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
-router.post('/updateEmail', (req,res,next) =>{
+router.post('/updateEmail', (req,res,next) => {
 	const { body } = req;
 	const { id, email } = body;
 
@@ -158,7 +160,7 @@ router.post('/updateEmail', (req,res,next) =>{
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
-router.post('/updateName', (req,res,next) =>{
+router.post('/updateName', (req,res,next) => {
 	const { body } = req;
 	const { id, name, lastName } = body;
 	
@@ -193,7 +195,7 @@ router.post('/updateName', (req,res,next) =>{
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
-router.post('/updatePassword', (req,res,next) =>{
+router.post('/updatePassword', (req,res,next) => {
 	const { body } = req;
 	let { id, password, newPassword } = body;
 	User.find({
