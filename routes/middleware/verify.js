@@ -26,10 +26,9 @@ let verify = function(req, res, next) {
                 message:"Error: Invalid session"
             });
         }else {
-            console.log("Verifying:", token)
-            res.send({ 
-                success:true,
-                message:"Good session"
+            res.set({ 
+                verifySuccess:true,
+                verifyMessage:"Good session"
             });
             next();
         }

@@ -9,8 +9,6 @@ import Trusts from '../components/profile/Trusts';
 import Vouches from '../components/vouching/Vouches';
 import VouchAverage from "../components/vouching/VouchAverage";
 
-import { getFromStorage } from '../utils/localStorage.js';
-
 /*
 * Purpose: Container compenent for the user ProfilePage, only takes care of tab switching all data
 * is in sub-components
@@ -23,14 +21,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 			_id:""
 		};
 	}
-	
-	componentDidMount() {
 
-	}
-	
-	/*
-    * Purpose: Verifies the users token before component mounting to make sure the user is authorised
-    */
 	componentWillMount() {
 		const { match: {params}} = this.props;
 

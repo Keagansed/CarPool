@@ -30,7 +30,6 @@ router.get('/',(req,res,next) => {
 				message: err
 			});
 		}else{
-			console.log("Success:", data)
 			res.json(data);
 		}
 	});
