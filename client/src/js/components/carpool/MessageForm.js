@@ -22,6 +22,12 @@ class MessageForm extends Component {
         this.handleUserInput = this.handleUserInput.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
     }
+
+    _handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.sendMessage();
+        }
+    }
     
     /*
      * Purpose:  sets the 'newMessageContent' field to the text from the corresponding input element in the form
@@ -57,7 +63,9 @@ class MessageForm extends Component {
                     <div className="row height-100p txt-purple font-20px fw-bold">
                         <input type="text" placeholder="Write a message..." className="col-10 bord-0 focusbord-1px-purple"
                                value={this.state.newMessageContent}
-                               onChange={this.handleUserInput}/>
+                               onChange={this.handleUserInput}
+                               onKeyPress={this._handleKeyPress}
+                               />
                         <button className="col-2 btn height-100p bg-white txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.sendMessage}>
                             <i className="fa fa-arrow-circle-right" ></i>
                         </button>
