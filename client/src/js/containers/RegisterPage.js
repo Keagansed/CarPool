@@ -32,13 +32,14 @@ function validate(fName, lName, idNum, email, password1, password2) {
             password1: '',
             password2: '',
 
-            everFocusedFirstName: false,
-            everFocusedLastName: false,
-            everFocusedID: false,
-            everFocusedEmail: false,
-            everFocusedPassword1: false,
-            everFocusedPassword2: false,
-            inFocus: '',
+            touched: {
+                fName: false,
+                lName: false,
+                idNum: false,
+                email: false,
+                password1: false,
+                password2: false,
+            },
         };
         this.updateSignUpfNameValue = this.updateSignUpfNameValue.bind(this);
         this.updateSignUplNameValue = this.updateSignUplNameValue.bind(this);
@@ -98,7 +99,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
     }
 
     /*
-    * Purpose: Calls the store.signUp() function
+    * Purpose: Calls the store.signUp() function if all values have been entered correctly
     */
     handleSignup = event => {
         event.preventDefault();
@@ -108,13 +109,35 @@ function validate(fName, lName, idNum, email, password1, password2) {
         this.props.store.signUp();
     }
 
+    /*
+    * Purpose: Check whether all fields have been entered correctly
+    */
     canBeSubmitted() {
         const errors = validate(this.state.fName, this.state.lName, this.state.idNum, this.state.email, this.state.password1, this.state.password2);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         return !isDisabled;
     }
 
+    /*
+    * Purpose: Give fields that have been entered incorrectly red borders
+    */
+    handleBlur = (field) => (evt) => {
+        this.setState({
+          touched: { ...this.state.touched, [field]: true },
+        });
+    }
+
     render() {
+        /*
+        * Purpose: Only give fields red borders if the user has changed/access them
+        * and they are still not valid.
+        */
+        const shouldMarkError = (field) => {
+            const hasError = errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
+
         const { registered } = this.props.store; 
         const errors = validate(this.state.fName, this.state.lName, this.state.idNum, this.state.email, this.state.password1, this.state.password2);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
@@ -132,7 +155,8 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     onChange={this.updateSignUpfNameValue} 
                                     type="text" 
                                     id="inputFirstName"
-                                    className={(errors.fName ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    className={(shouldMarkError('fName') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('fName')}
                                     placeholder="First Name"
                                     value={this.state.fName}
                                 />  
@@ -142,7 +166,8 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     onChange={this.updateSignUplNameValue}  
                                     type="text" 
                                     id="inputLastName"
-                                    className={(errors.fName ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    className={(shouldMarkError('lName') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('lName')}
                                     placeholder="Last Name" 
                                     value={this.state.lName}
                                 /> 
@@ -152,7 +177,8 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     onChange={this.updateSignUpIDValue} 
                                     type="text" 
                                     id="inputID"
-                                    className={(errors.fName ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    className={(shouldMarkError('idNum') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('idNum')}
                                     placeholder="ID Number"  
                                     value={this.state.idNum}
                                 /> 
@@ -162,7 +188,8 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     onChange={this.updateSignUpEmailValue} 
                                     type="email" 
                                     id="inputEmail"
-                                    className={(errors.email ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('email')}
                                     placeholder="Email"
                                     value={this.state.email}
                                 /> 
@@ -172,7 +199,8 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     onChange={this.updateSignUpPasswordValue1} 
                                     type="password" 
                                     id="inputPassword"
-                                    className={(errors.password1 ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    className={(shouldMarkError('password1') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('password1')}
                                     placeholder="Password" 
                                     value={this.state.password1}
                                 /> 
@@ -182,7 +210,8 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     onChange={this.updateSignUpPasswordValue2} 
                                     type="password" 
                                     id="inputConfirmPassword"
-                                    className={(errors.password2 ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    className={(shouldMarkError('password2') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('password2')}
                                     placeholder="Confirm Password"
                                     value={this.state.password2}
                                 /> 
