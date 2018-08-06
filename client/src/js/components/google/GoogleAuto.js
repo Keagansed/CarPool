@@ -69,11 +69,12 @@ import RoutesStore from '../../stores/RoutesStore';
             >
                 {
                     ({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                        <div className="col-11 mx-auto pad-0">
+                        <div className="col-6 pad-0 mx-auto">
                             <input
                                 {...getInputProps({
                                     placeholder: this.props.placeholder,
-                                    className: 'form-control brad-2rem' // Class to change the input box
+                                    className: 'form-control brad-2rem', // Class to change the input box
+                                    id: "inputStartLocation"
                                 })}
                             />
                             <div className="autocomplete-dropdown-container"> {/* Class for the dropdown box that contains all the suggestions*/}

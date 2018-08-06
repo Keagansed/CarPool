@@ -26,7 +26,9 @@ import RoutesStore from "../../stores/RoutesStore";
             //carpoolTabActive represents the status of the "Carpools" tab.
             carpoolTabActive: "",
             //tripTabActive represents the status of the "Trips" tab.
-            tripTabActive: "",    
+            tripTabActive: "", 
+            //addTabActive represents the status of the "Add" tab. 
+            addTabActive: "",  
         }
     }
 
@@ -42,6 +44,7 @@ import RoutesStore from "../../stores/RoutesStore";
             routeTabActive: "active",
             carpoolTabActive: "",
             tripTabActive: "", 
+            addTabActive: "",
         });
     }
 
@@ -57,6 +60,7 @@ import RoutesStore from "../../stores/RoutesStore";
             routeTabActive: "",
             carpoolTabActive: "active",
             tripTabActive: "", 
+            addTabActive: "",
         });
     }
 
@@ -72,6 +76,19 @@ import RoutesStore from "../../stores/RoutesStore";
             routeTabActive: "",
             carpoolTabActive: "",
             tripTabActive: "active", 
+            addTabActive: "",
+        });
+    }
+
+    handleAddToggle = (event) => {
+        event.preventDefault();
+
+        this.props.store.toggleToAdd();
+        this.setState({
+            routeTabActive: "",
+            carpoolTabActive: "",
+            tripTabActive: "", 
+            addTabActive: "active",
         });
     }
 
@@ -83,30 +100,32 @@ import RoutesStore from "../../stores/RoutesStore";
         return(
             <div className="fixed-top container-fluid height-50px bg-aqua">
                 <div className="row font-20px height-100p">
-                    <div className="col-10 pad-0">
+                    <div className="col-12 pad-0">
                         <button 
-                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.routeTabActive} 
+                            className={"btnTab col-3 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.routeTabActive} 
                             onClick={this.handleRouteToggle}
                         >
                             Routes
                         </button>
                         <button 
-                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.carpoolTabActive} 
+                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.carpoolTabActive} 
                             onClick={this.handleCarPoolToggle}
                         >
                             Carpools
                         </button>
                         <button 
-                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px " + this.state.tripTabActive} 
+                            className={"btnTab col-3 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.tripTabActive} 
                             onClick={this.handleTripToggle}
                         >
                             Trips
                         </button>
+                        <button 
+                            className={"btnTab col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.addTabActive} 
+                            onClick={this.handleAddToggle}
+                        >
+                            <i className="fa fa-plus"></i>
+                        </button>
                     </div>
-                    <NewRouteModal 
-                        store={RoutesStore} 
-                        token={this.props.store.token}
-                    />
                 </div>
             </div>
         )

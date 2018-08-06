@@ -386,6 +386,16 @@ button.btnTabWhiteActive.active{
 }
 
 /* ============================================================================ */
+/*AddRoute*/
+#inputRouteName,
+#inputRouteTime,
+#inputStartLocation{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+
+/* ============================================================================ */
 /*LoginPage*/
 /* Forgot password modal */
 #inputEmail, #inputPassword{
