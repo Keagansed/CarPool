@@ -110,7 +110,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         return(
             <div className="size-100 bg-purple">
                 {this.renderNavTabs()}
-                <div className="padtop-50px padbot-50px">
+                <div className="padtop-50px padbot-50px scroll-vert">
                     {this.setTab()}
                 </div>
                 {this.renderNavBar()}

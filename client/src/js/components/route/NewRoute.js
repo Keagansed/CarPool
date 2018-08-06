@@ -107,6 +107,7 @@ class NewRouteModal extends Component{
     */
     render() {
         return(
+            
             <div className="mx-auto">
                 <form>
                     <div className="row">
@@ -145,18 +146,16 @@ class NewRouteModal extends Component{
                         <h6 className="fw-bold mx-auto m-0 txt-white">Start and End Locations</h6>
                     </div>
                     <div className="row padbot-10px">
-                        <div className="col-10 mx-auto">
-                            <div className="row">
-                                <LocationSearchInput placeholder="Start"/>  
-                                <LocationSearchInput placeholder="End"/> 
-                            </div>
-                        </div>
+                        <LocationSearchInput placeholder="Start Location"/>   
+                    </div>
+                    <div className="row padbot-10px">
+                        <LocationSearchInput placeholder="End Location"/>   
                     </div>
                     <MapWrapper/>
-                    <div className="row">
+                    <div className="row padtop-10px">
                         <button 
                             onClick={this.handleAddRoute} 
-                            className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
                         >
                             <b>Add Route</b>
                         </button>

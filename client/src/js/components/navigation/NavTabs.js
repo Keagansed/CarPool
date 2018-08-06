@@ -3,9 +3,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
-import NewRouteModal from '../route/NewRouteModal';
-import RoutesStore from "../../stores/RoutesStore";
-
 /*
 * The purpose of this NavTabs class is to provide a tabular menu that is available on the Home page.
 * This tabbed menu provides access to the "Routes", "Carpools", and "Trips" tabs on the Home page.

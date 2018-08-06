@@ -69,7 +69,7 @@ import RoutesStore from '../../stores/RoutesStore';
             >
                 {
                     ({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                        <div className="col-6 pad-0 mx-auto">
+                        <div className="col-10 pad-0 mx-auto">
                             <input
                                 {...getInputProps({
                                     placeholder: this.props.placeholder,
