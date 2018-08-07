@@ -202,6 +202,7 @@ router.post('/CarPic', upload.single('file'), (req, res, next) => {
  router.post('/CarRegistration', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.id};
 	
+	console.log('test');
   User.findOne(query,(err,user) => {
 		if(err) {
 			return res.send({ 
