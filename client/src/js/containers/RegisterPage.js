@@ -45,13 +45,6 @@ function validate(fName, lName, idNum, email, password1, password2) {
                 password2: false,
             },
         };
-        this.updateSignUpfNameValue = this.updateSignUpfNameValue.bind(this);
-        this.updateSignUplNameValue = this.updateSignUplNameValue.bind(this);
-        this.updateSignUpIDValue = this.updateSignUpIDValue.bind(this);
-        this.updateSignUpEmailValue = this.updateSignUpEmailValue.bind(this);
-        this.updateSignUpPasswordValue1 = this.updateSignUpPasswordValue1.bind(this);
-        this.updateSignUpPasswordValue2 = this.updateSignUpPasswordValue2.bind(this);
-        this.handleSignup = this.handleSignup.bind(this);
     }
 
     /*
