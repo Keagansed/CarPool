@@ -2,6 +2,7 @@
 
 import { action, observable, toJS } from 'mobx';
 
+import { calcSecLvl } from '../utils/trustFactor.js'
 import { generateCarpoolArr, generateDifferenceArray } from './../utils/arrayCheck';
 
 /*
@@ -23,8 +24,11 @@ class matchesStore {
     // Array to store carpools that will be recommended
     @observable recommendedCarpools = [];
 
-    // Inmteger to store the maximum radius for carpools to be matched in km
+    // Integer to store the maximum radius for carpools to be matched in km
     @observable maxRadius = 2;
+
+    // Array to store the user of each of the recommended routes
+    @observable usersOfRoutes = []
 
     /*
         Method to get all routes relevant to the user
@@ -76,8 +80,9 @@ class matchesStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success) {
-                this.filterRoutesByRadius(json.data[0]);  
+                this.filterRoutesByRadius(json.data[0]);
                 this.filterRoutesByTime(json.data[0]); 
+                this.getUsersAndFilterByTrust();
                 this.loadingRoutes = false;
             }else{
                 console.log(json.message);
@@ -218,6 +223,67 @@ class matchesStore {
             }
         }
     };
+
+    /*
+        Get the users, add to 'usersOfRoutes' array and then call actual filter function
+        'filterRoutesByTrustFactor'.
+    */
+   @action getUsersAndFilterByTrust = () => {
+        let userIds = [];
+
+        this.recommendedRoutes.forEach(route => {
+            userIds.push(route.userId);
+        });
+
+        console.log(userIds);
+
+        fetch('/api/account/profile/getSelectUsers?userIds=' + userIds)
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then((json) => {
+
+            if(json.success) {
+                json.data.forEach(user => {
+                    this.usersOfRoutes.push(user);   
+                });
+                this.filterRoutesByTrustFactor();
+            }else{
+                console.log(json.message);
+            }
+
+        });
+    }
+
+    /*
+        Helper function that orders the routes in descending order of the trust factor
+        of the users of the recommeded routes.
+    */
+    @action filterRoutesByTrustFactor = () => {
+        let trustFactors = [], i, j, size = this.recommendedRoutes.length, temp;
+
+        this.usersOfRoutes.forEach(user => {
+            trustFactors.push(calcSecLvl(user));
+        })
+
+        console.log(this.usersOfRoutes);
+        console.log(trustFactors);
+
+        for(i = 0; i < size - 1; i++) {
+            for(j = 0; j < (size -i - 1); j++) {
+                if(trustFactors[j] < trustFactors[j + 1]) {
+                    temp = trustFactors[j];
+                    trustFactors[j] = trustFactors[j + 1];
+                    trustFactors[j + 1] = temp;
+
+                    temp = this.recommendedRoutes[j];
+                    this.recommendedRoutes[j] = this.recommendedRoutes[j + 1];
+                    this.recommendedRoutes[j + 1] = temp;
+                }
+            }
+        }
+        console.log(this.usersOfRoutes);
+
+    }
 
     /*
         Helper function to update the recommended routes for the current route

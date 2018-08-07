@@ -9,7 +9,7 @@
 export const calcSecLvl = function(user){ 
     let secLvl = 0;
     secLvl += hasDocs(user);
-    secLvl += reviewFactor(user) * 3;
+    secLvl += reviewFactor(user) /* * 3 */;
     secLvl += facebookConnected(user);
     return secLvl;
 }
@@ -29,7 +29,7 @@ function hasDocs(user){
 }
 
 function facebookConnected(user){
-    return 1;
+    return 0;
 }
 
 function reviewFactor(user){   
