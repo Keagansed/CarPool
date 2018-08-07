@@ -25,7 +25,7 @@ module.exports.ValidateIDNumber = function(idNumber) {
     // get first 6 digits as a valid date
     let tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
 
-    if (!((tempDate.getYear() === idNumber.substring(0, 2)) && (tempDate.getMonth() === idNumber.substring(2, 4) - 1) && (tempDate.getDate() === idNumber.substring(4, 6)))) {
+    if (!((tempDate.getYear().toString() === idNumber.substring(0, 2)) && (tempDate.getMonth() === idNumber.substring(2, 4) - 1) && (tempDate.getDate().toString() === idNumber.substring(4, 6)))) {
         correct = false;
     }
 
@@ -61,4 +61,4 @@ module.exports.ValidateIDNumber = function(idNumber) {
  */
 function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
-}
+};
