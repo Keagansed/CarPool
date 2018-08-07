@@ -6,15 +6,19 @@ import { Redirect } from 'react-router-dom';
 
 import logo  from "../../css/images/logo.png";
 
+const util = require('./../utils/idCheck');
+
+/*
+* Purpose: Validate whether all of the fields are valid - true if there are errors
+*/
 function validate(fName, lName, idNum, email, password1, password2) {
-    // true means invalid, so our conditions got reversed
     return {
         fName: fName.length === 0 || fName.length > 50,
         lName: lName.length === 0 || lName.length > 50,
-        idNum: idNum.length !== 13,
-        email: email.length === 0 || email.length > 100,
+        idNum: !util.ValidateIDNumber(idNum),
+        email: !util.ValidateEmail(email),
         password1: password1.length === 0,
-        password2: password2.length === 0,
+        password2: password2.length === 0 || password2 !== password1,
     };
 }
 
