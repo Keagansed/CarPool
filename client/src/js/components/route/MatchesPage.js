@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from "mobx-react";
 
-import EditRouteModal from './EditRouteModal';
 import Matches from './Matches';
 import MatchesStore from '../../stores/MatchesStore';
 import RouteInfoModal from './RouteInfoModal';
 import { getFromStorage } from '../../utils/localStorage.js';
+import DeleteRoute from './DeleteRoute';
 
 @observer class MatchesPage extends Component{
 
@@ -70,10 +70,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
                             _id={this.props.match.params._id} 
                             MatchesStore={MatchesStore}
                         />
-                        <EditRouteModal  
-                            token={this.props.store.token} 
-                            routeId={this.props.match.params._id}
-                        />
+                        <DeleteRoute/>
                     </div>
                 </div>
                 {/* Padding is there for top and bottom navs*/}
