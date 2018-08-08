@@ -3,6 +3,9 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
+import app from '../../stores/MessagingStore'
+import { getFromStorage } from '../../utils/localStorage.js'
+
 const display = {
     display: 'block'
 };
@@ -23,9 +26,12 @@ class CarpoolInfoModal extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
+        this.leaveCarpool = this.leaveCarpool.bind(this);
+        this.users = app.database().ref().child('groupChats/'+this.props.carpoolID+"/users");
 
         this.state = {
             user:[],
+            groupChatUsers:{},
             toggle: false
         };
     }
@@ -39,13 +45,24 @@ class CarpoolInfoModal extends Component {
             .then(json => this.setState({user: json}));
     }
 
+    componentWillMount(){
+        const previousUsers = this.state.groupChatUsers;
+
+        this.users.on('child_added', snap =>{
+            previousUsers[snap.key] = snap.val();
+            this.setState({
+                groupChatUsers: previousUsers
+            });
+        });
+    }
+
     /*
      * Purpose: acquires the name of the user by iterating through the 'user' array in state
      * and matching the ID that is passed through to the function.
      */
     getUsername(_id) {
 
-        for(var x in this.state.user) { 
+        for(let x in this.state.user) {
 
             if(this.state.user[x]._id === _id) {
                 return this.state.user[x].firstName;
@@ -65,6 +82,36 @@ class CarpoolInfoModal extends Component {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    /*
+     *Purpose: removes the user from the carpool and returns them to the homepage
+     * It is called when the leave carpool button is clicked
+     */
+    leaveCarpool(){
+        let tempUsers = {};
+        for(let user in this.state.groupChatUsers){
+            if(user !== getFromStorage('sessionKey').token){
+                tempUsers[user] = this.state.groupChatUsers[user];
+            }
+        }
+
+        this.setState({
+            groupChatUsers: tempUsers
+        }, function () {
+            app.database().ref().child('groupChats/'+this.props.carpoolID)
+                .update({users: this.state.groupChatUsers}).then(() => {
+                return {};
+            }).catch(error => {
+
+                return {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+
+            });
+        });
+
     }
 
     /*
@@ -100,6 +147,9 @@ class CarpoolInfoModal extends Component {
                             </div>  
                             {users}
                         </div>
+                        <a href="/HomePage" onClick={this.leaveCarpool}>
+                            Leave carpool
+                        </a>
                     </div>
                 </div>
             </div>
