@@ -166,7 +166,7 @@ class Messages extends Component {
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
+                            <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName} carpoolID={this.props.match.params.carpoolID}/>
                             <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip} carpoolID={this.state.carpoolID}  carpoolName={this.props.match.params.carpoolName}/>
                         </div>
                     </div>
