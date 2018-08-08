@@ -120,7 +120,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
     */
     handleBlur = (field) => (evt) => {
         this.setState({
-          touched: { ...this.state.touched, [field]: true },
+            touched: { ...this.state.touched, [field]: true },
         });
     }
 

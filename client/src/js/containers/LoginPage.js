@@ -5,9 +5,22 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Modal from '../components/login/PasswordModal';
-
 import { getFromStorage } from '../utils/localStorage.js';
+
 import logo  from "../../css/images/logo.png";
+
+const util = require('./../utils/idCheck');
+
+/*
+* Purpose: Validate whether all of the fields are valid - true if there are errors
+*/
+function validate(email, password) {
+    return {
+        email: !util.ValidateEmail(email),
+        password: password.length === 0,
+    };
+}
+
 
 /*
 * Purpose: Login page where the user enters login details to proceed to the HomePage
@@ -17,7 +30,14 @@ import logo  from "../../css/images/logo.png";
         super(props);
         
         this.state ={
-          token:'',
+            token:'',
+            email: '',
+            password: '',
+
+            touched: {
+                email: false,
+                password: false,
+            },
         }; 
     }
 
@@ -44,6 +64,7 @@ import logo  from "../../css/images/logo.png";
     * Purpose: Sets the 'store.lEmail' variable to senders current value
     */
     updateLoginEmailValue = (event) => {
+        this.setState({ email: event.target.value });
         this.props.store.lEmail = event.target.value;
     }
 
@@ -51,6 +72,7 @@ import logo  from "../../css/images/logo.png";
     * Purpose: Sets the 'store.lPassword' variable to senders current value
     */
     updateLoginPasswordValue = (event) => {
+        this.setState({ password: event.target.value });
         this.props.store.lPassword = event.target.value;
     }
 
@@ -59,7 +81,28 @@ import logo  from "../../css/images/logo.png";
     */
     handleLogin = (event) => {
         event.preventDefault();
+        if (!this.canBeSubmitted()) {
+            return;
+        }
         this.props.store.authenticate(this.state.email, this.state.password);
+    }
+
+    /*
+    * Purpose: Check whether all fields have been entered correctly
+    */
+    canBeSubmitted() {
+        const errors = validate(this.state.email, this.state.password);
+        const isDisabled = Object.keys(errors).some(x => errors[x]);
+        return !isDisabled;
+    }
+
+    /*
+    * Purpose: Give fields that have been entered incorrectly red borders
+    */
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true },
+        });
     }
 
     /*
@@ -71,24 +114,63 @@ import logo  from "../../css/images/logo.png";
     }
 
     render() {
+        /*
+        * Purpose: Only give fields red borders if the user has changed/access them
+        * and they are still not valid.
+        */
+        const shouldMarkError = (field) => {
+            const hasError = errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
+
         const { loggedIn } = this.props.store;
+        const errors = validate(this.state.email, this.state.password);
+        const isDisabled = Object.keys(errors).some(x => errors[x]);
     
         if(!loggedIn) {
             return(
                 <div className="vertical-center bg-purple">
                     <div className="container-fluid">
                         <div className="row">
-                            <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} id="imgLogo" alt="carpool_logo"/> 
+                            <img 
+                                className="img-fluid d-block mx-auto mbottom-2rem" 
+                                src={logo} 
+                                id="imgLogo" 
+                                alt="carpool_logo"
+                            /> 
                         </div>
                         <form>
                             <div className="row">
-                                <input onChange={this.updateLoginEmailValue} type="email" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem" placeholder="Email" required="required" name="Email" id="inputEmail"/> 
+                                <input 
+                                    onChange={this.updateLoginEmailValue} 
+                                    type="email" 
+                                    className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('email')}
+                                    placeholder="Email" 
+                                    id="inputEmail"
+                                    value={this.state.email}
+                                /> 
                             </div>
                             <div className="row">
-                                <input onChange={this.updateLoginPasswordValue} type="password" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem" placeholder="Password" required="required" name="Password" id="inputPassword"/> 
+                                <input 
+                                    onChange={this.updateLoginPasswordValue} 
+                                    type="password" 
+                                    className={(shouldMarkError('password') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                    onBlur={this.handleBlur('password')}
+                                    placeholder="Password"
+                                    id="inputPassword"
+                                    value={this.state.password}
+                                /> 
                             </div>
                             <div className="row">
-                                <button onClick={this.handleLogin} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnLogin">
+                                <button 
+                                    onClick={this.handleLogin} 
+                                    type="submit" 
+                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" 
+                                    id="btnLogin"
+                                    disabled={isDisabled}
+                                >
                                     Login
                                 </button>
                             </div>

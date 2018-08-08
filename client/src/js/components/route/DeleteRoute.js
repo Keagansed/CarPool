@@ -1,9 +1,6 @@
 // File Type: Component
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-import { getFromStorage } from '../../utils/localStorage.js';
 
 const display = {
     display: 'block'
