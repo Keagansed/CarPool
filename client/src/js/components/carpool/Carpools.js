@@ -157,6 +157,8 @@ class Carpools extends Component {
                                         messageString = "Message";
                                     }
 
+                                    verifyUser = false;
+
                                     return(
                                         <div key={Math.random()}>
                                             <Link
@@ -185,12 +187,13 @@ class Carpools extends Component {
                                         </div>
                                     )
                                 }else{
+                                    verifyUser = false;
 
                                     return(<div key={Math.random()}></div>);
 
                                 }
-
                             }catch(e) {
+                                verifyUser = false;
 
                                 return(<div key={Math.random()}></div>)
                                 
