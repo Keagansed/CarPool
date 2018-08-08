@@ -238,6 +238,9 @@ html, body{
 .pad-10px{
     padding: 10px;
 }
+.padtop-10px{
+    padding-top: 10px;
+}
 .padtop-20px{
     padding-top: 20px;
 }
