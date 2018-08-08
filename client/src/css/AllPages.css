@@ -118,6 +118,10 @@ html, body{
 
 /* ============================================================================ */
 /*Text colours*/
+.txt-black{
+    color: black;
+}
+
 .txt-purple{
     color: #140D4F;
 }
@@ -237,6 +241,9 @@ html, body{
 }
 .pad-10px{
     padding: 10px;
+}
+.padtop-10px{
+    padding-top: 10px;
 }
 .padtop-20px{
     padding-top: 20px;
@@ -422,6 +429,7 @@ input:-webkit-autofill:focus {
 #inputLastName,
 #inputID,
 #inputEmail,
+#inputPassword,
 #inputConfirmPassword
 {
     background-color: rgba(0,0,0,0) !important;
@@ -434,6 +442,15 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s;
+}
+#inputFirstName.error, 
+#inputLastName.error,
+#inputID.error,
+#inputEmail.error,
+#inputPassword.error,
+#inputConfirmPassword.error
+{
+    border-color: red;
 } 
 /* ============================================================================ */
 /*Day of week selector*/
