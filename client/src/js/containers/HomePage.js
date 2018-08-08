@@ -22,7 +22,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         super()
 
         this.state = {
-            loading: true,
+            token: "",
         }
     }
 
@@ -31,23 +31,15 @@ import { getFromStorage } from '../utils/localStorage.js';
     */
     componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token) {
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.token = token;
+        let { token } = obj;
 
-                    this.setState({
-                        loading: false,
-                    })
-                }
-            })
-        }
+        this.setState({
+            token,
+        })
         
         let { store } = this.props;
 
+        store.token = token;
         store.routeTab = true;
         store.carpoolTab = false;
         store.tripTab = false;
@@ -58,45 +50,31 @@ import { getFromStorage } from '../utils/localStorage.js';
     */
     setTab = () => {
         const { store } = this.props;
+        const { token } = this.state;
 
-        if(!this.state.loading) {
-            if(store.routeTab === true) {
-                return <Routes store={RoutesStore} token={this.props.store.token}/>;            
-            }
-            else if(store.carpoolTab === true) {
-                return <Carpools store={OffersStore} token={this.props.store.token}/>;
-            }
-            else if(store.tripTab === true) {
-                return <Trips/>;
-            }
+        if(store.routeTab === true) {
+            return <Routes store={RoutesStore} token={token}/>;            
         }
-        else {
-            return(
-                <div className="spinner">
-                    <div className="double-bounce1"></div>
-                    <div className="double-bounce2"></div>
-                </div>
-            );
+        else if(store.carpoolTab === true) {
+            return <Carpools store={OffersStore} token={token}/>;
         }
-
+        else if(store.tripTab === true) {
+            return <Trips/>;
+        }
     }
 
     /*
     * Purpose: Returns the JSX for the NavTabs component
     */
     renderNavTabs = () => {
-        if(!this.state.loading) {
-            return <NavTabs store={this.props.store}/>;
-        }
+        return <NavTabs store={this.props.store}/>; 
     }
 
     /*
     * Purpose: Returns the JSX for the Navbar component
     */
     renderNavBar = () => {
-        if(!this.state.loading) {
-            return <Navbar token={this.props.store.token}/>;
-        }
+        return <Navbar token={this.state.token}/>;
     }
 
     render() {

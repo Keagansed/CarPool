@@ -3,8 +3,6 @@ const UserSession = require('../../models/UserSessions.js');
 let verify = function(req, res, next) {
     const { query } = req;
     const { token } = query;
-    
-    
 
     let date = new Date();
     let currentDate = date.toDateString();
@@ -15,15 +13,15 @@ let verify = function(req, res, next) {
     }, (err,sessions) => {
         if(err) {
             return res.send({ 
-                success:false,
-                message:"Error: Server Error"
+                verifySuccess:false,
+                verifyMessage:"Error: Server Error"
             });
         }
         
         if(sessions.length != 1) {
             return res.send({ 
-                success:false,
-                message:"Error: Invalid session"
+                verifySuccess:false,
+                verifyMessage:"Error: Invalid session"
             });
         }else {
             res.set({ 

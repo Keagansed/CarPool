@@ -9,6 +9,8 @@ import Trusts from '../components/profile/Trusts';
 import Vouches from '../components/vouching/Vouches';
 import VouchAverage from "../components/vouching/VouchAverage";
 
+import { getFromStorage } from '../utils/localStorage.js';
+
 /*
 * Purpose: Container compenent for the user ProfilePage, only takes care of tab switching all data
 * is in sub-components
@@ -16,20 +18,21 @@ import VouchAverage from "../components/vouching/VouchAverage";
 @observer class ProfilePage extends Component {
 	constructor() {
 		super();
-
+	
 		this.state = {
-			_id:""
+			token: ""
 		};
 	}
 
 	componentWillMount() {
-		const { match: {params}} = this.props;
+		let obj = getFromStorage('sessionKey');
+		const { token } = obj;
 
 		this.setState({
-			_id: params._id,
+			token,
 		})
 
-		this.props.store.getProfile(params._id);
+		this.props.store.getProfile(token);
 	}
 	
 	/*
@@ -38,26 +41,22 @@ import VouchAverage from "../components/vouching/VouchAverage";
 	setTab = () => {
         const { store } = this.props;
 
-        if(!this.state.loading) {
-            if(store.vouchTab === true) {
-                return <Vouches _id={this.state._id}/>;
-            }
-            else if(store.trustTab === true) {
-                return <Trusts/>;
-            }
-        }
-
-    }
+		if(store.vouchTab === true) {
+			return <Vouches _id={this.state.token}/>;
+		}
+		else if(store.trustTab === true) {
+			return <Trusts/>;
+		}
+	}
 	
-	render() {
-		const { firstName, lastName, profilePic, secLvl } = this.props.store;
-		const profilePicture = "./../api/account/getImage?filename=" + profilePic;
-		
-		if (this.props.store.profileFound) {
-			const token = this.state._id;
+	renderProfile = () => {
+		if (this.props.store.profileFound) {			
+			const { firstName, lastName, profilePic, secLvl } = this.props.store;
+			const profilePicture = "./../api/account/getImage?filename=" + profilePic;
+			const token = this.state.token;
 
-			return(
-				<div className="size-100 bg-purple">
+			return (
+				<div>
 					<div className="container-fluid fixed-top bg-purple">
 						<div className="row height-150px bg-purple">
 							<img src={profilePicture} id="profilePic" className="mx-auto my-auto rounded-circle bord-5px-white" height="120" width="120" alt="s" />
@@ -68,7 +67,9 @@ import VouchAverage from "../components/vouching/VouchAverage";
 						<div className="row height-60px bg-purple padbot-10px">
 								<div className="col-6 bordright-1px-white my-auto">
 									<div className="col-12 txt-center txt-white">
-										<h6 className="mbottom-0"><VouchAverage _id={this.state._id}/> <i className="fa fa-star txt-gold txt-15px"></i></h6>
+										<h6 className="mbottom-0"><VouchAverage _id={token}/> 
+											<i className="fa fa-star txt-gold txt-15px"></i>
+										</h6>
 									</div>
 									<div className="col-12 txt-center txt-white">
 										<h6>
@@ -93,19 +94,30 @@ import VouchAverage from "../components/vouching/VouchAverage";
 							<NavTabs store={this.props.store} token={token}/>
 						</div>
 					</div>
-                    <div className="padtop-300px padbot-50px">
+					<div className="padtop-300px padbot-50px">
 						{this.setTab()}
 					</div>
-                    <Navbar token={token}/>
-            	</div>
+				</div>		
 			);
-		}else {
+		} else {
 			return (
-				<div>
-					<h1>LOADING</h1>
-				</div>
+				<div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
 			);
 		}
+	}
+	
+	render() {
+		const token = this.state.token;
+
+		return(
+			<div className="size-100 bg-purple">
+				{this.renderProfile()}
+				<Navbar token={token}/>
+			</div>
+		);	
 	}
 }
 
