@@ -10,6 +10,12 @@ import { getFromStorage } from '../utils/localStorage.js';
 import logo  from "../../css/images/logo.png";
 
 const util = require('./../utils/idCheck');
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
 
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
@@ -28,8 +34,10 @@ function validate(email, password) {
 @observer class Login extends Component {
     constructor(props) {
         super(props);
+        this.toggle = this.toggle.bind(this);
         
         this.state ={
+            toggle: false,
             token:'',
             email: '',
             password: '',
@@ -39,6 +47,15 @@ function validate(email, password) {
                 password: false,
             },
         }; 
+    }
+
+    /*
+     * Purpose: toggles the visibility of the component.  
+     */
+    toggle(event) {
+        this.setState(prevState => ({
+            toggle: !prevState.toggle
+        }));
     }
 
     /*
@@ -85,6 +102,8 @@ function validate(email, password) {
             return;
         }
         this.props.store.authenticate(this.state.email, this.state.password);
+        //TODO: this toggle should only be called if authentication was unsuccessful
+        this.toggle();
     }
 
     /*
@@ -127,6 +146,26 @@ function validate(email, password) {
         const { loggedIn } = this.props.store;
         const errors = validate(this.state.email, this.state.password);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
+
+        var modal = [];
+        modal.push(
+            // Modal
+            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Login Failed</h5>
+                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            You have entered an incorrect email or password.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     
         if(!loggedIn) {
             return(
@@ -176,8 +215,11 @@ function validate(email, password) {
                             </div>
                         </form>
                         <div className="row">
+                            {/* forgot password modal */}
                             <Modal />
                         </div>
+                        {/* login failed modal */}
+                        {modal}
                     </div>
                 </div>
             );
