@@ -22,7 +22,7 @@ router.get('/deleteRoute',(req,res,next) =>{
     const { routeId } = query;
 
     Offer.remove({
-        $or: [SenderRoute: routeId, RecieverRoute: routeId]
+        $or: {SenderRoute: routeId, RecieverRoute: routeId}
     },
     (err) => {
         if(err) {
@@ -31,25 +31,6 @@ router.get('/deleteRoute',(req,res,next) =>{
                 message: err
             });
         }else{
-            // Carpool.update({
-            //     routes:{$in:[routeId]}
-            // },
-            // {
-
-            // },
-            // {
-            //     multi: true
-            // },
-            // (err, data) => {
-            //     if(err) {
-            //         return res.send({
-            //             success: false,
-            //             message: err
-            //         });
-            //     }else{
-                    
-            //     }
-            // });
             Route.remove({
                 _id: routeId
             },
