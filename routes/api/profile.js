@@ -45,6 +45,37 @@ router.get('/getAllUsers',(req,res,next)=>
 	});
 });
 
+router.get('/getSelectUsers', (req,res) => {
+	const { query } = req;
+	const { userIds } = query;
+
+	User.find({
+		_id: { $in: JSON.parse(userIds)}
+	}, (err, data) => {
+
+		if(err) {
+			return res.send({
+				success: false,
+				message: "Error: server error"
+			});
+		}
+
+		if(data.length == 0) {
+			return res.send({
+				success: false,
+				message: "Error: cannot find users"
+			});
+		}else{
+			res.send({
+				success: true,
+				message: "Users retrieved successfully",
+				data: data
+			});
+		}
+
+	})
+})
+
 // This method gets all documents with a similar name to a name, that is passed, from the User Collection.
 // Parameters: 
 //      _id: String;  This is an object id of a Trip collection.

@@ -7,7 +7,7 @@ import { calcSecLvl } from '../utils/trustFactor.js'
 class profileStore {
 
     @observable user = {};
-    @observable secLvl = 1;    
+    @observable secLvl = 0;    
     @observable profileFound = false;
     @observable token = null;
     @observable opacity = "opacity-0"; //This is to help with how the page looks while it's loading data

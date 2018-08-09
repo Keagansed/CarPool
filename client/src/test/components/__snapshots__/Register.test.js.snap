@@ -22,78 +22,78 @@ exports[`Register Component captures snapshot 1`] = `
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputFirstName"
-          name="FirstName"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="First Name"
-          required="required"
           type="text"
+          value=""
         />
       </div>
       <div
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputLastName"
-          name="LastName"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Last Name"
-          required="required"
           type="text"
+          value=""
         />
       </div>
       <div
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputID"
-          name="ID"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="ID Number"
-          required="required"
           type="text"
+          value=""
         />
       </div>
       <div
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputEmail"
-          name="Email"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Email"
-          required="required"
           type="email"
+          value=""
         />
       </div>
       <div
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputPassword"
-          name="Password"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Password"
-          required="required"
           type="password"
+          value=""
         />
       </div>
       <div
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputConfirmPassword"
-          name="ConfirmPassword"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Confirm Password"
-          required="required"
           type="password"
+          value=""
         />
       </div>
       <div
@@ -101,7 +101,7 @@ exports[`Register Component captures snapshot 1`] = `
       >
         <button
           className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
-          id="btnLogin"
+          disabled={true}
           onClick={[Function]}
           type="submit"
         >

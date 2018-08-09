@@ -6,7 +6,7 @@ describe ('Profile Store test functions', () => {
     it ('initializes variables correctly', () => {
         values = {
             user : {},
-            secLvl : 1,
+            secLvl : 0,
             profileFound : false,
             token : ''
         };
