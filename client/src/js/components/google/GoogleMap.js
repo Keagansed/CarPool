@@ -14,9 +14,9 @@ const GoogleMapComponent = compose(
      */
     withProps({
         googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyByiVkTN7KXkkNnPKUCVehZ970UdKw94YE&v=3.exp&libraries=geometry,drawing,places",
-        loadingElement: <div style={{ height: `200px` }} />,
-        containerElement: <div style={{ height: `200px` }} />,
-        mapElement: <div style={{ height: `200px` }} />,
+        loadingElement: <div style={{ height: `200px`, width: '350px', margin: 'auto' }} />,
+        containerElement: <div style={{ height: `200px`, width: '350px', margin: 'auto'  }} />,
+        mapElement: <div style={{ height: `200px`, width: '350px', margin: 'auto'  }} />,
     }),
     withScriptjs,
     withGoogleMap,
