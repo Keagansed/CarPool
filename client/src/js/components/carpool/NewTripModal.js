@@ -24,17 +24,27 @@ const hide = {
      */
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
-        this.updateTime = this.updateTime.bind(this);
-        this.updateDate = this.updateDate.bind(this);
-        this.updateDays = this.updateDays.bind(this);
-        this.updateUsers = this.updateUsers.bind(this);
+        // this.toggle = this.toggle.bind(this);
+        // this.updateTime = this.updateTime.bind(this);
+        // this.updateDate = this.updateDate.bind(this);
+        // this.updateDays = this.updateDays.bind(this);
+        // this.updateUsers = this.updateUsers.bind(this);
 
         this.state ={
             user:[],
             toggle: false
         };
     }
+    
+    /*
+     * Purpose: performs an API call to acquire all the users
+     */
+    componentDidMount(){
+        fetch('/api/account/profile/getAllUsers')
+            .then(res => res.json())
+            .then(json => this.setState({user: json}));
+    }
+
 
     /*
      * Purpose: acquires the provided time from the corresponding html element and updates the time of the suggested 
@@ -102,19 +112,10 @@ const hide = {
     /*
      * Purpose: toggles the visibility of this modal component
      */
-    toggle(event) {
+    toggle = (event)=> {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
-    }
-
-    /*
-     * Purpose: performs an API call to acquire all the users
-     */
-    componentDidMount(){
-        fetch('/api/account/profile/getAllUsers')
-            .then(res => res.json())
-            .then(json => this.setState({user: json}));
     }
 
     /*

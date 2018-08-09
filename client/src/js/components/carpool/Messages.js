@@ -92,6 +92,11 @@ class Messages extends Component {
         });
     }
 
+    componentWillUnmount(){
+        this.database.off();
+        this.messages.off();
+        this.users.off();
+    }
     /*
      * Purpose: adds a new message to the current messages
      */
