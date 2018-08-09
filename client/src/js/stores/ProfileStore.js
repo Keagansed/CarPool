@@ -28,7 +28,12 @@ class profileStore {
             this.profileFound = true;
             this.opacity = "";
             this.setEdit();
-            this.secLvl = calcSecLvl(this.user);
+            fetch('/api/account/vouch/getVouches?idFor=' + this.user._id)
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then((json) => {
+                this.secLvl = calcSecLvl(this.user, json);
+            });
         })
     }
 
