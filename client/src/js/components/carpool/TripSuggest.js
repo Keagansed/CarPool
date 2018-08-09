@@ -36,7 +36,6 @@ class TripSuggest extends Component {
         this.message = app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID);
         this.accept = this.accept.bind(this);
         this.reject = this.reject.bind(this);
-        this.buttons = [];
     }
 
     /*
@@ -177,7 +176,6 @@ class TripSuggest extends Component {
             )
         });
 
-        this.buttons = this.state.buttons;
         fetch('/api/system/trip/respondToTrip',{
             method:'POST',
             headers:{
@@ -258,7 +256,7 @@ class TripSuggest extends Component {
                             <div className="row padtop-0">
                                 <div className="col-12">
                                     <div className="col-12">
-                                        {this.buttons}
+                                        {this.state.buttons}
                                     </div>
                                 </div>
                             </div>
