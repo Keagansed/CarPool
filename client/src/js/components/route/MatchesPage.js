@@ -21,7 +21,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
 
         this.state = {
             //The loading field represents the load state of the page
-            loading: true,
+            token: '',
         }
     }
 
@@ -32,20 +32,11 @@ import { getFromStorage } from '../../utils/localStorage.js';
     */
     componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token) {
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.token = token;
+        const { token } = obj;
 
-                    this.setState({
-                        loading: false,
-                    })
-                }
-            })
-        }
+        this.setState({
+            token,
+        })
     }
 
     /*
@@ -53,8 +44,8 @@ import { getFromStorage } from '../../utils/localStorage.js';
     * It returns react elements and HTML using JSX.
     */
     render() {
-        //const { token } = this.props.store;
-        return(
+        const { token } = this.state;
+        return (
             <div className="size-100 bg-purple">
                 <div className="fixed-top container-fluid height-50px bg-aqua">
                     <div className="row height-100p">
@@ -67,11 +58,11 @@ import { getFromStorage } from '../../utils/localStorage.js';
                             </button>
                         </Link>
                         <RouteInfoModal 
-                            _id={this.props.match.params._id} 
+                            _id={token} 
                             MatchesStore={MatchesStore}
                         />
                         <EditRouteModal  
-                            token={this.props.store.token} 
+                            token={token} 
                             routeId={this.props.match.params._id}
                         />
                     </div>
@@ -80,7 +71,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
                 <div className="padtop-50px">
                     <Matches 
                         store={MatchesStore} 
-                        token={this.props.store.token} 
+                        token={token} 
                         routeId={this.props.match.params._id}
                     />
                 </div>

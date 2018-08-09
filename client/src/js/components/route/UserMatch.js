@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore'
 
+import { getFromStorage } from '../../utils/localStorage.js';
+
 //'display' is used to show the modal
 const display = {
     display: 'block'
@@ -32,6 +34,7 @@ class UserMatch  extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
+            token: '',
             //userName is used to store the id of the matched user's profile picture
             userName: "",
             //routeArr is used to store the routes of any carpool match temporarily when accessed
@@ -45,12 +48,21 @@ class UserMatch  extends Component {
         }
     }
 
+    componentWillMount() {
+        const obj = getFromStorage('sessionKey');
+        let { token } = obj;
+
+        this.setState({
+            token,
+        }) 
+    }
+
     /*
     * The purpose of the componentWillMount method is to perform all programming tasks
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        fetch('/api/account/profile?_id=' + this.props.userId,{
+        fetch('/api/account/profile?token=' + this.state.token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -58,7 +70,7 @@ class UserMatch  extends Component {
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(json => {
+        .then(json => {            
             this.setState({ 
                 userName : (json[0].firstName +" "+ json[0].lastName),
                 profilePic : json[0].profilePic

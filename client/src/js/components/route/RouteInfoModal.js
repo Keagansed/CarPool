@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 
 import MapComponent from '../google/GeneralMapWrapper';
 
+import { getFromStorage } from '../../utils/localStorage.js';
+
 //'display' is used to show the modal
 const display = {
     display: 'block'
@@ -28,7 +30,8 @@ class RouteInfoModal extends Component{
         super(props);
         this.toggle = this.toggle.bind(this);
 
-        this.state ={
+        this.state = {
+            token: '',
             //the route field store the current route object
             route:{},
             //the originName field stores the current routes origin
@@ -47,32 +50,39 @@ class RouteInfoModal extends Component{
     * that need to take place before the component is rendered on the screen.
     */
     componentWillMount() {
+        const obj = getFromStorage('sessionKey');
+        let { token } = obj;
+
+        this.setState({
+            token,
+        })
 
         //Get current route and compare with OtherRoutes
-        fetch('/api/system/Route/getRoute?_id='+this.props._id, { 
+        fetch('/api/system/Route/getRoute?_id='+ token, { 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
             },
         })
-            .then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json => {
-                if(json.success) {
-                    this.setState({
-                        route:json.data[0],
-                        originName:json.data[0].startLocation.name,
-                        destinationName:json.data[0].endLocation.name,
-                        routeArr:[{
-                            origin : json.data[0].startLocation,
-                            destination : json.data[0].endLocation
-                        }]
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success) {
+                console.log(json)
+                this.setState({
+                    route:json.data[0],
+                    originName:json.data[0].startLocation.name,
+                    destinationName:json.data[0].endLocation.name,
+                    routeArr:[{
+                        origin : json.data[0].startLocation,
+                        destination : json.data[0].endLocation
+                    }]
 
-                    });
-                }else{
-                    console.log(json.message);
-                }
-            });
+                });
+            }else{
+                console.log(json.message);
+            }
+        });
     }
 
     /*

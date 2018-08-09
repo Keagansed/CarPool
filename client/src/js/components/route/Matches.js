@@ -17,23 +17,31 @@ import  "../../../css/components/Spinner.css"
 * ones are best suited to the user - not ponly based on proximity but also on other
 * user's trust factors and vouch averages.
 */
-@observer class Matches extends Component{
+@observer class Matches extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            token:'',
+            //userID is a placeholder field used to store the ID of a matched user
+            userID: '',
+            //carpoolID is a placeholder field used to store the ID of a matched carpool
+            carpoolID: ''
+        }
+    }
     /*
     * The purpose of the componentWillMount method is to perform all programming tasks
     * that need to take place before the component is rendered on the screen.
     */
-    componentWillMount(){
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success){
-                    this.props.store.getAllRoutes(token, this.props.routeId);
-                }
-            })
-        }    
+        const { token } = obj;
+           
+        this.setState({
+            token,
+        })
+
+        this.props.store.getAllRoutes(token, this.props.routeId);
     }
     
     /*
@@ -86,21 +94,6 @@ import  "../../../css/components/Spinner.css"
                     No matches yet...
                 </h5>
             );
-        }
-    }
-
-    /*
-    * The purpose of the constructor method is to instantiate fields to relevant values.
-    * In this case all fields are set to default values.
-    */
-    constructor(){
-        super()
-
-        this.state = {
-            //userID is a placeholder field used to store the ID of a matched user
-            userID: '',
-            //carpoolID is a placeholder field used to store the ID of a matched carpool
-            carpoolID: ''
         }
     }
 
