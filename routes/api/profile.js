@@ -46,11 +46,11 @@ router.get('/getAllUsers',(req,res,next)=>
 });
 
 router.get('/getSelectUsers', (req,res) => {
-	const { body } = req;
-	const { userIds } = body;
+	const { query } = req;
+	const { userIds } = query;
 
 	User.find({
-		_id: { $in: userIds }
+		_id: { $in: JSON.parse(userIds)}
 	}, (err, data) => {
 
 		if(err) {

@@ -27,8 +27,11 @@ class matchesStore {
     // Integer to store the maximum radius for carpools to be matched in km
     @observable maxRadius = 2;
 
-    // Array to store the user of each of the recommended routes
-    @observable usersOfRoutes = []
+    // Array to store the trust factor weights assigned the user of each of the recommended routes in order
+    @observable trustFactorWeights = [];
+
+    // Array to store the time weights assigned to each recommended route
+    @observable timeWeights = [];
 
     /*
         Method to get all routes relevant to the user
@@ -81,8 +84,8 @@ class matchesStore {
         .then(json => {
             if(json.success) {
                 this.filterRoutesByRadius(json.data[0]);
-                this.filterRoutesByTime(json.data[0]); 
-                this.getUsersAndFilterByTrust();
+                this.generateTimeWeights(json.data[0]);
+                this.getUsersAndGenerateTrustWeights();  // Reordering method is called through this function
                 this.loadingRoutes = false;
             }else{
                 console.log(json.message);
@@ -190,63 +193,102 @@ class matchesStore {
     };
 
     /*
-        Helper function to filter the routes by their time
-        Takes in the routeObj as a parameter
-     */
-    @action filterRoutesByTime = (routeObj) => {
-        // time difference between routeObj and recRoute in minutes
-        let timeDifferences = [];
+        Function that combines the weights of the time and trust factor and reorders the recommended
+        routes to be in decsending order of the combined weight.
+    */
+    @action reorderRoutes = () => {
+        let weights = [], count = 0, combinedWeight, i, j , size = this.recommendedRoutes.length, temp;
 
-        // Integer size of the recommended routes array
-        let size = this.recommendedRoutes.length;
-
-        // Temp variable for sorting array as well as integers for counting in the loops
-        let temp, i, j;
-
-        this.recommendedRoutes.forEach(route => {
-            timeDifferences.push(this.calcTimeDifference(routeObj.time, route.time));
+        this.timeWeights.forEach(weight => {
+            combinedWeight = weight + this.trustFactorWeights.get(count);
+            weights.push(combinedWeight);
+            count++;
         });
 
         for (i = 0; i < size - 1; i++) {
+
             for (j = 0; j < (size - i - 1); j++) {
-                if (timeDifferences[j] > timeDifferences[j + 1]) {
-                    // swap the time differences of the routes
-                    temp = timeDifferences[j];
-                    timeDifferences[j] = timeDifferences[j + 1];
-                    timeDifferences[j + 1] = temp;
+
+                if (weights[j] < weights[j + 1]) {
+                    // swap the weights of the corresponding routes
+                    temp = weights[j];
+                    weights[j] = weights[j + 1];
+                    weights[j + 1] = temp;
 
                     // swap the corresponding recommended routes
                     temp = this.recommendedRoutes[j];
                     this.recommendedRoutes[j] = this.recommendedRoutes[j + 1];
                     this.recommendedRoutes[j + 1] = temp;
                 }
+
             }
+
         }
+
+    }
+
+    /*
+        Function to generate the weight values associated with the time difference between
+        each of the recommended routes and the users route. If the recommeneded route is at the 
+        same time as the users route, it is assigned a weight of 1. For recommended routes that
+        are before the users route, 0.1 is subtracted from 1 for every 30 minutes difference. And
+        for recommended routes that are after, 0.1 is subtracted from 1 for every 15 minutes
+        difference. This is because a recommended route that is before the users specified time 
+        is preferable to a route that is after.
+     */
+    @action generateTimeWeights = (routeObj) => {
+        const beforeTime = 30, afterTime = 15, timeMultiplier = 0.1;
+        // time difference between routeObj and recRoute in minutes
+        let timeDifferences = [], timeWeight;
+
+        this.timeWeights = [];
+
+        this.recommendedRoutes.forEach(route => {
+            timeDifferences.push(this.calcTimeDifference(routeObj.time, route.time));
+        });
+
+        timeDifferences.forEach(time => {
+            timeWeight = 1;
+
+            if(time < 0) {  // Recommended route time before users route time
+                
+                timeWeight -= ((Math.abs(time) / beforeTime)|0) * timeMultiplier;
+
+            }else if(time > 0) {    // Recommended route time after users route time
+                
+                timeWeight -= ((time / afterTime)|0) * timeMultiplier
+            }
+            
+            this.timeWeights.push(timeWeight);
+        });
     };
 
     /*
-        Get the users, add to 'usersOfRoutes' array and then call actual filter function
-        'filterRoutesByTrustFactor'.
+        Get the user objects of each of the users of the recommended routes and stores then in the
+        'userObjs' array, then calls the 'generateTrustFactorWeights' using the 'userObjs' array.
     */
-   @action getUsersAndFilterByTrust = () => {
-        let userIds = [];
+   @action getUsersAndGenerateTrustWeights = () => {
+        let userIds = [], userObjs = [];
 
         this.recommendedRoutes.forEach(route => {
             userIds.push(route.userId);
         });
 
-        console.log(userIds);
-
-        fetch('/api/account/profile/getSelectUsers?userIds=' + userIds)
+        fetch('/api/account/profile/getSelectUsers?userIds=' + JSON.stringify(userIds), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then((json) => {
 
             if(json.success) {
                 json.data.forEach(user => {
-                    this.usersOfRoutes.push(user);   
+                    userObjs.push(user);   
                 });
-                this.filterRoutesByTrustFactor();
+                this.generateTrustFactorWeights(userObjs);
             }else{
                 console.log(json.message);
             }
@@ -255,34 +297,46 @@ class matchesStore {
     }
 
     /*
-        Helper function that orders the routes in descending order of the trust factor
-        of the users of the recommeded routes.
+        Function that generates the weight of the trust factor of each of the users of the recommeneded routes
+        and stores these computed weights in the 'trustFactorWeights' array. Weight is calculated by scaling the
+        trust factor to a range of [0,1]. Calls the 'reorderRoutes' function after the weights have been calculated 
+        and stored.
     */
-    @action filterRoutesByTrustFactor = () => {
-        let trustFactors = [], i, j, size = this.recommendedRoutes.length, temp;
+    @action generateTrustFactorWeights = (userObjs) => {
+        let trustFactors = [], scaledTrustFactor, secLevels = [], count;
+        
+        this.trustFactorWeights = [];
 
-        this.usersOfRoutes.forEach(user => {
-            trustFactors.push(calcSecLvl(user));
-        })
+        if(userObjs.length !== this.recommendedRoutes.length) {
+            
+            userObjs.forEach(user => {
+                secLevels.push(calcSecLvl(user));
+            });
+            
+            this.recommendedRoutes.forEach(route => {
+                count = 0;
+                userObjs.forEach(user => {
 
-        console.log(this.usersOfRoutes);
-        console.log(trustFactors);
+                    if(user._id === route.userId) {
+                        trustFactors.push(secLevels[count]);
+                    }
 
-        for(i = 0; i < size - 1; i++) {
-            for(j = 0; j < (size -i - 1); j++) {
-                if(trustFactors[j] < trustFactors[j + 1]) {
-                    temp = trustFactors[j];
-                    trustFactors[j] = trustFactors[j + 1];
-                    trustFactors[j + 1] = temp;
+                    count++;
+                });
+            });
 
-                    temp = this.recommendedRoutes[j];
-                    this.recommendedRoutes[j] = this.recommendedRoutes[j + 1];
-                    this.recommendedRoutes[j + 1] = temp;
-                }
-            }
+        }else{
+            userObjs.forEach(user => {
+                trustFactors.push(calcSecLvl(user));
+            });
         }
-        console.log(this.usersOfRoutes);
 
+        trustFactors.forEach(tf => {
+            scaledTrustFactor = (1 - 0)*(tf - 0)/(5-0)+0;
+            this.trustFactorWeights.push(scaledTrustFactor);
+        });
+
+        this.reorderRoutes();
     }
 
     /*
@@ -395,7 +449,8 @@ class matchesStore {
         // Recommended route time in minutes
         let recRouteTime = this.convertTime(routeTime);
         
-        return Math.abs(recRouteTime - currRouteTime);
+        // return Math.abs(recRouteTime - currRouteTime);
+        return (recRouteTime - currRouteTime);
     };
     
     /*
