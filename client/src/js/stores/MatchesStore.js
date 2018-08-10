@@ -85,7 +85,7 @@ class matchesStore {
             if(json.success) {
                 this.filterRoutesByRadius(json.data[0]);
                 this.generateTimeWeights(json.data[0]);
-                this.getUsersAndGenerateTrustWeights();  // Reordering method is called through this function
+                this.getUsersAndGenerateTrustWeights(json.data[0]);  // Reordering method is called through this function
                 this.loadingRoutes = false;
             }else{
                 console.log(json.message);
@@ -267,7 +267,7 @@ class matchesStore {
         Get the user objects of each of the users of the recommended routes and stores then in the
         'userObjs' array, then calls the 'generateTrustFactorWeights' using the 'userObjs' array.
     */
-   @action getUsersAndGenerateTrustWeights = () => {
+   @action getUsersAndGenerateTrustWeights = (routeObj) => {
         let userIds = [], userObjs = [];
 
         this.recommendedRoutes.forEach(route => {
@@ -288,7 +288,14 @@ class matchesStore {
                 json.data.forEach(user => {
                     userObjs.push(user);   
                 });
-                this.generateTrustFactorWeights(userObjs);
+
+                fetch('/api/account/vouch/getVouches?idFor=' + routeObj.userId)
+                .then(res => res.json())
+                .catch(error => console.error('Error: ', error))
+                .then((json) => {
+                    this.generateTrustFactorWeights(userObjs, json);
+                });
+
             }else{
                 console.log(json.message);
             }
@@ -302,7 +309,7 @@ class matchesStore {
         trust factor to a range of [0,1]. Calls the 'reorderRoutes' function after the weights have been calculated 
         and stored.
     */
-    @action generateTrustFactorWeights = (userObjs) => {
+    @action generateTrustFactorWeights = (userObjs, vouches) => {
         let trustFactors = [], scaledTrustFactor, secLevels = [], count;
         
         this.trustFactorWeights = [];
@@ -310,7 +317,7 @@ class matchesStore {
         if(userObjs.length !== this.recommendedRoutes.length) {
             
             userObjs.forEach(user => {
-                secLevels.push(calcSecLvl(user));
+                secLevels.push(calcSecLvl(user, vouches));
             });
             
             this.recommendedRoutes.forEach(route => {
@@ -327,7 +334,7 @@ class matchesStore {
 
         }else{
             userObjs.forEach(user => {
-                trustFactors.push(calcSecLvl(user));
+                trustFactors.push(calcSecLvl(user, vouches));
             });
         }
 
