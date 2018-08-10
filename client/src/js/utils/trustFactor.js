@@ -9,8 +9,8 @@
 export const calcSecLvl = function(user, vouches){ 
     let secLvl = 0;
     secLvl += hasDocs(user);
-    secLvl += reviewFactor(vouches) * 2;
-    secLvl += experienceFactor(vouches) * 2;
+    // secLvl += reviewFactor(vouches) * 2;
+    // secLvl += experienceFactor(vouches) * 2;
     // secLvl += facebookConnected(user);
     return secLvl;
 }

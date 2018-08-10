@@ -7,8 +7,8 @@ import app from '../../stores/MessagingStore'
 import CarpoolOffers from './CarpoolOffers';
 import { getFromStorage } from '../../utils/localStorage'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/js/bootstrap.min.js';
 import 'firebase/database';
 import "../../../css/components/Spinner.css"
 

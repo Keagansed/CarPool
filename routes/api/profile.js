@@ -45,6 +45,7 @@ router.get('/getAllUsers',(req,res,next)=>
 	});
 });
 
+//Method returns users from an array of userIds
 router.get('/getSelectUsers', (req,res) => {
 	const { query } = req;
 	const { userIds } = query;

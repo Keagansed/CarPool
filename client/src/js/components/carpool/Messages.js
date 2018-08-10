@@ -29,6 +29,7 @@ class Messages extends Component {
             carpoolID:"",
             messages:[],
             users:[],
+            userList:[]
         };
 
         this.addMessage = this.addMessage.bind(this);
@@ -45,6 +46,7 @@ class Messages extends Component {
     componentWillMount() {
         const previousUsers = this.state.users;
         let previousMessages = this.state.messages;
+        const date = JSON.stringify(new Date());
 
         this.messages.on('child_added', snap =>{
             previousMessages.push({
@@ -61,6 +63,7 @@ class Messages extends Component {
             this.setState({
                 messages: previousMessages
             });
+
         });
 
         this.database.on('child_added', snap =>{
@@ -76,9 +79,9 @@ class Messages extends Component {
             this.setState({
                 users: previousUsers
             });
+            
         });
-
-        const date = JSON.stringify(new Date());
+   
         app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:date}).then(() => {
                 return {};
@@ -90,8 +93,14 @@ class Messages extends Component {
                 }
 
         });
+
+        fetch('/api/account/profile/getAllUsers')
+            .then(res => res.json())
+            .then(json => this.setState({userList: json}));
+        
     }
 
+    //Switch off event listeners for firebase
     componentWillUnmount(){
         this.database.off();
         this.messages.off();
@@ -105,10 +114,33 @@ class Messages extends Component {
     }
 
     /*
+     * Purpose: Returns an array of all unique userIds from all messages 
+     */
+    getUsername = (_id) => {
+
+        for(var x in this.state.userList) {
+
+            if(this.state.userList[x]._id === _id) {
+                return this.state.userList[x].firstName;
+            }
+
+        }
+
+    }
+
+    /*
      * Purpose:  adds a trip suggestion to the messages
      */
     suggestTrip(message, userID, users, tripID) {
-        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users, tripID:tripID, usersResponded:{[getFromStorage('sessionKey').token]:true}});
+        this.messages.push().set({
+            userID: userID, 
+            messageContent: message, 
+            dateTime: JSON.stringify(new Date()), 
+            tripSuggest:true, 
+            users, 
+            tripID:tripID, 
+            usersResponded:{[getFromStorage('sessionKey').token]:true}
+        });
     }
 
     /*
@@ -134,7 +166,6 @@ class Messages extends Component {
      * The colour of the senders name is also different for each person. 
      */
     render() {
-
         let verify = false;
 
         for(let user in this.state.users) {
@@ -161,7 +192,7 @@ class Messages extends Component {
         }
 
         if(verify) { 
-
+            
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -171,8 +202,17 @@ class Messages extends Component {
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName} carpoolID={this.props.match.params.carpoolID}/>
-                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip} carpoolID={this.state.carpoolID}  carpoolName={this.props.match.params.carpoolName}/>
+                            <CarpoolInfoModal 
+                                users={this.state.users} 
+                                carpoolName={this.props.match.params.carpoolName} 
+                                carpoolID={this.props.match.params.carpoolID}
+                            />
+                            <NewTripModal 
+                                users={this.state.users} 
+                                suggestTrip={this.suggestTrip} 
+                                carpoolID={this.state.carpoolID}  
+                                carpoolName={this.props.match.params.carpoolName}
+                            />
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
@@ -182,7 +222,7 @@ class Messages extends Component {
                             {
                                 this.state.messages.map((message) => {
                                     let userColour;
-
+                                    let userName = this.getUsername(message.userID);
                                     try{
                                         userColour = this.state.users[message.userID].colour;
                                     }catch(e) {
@@ -192,13 +232,32 @@ class Messages extends Component {
                                     if(message.tripSuggest) {
 
                                         return(
-                                            <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} tripID={message.tripID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                            <TripSuggest
+                                                messageContent={message.messageContent} 
+                                                messageID={message.id} 
+                                                users={message.users} 
+                                                carpoolID={this.props.match.params.carpoolID} 
+                                                tripID={message.tripID} 
+                                                usersResponded={message.usersResponded} 
+                                                userID={message.userID} 
+                                                userColour={userColour} 
+                                                dateTime={message.dateTime} 
+                                                key={message.id}
+                                            />
                                         );
 
                                     }else{
 
                                         return(
-                                            <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                            <Message 
+                                                messageContent={message.messageContent} 
+                                                messageID={message.id} 
+                                                userID={message.userID} 
+                                                userName={userName}
+                                                userColour={userColour} 
+                                                dateTime={message.dateTime} 
+                                                key={message.id}
+                                            />
                                         );
 
                                     }
