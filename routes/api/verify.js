@@ -28,14 +28,14 @@ router.get('/', function(req, res, next) {
 		if(err) {
 			return res.send({ 
 				success:false,
-				message:"Error: Server Error"
+				message:"Database error: " + err,
 			});
 		}
 		
 		if(sessions.length != 1) {
 			return res.send({ 
 				success:false,
-				message:"Error: Invalid session"
+				message:"Return error: Invalid session"
 			});
 		}else{
 			return res.send({ 
