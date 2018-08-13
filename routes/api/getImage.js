@@ -35,9 +35,9 @@ router.get('/', (req, res, next) => {
 	gfs.files.findOne({ filename: req.query.filename }, (err, file) => {
 		// Check if file
 		if(!file || file.length === 0) {
-			return res.status(404).json({
-				err: 'No file exists',
-				filename: req.query
+			return res.send({
+				success: false,
+				message: 'File error: No file exists',
 			});
 		}
 		// Check if image
@@ -46,15 +46,14 @@ router.get('/', (req, res, next) => {
 			const readstream = gfs.createReadStream(file.filename);
 			readstream.pipe(res);
 		}else{
-			res.status(404).json({
-				err: 'Not an image'
+			return res.send({
+				success: false,
+				message: 'File error: Not an image',
 			});
 		}
 	});
 });
 
 module.exports = router;
-
-
 
 
