@@ -54,24 +54,26 @@ import { getFromStorage } from '../../utils/localStorage.js';
         fetch('/api/system/trip/getTrip?_id='+this.props.match.params.tripID)
             .then(res => res.json())
             .then(json => {
-                this.setState({trip : json});
-                fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
-                    .then(res => res.json())
-                    .then(json => {
-                        fetch('/api/system/route/getRoute?_id='+json.data[0].routes[0])
-                            .then(res => res.json())
-                            .then(json => {
-                                // console.log(json.data[0]);
-                                this.from = json.data[0].startLocation.name;
-                                this.to = json.data[0].endLocation.name;
-                                this.setState({
-                                    routeArr:[...this.state.routeArr,{
-                                        origin : json.data[0].startLocation,
-                                        destination : json.data[0].endLocation
-                                    }]
+                if (json.success) {
+                    this.setState({trip : json.data});
+                    fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
+                        .then(res => res.json())
+                        .then(json => {
+                            fetch('/api/system/route/getRoute?_id='+json.data[0].routes[0])
+                                .then(res => res.json())
+                                .then(json => {
+                                    // console.log(json.data[0]);
+                                    this.from = json.data[0].startLocation.name;
+                                    this.to = json.data[0].endLocation.name;
+                                    this.setState({
+                                        routeArr:[...this.state.routeArr,{
+                                            origin : json.data[0].startLocation,
+                                            destination : json.data[0].endLocation
+                                        }]
+                                    });
                                 });
-                            });
-                    });
+                        });
+                    }
             });
 
         fetch('/api/account/profile/getAllUsers')
