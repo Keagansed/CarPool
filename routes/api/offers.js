@@ -40,11 +40,11 @@ router.post('/makeOffer',(req,res,next) => {
     newOffer.RecieverRoute = recieverRoute;
     newOffer.JoinRequest = join;
  
-    newOffer.save((err, offer) => {
+    newOffer.save((err) => {
         if(err) {  
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
             
         }else{
@@ -77,7 +77,7 @@ router.get('/getOffers',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             })    
         }else{
             res.send({
@@ -108,7 +108,7 @@ router.get('/declineInvite',(req,res,next) =>{
         if(err) {
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             return res.send({
@@ -137,7 +137,7 @@ router.get('/acceptInvite',(req,res,next) =>{
         if(err) {
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             
@@ -154,7 +154,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                     if(err) {
                         return res.send({
                             success: false,
-                            message: err
+                            message: "Database error: " + err,
                         });
                     }else{
                         offer.remove({
@@ -164,7 +164,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                             if(err) {
                                 return res.send({
                                     success: false,
-                                    message: err
+                                    message: "Database error: " + err,
                                 });
                             }else{
                                 return res.send({
@@ -189,7 +189,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                     if(err) {
                         return res.send({
                             success: false,
-                            message: err
+                            message: "Database error: " + err,
                         });
                     }else{
                         offer.remove({
@@ -199,7 +199,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                             if(err) {
                                 return res.send({
                                     success: false,
-                                    message: err
+                                    message: "Database error: " + err,
                                 });
                             }else{
                                 return res.send({

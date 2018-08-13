@@ -59,10 +59,12 @@ class UserMatch  extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({ 
-                userName : (json[0].firstName +" "+ json[0].lastName),
-                profilePic : json[0].profilePic
-            });
+            if (json.success) {
+                this.setState({ 
+                    userName : (json.data[0].firstName +" "+ json.data[0].lastName),
+                    profilePic : json.data[0].profilePic
+                });
+            }
         });
         
         fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId ,{

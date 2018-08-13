@@ -59,7 +59,9 @@ class CarpoolOffer extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({sender : json[0]});
+            if (json.success){
+                this.setState({sender : json.data});
+            }
         })
     }
 

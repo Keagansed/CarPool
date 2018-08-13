@@ -96,7 +96,11 @@ class Messages extends Component {
 
         fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
-            .then(json => this.setState({userList: json}));
+            .then(json => {
+                if (json.success) {
+                    this.setState({userList: json.data})
+                }
+            });
         
     }
 

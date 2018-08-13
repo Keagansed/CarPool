@@ -76,7 +76,11 @@ import { getFromStorage } from '../../utils/localStorage.js';
 
         fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
-            .then(json => this.setState({user: json}));
+            .then(json => {
+                if (json.success) {
+                    this.setState({user: json.data})
+                }
+            });
     }
 
     getUsernameSurname = (_id)=> {

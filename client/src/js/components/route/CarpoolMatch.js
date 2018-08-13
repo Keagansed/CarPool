@@ -93,22 +93,24 @@ class CarpoolMatch  extends Component {
                 .then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then(json => {
-                    let memberComponent = (
-                        <div 
-                            className="row bordbot-1px-dash-grey" 
-                            key={Math.random()}
-                        >
-                            <div className="col-6">
-                                {json[0].firstName+' '+json[0].lastName}
+                    if (json.success){
+                        let memberComponent = (
+                            <div 
+                                className="row bordbot-1px-dash-grey" 
+                                key={Math.random()}
+                            >
+                                <div className="col-6">
+                                    {json.data[0].firstName+' '+json.data[0].lastName}
+                                </div>
+                                <div className="col-6 vertical-right">
+                                    <a href={"/ProfilePage/"+json.data[0]._id}>View Profile</a>
+                                </div>
                             </div>
-                            <div className="col-6 vertical-right">
-                                <a href={"/ProfilePage/"+json[0]._id}>View Profile</a>
-                            </div>
-                        </div>
-                    )
-                    this.setState({ 
-                        carpoolMembers : [...this.state.carpoolMembers,memberComponent]
-                    });
+                        )
+                        this.setState({ 
+                            carpoolMembers : [...this.state.carpoolMembers,memberComponent]
+                        });
+                    }
                 });
 
             });

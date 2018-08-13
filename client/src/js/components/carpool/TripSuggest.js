@@ -69,7 +69,11 @@ class TripSuggest extends Component {
 
         fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
-            .then(json => this.setState({user: json}));
+            .then(json => {
+                if (json.success) {
+                    this.setState({user: json.data});
+                }
+            });
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
