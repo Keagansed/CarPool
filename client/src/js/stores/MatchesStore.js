@@ -293,7 +293,9 @@ class matchesStore {
                 .then(res => res.json())
                 .catch(error => console.error('Error: ', error))
                 .then((json) => {
-                    this.generateTrustFactorWeights(userObjs, json);
+                    if (json.success) {
+                        this.generateTrustFactorWeights(userObjs, json.data);
+                    }
                 });
 
             }else{

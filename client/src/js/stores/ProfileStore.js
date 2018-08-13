@@ -33,7 +33,9 @@ class profileStore {
                 .then(res => res.json())
                 .catch(error => console.error('Error:', error))
                 .then((json) => {
-                    this.secLvl = calcSecLvl(this.user, json);
+                    if (json.success) {
+                        this.secLvl = calcSecLvl(this.user, json.data);
+                    }
                 });
             }
         })

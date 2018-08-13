@@ -62,10 +62,15 @@ class TripSuggest extends Component {
      * Purpose: acquires all the users and stores them in the 'user' field.
      */
     componentDidMount(){
-        const idFor = this.props._id;
-        fetch('/api/account/vouch/getVouches?idFor='+idFor)
-            .then(res => res.json())
-            .then(vouches => this.setState({vouches}));
+        // This is not needed as far as i can tell uncomment if you get error
+        // const idFor = this.props._id;
+        // fetch('/api/account/vouch/getVouches?idFor='+idFor)
+        //     .then(res => res.json())
+        //     .then(vouches => {
+        //         if (vouches.success){
+        //             this.setState({vouches: vouches.data})
+        //         }
+        //     });
 
         fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())

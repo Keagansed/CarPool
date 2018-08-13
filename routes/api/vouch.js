@@ -19,7 +19,17 @@ router.get('/getVouches', function(req, res, next) {
     Vouch.find({
         idFor:idFor,
     },(err,data)=>{
-        res.json(data);
+		if (err){
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
+			});
+		}else {
+			return res.send({
+				success: true,
+				data: data,
+			});
+		}
     });
 });
 
