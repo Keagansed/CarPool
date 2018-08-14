@@ -109,7 +109,7 @@ class UploadIDSetting extends Component {
                         <div className="col-9">
                             <div className="col-12">
                                 <h5 className="mbottom-0">
-                                    Upload ID
+                                    Identity Document
                                 </h5>
                             </div>
                         </div>

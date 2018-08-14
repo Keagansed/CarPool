@@ -22,7 +22,7 @@ class UploadCarPictureSetting extends Component {
   
         this.state = {
             toggle: false,
-            file: {}
+            file: undefined,
         }
     }
 
@@ -75,7 +75,7 @@ class UploadCarPictureSetting extends Component {
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
                             <h5 className="modal-title fw-bold">
-                                Car picture
+                                Picture of Vehicle  
                             </h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -83,11 +83,12 @@ class UploadCarPictureSetting extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <input type="file" onChange={this.handleFileChange.bind(this)} className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="new profile picture" required="required" name="file" id="file"/> 
+                                <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" name="file" id="file"/>
+                                <label htmlFor="file" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">Choose a file</label> 
                             </div>
                             <div className="row">
-                                <button type="submit" onClick={this.upload.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
-                                    Submit Change
+                                <button type="submit" disabled={this.state.file === undefined} onClick={this.upload.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
+                                    Submit
                                 </button>
                             </div>
                         </div>
@@ -102,14 +103,14 @@ class UploadCarPictureSetting extends Component {
                         <div className="col-9">
                             <div className="col-12">
                                 <h5 className="mbottom-0">
-                                    Upload Car Picture  
+                                    Picture of Vehicle  
                                 </h5>
                             </div>
                         </div>
                         <div className="col-3 vertical-right">
                             <div className="col-12">
                                 <h5 className="mbottom-0">
-                                    <i className="fa fa-camera"/>
+                                    <i className="fa fa-car"/>
                                 </h5>
                             </div>
                         </div>

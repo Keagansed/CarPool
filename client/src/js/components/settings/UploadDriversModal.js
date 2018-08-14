@@ -81,7 +81,7 @@ class UploadDriversSetting extends Component {
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
                             <h5 className="modal-title fw-bold">
-                                Upload Driver's License
+                                Driver's License
                             </h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -89,11 +89,11 @@ class UploadDriversSetting extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                            <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" name="file" id="file"/>
+                                <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" name="file" id="file"/>
                                 <label htmlFor="file" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">Choose a file</label>  
                             </div>
                             <div className="row">
-                                <button type="submit" disabled={this.state.file === undefined} onClick={this.upload.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
+                                <button type="submit" disabled={this.state.file === undefined} onClick={this.upload.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
                                     Submit Change
                                 </button>
                             </div>
@@ -109,7 +109,7 @@ class UploadDriversSetting extends Component {
                         <div className="col-9">
                             <div className="col-12">
                                 <h5 className="mbottom-0">
-                                    Upload Driver's License
+                                    Driver's License
                                 </h5>
                             </div>
                         </div>
