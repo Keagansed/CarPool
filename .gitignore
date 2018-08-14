@@ -2,3 +2,4 @@ node_modules/
 .vs/
 .idea/
 .vscode/
+client/src/js/config/config.js
