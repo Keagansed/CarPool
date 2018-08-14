@@ -65,11 +65,11 @@ import { getFromStorage } from '../utils/localStorage.js';
         
         return(
             <div className="size-100 bg-purple">
-                    <NavTabs store={this.props.store} token={token}/>
-                    <div className="padtop-50px padbot-50px">
-                        {this.setTab()}
-                    </div>
-                    <Navbar token={token}/>
+                <NavTabs store={this.props.store} token={token}/>
+                <div className="padtop-50px padbot-50px">
+                    {this.setTab()}
+                </div>
+                <Navbar token={token}/>
             </div>
         );
     }

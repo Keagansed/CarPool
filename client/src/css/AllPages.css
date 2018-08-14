@@ -123,7 +123,7 @@ html, body{
 }
 
 .txt-purple{
-    color: #140D4F;
+    color: #140D4F !important;
 }
 .txt-white{
     color: white !important;
@@ -174,7 +174,7 @@ html, body{
 /* ============================================================================ */
 /*Background colours*/
 .bg-aqua{
-    background-color: #6FEDB7;
+    background-color: #6FEDB7 !important;
 }
 .bg-grey{
     background-color: grey;
@@ -494,4 +494,15 @@ label {
 
 .tripSuggest{
     white-space:pre-wrap;
+}
+
+/* ============================================================================ */
+/*File inputs*/
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
