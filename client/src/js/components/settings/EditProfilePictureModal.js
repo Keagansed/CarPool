@@ -94,7 +94,7 @@ class EditProfilePictureSetting extends Component {
                             </div>
                             <div className="row">
                                 <button type="submit" disabled={this.state.file === undefined} onClick={this.upload.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
-                                    Submit Change
+                                    Submit
                                 </button>
                             </div>
                         </div>

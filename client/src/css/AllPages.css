@@ -482,7 +482,10 @@ input:-webkit-autofill:focus {
     transition: background-color 5000s ease-in-out 0s;
 }
 #changeFirstName.error, 
-#changeLastName.error
+#changeLastName.error,
+#changeEmail.error,
+#changePasswordCurrent.error,
+#changePasswordNew.error
 {
     border-color: red;
 } 

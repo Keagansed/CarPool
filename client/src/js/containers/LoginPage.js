@@ -124,14 +124,6 @@ function validate(email, password) {
         });
     }
 
-    /*
-    * Purpose: Toggles the modal to display
-    */
-    openModal = (event) => {
-        event.preventDefault();
-        this.modal.open();
-    }
-
     render() {
         /*
         * Purpose: Only give fields red borders if the user has changed/access them

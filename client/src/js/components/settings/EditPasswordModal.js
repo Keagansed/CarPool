@@ -10,6 +10,16 @@ const display = {
 const hide = {
     display: 'none'
 };
+
+/*
+* Purpose: Validate whether all of the fields are valid - true if there are errors
+*/
+function validate(password, newPassword) {
+    return {
+        password: password.length === 0,
+        newPassword: newPassword.length === 0,
+    };
+}
   
 /*
 * Purpose: Popup modal that allows you to enter a new password for your account
@@ -23,7 +33,12 @@ class EditPasswordModal extends Component {
         this.state = {
             toggle: false,
             password: "",
-            newPassword: ""
+            newPassword: "",
+
+            touched: {
+                password: false,
+                newPassword: false,
+            },
         }
     }
     
@@ -48,6 +63,15 @@ class EditPasswordModal extends Component {
     */
     handleNewPasswordChange(e) {
         this.setState({newPassword: e.target.value})
+    }
+
+    /*
+    * Purpose: Give fields that have been entered incorrectly red borders
+    */
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true },
+        });
     }
 
     /*
@@ -80,8 +104,19 @@ class EditPasswordModal extends Component {
     }
   
     render() {
-        var modal = [];
+        /*
+        * Purpose: Only give fields red borders if the user has changed/access them
+        * and they are still not valid.
+        */
+        const shouldMarkError = (field) => {
+            const hasError = errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
+        const errors = validate(this.state.password, this.state.newPassword);
+        const isDisabled = Object.keys(errors).some(x => errors[x]);
 
+        var modal = [];
         modal.push(
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
@@ -96,10 +131,24 @@ class EditPasswordModal extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <input onChange={this.handlePasswordChange.bind(this)} type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Current Password" required="required" name="currentPassword" id="changePasswordCurrent"/> 
+                                <input 
+                                    onChange={this.handlePasswordChange.bind(this)} 
+                                    type="password" 
+                                    className={(shouldMarkError('password') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput"}
+                                    placeholder="Current Password" 
+                                    id="changePasswordCurrent"
+                                    onBlur={this.handleBlur('password')}
+                                /> 
                             </div>
                             <div className="row">
-                                <input onChange={this.handleNewPasswordChange.bind(this)} type="text" className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="New Password" required="required" name="newPassword" id="changePasswordNew"/> 
+                                <input 
+                                    onChange={this.handleNewPasswordChange.bind(this)} 
+                                    type="password" 
+                                    className={(shouldMarkError('newPassword') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput"}
+                                    placeholder="New Password" 
+                                    id="changePasswordNew"
+                                    onBlur={this.handleBlur('newPassword')}
+                                /> 
                             </div>
                             <div className="row">
                                 <button onClick={this.changePassword.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangePassword">

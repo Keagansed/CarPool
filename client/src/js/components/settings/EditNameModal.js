@@ -94,7 +94,6 @@ class EditNameModal extends Component {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if (json.success) {
-                alert("Name changed");
                 this.toggle();
             }
             else {
@@ -151,8 +150,8 @@ class EditNameModal extends Component {
                                 /> 
                             </div>
                             <div className="row">
-                                <button disabled={isDisabled} onClick={this.changeName.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeName">
-                                    Submit Change
+                                <button disabled={isDisabled} onClick={this.changeName.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangeName">
+                                    Submit
                                 </button>
                             </div>
                         </div>

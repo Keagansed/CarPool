@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 
+const util = require('./../../utils/idCheck');
 // Used as a css prop
 const display = {
     display: 'block'
@@ -10,6 +11,15 @@ const display = {
 const hide = {
     display: 'none'
 };
+
+/*
+* Purpose: Validate whether all of the fields are valid - true if there are errors
+*/
+function validate(email) {
+    return {
+        email: !util.ValidateEmail(email),
+    };
+}
 
 /*
 * Purpose: Popup modal that allows you to enter a new email address for your account
@@ -22,8 +32,12 @@ class EditEmailModal extends Component {
   
         this.state = {
             toggle: false,
-            email: this.props.token
-        }
+            email: this.props.token,
+
+            touched: {
+                email: false,
+            },
+        };
     }
     
     /*
@@ -40,6 +54,15 @@ class EditEmailModal extends Component {
     */
     handleEmailChange(e){
         this.setState({email: e.target.value})
+    }
+
+    /*
+    * Purpose: Give fields that have been entered incorrectly red borders
+    */
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true },
+        });
     }
 
     /*
@@ -61,7 +84,6 @@ class EditEmailModal extends Component {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if (json.success) {
-                alert("Email changed");
                 this.toggle();
             }
             else {
@@ -71,8 +93,15 @@ class EditEmailModal extends Component {
     }
 
     render() {
-        var modal = [];
+        const shouldMarkError = (field) => {
+            const hasError = errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
+        const errors = validate(this.state.name, this.state.lastName);
+        const isDisabled = Object.keys(errors).some(x => errors[x]);
 
+        var modal = [];
         modal.push(
             <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
                 <div className="modal-dialog" role="document">
@@ -85,11 +114,19 @@ class EditEmailModal extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <input type="email" value={this.state.email} onChange={this.handleEmailChange.bind(this)} className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput" placeholder="Email" required="required" name="email" id="changeEmail"/> 
+                                <input 
+                                    type="email" 
+                                    value={this.state.email} 
+                                    onChange={this.handleEmailChange.bind(this)} 
+                                    className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput"}
+                                    placeholder="Email" 
+                                    onBlur={this.handleBlur('email')}
+                                    id="changeEmail"
+                                /> 
                             </div>
                             <div className="row">
-                                <button type="submit" onClick={this.changeEmail.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
-                                    Submit Change
+                                <button disabled={isDisabled} type="submit" onClick={this.changeEmail.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">
+                                    Submit
                                 </button>
                             </div>
                         </div>
