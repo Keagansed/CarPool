@@ -2,21 +2,34 @@ import React from 'react';
 import Settings from '../../js/containers/SettingsPage';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import { MemoryRouter } from 'react-router-dom'
-import configureStore from 'redux-mock-store';
+import { MemoryRouter } from 'react-router-dom';
+
+class MockStore {
+    token = '';
+    profileTab = true;
+    alertsTab = false;
+
+    toggleToProfile = () => {
+        this.profileTab = true;
+        this.alertsTab = false;
+    };
+
+    toggleToAlerts = () => {
+        this.alertsTab = true;
+        this.profileTab = false;
+    };
+}
 
 describe('Settings Page Component', () => {
-    const mockStore = configureStore();
-    let store, container;
-    const initialState = {token:"123Foo"};
+    let mockStore, container;
 
-    beforeEach(() => {
-        store = mockStore(initialState);
-        container = shallow(<MemoryRouter><Settings store={store} /></MemoryRouter>);
+    beforeAll(() => {
+        mockStore = new MockStore();
+        container = shallow(<MemoryRouter><Settings store={mockStore} /></MemoryRouter>);
     });
 
     it('captures snapshot', () => {
-        const renderedValue = renderer.create(<MemoryRouter><Settings store={store} /></MemoryRouter>).toJSON();
+        const renderedValue = renderer.create(<MemoryRouter><Settings store={mockStore} /></MemoryRouter>).toJSON();
         expect(renderedValue).toMatchSnapshot();
     });
 
