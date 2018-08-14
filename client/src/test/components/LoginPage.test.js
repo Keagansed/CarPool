@@ -81,17 +81,39 @@ describe('Login Page Component', () => {
         expect(instance.state.toggle).toEqual(false);
     });
 
-    // it('updates login email value correctly', () => {
-    //     const event = {target: {value: "test@email.com"}};
-    //     expect(instance.props.store.lemail).toEqual('');
-    //     instance.updateLoginEmailValue(event);
-    //     expect(instance.props.store.lemail).toEqual("test@email.com");
-    // })
+    it('updates login email value correctly', () => {
+        const event = {target: {value: "test@email.com"}};
+        expect(instance.state.email).toEqual('');
+        instance.updateLoginEmailValue(event);
+        expect(instance.state.email).toEqual("test@email.com");
+    })
 
-    // it('updates login password value correctly', () => {
-    //     const event = {target: {value: "1234"}};
-    //     expect(instance.props.store.lpassword).toEqual('');
-    //     instance.updateLoginPasswordValue(event);
-    //     expect(instance.props.store.lpassword).toEqual("1234");
-    // })
+    it('updates login password value correctly', () => {
+        const event = {target: {value: "1234"}};
+        expect(instance.state.password).toEqual('');
+        instance.updateLoginPasswordValue(event);
+        expect(instance.state.password).toEqual("1234");
+    })
+
+    it('handles login correctly', () => {
+        const event = {preventDefault: function() {}};
+        expect(instance.state.toggle).toEqual(false);
+        instance.handleLogin(event);
+        expect(instance.state.toggle).toEqual(true);
+    })
+
+    it('checks correct state variables correctly', () => {
+        expect(instance.canBeSubmitted()).toEqual(true);
+    })
+
+    it('check state variables correctly with incorrect email', () => {
+        instance.state.email = "invalidemail";
+        expect(instance.canBeSubmitted()).toEqual(false);
+    })
+
+    it('check state variables correctly with incorrect password', () => {
+        instance.state.email = "test@email.com";
+        instance.state.password = "";
+        expect(instance.canBeSubmitted()).toEqual(false);
+    })
 });
