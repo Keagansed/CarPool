@@ -126,8 +126,9 @@ class loginStore {
                 setInStorage('sessionKey',{ token:json.token });
                 this.setToken(json.token);
                 this.setLoggedIn(json.success);
+                return;
             }else{
-                alert(json.message);
+                return;
             }
         })
     };

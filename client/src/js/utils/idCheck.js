@@ -25,8 +25,11 @@ module.exports.ValidateIDNumber = function(idNumber) {
     // get first 6 digits as a valid date
     let tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
 
-    if (!((tempDate.getYear().toString() === idNumber.substring(0, 2)) && (tempDate.getMonth() === idNumber.substring(2, 4) - 1) && (tempDate.getDate().toString() === idNumber.substring(4, 6)))) {
-        correct = false;
+    if (!(
+        (tempDate.getYear() === parseInt(idNumber.substring(0, 2), 10)) 
+        && (tempDate.getMonth() === (parseInt(idNumber.substring(2, 4), 10)) - 1) 
+        && (tempDate.getDate() === parseInt(idNumber.substring(4, 6), 10)))) {
+            correct = false;
     }
 
     // get the gender
