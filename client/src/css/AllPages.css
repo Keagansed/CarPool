@@ -481,6 +481,11 @@ input:-webkit-autofill:focus {
     -webkit-text-fill-color: #140D4F;
     transition: background-color 5000s ease-in-out 0s;
 }
+#changeFirstName.error, 
+#changeLastName.error
+{
+    border-color: red;
+} 
 
 /* ============================================================================ */
 /*Review Trip Modal*/
