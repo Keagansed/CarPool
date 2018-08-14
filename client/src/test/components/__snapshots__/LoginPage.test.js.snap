@@ -22,26 +22,26 @@ exports[`Login Page Component captures snapshot 1`] = `
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputEmail"
-          name="Email"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Email"
-          required="required"
           type="email"
+          value=""
         />
       </div>
       <div
         className="row"
       >
         <input
-          className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
+          className=" form-control mx-auto width-15rem brad-2rem mbottom-1rem"
           id="inputPassword"
-          name="Password"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Password"
-          required="required"
           type="password"
+          value=""
         />
       </div>
       <div
@@ -49,6 +49,7 @@ exports[`Login Page Component captures snapshot 1`] = `
       >
         <button
           className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+          disabled={true}
           id="btnLogin"
           onClick={[Function]}
           type="submit"
@@ -139,6 +140,53 @@ exports[`Login Page Component captures snapshot 1`] = `
                 </form>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="modal"
+      id="myModal"
+      role="dialog"
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+      tabIndex="-1"
+    >
+      <div
+        className="modal-dialog"
+        role="document"
+      >
+        <div
+          className="modal-content"
+        >
+          <div
+            className="modal-header"
+          >
+            <h5
+              className="modal-title"
+            >
+              Login Failed
+            </h5>
+            <button
+              aria-label="Close"
+              className="close"
+              onClick={[Function]}
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            className="modal-body"
+          >
+            You have entered an incorrect email or password.
           </div>
         </div>
       </div>
