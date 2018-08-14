@@ -42,6 +42,33 @@ class tripsStore {
             })
         }
 
+    @action addTripWithoutFirebase = () => {
+        fetch('/api/system/trip/addTrip',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                tripName: this.tripName,
+                carpoolID: this.carpoolID,
+                idBy: this.idBy,
+                dateTime: this.dateTime,
+                days: this.days,
+                users: this.users,
+                driver: this.idBy,
+            })
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success){
+
+                }else{
+                    alert(json.message);
+                }
+            })
+    }
+
 }
 
 const TripsStore = new tripsStore();
