@@ -94,11 +94,10 @@ class EditPasswordModal extends Component {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if (json.success){
-                alert("Password changed");
                 this.toggle();
             }
             else{
-                alert("Password was not changed. " + json.message);
+                this.setState({password: ""});
             }
         });
     }
@@ -138,6 +137,7 @@ class EditPasswordModal extends Component {
                                     placeholder="Current Password" 
                                     id="changePasswordCurrent"
                                     onBlur={this.handleBlur('password')}
+                                    value={this.state.password}
                                 /> 
                             </div>
                             <div className="row">
@@ -148,11 +148,12 @@ class EditPasswordModal extends Component {
                                     placeholder="New Password" 
                                     id="changePasswordNew"
                                     onBlur={this.handleBlur('newPassword')}
+                                    value={this.state.newPassword}
                                 /> 
                             </div>
                             <div className="row">
-                                <button onClick={this.changePassword.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnChangePassword">
-                                    Submit Change
+                                <button onClick={this.changePassword.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangePassword">
+                                    Submit
                                 </button>
                             </div>
                         </div>

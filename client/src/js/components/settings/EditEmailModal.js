@@ -87,7 +87,7 @@ class EditEmailModal extends Component {
                 this.toggle();
             }
             else {
-                alert("Email was not changed "+ json.message);
+                this.setState({email: ""});
             }
         });
     }
@@ -98,7 +98,7 @@ class EditEmailModal extends Component {
             const shouldShow = this.state.touched[field];
             return hasError ? shouldShow : false;
         };
-        const errors = validate(this.state.name, this.state.lastName);
+        const errors = validate(this.state.email);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
 
         var modal = [];

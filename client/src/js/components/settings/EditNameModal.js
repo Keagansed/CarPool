@@ -97,7 +97,7 @@ class EditNameModal extends Component {
                 this.toggle();
             }
             else {
-                alert("Name was not changed " + json.message);
+                this.setState({name: "", lastName: ""});
             }
         });
     }
