@@ -1,6 +1,6 @@
 // File Type: Component
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 
 import app from '../../stores/MessagingStore'
@@ -35,6 +35,7 @@ class CarpoolInfoModal extends Component {
             groupChatUsers:{},
             toggle: false,
             toggleConfirm: false,
+            redirect: false,
         };
     }
 
@@ -87,7 +88,7 @@ class CarpoolInfoModal extends Component {
     }
 
     /*
-     *Purpose: removes the user from the carpool and returns them to the homepage
+     * Purpose: removes the user from the carpool and returns them to the homepage
      * It is called when the leave carpool button is clicked
      */
     leaveCarpool() {
@@ -103,6 +104,9 @@ class CarpoolInfoModal extends Component {
         }, function () {
             app.database().ref().child('groupChats/' + this.props.carpoolID)
                 .update({users: this.state.groupChatUsers}).then(() => {
+                this.setState({
+                    redirect: true
+                });
                 return {};
             }).catch(error => {
 
@@ -114,6 +118,16 @@ class CarpoolInfoModal extends Component {
             });
         });
     }
+
+    /*
+     * Purpose: causes page to be redirected to homepage when the state variable redirect is true
+     * It is called when the user clicks yes after clicking the leave caprool button
+     */
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/HomePage' />
+        }
+    };
 
     /*
      * Purpose: toggles whether the confirm to leave modal is visible or not
@@ -148,7 +162,7 @@ class CarpoolInfoModal extends Component {
             );
         }
 
-        var modal = [];
+        let modal = [];
         modal.push(
             // Modal
             <div 
@@ -194,7 +208,7 @@ class CarpoolInfoModal extends Component {
                 </div>
             </div>
         );
-        var modalConfirm = [];
+        let modalConfirm = [];
         modalConfirm.push(
             // Modal
             <div 
@@ -218,12 +232,14 @@ class CarpoolInfoModal extends Component {
                                 <h6 className="fw-bold mx-auto">Are you sure you want to leave this carpool?</h6>
                             </div>  
                             <div className="row">
-                                <a href="/HomePage"
-                                   onClick={this.leaveCarpool}
-                                   className="btn btn-primary txt-black col-5 mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                                <button
+                                    type="submit"
+                                    onClick={this.leaveCarpool}
+                                    className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                                    id="btnYesCancel"
                                 >
                                     Yes
-                                </a>
+                                </button>
                                 <button
                                     type="submit"
                                     onClick={this.toggleConfirm}
@@ -241,6 +257,7 @@ class CarpoolInfoModal extends Component {
 
         return(
             <div className="col-8 txt-center">
+                {this.renderRedirect()}
                 <button 
                     className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" 
                     onClick={this.toggle}
