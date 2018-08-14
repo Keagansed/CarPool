@@ -4,8 +4,6 @@ import React, { Component } from 'react';
 
 import MapComponent from '../google/GeneralMapWrapper';
 
-import { getFromStorage } from '../../utils/localStorage.js';
-
 //'display' is used to show the modal
 const display = {
     display: 'block'
@@ -31,7 +29,7 @@ class RouteInfoModal extends Component{
         this.toggle = this.toggle.bind(this);
 
         this.state = {
-            token: '',
+            routeId: this.props.routeId,
             //the route field store the current route object
             route:{},
             //the originName field stores the current routes origin
@@ -50,15 +48,9 @@ class RouteInfoModal extends Component{
     * that need to take place before the component is rendered on the screen.
     */
     componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        let { token } = obj;
-
-        this.setState({
-            token,
-        })
 
         //Get current route and compare with OtherRoutes
-        fetch('/api/system/Route/getRoute?_id='+ token, { 
+        fetch('/api/system/Route/getRoute?routeId='+ this.state.routeId + '&token=' + this.props.token, { 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -68,7 +60,6 @@ class RouteInfoModal extends Component{
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success) {
-                console.log(json)
                 this.setState({
                     route:json.data[0],
                     originName:json.data[0].startLocation.name,

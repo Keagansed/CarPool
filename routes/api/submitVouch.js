@@ -3,6 +3,7 @@ const express = require('express');
 const Vouch = require('../../models/Vouch.js');
 
 const router = express.Router();
+let verify = require('../middleware/verify.js');
 
 // This method creates a document in the Vouch collection.
 // Parameters: 
@@ -16,6 +17,8 @@ const router = express.Router();
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.use(verify);
+
 router.post('/',(req,res,next)=>{
 	const { body } = req;
 	const{

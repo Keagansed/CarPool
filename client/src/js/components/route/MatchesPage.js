@@ -58,7 +58,8 @@ import { getFromStorage } from '../../utils/localStorage.js';
                             </button>
                         </Link>
                         <RouteInfoModal 
-                            _id={token} 
+                            token={token}
+                            routeId={this.props.match.params._id} 
                             MatchesStore={MatchesStore}
                         />
                         <EditRouteModal  

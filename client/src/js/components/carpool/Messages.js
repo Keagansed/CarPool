@@ -26,6 +26,7 @@ class Messages extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            token: '',
             carpoolID:"",
             messages:[],
             users:[],
@@ -43,6 +44,13 @@ class Messages extends Component {
      * Purpose: adds all messages to previous messages, sets 'carpoolID' and updates users.
      */
     componentWillMount() {
+        let obj = getFromStorage('sessionKey');
+        let { token } = obj;
+        
+        this.setState({
+            token,
+        })
+
         const previousUsers = this.state.users;
         let previousMessages = this.state.messages;
 
@@ -79,7 +87,7 @@ class Messages extends Component {
         });
 
         const date = JSON.stringify(new Date());
-        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+this.state.token)
             .update({lastRefresh:date}).then(() => {
                 return {};
             }).catch(error => {
@@ -103,7 +111,7 @@ class Messages extends Component {
      * Purpose:  adds a trip suggestion to the messages
      */
     suggestTrip(message, userID, users, tripID) {
-        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users, tripID:tripID, usersResponded:{[getFromStorage('sessionKey').token]:true}});
+        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:true, users, tripID:tripID, usersResponded:{[this.state.token]:true}});
     }
 
     /*
@@ -111,7 +119,7 @@ class Messages extends Component {
      */
     updateLastRefresh() {
         let date = JSON.stringify(new Date());
-        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+this.state.token)
             .update({lastRefresh:date}).then(() => {
                 return {};
             }).catch(error => {
@@ -134,7 +142,7 @@ class Messages extends Component {
 
         for(let user in this.state.users) {
 
-            if(user === getFromStorage('sessionKey').token) {
+            if(user === this.state.token) {
                 verify = true;
             }
 
@@ -166,8 +174,8 @@ class Messages extends Component {
                                     <i className="fa fa-chevron-circle-left txt-center"></i>
                                 </button>
                             </Link>
-                            <CarpoolInfoModal users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
-                            <NewTripModal users={this.state.users} suggestTrip={this.suggestTrip} carpoolID={this.state.carpoolID}  carpoolName={this.props.match.params.carpoolName}/>
+                            <CarpoolInfoModal token={this.state.token} users={this.state.users} carpoolName={this.props.match.params.carpoolName}/>
+                            <NewTripModal token={this.state.token} users={this.state.users} suggestTrip={this.suggestTrip} carpoolID={this.state.carpoolID}  carpoolName={this.props.match.params.carpoolName}/>
                         </div>
                     </div>
                     {/* Padding is there for top and bottom navs*/}
@@ -187,13 +195,13 @@ class Messages extends Component {
                                     if(message.tripSuggest) {
 
                                         return(
-                                            <TripSuggest messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} tripID={message.tripID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                            <TripSuggest token={this.state.token} messageContent={message.messageContent} messageID={message.id} users={message.users} carpoolID={this.props.match.params.carpoolID} tripID={message.tripID} usersResponded={message.usersResponded} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                         );
 
                                     }else{
 
                                         return(
-                                            <Message messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
+                                            <Message token={this.state.token} messageContent={message.messageContent} messageID={message.id} userID={message.userID} userColour={userColour} dateTime={message.dateTime} key={message.id}/>
                                         );
 
                                     }

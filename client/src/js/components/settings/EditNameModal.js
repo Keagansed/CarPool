@@ -55,13 +55,13 @@ class EditNameModal extends Component {
     * the update was successful
     */
     changeName(){
-        fetch('/api/account/profile/updateName',{
+        fetch('/api/account/profile/updateName?token=' + this.props.token,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                id: this.props.token,
+                token: this.props.token,
                 name: this.state.name,
                 lastName: this.state.lastName
             })

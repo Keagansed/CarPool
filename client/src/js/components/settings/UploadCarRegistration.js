@@ -50,12 +50,12 @@ class UploadCarRegistrationSetting extends Component {
     upload() {
         const formData = new FormData();
         
-        formData.append('id', this.state.token);
+        formData.append('token', this.state.token);
         formData.append('file', this.state.file);
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/api/account/uploadFile/CarPic', true);
+        xhr.open('POST', '/api/account/uploadFile/CarRegistration', true);
         xhr.onreadystatechange = res => {            
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 alert("Successfully uploaded");

@@ -29,13 +29,13 @@ class Message extends Component {
      */
     componentDidMount(){
         const idFor = this.props._id;
-        fetch('/api/account/vouch/getVouches?idFor='+idFor)
-            .then(res => res.json())
-            .then(vouches => this.setState({vouches}));
+        fetch('/api/account/vouch/getVouches?idFor=' + idFor)
+        .then(res => res.json())
+        .then(vouches => this.setState({vouches}));
 
-        fetch('/api/account/profile/getAllUsers')
-            .then(res => res.json())
-            .then(json => this.setState({user: json}));
+        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
+        .then(res => res.json())
+        .then(json => this.setState({user: json}));
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;

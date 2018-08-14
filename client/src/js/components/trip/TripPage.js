@@ -17,6 +17,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
         super();
 
         this.state = {
+            token: '',
             loading: true,
             trip:[],
             carpool:[],
@@ -35,30 +36,26 @@ import { getFromStorage } from '../../utils/localStorage.js';
     //========= Fetch Session Token ===========
     componentDidMount(){
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token){
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success){
-                    this.props.store.token = token;
+        const { token } = obj;
 
-                    this.setState({
-                        loading: false,
-                        routeArr:[]
-                    })
-                }
-            })
-        }
+        this.props.store.token = token;
 
-        fetch('/api/system/trip/getTrip?_id='+this.props.match.params.tripID)
+        this.setState({
+            token,
+            loading: false,
+            routeArr:[]
+        })
+
+        
+
+        fetch('/api/system/trip/getTrip?_id=' + this.props.match.params.tripID + '&token=' + this.state.token)
             .then(res => res.json())
-            .then(json => {
+            .then(json => {                
                 this.setState({trip : json});
                 fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
                     .then(res => res.json())
                     .then(json => {
-                        fetch('/api/system/route/getRoute?_id='+json.data[0].routes[0])
+                        fetch('/api/system/route/getRoute?routeId='+json.data[0].routes[0])
                             .then(res => res.json())
                             .then(json => {
                                 // console.log(json.data[0]);
@@ -74,7 +71,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
                     });
             });
 
-        fetch('/api/account/profile/getAllUsers')
+        fetch('/api/account/profile/getAllUsers?token=' + this.state.token)
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }

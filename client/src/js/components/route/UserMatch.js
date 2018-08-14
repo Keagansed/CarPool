@@ -77,7 +77,7 @@ class UserMatch  extends Component {
             });
         });
         
-        fetch('/api/system/Route/getRoute?_id=' + this.props.uRouteId ,{
+        fetch('/api/system/Route/getRoute?routeId=' + this.props.uRouteId ,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -95,7 +95,7 @@ class UserMatch  extends Component {
             });
         });
 
-        fetch('/api/system/Route/getRoute?_id=' + this.props.routeId, {
+        fetch('/api/system/Route/getRoute?routeId=' + this.props.routeId, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

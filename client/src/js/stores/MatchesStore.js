@@ -31,7 +31,7 @@ class matchesStore {
         Makes API calls to get all the routes
      */
     @action getAllRoutes = (token, routeId) => {
-        fetch('/api/system/carpool/getAllOtherCarpools?routeId='+routeId,{//Get all Carpools that current route isn't in
+        fetch('/api/system/carpool/getAllOtherCarpools?routeId=' + routeId + '&token=' + token,{//Get all Carpools that current route isn't in
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -50,7 +50,7 @@ class matchesStore {
             }
         });
 
-        fetch('/api/system/Route/getOtherRoutes?userId=' + token,{ //Get all OtherRoutes that are not the users
+        fetch('/api/system/Route/getOtherRoutes?token=' + token,{ //Get all OtherRoutes that are not the users
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -66,7 +66,7 @@ class matchesStore {
             }
         });
 
-        fetch('/api/system/Route/getRoute?_id='+routeId,{ //Get current route and compare with OtherRoutes
+        fetch('/api/system/Route/getRoute?routeId=' + routeId + '&token=' + token,{ //Get current route and compare with OtherRoutes
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -76,7 +76,7 @@ class matchesStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success) {
-                this.filterRoutesByRadius(json.data[0]);  
+                this.filterRoutesByRadius(json.data[0], token);  
                 this.filterRoutesByTime(json.data[0]); 
                 this.loadingRoutes = false;
             }else{
@@ -92,7 +92,7 @@ class matchesStore {
         Calls functions generateDifferenceArray and generateCarpoolArr in other file client/src/js/utils/arrayCheck.js
         to generate an array of differences and generate an array or relevant carpools
      */
-    @action filterRoutesByRadius = (routeObj) => {
+    @action filterRoutesByRadius = (routeObj, token) => {
         // Longitudes, latitudes and radiuses
         let routeStartLat,routeStartLng,routeEndtLat,routeEndLng, startWithinRadius, endWithinRadius, startDistance, endDistance;
 
@@ -138,7 +138,7 @@ class matchesStore {
         }
 
         if(recRoutes.length > 0) {
-            this.updateRecommendedRoutes(recRoutes, routeObj._id);
+            this.updateRecommendedRoutes(recRoutes, routeObj._id, token);
         }
         if(differenceArray.length > 0) {
             this.updateRoutesCompared(differenceArray, routeObj._id);
@@ -151,9 +151,9 @@ class matchesStore {
         Makes an API call to getRoutes in order to filter carpools by relevance
         Takes the caproolArr and the user's ID as arguments
      */
-    @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
+    @action filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is already a part of
         this.allCarpools = []; //reset carpool
-        fetch('/api/system/Route/getRoutes?userId='+userId,{
+        fetch('/api/system/Route/getRoutes?token='+token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -224,7 +224,7 @@ class matchesStore {
         Takes in the recommendedArray and the routeID as an argument
         Makes an API call to update the recommended routes in the database
      */
-    @action updateRecommendedRoutes = (recommendedArray, routeId) => {
+    @action updateRecommendedRoutes = (recommendedArray, routeId, token) => {
         // Array of route IDs
         let arrRouteId = [];
 
@@ -232,7 +232,7 @@ class matchesStore {
             arrRouteId.push(element._id);
         });
 
-        fetch('/api/system/Route/updateRecommendedRoutes',{
+        fetch('/api/system/Route/updateRecommendedRoutes?token=' + token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

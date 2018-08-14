@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 
+import { getFromStorage } from '../../utils/localStorage.js';
+
 const display = {
     display: 'block'
 };
@@ -18,13 +20,21 @@ class Vouch  extends Component {
         super(props);
 
         this.state = {
+            token: '',
             toggle: false,
             user:[]
         }
     }
 
-    componentWillMount(){
-        fetch('/api/account/profile/getAllUsers')
+    componentWillMount() {
+        const obj = getFromStorage('sessionKey');
+        const { token } = obj;
+
+        this.setState({
+            token,
+        })
+
+        fetch('/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .then(json => this.setState({user: json}))
     }

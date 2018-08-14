@@ -44,7 +44,7 @@ class ReviewTripModal extends Component{
 
     submitReviews = ()=>{
         for(let user in this.userReviews){
-            VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review);
+            VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review, getFromStorage('sessionKey').token);
         }
         this.toggle();
     }

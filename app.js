@@ -14,10 +14,10 @@ let vouchRouter = require('./routes/api/vouch.js');
 let profileRouter = require('./routes/api/profile.js');
 let uploadRouter = require('./routes/api/uploadFile.js');
 let getImageRouter = require('./routes/api/getImage.js');
-let routesRouter = require('./routes/api/route');
+let routesRouter = require('./routes/api/route.js');
 let tripsRouter = require('./routes/api/trip.js');
-let carpoolRouter = require('./routes/api/carpool');
-let offerRouter = require('./routes/api/offers');
+let carpoolRouter = require('./routes/api/carpool.js');
+let offerRouter = require('./routes/api/offers.js');
 
 var app = express();
 

@@ -42,7 +42,7 @@ class UploadCarPictureSetting extends Component {
     upload(){
         const formData = new FormData();
         
-        formData.append('id', this.props.token);
+        formData.append('token', this.props.token);
         formData.append('file', this.state.file);
 
         const xhr = new XMLHttpRequest();

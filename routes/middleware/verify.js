@@ -6,7 +6,7 @@ let verify = function(req, res, next) {
 
     let date = new Date();
     let currentDate = date.toDateString();
-    
+
     UserSession.find({
         userId:token,
         timestamp: currentDate
@@ -19,7 +19,7 @@ let verify = function(req, res, next) {
         }
         
         if(sessions.length != 1) {
-            return res.send({ 
+            return res.send({                 
                 verifySuccess:false,
                 verifyMessage:"Error: Invalid session"
             });

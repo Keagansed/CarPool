@@ -9,6 +9,7 @@ const multer = require('multer');
 const path = require('path');
 
 const User = require('../../models/User.js');
+let verify = require('../middleware/verify.js');
 
 // This router handles the uploading of any and all files.
 const router = express.Router(); 
@@ -51,14 +52,16 @@ const upload = multer({ storage });
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a User collection.
+//      token: String;  This is an object id of a User collection.
 //			file: file;  This is a bit stream of the uploaded file.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.use(verify);
+
 router.post('/profilePicture', upload.single('file'), (req, res, next) => {
-	const query = {'_id': req.body.id};
+	const query = {'_id': req.body.token};
 
 	User.findOne(query,(err,user) => {	
 		if(err) {
@@ -88,14 +91,14 @@ router.post('/profilePicture', upload.single('file'), (req, res, next) => {
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a User collection.
+//      token: String;  This is an object id of a User collection.
 //			file: file;  This is a bit stream of the uploaded file.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 router.post('/driversLicense', upload.single('file'), (req, res, next) => {
- const query = {'_id': req.body.id};
+ const query = {'_id': req.body.token};
 
 	User.findOne(query,(err,user) => {	
 		if(err) {
@@ -123,14 +126,14 @@ router.post('/driversLicense', upload.single('file'), (req, res, next) => {
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a User collection.
+//      token: String;  This is an object id of a User collection.
 //			file: file;  This is a bit stream of the uploaded file.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 router.post('/IdDocument', upload.single('file'), (req, res, next) => {
-	const query = {'_id': req.body.id};
+	const query = {'_id': req.body.token};
 	
 	User.findOne(query,(err,user) => {
 		if(err) {
@@ -158,14 +161,14 @@ router.post('/IdDocument', upload.single('file'), (req, res, next) => {
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a User collection.
+//      token: String;  This is an object id of a User collection.
 //			file: file;  This is a bit stream of the uploaded file.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 router.post('/CarPic', upload.single('file'), (req, res, next) => {
-	const query = {'_id': req.body.id};
+	const query = {'_id': req.body.token};
 	
 	User.findOne(query,(err,user) => {	
 		if(err) {
@@ -193,14 +196,14 @@ router.post('/CarPic', upload.single('file'), (req, res, next) => {
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a User collection.
+//      token: String;  This is an object id of a User collection.
 //			file: file;  This is a bit stream of the uploaded file.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
  router.post('/CarRegistration', upload.single('file'), (req, res, next) => {
-	const query = {'_id': req.body.id};
+	const query = {'_id': req.body.token};
 	
   User.findOne(query,(err,user) => {
 		if(err) {

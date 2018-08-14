@@ -48,7 +48,7 @@ class CarpoolMatch  extends Component {
     */
     componentWillMount() {
         fetch(
-            '/api/system/Route/getRoute?_id=' + this.props.uRouteId, {
+            '/api/system/Route/getRoute?routeId=' + this.props.uRouteId, {
                 method:'GET',
                 headers: {
                     'Content-Type':'application/json'
@@ -68,7 +68,7 @@ class CarpoolMatch  extends Component {
         });
 
         this.props.routeArr.forEach(routeId => {
-            fetch('/api/system/Route/getRoute?_id=' + routeId, {
+            fetch('/api/system/Route/getRoute?routeId=' + routeId, {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -84,7 +84,7 @@ class CarpoolMatch  extends Component {
                     }]
                 });
 
-                fetch('/api/account/profile?_id=' + json.data[0].userId,{
+                fetch('/api/account/profile?token=' + json.data[0].userId,{
                     method:'GET',
                     headers:{
                         'Content-Type':'application/json'
@@ -130,7 +130,7 @@ class CarpoolMatch  extends Component {
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
     makeOffer() {
-        fetch('/api/system/route/getRoute?_id=' + this.props.routeArr[0], {
+        fetch('/api/system/route/getRoute?routeId=' + this.props.routeArr[0], {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

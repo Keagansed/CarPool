@@ -41,11 +41,11 @@ class EditRouteModal extends Component{
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        fetch('/api/account/profile/getAllUsers')
-            .then(res => res.json())
-            .then(json => this.setState({user: json}));
+        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
+        .then(res => res.json())
+        .then(json => this.setState({user: json}));
         
-        fetch('/api/system/route/getRoute?_id=' + this.props.routeId, {
+        fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.props.token, {
             method:'GET',
             headers: {
                 'Content-Type':'application/json'
@@ -53,8 +53,11 @@ class EditRouteModal extends Component{
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(json => {
-            this.setState({routeObj : json.data[0]});
+        .then(json => {  
+            if(json.success)          
+                this.setState({routeObj : json.data[0]});
+            else
+                console.log(json)
         });
     }
 

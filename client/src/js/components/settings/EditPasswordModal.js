@@ -55,13 +55,13 @@ class EditPasswordModal extends Component {
     * the update was successful
     */
     changePassword(){
-        fetch('/api/account/profile/updatePassword',{
+        fetch('/api/account/profile/updatePassword?token=' + this.props.token,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                id: this.props.token,
+                token: this.props.token,
                 password: this.state.password,
                 newPassword: this.state.newPassword
             })

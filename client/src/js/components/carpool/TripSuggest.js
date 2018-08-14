@@ -65,12 +65,12 @@ class TripSuggest extends Component {
     componentDidMount(){
         const idFor = this.props._id;
         fetch('/api/account/vouch/getVouches?idFor='+idFor)
-            .then(res => res.json())
-            .then(vouches => this.setState({vouches}));
+        .then(res => res.json())
+        .then(vouches => this.setState({vouches}));
 
-        fetch('/api/account/profile/getAllUsers')
-            .then(res => res.json())
-            .then(json => this.setState({user: json}));
+        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
+        .then(res => res.json())
+        .then(json => this.setState({user: json}));
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
@@ -178,14 +178,14 @@ class TripSuggest extends Component {
         });
 
         this.buttons = this.state.buttons;
-        fetch('/api/system/trip/respondToTrip',{
+        fetch('/api/system/trip/respondToTrip?token=' + this.props.token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
                 _id: this.props.tripID,
-                userID: getFromStorage('sessionKey').token
+                token: getFromStorage('sessionKey').token
             })
         })
         .then(res=>res.json())

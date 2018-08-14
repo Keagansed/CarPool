@@ -3,6 +3,7 @@
 let express = require('express');
 
 const Trip = require('../../models/Trip.js');
+let verify = require('../middleware/verify.js');
 
 // This router handles all API calls that only rely on the Trip collection.
 let router = express.Router();
@@ -20,6 +21,8 @@ let router = express.Router();
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.use(verify);
+
 router.post('/addTrip',(req,res,next)=>{
     const { body } = req;
     const {
@@ -96,7 +99,7 @@ router.post('/addTrip',(req,res,next)=>{
 // This method removes a document from the Trip collection.
 // Parameters: 
 //      _id: String;  This is an object id of a Trip collection.
-//		userId: String;  Object id of the user canceling the trip.
+//		token: String;  Object id of the user canceling the trip.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -105,7 +108,7 @@ router.post('/cancelTrip',(req,res,next)=>{
     const { body } = req;
     let {
         _id,
-        userID
+        token
     } = body;
     let tripName;
     let idBy;
@@ -121,7 +124,7 @@ router.post('/cancelTrip',(req,res,next)=>{
         dateTime = data[0].dateTime;
         days = data[0].days;
         users = data[0].users;
-        users[userID] = false;
+        users[token] = false;
 
         Trip.findOneAndUpdate(
             {"_id": _id},
@@ -156,10 +159,10 @@ router.post('/cancelTrip',(req,res,next)=>{
 //          message: String;  Contains the error message or completion message.
 router.get('/deleteTrip', function(req, res, next) {
     const { query } = req;
-    const { _id } = query;
+    const { tripId } = query;
 
     Trip.remove({
-        _id:_id,
+        _id:tripId,
     },(err) => {
         if(err) {
             return res.send({
@@ -200,9 +203,9 @@ router.get('/getTrip', function(req, res, next) {
 //          data: JSON object;  Contains the result of the DB query.
 router.get('/getTrips', function(req, res, next) {
     const { query } = req;
-    const { userID } = query;
+    const { token } = query;
 
-    Trip.find({['users.' + userID]:true},
+    Trip.find({['users.' + token]:true},
         (err,data)=>{
         res.json(data);
     });
@@ -211,7 +214,7 @@ router.get('/getTrips', function(req, res, next) {
 // This method handles a users respons to a trip.
 // Parameters: 
 //      _id: String;  This is an object id of a Trip collection.
-//      userID: String;  This is the user who is responding to the trip.
+//      token: String;  This is the user who is responding to the trip.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -220,7 +223,7 @@ router.post('/respondToTrip',(req,res,next) => {
     const { body } = req;
     let {
         _id,
-        userID
+        token
     } = body;
     let tripName;
     let idBy;
@@ -236,7 +239,7 @@ router.post('/respondToTrip',(req,res,next) => {
         dateTime = data[0].dateTime;
         days = data[0].days;
         users = data[0].users;
-        users[userID] = true;
+        users[token] = true;
 
         Trip.findOneAndUpdate(
             {"_id": _id},

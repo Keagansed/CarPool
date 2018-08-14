@@ -101,7 +101,7 @@ router.post('/getUserByName', (req,res,next) => {
 
 // This method updates the email field of a document in the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a document in the User collection.
+//      token: String;  This is an object id of a document in the User collection.
 //		email: String;  This is the value the field should be changed to.
 // Return Value:
 //      Response containing: 
@@ -109,7 +109,7 @@ router.post('/getUserByName', (req,res,next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/updateEmail', (req,res,next) => {
 	const { body } = req;
-	const { id, email } = body;
+	const { token, email } = body;
 
 	email = email.toLowerCase();
 
@@ -121,14 +121,14 @@ router.post('/updateEmail', (req,res,next) => {
 				success:false,
 				message:"Error:Server error"+err
 			});
-		}else if((users.length>0) && (users[0]._id != id)) {
+		}else if((users.length>0) && (users[0]._id != token)) {
 			return res.send({
 				success:false,
 				message:"Error: Email already exists"
 			});
 		}else{
 			User.findOneAndUpdate({
-				_id: id
+				_id: token
 			},
 				{$set:{
 					email : email
@@ -152,7 +152,7 @@ router.post('/updateEmail', (req,res,next) => {
 
 // This method updates the name and lastName fields of a document in the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a document in the User collection.
+//      token: String;  This is an object id of a document in the User collection.
 //		name: String;  This is the value the firstName field should be changed to.
 //		lastName: String;  This is the value the lastName field should be changed to.
 // Return Value:
@@ -161,10 +161,10 @@ router.post('/updateEmail', (req,res,next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/updateName', (req,res,next) => {
 	const { body } = req;
-	const { id, name, lastName } = body;
+	const { token, name, lastName } = body;
 	
 	User.findOneAndUpdate({
-		_id: id
+		_id: token
 	},
 		{$set: {
 			firstName: name,
@@ -187,7 +187,7 @@ router.post('/updateName', (req,res,next) => {
 
 // This method updates the password field of a document in the User collection.
 // Parameters: 
-//      id: String;  This is an object id of a document in the User collection.
+//      token: String;  This is an object id of a document in the User collection.
 //		password: String;  This hashed is the current value of the field.
 //		newPassword: String; This hashed is the value the field should be changed to.
 // Return Value:
@@ -196,9 +196,9 @@ router.post('/updateName', (req,res,next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/updatePassword', (req,res,next) => {
 	const { body } = req;
-	let { id, password, newPassword } = body;
+	let { token, password, newPassword } = body;
 	User.find({
-		_id: id
+		_id: token
 	},(err, users) => {
 		if(err) {
 			return res.send({
@@ -213,7 +213,7 @@ router.post('/updatePassword', (req,res,next) => {
 		}else{
 			newPassword = users[0].generateHash(newPassword);
 			User.findOneAndUpdate({
-				_id: id
+				_id: token
 			},
 				{$set:{
 					password : newPassword

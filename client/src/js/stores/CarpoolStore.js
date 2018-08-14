@@ -28,8 +28,8 @@ class carpoolStore {
         Takes the carpool offer ID as a variable which is a string
         Calls getRandomColour
      */
-    @action addCarpool = (offerId) => {
-        fetch('/api/system/offers/acceptInvite?offerId=' + offerId,{
+    @action addCarpool = (offerId, token) => {
+        fetch('/api/system/offers/acceptInvite?offerId=' + offerId + '&token=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -112,7 +112,7 @@ class carpoolStore {
                 let date = "\\\"" +  dateStr.substr(1,dateStr.length - 2) + "\\\"";
 
                 this.routes.forEach(route => {
-                    fetch('api/system/route/getRoute?_id=' + route,{
+                    fetch('api/system/route/getRoute?routeId=' + route,{
                         method:'GET',
                         headers:{
                             'Content-Type':'application/json'
