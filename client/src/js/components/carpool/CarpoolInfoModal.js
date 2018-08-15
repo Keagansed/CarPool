@@ -45,7 +45,11 @@ class CarpoolInfoModal extends Component {
     componentDidMount(){
         fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
             .then(res => res.json())
-            .then(json => this.setState({user: json}));
+            .then(json => {
+                if(json.success) {
+                    this.setState({user: json.data})
+                }
+            });
     }
 
     componentWillMount(){

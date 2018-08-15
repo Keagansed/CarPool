@@ -51,7 +51,7 @@ class CarpoolOffer extends Component {
      * the user to the sender field in the state.
      */
     componentDidMount(){
-        fetch('/api/account/profile?token=' + this.props.store.senderId + '&userId=' + this.props.store.senderId,{
+        fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.store.senderId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -59,9 +59,9 @@ class CarpoolOffer extends Component {
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(json => {
+        .then(json => {            
             if (json.success){
-                this.setState({sender : json.data});
+                this.setState({sender : json.data[0]});
             }
         })
     }
