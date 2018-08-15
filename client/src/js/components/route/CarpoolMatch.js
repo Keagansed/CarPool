@@ -84,7 +84,7 @@ class CarpoolMatch  extends Component {
                     }]
                 });
 
-                fetch('/api/account/profile?token=' + json.data[0].userId,{
+                fetch('/api/account/profile?token=' + this.props.token + '&userId=' + json.data[0].userId,{
                     method:'GET',
                     headers:{
                         'Content-Type':'application/json'

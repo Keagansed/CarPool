@@ -299,7 +299,7 @@ class matchesStore {
                 });
 
             }else{
-                console.log(json);
+                console.log(json.message);
             }
 
         });

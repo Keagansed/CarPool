@@ -76,7 +76,7 @@ import  "../../../css/components/Spinner.css"
     * users. These matches are not already joined in a carpool.
     */
     renderRoutes = () => {
-        const Routes = this.props.store.recommendedRoutes.map(route =>             
+        const Routes = this.props.store.recommendedRoutes.map(route =>                       
             <UserMatch 
                 key = {route._id} 
                 token = {this.props.token}
@@ -84,7 +84,7 @@ import  "../../../css/components/Spinner.css"
                 uRouteId = {this.props.routeId}
                 userId = {route.userId} 
                 store = {new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}
-            />
+            />            
         )
         if(Routes.length > 0) {
             return Routes;
