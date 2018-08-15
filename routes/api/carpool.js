@@ -15,17 +15,17 @@ const router = express.Router();
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 //          data: JSON object; Contains the data from the DB query.
-router.get('/getAllOtherCarpools',function(req,res,next){
+router.get('/getAllOtherCarpools', function (req, res, next) {
     const { query } = req;
     const { routeId } = query;
-    Carpool.find({routes:{$nin:[routeId]}},
-        (err,data) => {
-            if(err) {
+    Carpool.find({ routes: { $nin: [routeId] } },
+        (err, data) => {
+            if (err) {
                 return res.send({
                     success: false,
-                    message: err
+                    message: "Database error: " + err,
                 });
-            }else{
+            } else {
                 res.send({
                     success: true,
                     message: "Carpools retrieved successfully",
@@ -43,17 +43,17 @@ router.get('/getAllOtherCarpools',function(req,res,next){
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 //          data: JSON object; Contains the data from the DB query.
-router.get('/getCarpool', function(req, res, next) {
+router.get('/getCarpool', function (req, res, next) {
     const { query } = req;
     const { _id } = query;
-    Carpool.find({_id : _id},
-        (err,data) => {
-            if(err) {
+    Carpool.find({ _id: _id },
+        (err, data) => {
+            if (err) {
                 return res.send({
                     success: false,
-                    message: err
+                    message: "Database error: " + err,
                 });
-            }else{
+            } else {
                 res.send({
                     success: true,
                     message: "Carpool retrieved successfully",
@@ -72,20 +72,20 @@ router.get('/getCarpool', function(req, res, next) {
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 //          _id: String; The object id of the new carpool document.
-router.post('/addCarpool',(req,res,next)=>{
+router.post('/addCarpool', (req, res, next) => {
     const { body } = req;
     const { carpoolName, routes } = body;
 
-    if(!carpoolName) {
+    if (!carpoolName) {
         return res.send({
-            success:false,
-            message:"Error: Carpool name cannot be blank!"
+            success: false,
+            message: "Input error: carpoolName is blank"
         });
     }
-    if(!routes) {
+    if (!routes) {
         return res.send({
-            success:false,
-            message:"Error: Routes cannot be blank!"
+            success: false,
+            message: "Input error: routes is blank"
         });
     }
 
@@ -93,16 +93,16 @@ router.post('/addCarpool',(req,res,next)=>{
     newCarpool.carpoolName = carpoolName;
     newCarpool.routes = routes;
     newCarpool.save((err) => {
-        if(err) {
+        if (err) {
             return res.send({
-                success:false,
-                message:"Error: Server error"
+                success: false,
+                message: "Database error: " + err,
             });
-        }else{
+        } else {
             return res.send({
-                _id:newCarpool._id,
-                success:true,
-                message:"Success: Added Carpool"
+                _id: newCarpool._id,
+                success: true,
+                message: "Success: Added Carpool"
             });
         }
     });

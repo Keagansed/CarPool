@@ -13,6 +13,7 @@ let verify = require('../middleware/verify.js');
 //      _id: String;  The object id of a document from the User collection.
 // Return Value:
 //      Response containing:
+//          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 //			or
 //          data: JSON object; Contains the data from the DB query.
@@ -25,30 +26,88 @@ router.get('/',(req,res,next) => {
 	User.find({
 		_id : token,
 	},(err,data) => {
-		if(err) {			
-			res.send({				
-				message: err
+		if(err) {
+			res.send({
+				success: false,
+				message: "Database error: " + err,
 			});
 		}else{
-			res.json(data);
+			return res.send({
+				success: true,
+				data: data,
+			});
 		}
 	});
 });
 
 // This method gets all users in the User collection.
 // Return Value:
-//      Response containing: 
-//          data: JSON object;  Contains the result of the DB query.
-router.get('/getAllUsers',(req,res,next) => {
+//      Response containing:
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+//			or
+//          data: JSON object; Contains the data from the DB query.
+router.get('/getAllUsers',(req,res,next)=>
+{
 	User.find({
 	},(err,data) => {
-		res.json(data);
+		if (err) {
+			return res.send({
+				success: false,
+				message: 'Database error: ' + err,
+			});
+		} else {
+			return res.send({
+				success: true,
+				data: data,
+			});
+		}
 	});
 });
 
+//Method returns users from an array of userIds
+// Parameters:
+//		userIds: Array; strings with ids from the user collection.
+// Return Value:
+//      Response containing:
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+//			or
+//          data: JSON object; Contains the data from the DB query.
+router.get('/getSelectUsers', (req,res) => {
+	const { query } = req;
+	const { userIds } = query;
+
+	User.find({
+		_id: { $in: JSON.parse(userIds)}
+	}, (err, data) => {
+
+		if(err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
+			});
+		}
+
+		if(data.length == 0) {
+			return res.send({
+				success: false,
+				message: "Return error: cannot find users"
+			});
+		}else{
+			res.send({
+				success: true,
+				message: "Users retrieved successfully",
+				data: data
+			});
+		}
+
+	})
+})
+
 // This method gets all documents with a similar name to a name, that is passed, from the User Collection.
 // Parameters: 
-//      _id: String;  This is an object id of a Trip collection.
+//      name: String;  This is an name of a user
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -84,17 +143,20 @@ router.post('/getUserByName', (req,res,next) => {
 		if(err){
 			return res.send({ 
 				success:false,
-				message:"Error: Server Error"
+				message:"Database error: " + err,
 			});
 		}
 		if(users.length == 0){
 			return res.send({ 
 				success:false,
-				message:"Error: No Such User "
+				message:"Return error: No Such User ",
 			});
 			
 		}else
-			res.json(users);
+			return res.send({
+				success: true,
+				users: users,
+			});
 		
 	});
 });
@@ -119,12 +181,12 @@ router.post('/updateEmail', (req,res,next) => {
 		if(err) {
 			return res.send({
 				success:false,
-				message:"Error:Server error"+err
+				message:"Database error: " + err
 			});
 		}else if((users.length>0) && (users[0]._id != token)) {
 			return res.send({
 				success:false,
-				message:"Error: Email already exists"
+				message:"Input error: Email already exists",
 			});
 		}else{
 			User.findOneAndUpdate({
@@ -139,7 +201,7 @@ router.post('/updateEmail', (req,res,next) => {
 					if(err) {
 						return res.send({
 							success:false,
-							message:"Error did not update"
+							message:"Database error: " + err,
 						});
 					}else{
 						return res.send({success:true});
@@ -176,7 +238,7 @@ router.post('/updateName', (req,res,next) => {
 			if(err) {
 				return res.send({
 					success:false,
-					message:"Error did not update"
+					message:"Database error: " + err,
 				});
 			}else{
 				return res.send({success:true});
@@ -203,12 +265,12 @@ router.post('/updatePassword', (req,res,next) => {
 		if(err) {
 			return res.send({
 				success:false,
-				message:"Error:Server error"+err
+				message:"Database error: " + err,
 			});
 		}else if(!users[0].validPassword(password)) {
 			return res.send({
 				success:false,
-				message:"Incorrect password"
+				message:"Input error: Incorrect password"
 			});
 		}else{
 			newPassword = users[0].generateHash(newPassword);
@@ -224,7 +286,7 @@ router.post('/updatePassword', (req,res,next) => {
 					if (err) {
 						return res.send({
 							success:false,
-							message:"Error did not update"
+							message:"Database error: " + err,
 						});
 					}else{
 						return res.send({success:true});

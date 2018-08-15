@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
   		if(err) {
   			return res.send({ 
   				success:false,
-  				message:"Error: Server Error"
+  				message:"Database error: " + err,
   			});
 		}else{
 			return res.send({ 

@@ -36,7 +36,6 @@ class TripSuggest extends Component {
         this.message = app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID);
         this.accept = this.accept.bind(this);
         this.reject = this.reject.bind(this);
-        this.buttons = [];
     }
 
     /*
@@ -63,14 +62,14 @@ class TripSuggest extends Component {
      * Purpose: acquires all the users and stores them in the 'user' field.
      */
     componentDidMount(){
-        const idFor = this.props._id;
-        fetch('/api/account/vouch/getVouches?idFor='+idFor)
-        .then(res => res.json())
-        .then(vouches => this.setState({vouches}));
 
         fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
-        .then(res => res.json())
-        .then(json => this.setState({user: json}));
+            .then(res => res.json())
+            .then(json => {
+                if (json.success) {
+                    this.setState({user: json.data});
+                }
+            });
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
@@ -258,7 +257,7 @@ class TripSuggest extends Component {
                             <div className="row padtop-0">
                                 <div className="col-12">
                                     <div className="col-12">
-                                        {this.buttons}
+                                        {this.state.buttons}
                                     </div>
                                 </div>
                             </div>

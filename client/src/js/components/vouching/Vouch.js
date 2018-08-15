@@ -36,7 +36,11 @@ class Vouch  extends Component {
 
         fetch('/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
-            .then(json => this.setState({user: json}))
+            .then(json => {
+                if (json.success) {
+                    this.setState({user: json})
+                }
+            });
     }
 
     toggle = (event)=> {

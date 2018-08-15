@@ -1,49 +1,42 @@
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// FILE NO LONGER IN USE - TO BE DELETED AFTER ALL FUNCTIONALITY HAS BEEN TRANSFERRED
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+// File Type: Component
 
 import React, { Component } from 'react';
-import { observer } from "mobx-react";
-import { Redirect, Link } from 'react-router-dom';
 
-import RoutesStore from '../../stores/RoutesStore';
+import LocationSearchInput from '../google/GoogleAuto';
+import MapWrapper from '../google/MapWrapper';
+import WeekdaySelector from './WeekdaySelector';
 
-import '../../../css/components/NewRoute.css';
-
-@observer class NewRoute extends Component{
-    constructor(){
-        super()
-
+/*
+* The purpose of this NewRouteModal class is to provide a component that allows a user
+* to add a route. The component consists of an add sign which opens a the add route page 
+* when clicked on.
+*/
+class NewRouteModal extends Component{
+    /*
+    * The purpose of the constructor method is to instantiate fields to relevant values. The 'toggle'
+    * field is set to false because the modal is not visible when the page is first loaded. 
+    * Other fields are set to default values.
+    */
+    constructor(props) {
+        super(props);
+  
         this.state = {
-            token: '',
+            //stores the session token
+            token: this.props.token,
+            //stores the routeName
             routeName: '',
-            startLocation: '',
-            endLocation: '',
-            days: {
-                monday: false,
-                tuesday: false,
-                wednesday: false,
-                thursday: false,
-                friday: false,
-                saturday: false,
-                sunday: false,
-            },
+            // startLocation: '',
+            // endLocation: '',
+            //stores the route time
             time: '00:00',
+            //whether or not the route repeats
             repeat: false,
         }
     }
 
-    componentWillMount(){
-
-        RoutesStore.routeSuccess = false;
-
-        this.setState({
-            token: this.props.location.token
-        })
-    }
-
-    //HANDLING FORM INFORMATION
-
+    /*
+    * The purpose of the updateNameValue method is to change the value of the routeName field.
+    */
     updateNameValue = (event) => {
         event.preventDefault();
 
@@ -52,22 +45,25 @@ import '../../../css/components/NewRoute.css';
         })
     }
 
-    updateStartValue = (event) => {
-        event.preventDefault();
+    // updateStartValue = (event) => {
+    //     event.preventDefault();
 
-        this.setState({
-            startLocation: event.target.value
-        })
-    }
+    //     this.setState({
+    //         startLocation: event.target.value
+    //     })
+    // }
 
-    updateEndValue = (event) => {
-        event.preventDefault();
+    // updateEndValue = (event) => {
+    //     event.preventDefault();
 
-        this.setState({
-            endLocation: event.target.value
-        })
-    }
+    //     this.setState({
+    //         endLocation: event.target.value
+    //     })
+    // }
 
+    /*
+    * The purpose of the updateTimeValue method is to change the value of the time field.
+    */
     updateTimeValue = (event) => {
         event.preventDefault();
 
@@ -76,328 +72,98 @@ import '../../../css/components/NewRoute.css';
         })
     }
 
-    updateRepeatValue = (event) => {
-        event.preventDefault();
+    // updateRepeatValue = (event) => {
+    //     event.preventDefault();
 
-        let value = false;
+    //     let value = false;
 
-        if(event.target.value === 'on')
-            value = true;
+    //     if(event.target.value === 'on')
+    //         value = true;
 
-        this.setState({
-            repeat: value
-        })
-    }
+    //     this.setState({
+    //         repeat: value
+    //     })
+    // }
 
-    //HANDLING WHICH DAYS THE ROUTE WILL TAKE PLACE ON
-
-    toggleMonday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.monday === true){
-            this.setState({
-                days: {
-                    monday: false,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: true,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-    }
-
-    toggleTuesday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.tuesday === true){
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: false,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: true,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-    }
-
-    toggleWednesday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.wednesday === true){
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: false,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: true,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-    }
-
-    toggleThursday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.thursday === true){
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: false,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: true,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-    }
-
-    toggleFriday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.friday === true){
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: false,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: true,
-                    saturday: state.days.saturday,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-    }
-
-    toggleSaturday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.saturday === true){
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: false,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: true,
-                    sunday: state.days.sunday,
-                }
-            })
-        }
-    }
-
-    toggleSunday = (event) => {
-        event.preventDefault();
-
-        const { state } = this;
-
-        if(this.state.days.sunday === true){
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: false,
-                }
-            })
-        }
-        else{
-            this.setState({
-                days: {
-                    monday: state.days.monday,
-                    tuesday: state.days.tuesday,
-                    wednesday: state.days.wednesday,
-                    thursday: state.days.thursday,
-                    friday: state.days.friday,
-                    saturday: state.days.saturday,
-                    sunday: true,
-                }
-            })
-        }
-    }
-
-    //SENDING FORM INFORMATION TO ROUTES STORE TO CREATE A NEW ROUTE
-
+    /*
+    * The purpose of the handleAddRoute method is to add the route for which details
+    * have been entered to the users home page.
+    */
     handleAddRoute = (event) => {
         event.preventDefault();
-        
+
         const {
             token,
-            startLocation,
-            endLocation,
-            days,
-            time,
-            repeat,
-            routeName
+            routeName,
+            time
         } = this.state;
-
-        RoutesStore.newRoute(token, startLocation, endLocation, days, time, routeName, repeat)
-
+        
+        this.props.store.newRoute(token, time, routeName);
     }
 
-    render(){
-        if(RoutesStore.routeSuccess){
-            return(
-                <Redirect to="/HomePage"/>    
-            )
-        }
-        else{
-            return(
-                <div className="bg-purple size-100">                    
-                    <p className="m-2 font-weight-bold h1">  
-                        <Link className="text-white" to="/Homepage">                    
-                            &lt;
-                        </Link>                     
-                    </p>
-                    
-                    <form className="m-5" action="">
-                        <div className="form-group">
-                            <input type="text" placeholder="Name" onChange={this.updateNameValue}/>
+    /*
+    * The purpose of the render method is to enable the rendering of this component.
+    * It returns react elements and HTML using JSX.
+    */
+    render() {
+        return(
+            
+            <div className="mx-auto">
+                <form>
+                    <div className="row">
+                        <h6 className="fw-bold mx-auto padver-10px m-0 txt-white">Route Name</h6>
+                    </div>
+                    <div className="row padbot-10px">
+                        <input 
+                            id="inputRouteName"
+                            type="text" 
+                            onChange={this.updateNameValue} 
+                            className="col-10 form-control mx-auto brad-2rem" 
+                            placeholder="e.g. Home to Work"
+                        /> 
+                    </div>
+                    <div className="row  padbot-10px">
+                        <h6 className="fw-bold mx-auto m-0 txt-white">Time</h6>
+                    </div>
+                    <div className="row padbot-10px">
+                        <input 
+                            id="inputRouteTime"
+                            type="time" 
+                            onChange={this.updateTimeValue} 
+                            className="col-10 form-control mx-auto brad-2rem" 
+                            placeholder="08:00"
+                        /> 
+                    </div>
+                    <div className="row  padbot-10px">
+                        <h6 className="fw-bold mx-auto m-0 txt-white">Repeat Weekly</h6>
+                    </div>
+                    <div className="row padbot-10px">
+                        <div className="mx-auto">
+                            <WeekdaySelector/>
                         </div>
-
-                        <div className="form-group">
-                            <input type="text" placeholder="Start Location" onChange={this.updateStartValue}/>
-                        </div>
-
-                        <div className="form-group">
-                            <input type="text" placeholder="End Location" onChange={this.updateEndValue}/>
-                        </div>
-
-                        <div className="form-group">
-                            <label>Days: </label>
-                            <input className={"button-" + this.state.days.monday} type="button" value="M" onClick={this.toggleMonday}/>
-                            <input className={"button-" + this.state.days.tuesday} type="button" value="T" onClick={this.toggleTuesday}/>
-                            <input className={"button-" + this.state.days.wednesday} type="button" value="W" onClick={this.toggleWednesday}/>
-                            <input className={"button-" + this.state.days.thursday} type="button" value="T" onClick={this.toggleThursday}/>
-                            <input className={"button-" + this.state.days.friday} type="button" value="F" onClick={this.toggleFriday}/>
-                            <input className={"button-" + this.state.days.saturday} type="button" value="S" onClick={this.toggleSaturday}/>
-                            <input className={"button-" + this.state.days.sunday} type="button" value="S" onClick={this.toggleSunday}/>
-                        </div>
-
-                        <div className="form-group">
-                            <label>Time: </label>
-                            <input type="time" onChange={this.updateTimeValue}/>
-                        </div>
-
-                        <div className="form-group"> 
-                            <label>Repeat: </label>
-                            <input type="checkbox" onChange={this.updateRepeatValue}/>
-                        </div> 
-
-                        <div>
-                            <input className="btn btn-success" type="button" value="Create Route" onClick={this.handleAddRoute}/>
-                        </div> 
-                    </form>
-                </div>
-            );
-        }
+                    </div>
+                    <div className="row  padbot-10px">
+                        <h6 className="fw-bold mx-auto m-0 txt-white">Start and End Locations</h6>
+                    </div>
+                    <div className="row padbot-10px">
+                        <LocationSearchInput placeholder="Start Location"/>   
+                    </div>
+                    <div className="row padbot-10px">
+                        <LocationSearchInput placeholder="End Location"/>   
+                    </div>
+                    <MapWrapper/>
+                    <div className="row padtop-10px">
+                        <button 
+                            onClick={this.handleAddRoute} 
+                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                        >
+                            <b>Add Route</b>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        );
     }
 }
 
-export default NewRoute;
+export default NewRouteModal;

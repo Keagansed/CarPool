@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import Carpools from '../components/carpool/Carpools';
 import Navbar from '../components/navigation/Navbar';
 import NavTabs from '../components/navigation/NavTabs';
+import NewRoute from "../components/route/NewRoute";
 import OffersStore from '../stores/OffersStore'
 import Routes from '../components/route/Routes';
 import RoutesStore from '../stores/RoutesStore';
@@ -81,7 +82,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         return(
             <div className="size-100 bg-purple">
                 {this.renderNavTabs()}
-                <div className="padtop-50px padbot-50px">
+                <div className="padtop-50px padbot-50px scroll-vert">
                     {this.setTab()}
                 </div>
                 {this.renderNavBar()}

@@ -18,7 +18,11 @@ class VouchAverage extends Component {
 		const idFor = this.props._id;
 		fetch('/api/account/vouch/getVouches?idFor='+idFor)
 		.then(res => res.json())
-		.then(vouches => this.setState({vouches}));
+		.then(vouches => {
+			if (vouches.success) {
+				this.setState({vouches: vouches.data})
+			}
+		});
 	}
 	
 	averageRating = ()=> {

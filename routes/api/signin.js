@@ -25,13 +25,13 @@ router.post('/',(req,res,next)=>{
 	if(!email) {
 		return res.send({ 
 			success:false,
-			message:"Error: Email cannot be blank!"
+			message:"Input error: Email cannot be blank!"
 		});
 	}
 	if(!password) {
 		return res.send({ 
 			success:false,
-			message:"Error: Password cannot be blank!"
+			message:"Input error: Password cannot be blank!"
 		});
 	}
 	email = email.toLowerCase();
@@ -42,13 +42,13 @@ router.post('/',(req,res,next)=>{
 		if(err) {
 			return res.send({ 
 				success:false,
-				message:"Error: Server Error"
+				message:"Database error: " + err,
 			});
 		}
 		if(users.length != 1) {
 			return res.send({ 
 				success:false,
-				message:"Error: Invalid email "
+				message:"Input error: Invalid email "
 			});
 		}
 
@@ -56,7 +56,7 @@ router.post('/',(req,res,next)=>{
 		if(!user.validPassword(password)) {
 			return res.send({ 
 				success:false,
-				message:"Error: Invalid password "
+				message:"Input error: Invalid password "
 			});
 		}
 
@@ -69,7 +69,7 @@ router.post('/',(req,res,next)=>{
 			if(err) {
 				return res.send({
 					success:false,
-					message:"Error:Server error"
+					message:"Database error: " + err,
 				});
 			}else{
 				return res.send({

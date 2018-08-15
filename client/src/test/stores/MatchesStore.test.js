@@ -16,7 +16,7 @@ describe ('Matches Store test functions', () => {
 
         let result = MatchesStore.calcTimeDifference(objRouteTime, routeTime);
 
-        expect(result).toEqual(34);
+        expect(result).toEqual(-34);
     });
 
     it ('calculates distance correctly', () => {
@@ -30,27 +30,4 @@ describe ('Matches Store test functions', () => {
         expect(distance).toEqual(53.89340180121514);
     });
 
-    it ('filters routes by time correctly', () => {
-        let routeObj = {
-            time : "06:00"
-        }
-
-        MatchesStore.recommendedRoutes = [
-            {routeName : "TestRoute1", time : "03:00"},
-            {routeName : "TestRoute2", time : "05:00"},
-            {routeName : "TestRoute3", time : "06:00"},
-            {routeName : "TestRoute4", time : "21:00"}
-        ];
-
-        MatchesStore.filterRoutesByTime(routeObj);
-
-        values = [
-            {routeName : "TestRoute3", time : "06:00"},
-            {routeName : "TestRoute2", time : "05:00"},
-            {routeName : "TestRoute1", time : "03:00"},
-            {routeName : "TestRoute4", time : "21:00"}
-        ]
-
-        expect(MatchesStore.recommendedRoutes).toEqual(values);
-    });
 });

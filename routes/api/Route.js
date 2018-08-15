@@ -47,7 +47,7 @@ router.post('/newRoute',(req,res,next) => {
         if(err) {  
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });    
         }else{
             return res.send({
@@ -78,7 +78,7 @@ router.get('/getRoutes',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             res.send({
@@ -110,7 +110,7 @@ router.get('/getRoute',(req,res,next) => {
         if(err){
             return res.send({
                 success: false,
-                message: "error, Route not found"
+                message: "Database error: " + err,
             })
         }else{
             res.send({
@@ -142,7 +142,7 @@ router.get('/getOtherRoutes',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             res.send({
@@ -177,7 +177,7 @@ router.post('/updateRoutesCompared',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: "Could not update Routes Compared",
+                message: "Database error: " + err,
             });
         }else{
             res.send({
@@ -211,7 +211,7 @@ router.post('/updateRecommendedRoutes',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: "Could not update Recommended Routes",
+                message: "Database error: " + err,
             });
         }else{
             res.send({

@@ -9,6 +9,7 @@ import Matches from './Matches';
 import MatchesStore from '../../stores/MatchesStore';
 import RouteInfoModal from './RouteInfoModal';
 import { getFromStorage } from '../../utils/localStorage.js';
+import DeleteRoute from './DeleteRoute';
 
 @observer class MatchesPage extends Component{
 
@@ -66,6 +67,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
                             token={token} 
                             routeId={this.props.match.params._id}
                         />
+                        <DeleteRoute/>
                     </div>
                 </div>
                 {/* Padding is there for top and bottom navs*/}

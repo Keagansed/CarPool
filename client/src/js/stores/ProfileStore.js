@@ -7,7 +7,7 @@ import { calcSecLvl } from '../utils/trustFactor.js'
 class profileStore {
 
     @observable user = {};
-    @observable secLvl = 1;    
+    @observable secLvl = 0;    
     @observable profileFound = false;
     @observable token = null;
     @observable opacity = "opacity-0"; //This is to help with how the page looks while it's loading data
@@ -23,12 +23,21 @@ class profileStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
-            this.token = token;                   
-            this.user = json[0];
-            this.profileFound = true;
-            this.opacity = "";
-            this.setEdit();
-            this.secLvl = calcSecLvl(this.user);
+            if (json.success) {
+                this.token = token;                   
+                this.user = json.data[0];
+                this.profileFound = true;
+                this.opacity = "";
+                this.setEdit();
+                fetch('/api/account/vouch/getVouches?idFor=' + this.user._id)
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then((json) => {
+                    if (json.success) {
+                        this.secLvl = calcSecLvl(this.user, json.data);
+                    }
+                });
+            }
         })
     }
 

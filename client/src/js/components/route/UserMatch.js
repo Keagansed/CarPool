@@ -70,14 +70,16 @@ class UserMatch  extends Component {
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(json => {            
-            this.setState({ 
-                userName : (json[0].firstName +" "+ json[0].lastName),
-                profilePic : json[0].profilePic
-            });
+        .then(json => {
+            if (json.success) {
+                this.setState({ 
+                    userName : (json.data[0].firstName +" "+ json.data[0].lastName),
+                    profilePic : json.data[0].profilePic
+                });
+            }
         });
         
-        fetch('/api/system/Route/getRoute?routeId=' + this.props.uRouteId ,{
+        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId ,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -95,7 +97,7 @@ class UserMatch  extends Component {
             });
         });
 
-        fetch('/api/system/Route/getRoute?routeId=' + this.props.routeId, {
+        fetch('/api/system/route/getRoute?routeId=' + this.props.routeId, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

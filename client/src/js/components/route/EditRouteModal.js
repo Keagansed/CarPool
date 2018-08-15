@@ -42,8 +42,12 @@ class EditRouteModal extends Component{
     */
     componentDidMount(){
         fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
-        .then(res => res.json())
-        .then(json => this.setState({user: json}));
+            .then(res => res.json())
+            .then(json => {
+                if (json.success){
+                    this.setState({user: json.data})
+                }
+            });
         
         fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.props.token, {
             method:'GET',
