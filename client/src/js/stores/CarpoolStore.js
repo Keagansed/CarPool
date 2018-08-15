@@ -42,7 +42,7 @@ class carpoolStore {
                     this.carpoolID = json._id;
                     this.carpoolName = json.carpoolName;
                     this.routes = json.routes;
-                    this.getCarpool(this.carpoolID);
+                    this.getCarpool(this.carpoolID, token);
                 }else{
                     alert(json.message);
                 }
@@ -84,7 +84,7 @@ class carpoolStore {
         Method responsible for getting a carpool after it has been created by making an API call
         It then takes the carpool that was created in the mongoDB database and creates a group chat on firebase
      */
-    @action getCarpool(id) {
+    @action getCarpool(id, token) {
         fetch('/api/system/carpool/getCarpool?_id=' + id,{
             method:'GET',
             headers:{
@@ -112,7 +112,7 @@ class carpoolStore {
                 let date = "\\\"" +  dateStr.substr(1,dateStr.length - 2) + "\\\"";
 
                 this.routes.forEach(route => {
-                    fetch('api/system/route/getRoute?routeId=' + route,{
+                    fetch('api/system/route/getRoute?routeId=' + route + '&token=' + token,{
                         method:'GET',
                         headers:{
                             'Content-Type':'application/json'

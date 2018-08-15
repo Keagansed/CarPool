@@ -85,7 +85,7 @@ class matchesStore {
             if(json.success) {
                 this.filterRoutesByRadius(json.data[0], token);  
                 this.generateTimeWeights(json.data[0]);
-                this.getUsersAndGenerateTrustWeights(json.data[0]);  // Reordering method is called through this function
+                this.getUsersAndGenerateTrustWeights(json.data[0], token);  // Reordering method is called through this function
                 this.loadingRoutes = false;
             }else{
                 console.log(json.message);
@@ -267,14 +267,14 @@ class matchesStore {
         Get the user objects of each of the users of the recommended routes and stores then in the
         'userObjs' array, then calls the 'generateTrustFactorWeights' using the 'userObjs' array.
     */
-   @action getUsersAndGenerateTrustWeights = (routeObj) => {
+   @action getUsersAndGenerateTrustWeights = (routeObj, token) => {
         let userIds = [], userObjs = [];
 
         this.recommendedRoutes.forEach(route => {
             userIds.push(route.userId);
         });
 
-        fetch('/api/account/profile/getSelectUsers?userIds=' + JSON.stringify(userIds), {
+        fetch('/api/account/profile/getSelectUsers?userIds=' + JSON.stringify(userIds) + '&token=' + token, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -289,7 +289,7 @@ class matchesStore {
                     userObjs.push(user);   
                 });
 
-                fetch('/api/account/vouch/getVouches?idFor=' + routeObj.userId)
+                fetch('/api/account/vouch/getVouches?idFor=' + routeObj.userId + '&token=' + token)
                 .then(res => res.json())
                 .catch(error => console.error('Error: ', error))
                 .then((json) => {
