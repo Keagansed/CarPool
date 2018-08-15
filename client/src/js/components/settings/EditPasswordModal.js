@@ -152,7 +152,7 @@ class EditPasswordModal extends Component {
                                 /> 
                             </div>
                             <div className="row">
-                                <button onClick={this.changePassword.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangePassword">
+                                <button disabled={isDisabled} onClick={this.changePassword.bind(this)} type="submit" className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangePassword">
                                     Submit
                                 </button>
                             </div>
