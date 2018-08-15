@@ -28,7 +28,8 @@ class RouteInfoModal extends Component{
         super(props);
         this.toggle = this.toggle.bind(this);
 
-        this.state ={
+        this.state = {
+            routeId: this.props.routeId,
             //the route field store the current route object
             route:{},
             //the originName field stores the current routes origin
@@ -49,30 +50,30 @@ class RouteInfoModal extends Component{
     componentWillMount() {
 
         //Get current route and compare with OtherRoutes
-        fetch('/api/system/Route/getRoute?_id='+this.props._id, { 
+        fetch('/api/system/route/getRoute?routeId='+ this.state.routeId + '&token=' + this.props.token, { 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
             },
         })
-            .then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json => {
-                if(json.success) {
-                    this.setState({
-                        route:json.data[0],
-                        originName:json.data[0].startLocation.name,
-                        destinationName:json.data[0].endLocation.name,
-                        routeArr:[{
-                            origin : json.data[0].startLocation,
-                            destination : json.data[0].endLocation
-                        }]
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success) {
+                this.setState({
+                    route:json.data[0],
+                    originName:json.data[0].startLocation.name,
+                    destinationName:json.data[0].endLocation.name,
+                    routeArr:[{
+                        origin : json.data[0].startLocation,
+                        destination : json.data[0].endLocation
+                    }]
 
-                    });
-                }else{
-                    console.log(json.message);
-                }
-            });
+                });
+            }else{
+                console.log(json.message);
+            }
+        });
     }
 
     /*

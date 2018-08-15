@@ -44,7 +44,7 @@ class ReviewTripModal extends Component{
 
     submitReviews = ()=>{
         for(let user in this.userReviews){
-            VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review);
+            VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review, getFromStorage('sessionKey').token);
         }
         this.toggle();
     }
@@ -58,9 +58,11 @@ class ReviewTripModal extends Component{
                 fetch('/api/account/vouch/getVouches?idFor=' + user)
                     .then(res => res.json())
                     .then(vouches => {
-                        let previousVouches = this.state.vouches;
-                        previousVouches[user] = vouches;
-                        this.setState({vouches:previousVouches});
+                        if (vouches.success){
+                            let previousVouches = this.state.vouches;
+                            previousVouches[user] = vouches;
+                            this.setState({vouches:previousVouches.data});
+                        }
                     }).then(() => {
                     let userReviews = [];
                     try{

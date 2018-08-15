@@ -25,7 +25,7 @@ import OfferStore from '../../stores/OfferStore';
     */
     renderOffers() {
         const Offers = this.props.store.offers.map(offer =>             
-            <CarpoolOffer key={offer._id} offerId={offer._id} store={new OfferStore(offer.CarpoolName, offer.SenderID, offer.SenderRoute, offer.RecieverID, offer.RecieverRoute, offer.JoinRequest)}/>
+            <CarpoolOffer token={this.props.token} key={offer._id} offerId={offer._id} store={new OfferStore(offer.CarpoolName, offer.SenderID, offer.SenderRoute, offer.RecieverID, offer.RecieverRoute, offer.JoinRequest)}/>
         )
         
         if(Offers.length > 0) {

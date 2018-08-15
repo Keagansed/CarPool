@@ -1,37 +1,9 @@
-// File Type: API endpoint
-
 const express = require('express');
 
 const Vouch = require('../../models/Vouch.js');
 
-// This router handles all API calls that reply only on the Vouch collection.
 const router = express.Router();
-
-// This method gets all the documents from the Vouch collection for a particular user.
-// Parameters: 
-//      idFor: String;  This is an object id of a User collection.
-// Return Value:
-//      Response containing: 
-//          data: JSON object;  Contains the result of the DB query.
-router.get('/getVouches', function(req, res, next) {
-    const { query } = req;
-    const { idFor } = query;
-    Vouch.find({
-        idFor:idFor,
-    },(err,data)=>{
-		if (err){
-			return res.send({
-				success: false,
-				message: "Database error: " + err,
-			});
-		}else {
-			return res.send({
-				success: true,
-				data: data,
-			});
-		}
-    });
-});
+let verify = require('../middleware/verify.js');
 
 // This method creates a document in the Vouch collection.
 // Parameters: 
@@ -45,7 +17,9 @@ router.get('/getVouches', function(req, res, next) {
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
-router.post('/submitVouch',(req,res,next)=>{
+router.use(verify);
+
+router.post('/',(req,res,next)=>{
 	const { body } = req;
 	const{
 		tripID,

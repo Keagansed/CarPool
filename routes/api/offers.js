@@ -4,6 +4,7 @@ const express = require('express');
 
 const carpool = require('../../models/Carpool.js');
 const offer = require('../../models/Offer.js');
+let verify = require('../middleware/verify.js');
 
 // This router handles all changes to the Offer collection aswell as updating the Carpool collection if needed.
 const router = express.Router();
@@ -20,6 +21,8 @@ const router = express.Router();
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.use(verify);
+
 router.post('/makeOffer',(req,res,next) => {
     const { body } = req;
 
@@ -40,11 +43,11 @@ router.post('/makeOffer',(req,res,next) => {
     newOffer.RecieverRoute = recieverRoute;
     newOffer.JoinRequest = join;
  
-    newOffer.save((err, offer) => {
+    newOffer.save((err) => {
         if(err) {  
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
             
         }else{
@@ -59,7 +62,7 @@ router.post('/makeOffer',(req,res,next) => {
 
 // This method gets all documents from the Offer collection are for a particular user.
 // Parameters: 
-//      userId: String;  This is the object id of a document from the User collection.
+//      token: String;  This is the object id of a document from the User collection.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -67,17 +70,17 @@ router.post('/makeOffer',(req,res,next) => {
 //          data: JSON object; Contains the data from the DB query.
 router.get('/getOffers',(req,res,next) => {
     const { query } = req;
-    const { userId } = query;
+    const { token } = query;
 
     offer.find(
     {
-        RecieverID: userId
+        RecieverID: token
     },
     (err,data) => {
         if(err) {
             res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             })    
         }else{
             res.send({
@@ -108,7 +111,7 @@ router.get('/declineInvite',(req,res,next) =>{
         if(err) {
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             return res.send({
@@ -137,7 +140,7 @@ router.get('/acceptInvite',(req,res,next) =>{
         if(err) {
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             
@@ -154,7 +157,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                     if(err) {
                         return res.send({
                             success: false,
-                            message: err
+                            message: "Database error: " + err,
                         });
                     }else{
                         offer.remove({
@@ -164,7 +167,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                             if(err) {
                                 return res.send({
                                     success: false,
-                                    message: err
+                                    message: "Database error: " + err,
                                 });
                             }else{
                                 return res.send({
@@ -189,7 +192,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                     if(err) {
                         return res.send({
                             success: false,
-                            message: err
+                            message: "Database error: " + err,
                         });
                     }else{
                         offer.remove({
@@ -199,7 +202,7 @@ router.get('/acceptInvite',(req,res,next) =>{
                             if(err) {
                                 return res.send({
                                     success: false,
-                                    message: err
+                                    message: "Database error: " + err,
                                 });
                             }else{
                                 return res.send({

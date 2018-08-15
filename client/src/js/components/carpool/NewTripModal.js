@@ -35,16 +35,15 @@ const hide = {
             toggle: false
         };
     }
-    
+
     /*
      * Purpose: performs an API call to acquire all the users
      */
     componentDidMount(){
-        fetch('/api/account/profile/getAllUsers')
+        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
             .then(res => res.json())
             .then(json => this.setState({user: json}));
     }
-
 
     /*
      * Purpose: acquires the provided time from the corresponding html element and updates the time of the suggested 
@@ -116,7 +115,7 @@ const hide = {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
-    }
+    }    
 
     /*
      * Purpose: uses the _id arguement to find the specific user in the 'user' field and acquire that users name
@@ -203,7 +202,7 @@ const hide = {
 
         this.toggle();
         TripsStore.carpoolID = this.props.carpoolID;
-        TripsStore.addTrip(this.props.suggestTrip,messageContent,users);
+        TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
     }
 
     /*

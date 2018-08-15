@@ -6,10 +6,11 @@ const Route = require('../../models/Route.js');
 
 // This router handles all API calls that only rely on the Route collection.
 const router = express.Router();
+let verify = require('../middleware/verify.js');
 
 // This method creates a document in the Route collection.
 // Parameters: 
-//      userId: String;  Object id of a document in the User collection.
+//      token: String;  Object id of a document in the User collection.
 //      startLocation: String;  Coordinates of the start of the route.
 //      endLocation: String;  Coordinates of the end of the route.
 //      waypoints: Array;  List of coordinates along the route.
@@ -19,10 +20,12 @@ const router = express.Router();
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.use(verify);
+
 router.post('/newRoute',(req,res,next) => {
     const { body } = req;
     const {
-        userId,
+        token,
         startLocation,
         endLocation,
         waypoints,
@@ -31,7 +34,7 @@ router.post('/newRoute',(req,res,next) => {
     } = body;
 
     const newRoute = new Route();
-    newRoute.userId = userId;
+    newRoute.userId = token;
     newRoute.startLocation = startLocation;
     newRoute.endLocation = endLocation;
     newRoute.waypoints = waypoints;
@@ -44,7 +47,7 @@ router.post('/newRoute',(req,res,next) => {
         if(err) {  
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });    
         }else{
             return res.send({
@@ -66,16 +69,16 @@ router.post('/newRoute',(req,res,next) => {
 //          data: JSON object; Contains the data from the DB query.
 router.get('/getRoutes',(req,res,next) => {
     const { query } = req;
-    const { userId } = query;
+    const { token } = query;
 
     Route.find({
-        userId: userId
+        userId: token
     },
     (err,data) => {
         if(err) {
             res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             res.send({
@@ -98,16 +101,16 @@ router.get('/getRoutes',(req,res,next) => {
 //          data: JSON object; Contains the data from the DB query.
 router.get('/getRoute',(req,res,next) => { 
     const { query } = req;
-    const { _id } = query;
+    const { routeId } = query;
 
     Route.find({
-        _id: _id
+        _id: routeId
     },
     (err,data) => {
         if(err){
             return res.send({
                 success: false,
-                message: "error, Route not found"
+                message: "Database error: " + err,
             })
         }else{
             res.send({
@@ -122,7 +125,7 @@ router.get('/getRoute',(req,res,next) => {
 
 // This method gets all documents from the Route collection that were not created by a user.
 // Parameters: 
-//      userId: String;  This is the object id of a document from the User collection.
+//      token: String;  This is the object id of a document from the User collection.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -130,16 +133,16 @@ router.get('/getRoute',(req,res,next) => {
 //          data: JSON object; Contains the data from the DB query.
 router.get('/getOtherRoutes',(req,res,next) => {  
     const { query } = req;
-    const { userId } = query;
+    const { token } = query;
 
     Route.find({
-        userId: {$ne: userId}
+        userId: {$ne: token}
     },
     (err,data) => {
         if(err) {
             res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             res.send({
@@ -174,7 +177,7 @@ router.post('/updateRoutesCompared',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: "Could not update Routes Compared",
+                message: "Database error: " + err,
             });
         }else{
             res.send({
@@ -208,7 +211,7 @@ router.post('/updateRecommendedRoutes',(req,res,next) => {
         if(err) {
             res.send({
                 success: false,
-                message: "Could not update Recommended Routes",
+                message: "Database error: " + err,
             });
         }else{
             res.send({

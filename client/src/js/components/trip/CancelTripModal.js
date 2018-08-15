@@ -20,9 +20,19 @@ class CancelTripModal extends Component{
         super(props);
   
         this.state = {
+            token: '',
             toggle: false
         }
 
+    }
+
+    componentWillMount() {
+        const obj = getFromStorage('sessionKey').token;
+        let { token } = obj;
+
+        this.setState({
+            token,
+        })
     }
   
     toggle = (event)=> {
@@ -33,7 +43,7 @@ class CancelTripModal extends Component{
  
     cancelOrDelete = ()=> {
 
-        if(this.props.trip.driver === getFromStorage('sessionKey').token){
+        if(this.props.trip.driver === this.state.token){
             this.deleteTrip();
         }else{
             this.cancelTrip();
@@ -42,14 +52,14 @@ class CancelTripModal extends Component{
     }
 
     cancelTrip = ()=> {
-        fetch('/api/system/trip/cancelTrip', {
+        fetch('/api/system/trip/cancelTrip?token=' + this.state.token, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
                 _id: this.props.trip._id,
-                userID: getFromStorage('sessionKey').token
+                token: getFromStorage('sessionKey').token
             })
         })
             .then(res=>res.json())
@@ -68,7 +78,7 @@ class CancelTripModal extends Component{
     }
 
     deleteTrip = ()=> {
-        fetch('/api/system/trip/deleteTrip?_id='+this.props.trip._id)
+        fetch('/api/system/trip/deleteTrip?tripId=' + this.props.trip._id + '&token=' + this.state.token)
             .then(res => res.json())
             .then(json => {
             });

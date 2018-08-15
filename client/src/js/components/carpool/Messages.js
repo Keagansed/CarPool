@@ -26,6 +26,7 @@ class Messages extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            token: '',
             carpoolID:"",
             messages:[],
             users:[],
@@ -44,9 +45,15 @@ class Messages extends Component {
      * Purpose: adds all messages to previous messages, sets 'carpoolID' and updates users.
      */
     componentWillMount() {
+        let obj = getFromStorage('sessionKey');
+        let { token } = obj;
+        
+        this.setState({
+            token,
+        })
+
         const previousUsers = this.state.users;
         let previousMessages = this.state.messages;
-        const date = JSON.stringify(new Date());
 
         this.messages.on('child_added', snap =>{
             previousMessages.push({
@@ -81,8 +88,9 @@ class Messages extends Component {
             });
             
         });
-   
-        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+
+        const date = JSON.stringify(new Date());
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+this.state.token)
             .update({lastRefresh:date}).then(() => {
                 return {};
             }).catch(error => {
@@ -96,7 +104,11 @@ class Messages extends Component {
 
         fetch('/api/account/profile/getAllUsers')
             .then(res => res.json())
-            .then(json => this.setState({userList: json}));
+            .then(json => {
+                if (json.success) {
+                    this.setState({userList: json.data})
+                }
+            });
         
     }
 
@@ -148,7 +160,7 @@ class Messages extends Component {
      */
     updateLastRefresh() {
         let date = JSON.stringify(new Date());
-        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+this.state.token)
             .update({lastRefresh:date}).then(() => {
                 return {};
             }).catch(error => {
@@ -170,7 +182,7 @@ class Messages extends Component {
 
         for(let user in this.state.users) {
 
-            if(user === getFromStorage('sessionKey').token) {
+            if(user === this.state.token) {
                 verify = true;
             }
 

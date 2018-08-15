@@ -18,51 +18,25 @@ import { getFromStorage } from '../utils/localStorage.js';
 @observer class ProfilePage extends Component {
 	constructor() {
 		super();
-
+	
 		this.state = {
-			_id:""
+			token: ""
 		};
 	}
-	
-	componentDidMount() {
-		this.props.store.getProfile(this.props.match.params._id);
 
-		fetch('/api/account/verify?token='+this.props.match.params._id)
-		.then(res => res.json())
-		.then(json => {
-			if(!json.success) {
-				this.disableEditBut();
-			}
-		});
-	}
-	
-	/*
-    * Purpose: Verifies the users token before component mounting to make sure the user is authorised
-    */
 	componentWillMount() {
-		const { match: {params}} = this.props;
+		let obj = getFromStorage('sessionKey');
+		let token;
+		
+		if(obj) {
+			token = obj.token;
+		}
 
 		this.setState({
-			_id: params._id,
+			token,
 		})
 
-		this.props.store.getProfile(params._id);		
-		const obj = getFromStorage('sessionKey');
-
-        if(obj && obj.token) {
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.token = token;
-
-                    this.setState({
-                        loading: false,
-                    })
-                }
-            })
-        }
+		this.props.store.getProfile(token);
 	}
 	
 	/*
@@ -71,26 +45,22 @@ import { getFromStorage } from '../utils/localStorage.js';
 	setTab = () => {
         const { store } = this.props;
 
-        if(!this.state.loading) {
-            if(store.vouchTab === true) {
-                return <Vouches _id={this.state._id}/>;
-            }
-            else if(store.trustTab === true) {
-                return <Trusts/>;
-            }
-        }
-
-    }
+		if(store.vouchTab === true) {
+			return <Vouches _id={this.state.token}/>;
+		}
+		else if(store.trustTab === true) {
+			return <Trusts/>;
+		}
+	}
 	
-	render() {
-		const { firstName, lastName, profilePic, secLvl } = this.props.store;
-		const profilePicture = "./../api/account/getImage?filename=" + profilePic;
-		
-		if (this.props.store.profileFound) {
-			const token = this.state._id;
+	renderProfile = () => {
+		if (this.props.store.profileFound) {			
+			const { firstName, lastName, profilePic, secLvl } = this.props.store;
+			const profilePicture = "./../api/account/getImage?filename=" + profilePic;
+			const token = this.state.token;
 
-			return(
-				<div className="size-100 bg-purple">
+			return (
+				<div>
 					<div className="container-fluid fixed-top bg-purple">
 						<div className="row height-150px bg-purple">
 							<img src={profilePicture} id="profilePic" className="mx-auto my-auto rounded-circle bord-5px-white" height="120" width="120" alt="s" />
@@ -101,7 +71,9 @@ import { getFromStorage } from '../utils/localStorage.js';
 						<div className="row height-60px bg-purple padbot-10px">
 								<div className="col-6 bordright-1px-white my-auto">
 									<div className="col-12 txt-center txt-white">
-										<h6 className="mbottom-0"><VouchAverage _id={this.state._id}/> <i className="fa fa-star txt-gold txt-15px"></i></h6>
+										<h6 className="mbottom-0"><VouchAverage _id={token}/> 
+											<i className="fa fa-star txt-gold txt-15px"></i>
+										</h6>
 									</div>
 									<div className="col-12 txt-center txt-white">
 										<h6>
@@ -126,19 +98,30 @@ import { getFromStorage } from '../utils/localStorage.js';
 							<NavTabs store={this.props.store} token={token}/>
 						</div>
 					</div>
-                    <div className="padtop-300px padbot-50px">
+					<div className="padtop-300px padbot-50px">
 						{this.setTab()}
 					</div>
-                    <Navbar token={token}/>
-            	</div>
+				</div>		
 			);
-		}else {
+		} else {
 			return (
-				<div>
-					<h1>LOADING</h1>
-				</div>
+				<div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
 			);
 		}
+	}
+	
+	render() {
+		const token = this.state.token;
+
+		return(
+			<div className="size-100 bg-purple">
+				{this.renderProfile()}
+				<Navbar token={token}/>
+			</div>
+		);	
 	}
 }
 

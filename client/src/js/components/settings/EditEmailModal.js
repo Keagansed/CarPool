@@ -70,13 +70,13 @@ class EditEmailModal extends Component {
     * the update was successful
     */
     changeEmail(){
-        fetch('/api/account/profile/updateEmail',{
+        fetch('/api/account/profile/updateEmail?token=' + this.props.token,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                id: this.props.token,
+                token: this.props.token,
                 email: this.state.email
             })
         })

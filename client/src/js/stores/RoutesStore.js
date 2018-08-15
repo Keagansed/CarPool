@@ -38,7 +38,7 @@ class routesStore {
     }
     
     @action getRoutes = (token) => {
-        fetch('/api/system/route/getRoutes?userId=' + token,{
+        fetch('/api/system/route/getRoutes?token=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -74,7 +74,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                         'Content-Type':'application/json'
                     },
                     body:JSON.stringify({
-                        userId: token,
+                        token: token,
                         // startLocation: startLocation,
                         startLocation: {
                             name: originName,
@@ -97,11 +97,10 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                 .then(res=>res.json())
                 .catch(error => console.error('Error:', error))
                 .then(json=>{
-                    console.log(json);
                     if(json.success === true) {
                         routeSuccess = true;
 
-                        fetch('/api/system/route/getRoutes?userId=' + token,{
+                        fetch('/api/system/route/getRoutes?token=' + token,{
                             method:'GET',
                             headers:{
                                 'Content-Type':'application/json'

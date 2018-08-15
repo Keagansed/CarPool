@@ -28,6 +28,7 @@ class CarpoolOffer extends Component {
         this.toggle = this.toggle.bind(this);
   
         this.state = {
+            token: '',
             toggle: false,
             sender: [],
             deleted: false
@@ -50,7 +51,7 @@ class CarpoolOffer extends Component {
      * the user to the sender field in the state.
      */
     componentDidMount(){
-        fetch('/api/account/profile?_id=' + this.props.store.senderId,{
+        fetch('/api/account/profile?token=' + this.props.store.senderId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -59,7 +60,9 @@ class CarpoolOffer extends Component {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(json => {
-            this.setState({sender : json[0]});
+            if (json.success){
+                this.setState({sender : json.data});
+            }
         })
     }
 
@@ -105,7 +108,7 @@ class CarpoolOffer extends Component {
      * the deleted state to true and closes the modal.
      */
     handleAcceptInvite() {
-        CarpoolStore.addCarpool(this.props.offerId);
+        CarpoolStore.addCarpool(this.props.offerId, this.props.token);
         this.setState({deleted: true});
         this.toggle();
     }
@@ -115,7 +118,7 @@ class CarpoolOffer extends Component {
      * and closes the modal.
      */
     handleDeclineInvite() {
-        fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId, {
+        fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

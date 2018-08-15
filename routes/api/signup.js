@@ -32,41 +32,41 @@ router.post('/',(req,res,next)=>{
 	if(!firstName) {
 		return res.send({ 
 			success:false,
-			message:"Error:Firstname cannot be blank!"
+			message:"Input error:Firstname cannot be blank!"
 		});
 	}
 	if(!lastName) {
 		return res.send({ 
 			success:false,
-			message:"Error: Last Name cannot be blank!"
+			message:"Input error: Last Name cannot be blank!"
 		});
 	}
 	if(!email) {
 		return res.send({ 
 			success:false,
-			message:"Error: Email cannot be blank!"
+			message:"Input error: Email cannot be blank!"
 		});
 	}
 	if(!id) {
 		return res.send({ 
 			success:false,
-			message:"Error: ID cannot be blank!"
+			message:"Input error: ID cannot be blank!"
 		});
 	}else if(!util.ValidateIDNumber(id)) {
 		return res.send({ 
 			success:false,
-			message:"Error: ID invalid!"
+			message:"Input error: ID invalid!"
 		});
 	}else if(!util.ValidateEmail(email)) {
 		return res.send({ 
 			success:false,
-			message:"Error: Email invalid!"
+			message:"Input error: Email invalid!"
 		});
 	}
 	if(!password) {
 		return res.send({ 
 			success:false,
-			message:"Error: Password cannot be blank!"
+			message:"Input error: Password cannot be blank!"
 		});
 	}
 
@@ -79,13 +79,13 @@ router.post('/',(req,res,next)=>{
 		if(err) {
 			return res.send({
 				success:false,
-				message:"Error:Server error"
+				message:"Database error: " + err,
 			});
 		}else if(previousUsers.length>0) {
 			return res.send({
 				success:false,
-				message:"Error:Account already exists"
-			});
+				message:"Input error: Account already exists"
+			}); 
 		}else{
 			//check email
 			User.find({
@@ -95,12 +95,12 @@ router.post('/',(req,res,next)=>{
 				if(err) {
 					return res.send({
 						success:false,
-						message:"Error:Server error"
+						message:"Database error: " + err,
 					});
 				}else if(previousUsers.length>0) {
 					return res.send({
 						success:false,
-						message:"Error: Email already exists"
+						message:"Input error: Email already exists"
 					});
 				}else{
 					//save user
@@ -114,7 +114,7 @@ router.post('/',(req,res,next)=>{
 						if(err) {
 							return res.send({
 								success:false,
-								message:"Error: Server error"
+								message:"Database error: " + err,
 							});
 						}
 						return res.send({

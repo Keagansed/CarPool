@@ -3,6 +3,7 @@
 let express = require('express');
 
 const Trip = require('../../models/Trip.js');
+let verify = require('../middleware/verify.js');
 
 // This router handles all API calls that only rely on the Trip collection.
 let router = express.Router();
@@ -20,6 +21,8 @@ let router = express.Router();
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.use(verify);
+
 router.post('/addTrip',(req,res,next)=>{
     const { body } = req;
     const {
@@ -35,37 +38,37 @@ router.post('/addTrip',(req,res,next)=>{
     if(!tripName) {
         return res.send({
             success:false,
-            message:"Error: Carpool name cannot be blank!"
+            message:"Input error: Carpool name cannot be blank!"
         });
     }
     if(!carpoolID) {
         return res.send({
             success:false,
-            message:"Error: CarpoolID cannot be blank!"
+            message:"Input error: CarpoolID cannot be blank!"
         });
     }
     if(!dateTime) {
         return res.send({
             success:false,
-            message:"Error: Date cannot be blank!"
+            message:"Input error: Date cannot be blank!"
         });
     }
     if(!days) {
         return res.send({
             success:false,
-            message:"Error: Days cannot be blank!"
+            message:"Input error: Days cannot be blank!"
         });
     }
     if(!users) {
         return res.send({
             success:false,
-            message:"Error: Users cannot be blank!"
+            message:"Input error: Users cannot be blank!"
         });
     }
     if(!driver) {
         return res.send({
             success:false,
-            message:"Error: Driver cannot be blank!"
+            message:"Input error: Driver cannot be blank!"
         });
     }
 
@@ -81,7 +84,7 @@ router.post('/addTrip',(req,res,next)=>{
         if(err) {
             return res.send({
                 success:false,
-                message:"Error: Server error"
+                message:"Database error: " + err,
             });
         }else{
             return res.send({
@@ -96,7 +99,7 @@ router.post('/addTrip',(req,res,next)=>{
 // This method removes a document from the Trip collection.
 // Parameters: 
 //      _id: String;  This is an object id of a Trip collection.
-//		userId: String;  Object id of the user canceling the trip.
+//		token: String;  Object id of the user canceling the trip.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -105,7 +108,7 @@ router.post('/cancelTrip',(req,res,next)=>{
     const { body } = req;
     let {
         _id,
-        userID
+        token
     } = body;
     let tripName;
     let idBy;
@@ -116,34 +119,41 @@ router.post('/cancelTrip',(req,res,next)=>{
     Trip.find({
         _id:_id,
     },(err,data) => {
-        tripName = data[0].tripName;
-        idBy = data[0].idBy;
-        dateTime = data[0].dateTime;
-        days = data[0].days;
-        users = data[0].users;
-        users[userID] = false;
+        if (err){
+            return res.send({
+                success:false,
+                message:"Database error: " + err,
+            });
+        }else{
+            tripName = data[0].tripName;
+            idBy = data[0].idBy;
+            dateTime = data[0].dateTime;
+            days = data[0].days;
+            users = data[0].users;
+            users[userID] = false;
 
-        Trip.findOneAndUpdate(
-            {"_id": _id},
-            {$set:{
-                "tripName":tripName,
-                "idBy":idBy,
-                "dateTime":dateTime,
-                "days":days,
-                "users":users
-            }
-            },
-            {upsert: true},
-            function(err) {
-                if (err)
-                    return res.send({
-                        success:false,
-                        message:"Error did not cancel"
-                    });
-                else
-                    return res.send({success:true});
-            }
-        );
+            Trip.findOneAndUpdate(
+                {"_id": _id},
+                {$set:{
+                    "tripName":tripName,
+                    "idBy":idBy,
+                    "dateTime":dateTime,
+                    "days":days,
+                    "users":users
+                }
+                },
+                {upsert: true},
+                function(err) {
+                    if (err)
+                        return res.send({
+                            success:false,
+                            message:"Database error: " + err,
+                        });
+                    else
+                        return res.send({success:true});
+                }
+            );
+        }
     });
 });
 
@@ -156,15 +166,15 @@ router.post('/cancelTrip',(req,res,next)=>{
 //          message: String;  Contains the error message or completion message.
 router.get('/deleteTrip', function(req, res, next) {
     const { query } = req;
-    const { _id } = query;
+    const { tripId } = query;
 
     Trip.remove({
-        _id:_id,
+        _id:tripId,
     },(err) => {
         if(err) {
             return res.send({
                 success:false,
-                message:"Error: Server Error"
+                message:"Database error: " + err,
             });
         }else{
             return res.send({
@@ -188,8 +198,18 @@ router.get('/getTrip', function(req, res, next) {
     Trip.find({
         _id : _id
     },(err,data) => {
-            res.json(data);
-        });
+        if(err) {
+            return res.send({
+                success:false,
+                message:"Database error: " + err,
+            });
+        }else{
+            return res.send({
+                success:true,
+                data: data,
+            });
+        }
+    });
 });
 
 // This method gets all the documents from the Trip collection for a particular user.
@@ -200,18 +220,28 @@ router.get('/getTrip', function(req, res, next) {
 //          data: JSON object;  Contains the result of the DB query.
 router.get('/getTrips', function(req, res, next) {
     const { query } = req;
-    const { userID } = query;
+    const { token } = query;
 
-    Trip.find({['users.' + userID]:true},
+    Trip.find({['users.' + token]:true},
         (err,data)=>{
-        res.json(data);
+            if(err) {
+                return res.send({
+                    success:false,
+                    message:"Database error: " + err,
+                });
+            }else{
+                return res.send({
+                    success: true,
+                    data: data,
+                });
+            }
     });
 });
 
 // This method handles a users respons to a trip.
 // Parameters: 
 //      _id: String;  This is an object id of a Trip collection.
-//      userID: String;  This is the user who is responding to the trip.
+//      token: String;  This is the user who is responding to the trip.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
@@ -220,7 +250,7 @@ router.post('/respondToTrip',(req,res,next) => {
     const { body } = req;
     let {
         _id,
-        userID
+        token
     } = body;
     let tripName;
     let idBy;
@@ -236,7 +266,7 @@ router.post('/respondToTrip',(req,res,next) => {
         dateTime = data[0].dateTime;
         days = data[0].days;
         users = data[0].users;
-        users[userID] = true;
+        users[token] = true;
 
         Trip.findOneAndUpdate(
             {"_id": _id},
@@ -253,7 +283,7 @@ router.post('/respondToTrip',(req,res,next) => {
                 if(err) {
                     return res.send({
                         success:false,
-                        message:"Error did not respond"
+                        message:"Database error: " + err,
                     });
                 }else{
                     return res.send({success:true});

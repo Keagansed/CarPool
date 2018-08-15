@@ -5,10 +5,10 @@ import { action } from 'mobx';
 import { getFromStorage } from '../utils/localStorage.js'
 
 class vouchStore {
-    @action submitVouch(tripID, idFor, rating, reviewBody){
+    @action submitVouch(tripID, idFor, rating, reviewBody, token){
         if(reviewBody!== undefined){
             const obj = getFromStorage('sessionKey');
-            fetch('/api/account/vouch/submitVouch',{
+            fetch('/api/account/vouch/submitVouch?token=' + token,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

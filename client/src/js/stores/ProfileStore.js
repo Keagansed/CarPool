@@ -19,21 +19,25 @@ class profileStore {
     @computed get profilePic() { return this.user.profilePic };
 
     @action getProfile = (token) => {        
-        fetch('/api/account/profile?_id=' + token)
+        fetch('/api/account/profile?token=' + token)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
-            this.token = token;                   
-            this.user = json[0];
-            this.profileFound = true;
-            this.opacity = "";
-            this.setEdit();
-            fetch('/api/account/vouch/getVouches?idFor=' + this.user._id)
-            .then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then((json) => {
-                this.secLvl = calcSecLvl(this.user, json);
-            });
+            if (json.success) {
+                this.token = token;                   
+                this.user = json.data[0];
+                this.profileFound = true;
+                this.opacity = "";
+                this.setEdit();
+                fetch('/api/account/vouch/getVouches?idFor=' + this.user._id)
+                .then(res => res.json())
+                .catch(error => console.error('Error:', error))
+                .then((json) => {
+                    if (json.success) {
+                        this.secLvl = calcSecLvl(this.user, json.data);
+                    }
+                });
+            }
         })
     }
 

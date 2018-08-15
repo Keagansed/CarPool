@@ -28,6 +28,14 @@ class Message extends Component {
      * Purpose: gets all the users in order to obtain the name of the sender of the message.
      */
     componentDidMount(){
+        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
+        .then(res => res.json())
+        .then(json => {
+            if(json.success){
+                this.setState({user: json.data})
+            }
+        });
+
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
     }

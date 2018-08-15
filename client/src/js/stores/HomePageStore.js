@@ -7,7 +7,6 @@ import { action, observable } from 'mobx';
  */
 class homePageStore {
 
-    @observable token = '';
     @observable routeTab = true;
     @observable carpoolTab = false;
     @observable tripTab = false;

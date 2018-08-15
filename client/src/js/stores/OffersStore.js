@@ -18,7 +18,7 @@ class offersStore {
         Takes user's ID in as parameter token which is a string
      */
     @action getOffers = (token) => {
-        fetch('/api/system/offers/getOffers?userId=' + token,{
+        fetch('/api/system/offers/getOffers?token=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -44,7 +44,7 @@ class offersStore {
         all are string except join which is boolean
      */
     @action makeOffer = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join) => {        
-        fetch('/api/system/offers/makeOffer',{
+        fetch('/api/system/offers/makeOffer?token=' + senderId,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

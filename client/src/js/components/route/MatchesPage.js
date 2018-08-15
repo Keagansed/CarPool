@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from "mobx-react";
 
+import EditRouteModal from './EditRouteModal';
 import Matches from './Matches';
 import MatchesStore from '../../stores/MatchesStore';
 import RouteInfoModal from './RouteInfoModal';
@@ -21,7 +22,7 @@ import DeleteRoute from './DeleteRoute';
 
         this.state = {
             //The loading field represents the load state of the page
-            loading: true,
+            token: '',
         }
     }
 
@@ -32,20 +33,11 @@ import DeleteRoute from './DeleteRoute';
     */
     componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token) {
-            const { token } = obj;
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.token = token;
+        const { token } = obj;
 
-                    this.setState({
-                        loading: false,
-                    })
-                }
-            })
-        }
+        this.setState({
+            token,
+        })
     }
 
     /*
@@ -53,8 +45,8 @@ import DeleteRoute from './DeleteRoute';
     * It returns react elements and HTML using JSX.
     */
     render() {
-        //const { token } = this.props.store;
-        return(
+        const { token } = this.state;
+        return (
             <div className="size-100 bg-purple">
                 <div className="fixed-top container-fluid height-50px bg-aqua">
                     <div className="row height-100p">
@@ -67,8 +59,13 @@ import DeleteRoute from './DeleteRoute';
                             </button>
                         </Link>
                         <RouteInfoModal 
-                            _id={this.props.match.params._id} 
+                            token={token}
+                            routeId={this.props.match.params._id} 
                             MatchesStore={MatchesStore}
+                        />
+                        <EditRouteModal  
+                            token={token} 
+                            routeId={this.props.match.params._id}
                         />
                         <DeleteRoute/>
                     </div>
@@ -77,7 +74,7 @@ import DeleteRoute from './DeleteRoute';
                 <div className="padtop-50px">
                     <Matches 
                         store={MatchesStore} 
-                        token={this.props.store.token} 
+                        token={token} 
                         routeId={this.props.match.params._id}
                     />
                 </div>

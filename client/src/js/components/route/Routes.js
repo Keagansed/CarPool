@@ -83,7 +83,7 @@ import  "../../../css/components/Spinner.css"
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
     */
-    render(){
+    render() {
         
         if(this.props.store.loadingRoutes) {
             return(
