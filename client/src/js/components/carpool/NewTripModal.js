@@ -35,20 +35,6 @@ const hide = {
             toggle: false
         };
     }
-    
-    /*
-     * Purpose: performs an API call to acquire all the users
-     */
-    componentDidMount(){
-        fetch('/api/account/profile/getAllUsers')
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    this.setState({user: json.data})
-                }
-            });
-    }
-
 
     /*
      * Purpose: performs an API call to acquire all the users

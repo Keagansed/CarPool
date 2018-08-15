@@ -84,7 +84,6 @@ class matchesStore {
         .then(json => {
             if(json.success) {
                 this.filterRoutesByRadius(json.data[0], token);  
-                this.filterRoutesByTime(json.data[0]); 
                 this.generateTimeWeights(json.data[0]);
                 this.getUsersAndGenerateTrustWeights(json.data[0]);  // Reordering method is called through this function
                 this.loadingRoutes = false;
