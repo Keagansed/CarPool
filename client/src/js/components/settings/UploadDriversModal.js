@@ -89,8 +89,8 @@ class UploadDriversSetting extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" name="file" id="file"/>
-                                <label htmlFor="file" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">Choose a file</label>  
+                                <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" id="driversFile"/>
+                                <label htmlFor="driversFile" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">Choose a file</label>  
                             </div>
                             <div className="row">
                                 <button type="submit" disabled={this.state.file === undefined} onClick={this.upload.bind(this)} className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" id="btnChangeEmail">

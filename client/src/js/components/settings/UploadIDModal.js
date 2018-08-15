@@ -89,7 +89,7 @@ class UploadIDSetting extends Component {
                         </div>
                         <div className="modal-body">
                             <div className="row">
-                                <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" name="file" id="file"/>
+                                <input type="file" onChange={this.handleFileChange.bind(this)} className="inputfile" id="file"/>
                                 <label htmlFor="file" className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">Choose a file</label> 
                             </div>
                             <div className="row">
