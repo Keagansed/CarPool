@@ -108,8 +108,7 @@ class NewRouteModal extends Component{
     render() {
         return(
             
-            <div className="mx-auto">
-                <form>
+            <div className="container-fluid">
                     <div className="row">
                         <h6 className="fw-bold mx-auto padver-10px m-0 txt-white">Route Name</h6>
                     </div>
@@ -155,12 +154,11 @@ class NewRouteModal extends Component{
                     <div className="row padtop-10px">
                         <button 
                             onClick={this.handleAddRoute} 
-                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
+                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
                         >
                             <b>Add Route</b>
                         </button>
                     </div>
-                </form>
             </div>
         );
     }
