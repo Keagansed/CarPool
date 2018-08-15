@@ -102,7 +102,7 @@ class Messages extends Component {
 
         });
 
-        fetch('/api/account/profile/getAllUsers')
+        fetch('/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .then(json => {
                 if (json.success) {
@@ -215,11 +215,13 @@ class Messages extends Component {
                                 </button>
                             </Link>
                             <CarpoolInfoModal 
+                                token={this.state.token}
                                 users={this.state.users} 
                                 carpoolName={this.props.match.params.carpoolName} 
                                 carpoolID={this.props.match.params.carpoolID}
                             />
                             <NewTripModal 
+                                token={this.state.token}
                                 users={this.state.users} 
                                 suggestTrip={this.suggestTrip} 
                                 carpoolID={this.state.carpoolID}  
@@ -262,6 +264,7 @@ class Messages extends Component {
 
                                         return(
                                             <Message 
+                                                token={this.state.token}
                                                 messageContent={message.messageContent} 
                                                 messageID={message.id} 
                                                 userID={message.userID} 
