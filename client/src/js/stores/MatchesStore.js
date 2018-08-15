@@ -2,7 +2,7 @@
 
 import { action, observable, toJS } from 'mobx';
 
-import { calcSecLvl } from '../utils/trustFactor.js'
+import { calcSecLvl } from '../utils/trustFactor.js';
 import { generateCarpoolArr, generateDifferenceArray } from './../utils/arrayCheck';
 
 /*
