@@ -392,7 +392,7 @@ class matchesStore {
             arrRouteId.push(element._id);
         });
 
-        fetch('/api/system/route/updateRoutesCompared&token=' + token,{
+        fetch('/api/system/route/updateRoutesCompared?token=' + token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
