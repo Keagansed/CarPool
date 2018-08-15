@@ -19,7 +19,7 @@ class profileStore {
     @computed get profilePic() { return this.user.profilePic };
 
     @action getProfile = (token) => {        
-        fetch('/api/account/profile?token=' + token)
+        fetch('/api/account/profile?token=' + token + '&userId=' + token)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {

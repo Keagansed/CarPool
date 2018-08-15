@@ -21,10 +21,10 @@ router.use(verify);
 
 router.get('/',(req,res,next) => {
 	const { query } = req;
-	const { token } = query;
+	const { userId } = query;
 
 	User.find({
-		_id : token,
+		_id : userId,
 	},(err,data) => {
 		if(err) {
 			res.send({
@@ -77,8 +77,6 @@ router.get('/getAllUsers',(req,res,next)=>
 router.get('/getSelectUsers', (req,res) => {
 	const { query } = req;
 	const { userIds } = query;
-
-	console.log(query);
 
 	User.find({
 		_id: { $in: JSON.parse(userIds)}
