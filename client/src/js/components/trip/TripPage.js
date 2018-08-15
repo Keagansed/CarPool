@@ -33,8 +33,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
         this.reviewModal = [];
     }
 
-    //========= Fetch Session Token ===========
-    componentDidMount(){
+    componentWillMount() {
         const obj = getFromStorage('sessionKey');
         const { token } = obj;
 
@@ -45,21 +44,24 @@ import { getFromStorage } from '../../utils/localStorage.js';
             loading: false,
             routeArr:[]
         })
+    }
 
+    componentDidMount() {
         
-
         fetch('/api/system/trip/getTrip?_id=' + this.props.match.params.tripID + '&token=' + this.state.token)
             .then(res => res.json())
             .then(json => {
                 if (json.success) {
                     this.setState({trip : json.data});
+
                     fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
                         .then(res => res.json())
                         .then(json => {
-                            fetch('/api/system/route/getRoute?_id='+json.data[0].routes[0])
+
+                            fetch('/api/system/route/getRoute?routeId='+json.data[0].routes[0] + '&token=' + this.state.token)
                                 .then(res => res.json())
                                 .then(json => {
-                                    // console.log(json.data[0]);
+                                     
                                     this.from = json.data[0].startLocation.name;
                                     this.to = json.data[0].endLocation.name;
                                     this.setState({
@@ -74,12 +76,12 @@ import { getFromStorage } from '../../utils/localStorage.js';
             });
 
         fetch('/api/account/profile/getAllUsers?token=' + this.state.token)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    this.setState({user: json.data})
-                }
-            });
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                this.setState({user: json.data})
+            }
+        });
     }
 
     getUsernameSurname = (_id)=> {

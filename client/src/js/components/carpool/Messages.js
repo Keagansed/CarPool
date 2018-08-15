@@ -247,6 +247,7 @@ class Messages extends Component {
 
                                         return(
                                             <TripSuggest
+                                                token={this.state.token}
                                                 messageContent={message.messageContent} 
                                                 messageID={message.id} 
                                                 users={message.users} 
