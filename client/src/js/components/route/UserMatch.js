@@ -79,7 +79,7 @@ class UserMatch  extends Component {
             }
         });
         
-        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId ,{
+        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId + '&token=' + this.state.token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -97,7 +97,7 @@ class UserMatch  extends Component {
             });
         });
 
-        fetch('/api/system/route/getRoute?routeId=' + this.props.routeId, {
+        fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.state.token, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

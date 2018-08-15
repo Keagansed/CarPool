@@ -6,7 +6,8 @@ import React, { Component } from 'react';
 import Carpools from '../components/carpool/Carpools';
 import Navbar from '../components/navigation/Navbar';
 import NavTabs from '../components/navigation/NavTabs';
-import OffersStore from '../stores/OffersStore'
+import NewRoute from '../components/route/NewRoute';
+import OffersStore from '../stores/OffersStore';
 import Routes from '../components/route/Routes';
 import RoutesStore from '../stores/RoutesStore';
 import Trips from '../components/trip/Trips';
@@ -60,6 +61,12 @@ import { getFromStorage } from '../utils/localStorage.js';
         }
         else if(store.tripTab === true) {
             return <Trips/>;
+        }
+        else if(store.addTab === true) {
+            return <NewRoute
+                        store={RoutesStore} 
+                        token={this.props.store.token}
+                    />
         }
     }
 

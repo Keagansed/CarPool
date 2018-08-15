@@ -68,7 +68,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
         waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
                 function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints,){
 
-                fetch('/api/system/route/newRoute',{
+                fetch('/api/system/route/newRoute?token=' + token,{
                     method:'POST',
                     headers:{
                         'Content-Type':'application/json'
@@ -119,6 +119,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
 
                     }
                     else{
+                        console.log(json)
                         window.alert("Failed to create new route");
                     } 
                 }) 
