@@ -184,13 +184,12 @@ class TripSuggest extends Component {
             },
             body:JSON.stringify({
                 _id: this.props.tripID,
-                token: getFromStorage('sessionKey').token
+                token: this.props.token
             })
         })
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-
             if(json.success) {
                 // this.tripID = json._id;
                 // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
