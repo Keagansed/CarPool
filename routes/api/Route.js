@@ -38,12 +38,12 @@ router.get('/deleteRoute',(req,res,next) =>{
                 if(err) {
                     return res.send({
                         success: false,
-                        message: err
+                        message: "Database error: " + err,
                     });
                 }else{
                     return res.send({
                         success: true,
-                        message: "route deleted"
+                        message: "route deleted",
                     });
                 }
             });
