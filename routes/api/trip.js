@@ -38,37 +38,37 @@ router.post('/addTrip',(req,res,next)=>{
     if(!tripName) {
         return res.send({
             success:false,
-            message:"Error: Carpool name cannot be blank!"
+            message:"Input error: Carpool name cannot be blank!"
         });
     }
     if(!carpoolID) {
         return res.send({
             success:false,
-            message:"Error: CarpoolID cannot be blank!"
+            message:"Input error: CarpoolID cannot be blank!"
         });
     }
     if(!dateTime) {
         return res.send({
             success:false,
-            message:"Error: Date cannot be blank!"
+            message:"Input error: Date cannot be blank!"
         });
     }
     if(!days) {
         return res.send({
             success:false,
-            message:"Error: Days cannot be blank!"
+            message:"Input error: Days cannot be blank!"
         });
     }
     if(!users) {
         return res.send({
             success:false,
-            message:"Error: Users cannot be blank!"
+            message:"Input error: Users cannot be blank!"
         });
     }
     if(!driver) {
         return res.send({
             success:false,
-            message:"Error: Driver cannot be blank!"
+            message:"Input error: Driver cannot be blank!"
         });
     }
 
@@ -84,7 +84,7 @@ router.post('/addTrip',(req,res,next)=>{
         if(err) {
             return res.send({
                 success:false,
-                message:"Error: Server error"
+                message:"Database error: " + err,
             });
         }else{
             return res.send({
@@ -119,34 +119,41 @@ router.post('/cancelTrip',(req,res,next)=>{
     Trip.find({
         _id:_id,
     },(err,data) => {
-        tripName = data[0].tripName;
-        idBy = data[0].idBy;
-        dateTime = data[0].dateTime;
-        days = data[0].days;
-        users = data[0].users;
-        users[token] = false;
+        if (err){
+            return res.send({
+                success:false,
+                message:"Database error: " + err,
+            });
+        }else{
+            tripName = data[0].tripName;
+            idBy = data[0].idBy;
+            dateTime = data[0].dateTime;
+            days = data[0].days;
+            users = data[0].users;
+            users[userID] = false;
 
-        Trip.findOneAndUpdate(
-            {"_id": _id},
-            {$set:{
-                "tripName":tripName,
-                "idBy":idBy,
-                "dateTime":dateTime,
-                "days":days,
-                "users":users
-            }
-            },
-            {upsert: true},
-            function(err) {
-                if (err)
-                    return res.send({
-                        success:false,
-                        message:"Error did not cancel"
-                    });
-                else
-                    return res.send({success:true});
-            }
-        );
+            Trip.findOneAndUpdate(
+                {"_id": _id},
+                {$set:{
+                    "tripName":tripName,
+                    "idBy":idBy,
+                    "dateTime":dateTime,
+                    "days":days,
+                    "users":users
+                }
+                },
+                {upsert: true},
+                function(err) {
+                    if (err)
+                        return res.send({
+                            success:false,
+                            message:"Database error: " + err,
+                        });
+                    else
+                        return res.send({success:true});
+                }
+            );
+        }
     });
 });
 
@@ -167,7 +174,7 @@ router.get('/deleteTrip', function(req, res, next) {
         if(err) {
             return res.send({
                 success:false,
-                message:"Error: Server Error"
+                message:"Database error: " + err,
             });
         }else{
             return res.send({
@@ -191,8 +198,18 @@ router.get('/getTrip', function(req, res, next) {
     Trip.find({
         _id : _id
     },(err,data) => {
-            res.json(data);
-        });
+        if(err) {
+            return res.send({
+                success:false,
+                message:"Database error: " + err,
+            });
+        }else{
+            return res.send({
+                success:true,
+                data: data,
+            });
+        }
+    });
 });
 
 // This method gets all the documents from the Trip collection for a particular user.
@@ -207,7 +224,17 @@ router.get('/getTrips', function(req, res, next) {
 
     Trip.find({['users.' + token]:true},
         (err,data)=>{
-        res.json(data);
+            if(err) {
+                return res.send({
+                    success:false,
+                    message:"Database error: " + err,
+                });
+            }else{
+                return res.send({
+                    success: true,
+                    data: data,
+                });
+            }
     });
 });
 
@@ -256,7 +283,7 @@ router.post('/respondToTrip',(req,res,next) => {
                 if(err) {
                     return res.send({
                         success:false,
-                        message:"Error did not respond"
+                        message:"Database error: " + err,
                     });
                 }else{
                     return res.send({success:true});

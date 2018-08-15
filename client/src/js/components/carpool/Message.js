@@ -28,32 +28,16 @@ class Message extends Component {
      * Purpose: gets all the users in order to obtain the name of the sender of the message.
      */
     componentDidMount(){
-        const idFor = this.props._id;
-        fetch('/api/account/vouch/getVouches?idFor=' + idFor)
-        .then(res => res.json())
-        .then(vouches => this.setState({vouches}));
-
         fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
         .then(res => res.json())
-        .then(json => this.setState({user: json}));
+        .then(json => {
+            if(json.success){
+                this.setState({user: json.data})
+            }
+        });
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
-    }
-
-    /*
-     * Purpose: uses the _id argument to get the name of the user from the 'user' field.
-     */
-    getUsername(_id) {
-
-        for(var x in this.state.user) {
-
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].firstName;
-            }
-
-        }
-
     }
 
     /*
@@ -111,7 +95,7 @@ class Message extends Component {
      * Purpose: renders the message component in the DOM which have different formats depending on who sent the
      * message in the chat and when the message was sent.
      */
-    render(props) {
+    render() {
         let dat = "";
 
         if(this.checkIfToday(this.props.dateTime)) {
@@ -160,7 +144,7 @@ class Message extends Component {
                     <div className="row padver-10px padbot-0">
                         <div className="col-6">
                             <div className={"col-12 "+this.props.userColour}>
-                                <h5>{this.getUsername(this.props.userID)}</h5>
+                                <h5>{this.props.userName}</h5>
                             </div>
                             <div className="col-12">
                                 {/* Empty for now */}

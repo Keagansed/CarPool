@@ -50,7 +50,7 @@ class RouteInfoModal extends Component{
     componentWillMount() {
 
         //Get current route and compare with OtherRoutes
-        fetch('/api/system/Route/getRoute?routeId='+ this.state.routeId + '&token=' + this.props.token, { 
+        fetch('/api/system/route/getRoute?routeId='+ this.state.routeId + '&token=' + this.props.token, { 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

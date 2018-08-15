@@ -12,7 +12,7 @@ const User = require('../../models/User.js');
 let verify = require('../middleware/verify.js');
 
 // This router handles the uploading of any and all files.
-const router = express.Router(); 
+const router = express.Router();
 
 // Mongo URI
 const mongoURI = 'mongodb://localhost/carpool';
@@ -24,29 +24,29 @@ const conn = mongoose.createConnection(mongoURI);
 let gfs;
 
 conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
+	// Init stream
+	gfs = Grid(conn.db, mongoose.mongo);
+	gfs.collection('uploads');
 });
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if(err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
+	url: mongoURI,
+	file: (req, file) => {
+		return new Promise((resolve, reject) => {
+			crypto.randomBytes(16, (err, buf) => {
+				if (err) {
+					return reject(err);
+				}
+				const filename = buf.toString('hex') + path.extname(file.originalname);
+				const fileInfo = {
+					filename: filename,
+					bucketName: 'uploads'
+				};
+				resolve(fileInfo);
+			});
+		});
+	}
 });
 const upload = multer({ storage });
 
@@ -63,25 +63,25 @@ router.use(verify);
 router.post('/profilePicture', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.token};
 
-	User.findOne(query,(err,user) => {	
-		if(err) {
-			return res.send({ 
-				success:false,
-				message:"Error: Server Error"
+	User.findOne(query, (err, user) => {
+		if (err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
 			});
-		}else{
-			if(user.profilePic != "default.jpg") {
-				gfs.files.findOne({"filename":user.profilePic}, (err, file) => {
+		} else {
+			if (user.profilePic != "default.jpg") {
+				gfs.files.findOne({ "filename": user.profilePic }, (err, file) => {
 					if (file) {
-						gfs.remove({_id:file._id, root:'uploads'},(err, gridStore) => {
-							if (err) 
+						gfs.remove({ _id: file._id, root: 'uploads' }, (err, gridStore) => {
+							if (err)
 								return res.status(404).json({ err: err });
 						});
 					}
-				}); 
+				});
 			}
-			User.findOneAndUpdate(query, {$set:{profilePic: req.file.filename}}, {upsert:true}, function(err, doc) {
-				if (err) 
+			User.findOneAndUpdate(query, { $set: { profilePic: req.file.filename } }, { upsert: true }, function (err, doc) {
+				if (err)
 					return res.send(500, { error: err });
 			});
 			res.redirect('/');
@@ -100,26 +100,26 @@ router.post('/profilePicture', upload.single('file'), (req, res, next) => {
 router.post('/driversLicense', upload.single('file'), (req, res, next) => {
  const query = {'_id': req.body.token};
 
-	User.findOne(query,(err,user) => {	
-		if(err) {
-			return res.send({ 
-				success:false,
-				message:"Error: Server Error"
+	User.findOne(query, (err, user) => {
+		if (err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
 			});
-		}else{
-			gfs.files.findOne({"filename":user.driversLicense}, (err, file) => {
-				if(file) {
-					gfs.remove({_id:file._id, root:'uploads'},(err, gridStore) => {
-						if(err) 
-								return res.status(404).json({ err: err });
+		} else {
+			gfs.files.findOne({ "filename": user.driversLicense }, (err, file) => {
+				if (file) {
+					gfs.remove({ _id: file._id, root: 'uploads' }, (err, gridStore) => {
+						if (err)
+							return res.status(404).json({ err: err });
 					});
 				}
-			}); 
-			 User.findOneAndUpdate(query, {$set:{driversLicense: req.file.filename}}, {upsert:true}, function(err, doc){
-			   if(err) 
-			     return res.send(500, { error: err });
-			 });
-			 res.redirect('/');
+			});
+			User.findOneAndUpdate(query, { $set: { driversLicense: req.file.filename } }, { upsert: true }, function (err, doc) {
+				if (err)
+					return res.send(500, { error: err });
+			});
+			res.redirect('/');
 		}
 	});
 });
@@ -134,30 +134,30 @@ router.post('/driversLicense', upload.single('file'), (req, res, next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/IdDocument', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.token};
-	
-	User.findOne(query,(err,user) => {
-		if(err) {
-			return res.send({ 
-				success:false,
-				message:"Error: Server Error"
+
+	User.findOne(query, (err, user) => {
+		if (err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
 			});
-		}else{
-			gfs.files.findOne({"filename":user.IdDocument}, (err, file) => {
-				if(file) {
-					gfs.remove({_id:file._id, root:'uploads'},(err, gridStore) => {
-						if(err)
-								return res.status(404).json({ err: err });
+		} else {
+			gfs.files.findOne({ "filename": user.IdDocument }, (err, file) => {
+				if (file) {
+					gfs.remove({ _id: file._id, root: 'uploads' }, (err, gridStore) => {
+						if (err)
+							return res.status(404).json({ err: err });
 					});
 				}
-			}); 
-			User.findOneAndUpdate(query, {$set:{IdDocument: req.file.filename}}, {upsert:true}, function(err, doc){
-			    if(err) 
-			      return res.send(500, { error: err });
-			  });
-			  res.redirect('/');
+			});
+			User.findOneAndUpdate(query, { $set: { IdDocument: req.file.filename } }, { upsert: true }, function (err, doc) {
+				if (err)
+					return res.send(500, { error: err });
+			});
+			res.redirect('/');
 		}
 	});
- });
+});
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
@@ -169,30 +169,30 @@ router.post('/IdDocument', upload.single('file'), (req, res, next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/CarPic', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.token};
-	
-	User.findOne(query,(err,user) => {	
-		if(err) {
-			return res.send({ 
-				success:false,
-				message:"Error: Server Error"
+
+	User.findOne(query, (err, user) => {
+		if (err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
 			});
-		}else{
-			gfs.files.findOne({"filename":user.CarPic}, (err, file) => {
-				if(file) {
-					gfs.remove({_id:file._id, root:'uploads'},(err, gridStore) => {
-						if(err) 
-								return res.status(404).json({ err: err });
+		} else {
+			gfs.files.findOne({ "filename": user.CarPic }, (err, file) => {
+				if (file) {
+					gfs.remove({ _id: file._id, root: 'uploads' }, (err, gridStore) => {
+						if (err)
+							return res.status(404).json({ err: err });
 					});
 				}
-			}); 
-			  User.findOneAndUpdate(query, {$set:{CarPic: req.file.filename}}, {upsert:true}, function(err, doc){
-			    if(err) 
-			      return res.send(500, { error: err });
-			  });
-			  res.redirect('/');
+			});
+			User.findOneAndUpdate(query, { $set: { CarPic: req.file.filename } }, { upsert: true }, function (err, doc) {
+				if (err)
+					return res.send(500, { error: err });
+			});
+			res.redirect('/');
 		}
 	});
- });
+});
 
 // This method creates a document in the GFS collections and updates the User collection.
 // Parameters: 
@@ -204,29 +204,29 @@ router.post('/CarPic', upload.single('file'), (req, res, next) => {
 //          message: String;  Contains the error message or completion message.
  router.post('/CarRegistration', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.token};
-	
-  User.findOne(query,(err,user) => {
-		if(err) {
-			return res.send({ 
-				success:false,
-				message:"Error: Server Error"
+
+	User.findOne(query, (err, user) => {
+		if (err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
 			});
-		}else{
-			gfs.iles.findOne({"filename":user.CarRegistration}, (err, file) => {
-				if(file) {
-					gfs.remove({_id:file._id, root:'uploads'},(err, gridStore) => {
-						if (err) 
-								return res.status(404).json({ err: err });
+		} else {
+			gfs.files.findOne({ "filename": user.CarRegistration }, (err, file) => {
+				if (file) {
+					gfs.remove({ _id: file._id, root: 'uploads' }, (err, gridStore) => {
+						if (err)
+							return res.status(404).json({ err: err });
 					});
 				}
-			}); 
-			  User.findOneAndUpdate(query, {$set:{CarRegistration: req.file.filename}}, {upsert:true}, function(err, doc) {
-			    if(err) 
-			      return res.send(500, { error: err });
-			  });
-			  res.redirect('/');
+			});
+			User.findOneAndUpdate(query, { $set: { CarRegistration: req.file.filename } }, { upsert: true }, function (err, doc) {
+				if (err)
+					return res.send(500, { error: err });
+			});
+			res.redirect('/');
 		}
 	});
- });
+});
 
 module.exports = router;

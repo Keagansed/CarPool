@@ -18,7 +18,11 @@ class Trips  extends Component {
     componentDidMount(){
         fetch('/api/system/trip/getTrips?token='+getFromStorage('sessionKey').token)
             .then(res => res.json())
-            .then(json => this.setState({trips : json}));
+            .then(json => {
+                if (json.success) {
+                    this.setState({trips : json.data})
+                }
+            });
     }
 
     render(){
