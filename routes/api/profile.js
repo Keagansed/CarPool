@@ -78,6 +78,8 @@ router.get('/getSelectUsers', (req,res) => {
 	const { query } = req;
 	const { userIds } = query;
 
+	console.log(query);
+
 	User.find({
 		_id: { $in: JSON.parse(userIds)}
 	}, (err, data) => {
