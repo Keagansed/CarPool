@@ -26,7 +26,11 @@ import { getFromStorage } from '../utils/localStorage.js';
 
 	componentWillMount() {
 		let obj = getFromStorage('sessionKey');
-		const { token } = obj;
+		let token;
+		
+		if(obj) {
+			token = obj.token;
+		}
 
 		this.setState({
 			token,

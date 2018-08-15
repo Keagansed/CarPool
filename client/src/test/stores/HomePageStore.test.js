@@ -5,14 +5,12 @@ describe ('HomePage Store test functions', () => {
 
     it('sets defaults correctly', () => {
         data = {
-            token: HomePageStore.token,
             carpool: HomePageStore.carpoolTab,
             tripTab: HomePageStore.tripTab,
             routeTab: HomePageStore.routeTab
         };
 
         values = {
-            token: '',
             carpool: false,
             tripTab: false,
             routeTab: true
