@@ -2,7 +2,7 @@
 
 import { action, observable } from 'mobx';
 
-import app from '../stores/MessagingStore'
+import app from '../stores/FirebaseStore.js'
 
 /*
  Provides a store for variables and methods for carpools

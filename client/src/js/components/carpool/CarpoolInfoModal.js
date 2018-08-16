@@ -1,9 +1,11 @@
 // File Type: Component
 
+import { observer } from "mobx-react";
 import { Link, Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import app from '../../stores/MessagingStore'
+import MessageStore  from '../../stores/MessagingStore.js';
+import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js'
 
 const display = {
@@ -16,7 +18,7 @@ const hide = {
 /*
  * Purpose: an interface that displays the members of the carpool and a link to their profile.
  */
-class CarpoolInfoModal extends Component {
+@observer class CarpoolInfoModal extends Component {
 
     /*
      * Purpose: call constructor of parent class and initializes the fields. 'state' contains 
@@ -31,25 +33,11 @@ class CarpoolInfoModal extends Component {
         this.users = app.database().ref().child('groupChats/'+this.props.carpoolID+"/users");
 
         this.state = {
-            user:[],
             groupChatUsers:{},
             toggle: false,
             toggleConfirm: false,
             redirect: false,
         };
-    }
-
-    /*
-     * Purpose: acquires the users that are in the carpool and sets them to the state.
-     */
-    componentDidMount(){
-        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.setState({user: json.data})
-                }
-            });
     }
 
     componentWillMount(){
@@ -61,22 +49,6 @@ class CarpoolInfoModal extends Component {
                 groupChatUsers: previousUsers
             });
         });
-    }
-
-    /*
-     * Purpose: acquires the name of the user by iterating through the 'user' array in state
-     * and matching the ID that is passed through to the function.
-     */
-    getUsername(_id) {
-
-        for(let x in this.state.user) {
-
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].firstName;
-            }
-
-        }
-
     }
 
     /*
@@ -157,7 +129,7 @@ class CarpoolInfoModal extends Component {
                     key={Math.random()}
                 >
                     <div className="col-6 txt-left">
-                        {this.getUsername(user)}
+                        {MessageStore.getUsername(user)}
                     </div>
                     <div className="col-6 vertical-right">
                         <Link to={"/ProfilePage/"+user}>View Profile</Link>

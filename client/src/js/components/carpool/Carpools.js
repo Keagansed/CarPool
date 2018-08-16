@@ -3,7 +3,7 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import app from '../../stores/MessagingStore'
+import app from '../../stores/FirebaseStore.js'
 import CarpoolOffers from './CarpoolOffers';
 import { getFromStorage } from '../../utils/localStorage'
 

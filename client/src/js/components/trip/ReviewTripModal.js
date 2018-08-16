@@ -53,15 +53,15 @@ class ReviewTripModal extends Component{
         let sessionKey = getFromStorage('sessionKey').token;
 
         for(let user in this.props.trip.users) {
-
+            
             if(this.props.trip.users[user] === true){
                 fetch('/api/account/vouch/getVouches?idFor=' + user)
                     .then(res => res.json())
                     .then(vouches => {
                         if (vouches.success){
                             let previousVouches = this.state.vouches;
-                            previousVouches[user] = vouches;
-                            this.setState({vouches:previousVouches.data});
+                            previousVouches[user] = vouches.data;
+                            this.setState({vouches:previousVouches});
                         }
                     }).then(() => {
                     let userReviews = [];

@@ -1,11 +1,13 @@
 //File Type: Component
 
+import { observer } from "mobx-react";
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import app from '../../stores/MessagingStore'
-import CarpoolInfoModal from './CarpoolInfoModal';
-import { getFromStorage } from '../../utils/localStorage.js'
+import app from '../../stores/FirebaseStore.js';
+import MessageStore  from '../../stores/MessagingStore.js';
+import CarpoolInfoModal from './CarpoolInfoModal.js';
+import { getFromStorage } from '../../utils/localStorage.js';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import NewTripModal from './NewTripModal';
@@ -16,7 +18,7 @@ import "../../../css/components/Spinner.css"
 /*
  * Purpose: container for the messages that are sent within a carpool chat
  */
-class Messages extends Component {
+@observer class Messages extends Component {
 
     /*
      * Purpose: calls the constructor of the parent class and initializes the fields. 'carpoolID' contains the 
@@ -102,13 +104,7 @@ class Messages extends Component {
 
         });
 
-        fetch('/api/account/profile/getAllUsers?token=' + token)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    this.setState({userList: json.data})
-                }
-            });
+        MessageStore.getAllUsers(token);
         
     }
 
@@ -122,22 +118,12 @@ class Messages extends Component {
      * Purpose: adds a new message to the current messages
      */
     addMessage(message, userID) {
-        this.messages.push().set({userID: userID, messageContent: message, dateTime: JSON.stringify(new Date()), tripSuggest:false});
-    }
-
-    /*
-     * Purpose: Returns an array of all unique userIds from all messages 
-     */
-    getUsername = (_id) => {
-
-        for(var x in this.state.userList) {
-
-            if(this.state.userList[x]._id === _id) {
-                return this.state.userList[x].firstName;
-            }
-
-        }
-
+        this.messages.push().set({
+            userID: userID, 
+            messageContent: message, 
+            dateTime: JSON.stringify(new Date()), 
+            tripSuggest:false
+        });
     }
 
     /*
@@ -236,7 +222,7 @@ class Messages extends Component {
                             {
                                 this.state.messages.map((message) => {
                                     let userColour;
-                                    let userName = this.getUsername(message.userID);
+                                    let userName = MessageStore.getUsername(message.userID);
                                     try{
                                         userColour = this.state.users[message.userID].colour;
                                     }catch(e) {

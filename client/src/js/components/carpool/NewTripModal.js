@@ -3,6 +3,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
+import MessageStore  from '../../stores/MessagingStore.js';
 import TripsStore from '../../stores/TripsStore'
 import WeekdaySelector from './WeekdaySelector';
 import { getFromStorage } from '../../utils/localStorage.js'
@@ -24,29 +25,10 @@ const hide = {
      */
     constructor(props) {
         super(props);
-        // this.toggle = this.toggle.bind(this);
-        // this.updateTime = this.updateTime.bind(this);
-        // this.updateDate = this.updateDate.bind(this);
-        // this.updateDays = this.updateDays.bind(this);
-        // this.updateUsers = this.updateUsers.bind(this);
 
         this.state ={
-            user:[],
             toggle: false
         };
-    }
-
-    /*
-     * Purpose: performs an API call to acquire all the users
-     */
-    componentDidMount(){
-        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.setState({user: json.data})
-                }
-            });
     }
 
     /*
@@ -122,21 +104,6 @@ const hide = {
     }    
 
     /*
-     * Purpose: uses the _id arguement to find the specific user in the 'user' field and acquire that users name
-     */
-    getUsername(_id) {
-
-        for(let x in this.state.user) {
-
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].firstName;
-            }
-
-        }
-
-    }
-
-    /*
      * Purpose: aqcuires the information provided in the html form elements and creates a new message and trip
      * suggestion with the information. Resets the modal form elements once the information has been acquired and
      * renders the modal invisible.
@@ -178,7 +145,7 @@ const hide = {
         for(let user in this.props.users) {
 
             if(document.getElementById(user).checked) {
-                userNames = userNames + this.getUsername(user) + " ";
+                userNames = userNames + MessageStore.getUsername(user) + " ";
                 users[user]=true;
             }
 
@@ -218,7 +185,10 @@ const hide = {
         for(let user in this.props.users) {
             users.push(
                 <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6 txt-left">{this.getUsername(user)}</div><div className="col-6 vertical-right"><input id={user} onChange={this.updateUsers} type="checkbox"/></div>
+                    <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
+                    <div className="col-6 vertical-right">
+                        <input id={user} onChange={this.updateUsers} type="checkbox"/>
+                    </div>
                 </div>
             );
         }
@@ -242,8 +212,24 @@ const hide = {
                                         <h6 className="fw-bold mx-auto">First Time and Date</h6>
                                     </div>
                                     <div className="row padbot-10px">
-                                        <input type="time" onChange={this.updateTime} className="col-5 form-control mx-auto brad-2rem" placeholder="Time" required="required" name="Time" id="inputTripTime"/>
-                                        <input type="date" onChange={this.updateDate} className="col-5 form-control mx-auto brad-2rem" placeholder="Date" required="required" name="Date" id="inputTripDate"/>
+                                        <input 
+                                            type="time" 
+                                            onChange={this.updateTime} 
+                                            className="col-5 form-control mx-auto brad-2rem" 
+                                            placeholder="Time" 
+                                            required="required" 
+                                            name="Time" 
+                                            id="inputTripTime"
+                                        />
+                                        <input 
+                                            type="date" 
+                                            onChange={this.updateDate} 
+                                            className="col-5 form-control mx-auto brad-2rem" 
+                                            placeholder="Date" 
+                                            required="required" 
+                                            name="Date" 
+                                            id="inputTripDate"
+                                        />
                                     </div>
                                     <div className="row">
                                         <h6 className="fw-bold mx-auto">Repeat Weekly</h6>
@@ -260,7 +246,11 @@ const hide = {
                                     <div className="row padtop-20px">
                                         <div className="col-1"></div>
                                         <div className="col-10">
-                                            <a onClick={() => this.suggestTrip()} className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold" id="btnSuggestTrip">
+                                            <a 
+                                                onClick={() => this.suggestTrip()} 
+                                                className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold" 
+                                                id="btnSuggestTrip"
+                                            >
                                                 Suggest
                                             </a>
                                         </div>
