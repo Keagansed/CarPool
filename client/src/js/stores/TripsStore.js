@@ -14,6 +14,20 @@ class tripsStore {
     @observable users = {};
     @observable tripID;
 
+    @observable trips =[];
+
+    @action getTrip = (token) => {
+        fetch('/api/system/trip/getTrips?token='+ token)
+            .then(res => res.json())
+            .then(json => {
+                if (json.success) {
+                    this.trips = json.data
+                } else {
+                    console.log(json);
+                }
+            });
+    }
+
     @action addTrip = (suggestTrip, messageContent, users, token) => {
         fetch('/api/system/trip/addTrip?token=' + token,{
             method:'POST',

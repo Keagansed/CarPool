@@ -46,7 +46,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         const { store } = this.props;
 
 		if(store.vouchTab === true) {
-			return <Vouches _id={this.state.token}/>;
+			return <Vouches token={this.state.token}/>;
 		}
 		else if(store.trustTab === true) {
 			return <Trusts/>;
@@ -63,7 +63,13 @@ import { getFromStorage } from '../utils/localStorage.js';
 				<div>
 					<div className="container-fluid fixed-top bg-purple">
 						<div className="row height-150px bg-purple">
-							<img src={profilePicture} id="profilePic" className="mx-auto my-auto rounded-circle bord-5px-white" height="120" width="120" alt="s" />
+							<img 
+								src={profilePicture} 
+								id="profilePic" 
+								className="mx-auto my-auto rounded-circle bord-5px-white" 
+								height="120" 
+								width="120" 
+								alt="profilePic" />
 						</div>
 						<div className="row height-40px bg-purple">
 							<h4 className="mx-auto my-auto txt-white mbottom-0">{firstName} {lastName}</h4>

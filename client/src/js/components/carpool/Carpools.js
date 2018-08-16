@@ -74,6 +74,11 @@ class Carpools extends Component {
         });
     }
 
+    //Switch off event listeners for firebase
+    componentWillUnmount(){
+        this.groupChats.off();
+    }
+
     /*
      * Purpose: renders the component in the DOM which shows the carpool offers and current carpools that
      * the user is apart of. Also shows if there are any new messages in any carpools that the user is in.

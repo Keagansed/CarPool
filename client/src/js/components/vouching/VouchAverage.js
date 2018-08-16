@@ -1,41 +1,29 @@
 // File Type: Component
 
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
+
+import VouchStore from './../../stores/VouchStore';
 
 import 'font-awesome/css/font-awesome.min.css';
 
 /**
  * Purpose: Display the average vouches of the user
  */
-class VouchAverage extends Component {
-	constructor(props){
-		super(props);
-		
-		this.state ={vouches: []};
-	}
-	
-	componentDidMount(){
-		const idFor = this.props._id;
-		fetch('/api/account/vouch/getVouches?idFor='+idFor)
-		.then(res => res.json())
-		.then(vouches => {
-			if (vouches.success) {
-				this.setState({vouches: vouches.data})
-			}
-		});
-	}
-	
+@observer class VouchAverage extends Component {
+
+/**
+ * VouchStore.vouchesFor will be populated by Vouches.js component
+ */
 	averageRating = ()=> {
 		let total = 0;
 		let reviews = 0;
 		let average;
 
-		for(let x in this.state.vouches) {
-			if(x){
-				reviews++;
-				total += this.state.vouches[x].rating;
-			}
-		}
+		VouchStore.vouchesFor.forEach(vouch => {
+			reviews++;
+			total += vouch.rating;
+		});
 		
 		if(total!==0 && reviews!==0) {
 			average = total/reviews;

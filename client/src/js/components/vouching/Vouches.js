@@ -1,12 +1,14 @@
 // File Type: Component
-
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
+
+import VouchStore from './../../stores/VouchStore';
 import Vouch from './Vouch'
 
 /**
  * Purpose: Container to store and display various Vouch components for the user
  */
-class Vouches  extends Component {
+@observer class Vouches  extends Component {
     constructor(props){
         super(props);
 
@@ -14,21 +16,16 @@ class Vouches  extends Component {
     }
 
     componentDidMount() {
-        const idFor = this.props._id;
-        fetch('/api/account/vouch/getVouches?idFor=' + idFor)
-            .then(res => res.json())
-            .then(vouches => {
-                if (vouches.success) {
-                    this.setState({vouches: vouches.data})
-                }
-            });
+        const idFor = this.props.token;
+        VouchStore.getVouchesFor(idFor);
     }
 
     render() {
+        let vouches = VouchStore.vouchesFor;
         return(
             <div className="scroll-vert">
                 {
-                    this.state.vouches.map((vouch) => {
+                    vouches.map((vouch) => {
                         return (<Vouch vouch={vouch} key={Math.random()}/>);
                     })
                 }

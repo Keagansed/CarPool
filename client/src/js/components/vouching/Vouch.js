@@ -1,8 +1,9 @@
 // File Type: Component
 
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
-import { getFromStorage } from '../../utils/localStorage.js';
+import VouchStore from './../../stores/VouchStore';
 
 const display = {
     display: 'block'
@@ -15,7 +16,7 @@ const hide = {
 /**
  * Purpose: Interface to display the various vouches/ ratings the user has received
  */
-class Vouch  extends Component {
+@observer class Vouch  extends Component {
     constructor(props) {
         super(props);
 
@@ -26,52 +27,10 @@ class Vouch  extends Component {
         }
     }
 
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        const { token } = obj;
-
-        this.setState({
-            token,
-        })
-
-        fetch('/api/account/profile/getAllUsers?token=' + token)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    this.setState({user: json})
-                }
-            });
-    }
-
     toggle = (event)=> {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
-    }
-
-    getUsername = (_id)=> {
-        for (let x in this.state.user) {
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].firstName;
-            }
-        }
-
-    }
-
-    getUsernameSurname = (_id)=> {
-        for (let x in this.state.user) {
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].firstName + " " + this.state.user[x].lastName;
-            }
-        }
-    }
-
-    getUserProfilePic = (_id)=> {
-        for (let x in this.state.user) {
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].profilePic;
-            }
-        }
     }
 
     printStars = (numStars)=> {
@@ -94,7 +53,7 @@ class Vouch  extends Component {
     }
 
     render(){
-        let profilePic = this.getUserProfilePic(this.props.vouch.idBy);
+        let profilePic = VouchStore.getUserProfilePic(this.props.vouch.idBy);
         const profilePicture = "./../api/account/getImage?filename=" + profilePic;
         
         let modal = [];
@@ -104,7 +63,7 @@ class Vouch  extends Component {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">{this.getUsername(this.props.vouch.idBy)}'s Review</h5>
+                            <h5 className="modal-title fw-bold">{VouchStore.getUsername(this.props.vouch.idBy)}'s Review</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -148,7 +107,7 @@ class Vouch  extends Component {
                                 <h5>{this.printStars(this.props.vouch.rating)}</h5>
                             </div>
                             <div className="col-12">
-                                {this.getUsernameSurname(this.props.vouch.idBy)}
+                                {VouchStore.getUsernameSurname(this.props.vouch.idBy)}
                             </div>
                         </div>
                         <div className="col-3 vertical-right">
