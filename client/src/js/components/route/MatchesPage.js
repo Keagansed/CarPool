@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from "mobx-react";
 
-import EditRouteModal from './EditRouteModal';
 import Matches from './Matches';
 import MatchesStore from '../../stores/MatchesStore';
 import RouteInfoModal from './RouteInfoModal';
@@ -21,7 +20,6 @@ import DeleteRoute from './DeleteRoute';
         super()
 
         this.state = {
-            //The loading field represents the load state of the page
             token: '',
         }
     }
@@ -62,10 +60,6 @@ import DeleteRoute from './DeleteRoute';
                             token={token}
                             routeId={this.props.match.params._id} 
                             MatchesStore={MatchesStore}
-                        />
-                        <EditRouteModal  
-                            token={token} 
-                            routeId={this.props.match.params._id}
                         />
                         <DeleteRoute/>
                     </div>

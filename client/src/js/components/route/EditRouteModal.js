@@ -1,4 +1,5 @@
-// File Type: Component
+// ************* File no longer in use ********************
+// ************* To be deleted          ********************
 
 import React, { Component } from 'react';
 
