@@ -6,10 +6,13 @@ import { waypointGenerator } from './../utils/waypointGenerator';
 
 class routesStore {
     
+    @observable userList = [];
+    @observable userObj = {};
+
     @observable routes = [];
     @observable routeSuccess = false;
     @observable loadingRoutes = true;
-    
+
     @observable originResult = {};
     @observable destinationResult = {};
     
@@ -36,6 +39,23 @@ class routesStore {
     @action setdestination = (destination) => {
         this.destination = destination;
     }
+
+    @action getAllUsers = (token) => {
+
+        fetch('/api/account/profile/getAllUsers?token=' + token)
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json => {
+                if (json.success){
+                    this.userList = json.data;
+
+                } else {
+                    console.log(json);
+                }
+            });
+    }
+
+
     
     @action getRoutes = (token) => {
         fetch('/api/system/route/getRoutes?token=' + token,{

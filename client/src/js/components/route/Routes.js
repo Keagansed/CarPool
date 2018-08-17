@@ -49,7 +49,15 @@ import  "../../../css/components/Spinner.css"
         const Routes = this.props.store.routes.map(route =>             
             <Route 
                 key={route._id} 
-                store={new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}
+                store={new RouteStore(
+                    route.routeName, 
+                    route.startLocation, 
+                    route.endLocation, 
+                    route.days, 
+                    route.time, 
+                    route.repeat, 
+                    route._id
+                )}
             />
         )
         

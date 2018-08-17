@@ -18,9 +18,9 @@ class profileStore {
     @computed get idNum() { return this.user.id}
     @computed get profilePic() { return this.user.profilePic };
 
-    @action getProfile = (token) => {    
+    @action getProfile = (token, userId) => {    
 
-        fetch('/api/account/profile?token=' + token + '&userId=' + token)
+        fetch('/api/account/profile?token=' + token + '&userId=' + userId)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
@@ -31,7 +31,7 @@ class profileStore {
                 this.opacity = "";
                 this.setEdit();
 
-                fetch('/api/account/vouch/getVouches?idFor=' + token)
+                fetch('/api/account/vouch/getVouches?idFor=' + userId)
                 .then(res => res.json())
                 .then(vouches => {
                     if (vouches.success) {

@@ -20,23 +20,21 @@ import { getFromStorage } from '../utils/localStorage.js';
 		super();
 	
 		this.state = {
-			token: ""
+			token: "",
+			userId: 0
 		};
 	}
 
 	componentWillMount() {
-		let obj = getFromStorage('sessionKey');
-		let token;
-		
-		if(obj) {
-			token = obj.token;
-		}
+		let token = getFromStorage('sessionKey').token;
+		let userId = this.props.match.params._id;
 
 		this.setState({
 			token,
+			userId: userId
 		})
 
-		this.props.store.getProfile(token);
+		this.props.store.getProfile(token, userId);
 	}
 	
 	/*
@@ -46,7 +44,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         const { store } = this.props;
 
 		if(store.vouchTab === true) {
-			return <Vouches token={this.state.token}/>;
+			return <Vouches userId={this.state.userId}/>;
 		}
 		else if(store.trustTab === true) {
 			return <Trusts/>;
@@ -77,7 +75,8 @@ import { getFromStorage } from '../utils/localStorage.js';
 						<div className="row height-60px bg-purple padbot-10px">
 								<div className="col-6 bordright-1px-white my-auto">
 									<div className="col-12 txt-center txt-white">
-										<h6 className="mbottom-0"><VouchAverage _id={token}/> 
+										<h6 className="mbottom-0">
+											<VouchAverage /> 
 											<i className="fa fa-star txt-gold txt-15px"></i>
 										</h6>
 									</div>

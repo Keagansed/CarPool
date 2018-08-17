@@ -80,10 +80,18 @@ import  "../../../css/components/Spinner.css"
             <UserMatch 
                 key = {route._id} 
                 token = {this.props.token}
-                routeId = {route._id}
-                uRouteId = {this.props.routeId}
+                routeId = {route._id} //matched route ID
+                uRouteId = {this.props.routeId} //own route ID
                 userId = {route.userId} 
-                store = {new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}
+                store = {new RouteStore(
+                    route.routeName, 
+                    route.startLocation, 
+                    route.endLocation, 
+                    route.days, 
+                    route.time, 
+                    route.repeat, 
+                    route._id
+                )}
             />            
         )
         if(Routes.length > 0) {

@@ -16,8 +16,13 @@ import Vouch from './Vouch'
     }
 
     componentDidMount() {
-        const idFor = this.props.token;
+        const idFor = this.props.userId;
         VouchStore.getVouchesFor(idFor);
+
+        if(VouchStore.allUsers.length === 0){
+            console.log(VouchStore.allUsers.length + " NEED TO FIX!!! MOVE TO LOGIN");
+            VouchStore.getAllUsers();
+        }
     }
 
     render() {

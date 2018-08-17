@@ -7,18 +7,21 @@ import { getFromStorage } from '../utils/localStorage.js'
 class vouchStore {
     @observable vouchesFor = [];
     @observable allUsers = [];
+    @observable token;
 
     constructor(){
+        console.log("VouchStore: Call only once");
+
         const obj = getFromStorage('sessionKey');
         const { token } = obj;
 
-        console.log("VouchStore: Call only once");
-
+        this.token = token;
         this.getAllUsers(token);   
     }
 
-    @action getAllUsers = (token) => {
-        fetch('/api/account/profile/getAllUsers?token=' + token)
+    @action getAllUsers = () => {
+
+        fetch('/api/account/profile/getAllUsers?token=' + this.token)
             .then(res => res.json())
             .then(json => {
                 if(json.success){
