@@ -6,6 +6,10 @@ import { getFromStorage } from '../utils/localStorage.js'
 
 class tripsStore {
 
+    @observable allUsers = [];
+    @observable routeObj = {};
+    @observable tripObj = {};
+
     @observable tripName;
     @observable carpoolID;
     @observable idBy = getFromStorage('sessionKey').token;
@@ -15,6 +19,45 @@ class tripsStore {
     @observable tripID;
 
     @observable trips =[];
+
+    @action getAllUsers = (token) => {
+        fetch('/api/account/profile/getAllUsers?token=' + token)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success){
+                    this.allUsers = json.data;
+                }else{
+                    console.log(json);
+                    console.log("Failed to retrieve User list");
+                }
+            });
+    }
+
+    @action getUsernameSurname = (userId) => {
+        let found = false;
+        
+        for( let x = 0; x < this.allUsers.length && !found; x++){
+            if(this.allUsers[x]._id === userId){
+                found = true;
+                this.userNameSurname = this.allUsers[x].firstName+ " "+ this.allUsers[x].lastName;
+                return this.userNameSurname;
+            }
+        }
+    
+    }
+
+    @action getAllTripData = (token,tripId ) => {
+        fetch('/api/system/trip/getAllTripInfo?_id=' +tripId + '&token=' + token)
+        .then( res => res.json())
+        .then(json => {
+            if(json.success){
+                this.routeObj = json.routeData[0];
+                this.tripObj = json.tripData[0];
+            }else{
+                console.log(json);
+            }
+        });
+    }
 
     @action getTrip = (token) => {
         fetch('/api/system/trip/getTrips?token='+ token)

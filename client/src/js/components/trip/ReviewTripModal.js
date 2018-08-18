@@ -42,9 +42,15 @@ class ReviewTripModal extends Component{
         this.userReviews[id].stars = stars;
     }
 
-    submitReviews = ()=>{
+    submitReviews = () => {
         for(let user in this.userReviews){
-            VouchStore.submitVouch(this.props.trip._id,user,this.userReviews[user].stars,this.userReviews[user].review, getFromStorage('sessionKey').token);
+            VouchStore.submitVouch(
+                this.props.trip._id,
+                user,
+                this.userReviews[user].stars,
+                this.userReviews[user].review, 
+                getFromStorage('sessionKey').token
+            );
         }
         this.toggle();
     }
@@ -52,6 +58,8 @@ class ReviewTripModal extends Component{
     updateUserReviewsDisplay = ()=> {
         let sessionKey = getFromStorage('sessionKey').token;
 
+        console.log(this.props.trip.users);
+        console.log(this.props.userList[0]);
         for(let user in this.props.trip.users) {
             
             if(this.props.trip.users[user] === true){
@@ -72,14 +80,24 @@ class ReviewTripModal extends Component{
                                     this.userReviews[user] = {};
                                     this.userReviews[user].stars = 1;
                                     userReviews.push(
-                                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                        <UserReview 
+                                            id={user} 
+                                            key={Math.random()} 
+                                            user={this.props.user} 
+                                            updateReview={this.updateReview} 
+                                            updateStars={this.updateStars}
+                                        />
                                     );
                                 }
                             }else{
                                 let hasVouch = false;
 
                                 for(let vouch in this.state.vouches[user]){
-                                    if(this.state.vouches[user][vouch].idBy === sessionKey && this.state.vouches[user][vouch].idFor === user && this.state.vouches[user][vouch].tripID === this.props.trip._id){
+                                    if(
+                                        this.state.vouches[user][vouch].idBy === sessionKey && 
+                                        this.state.vouches[user][vouch].idFor === user && 
+                                        this.state.vouches[user][vouch].tripID === this.props.trip._id
+                                    ){
                                         hasVouch = true;
                                     }
                                 }
@@ -87,7 +105,13 @@ class ReviewTripModal extends Component{
                                     this.userReviews[user] = {};
                                     this.userReviews[user].stars = 1;
                                     userReviews.push(
-                                        <UserReview id={user} key={Math.random()} user={this.props.user} updateReview={this.updateReview} updateStars={this.updateStars}/>
+                                        <UserReview 
+                                            id={user} 
+                                            key={Math.random()} 
+                                            user={this.props.userList} 
+                                            updateReview={this.updateReview}
+                                            updateStars={this.updateStars}
+                                        />
                                     );
                                 }
 
@@ -125,7 +149,12 @@ class ReviewTripModal extends Component{
                         <div className="modal-body">
                             {this.state.userReviews}
                             <div className="row">
-                                <button type="submit" onClick={this.submitReviews} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnSubmitReview">
+                                <button 
+                                    type="submit" 
+                                    onClick={this.submitReviews} 
+                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" 
+                                    id="btnSubmitReview"
+                                >
                                     Submit Review
                                 </button>
                             </div>

@@ -18,6 +18,7 @@ class UserReview extends Component{
     }
 
     componentWillMount(){
+        console.log(this.props.user);
         this.setState({user: this.props.user});
     }
 
@@ -57,7 +58,15 @@ class UserReview extends Component{
                 {/* Static data will be replaced by dynamic data */}
                 <div className="row">
                     <div className="col-12 txt-center">
-                        <textarea type="text" className="col-10 form-control mx-auto brad-20px" onChange={this.updateReview.bind(this)} placeholder={"Thoughts on " + this.getUsername(this.props.id)} required="required" name="UserReview" id={this.props.id}/>
+                        <textarea 
+                            type="text" 
+                            className="col-10 form-control mx-auto brad-20px" 
+                            onChange={this.updateReview.bind(this)} 
+                            placeholder={"Thoughts on " + this.getUsername(this.props.id)} 
+                            required="required" 
+                            name="UserReview" 
+                            id={this.props.id}
+                        />
                     </div>
                 </div>
                 <div className="row">
