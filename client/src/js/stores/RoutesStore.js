@@ -7,7 +7,6 @@ import { waypointGenerator } from './../utils/waypointGenerator';
 class routesStore {
     
     @observable userList = [];
-    @observable userObj = {};
 
     @observable routes = [];
     @observable routeSuccess = false;

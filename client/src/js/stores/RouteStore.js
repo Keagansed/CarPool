@@ -1,6 +1,6 @@
 // File Type: Store
 
-import { action, observable, toJS } from 'mobx';
+import { action, observable } from 'mobx';
 
 class RouteStore {
 

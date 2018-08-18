@@ -41,28 +41,22 @@ class EditRouteModal extends Component{
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        fetch('/api/account/profile/getAllUsers?token=' + this.props.token)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success){
-                    this.setState({user: json.data})
-                }
-            });
+
         
-        fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.props.token, {
-            method:'GET',
-            headers: {
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {  
-            if(json.success)          
-                this.setState({routeObj : json.data[0]});
-            else
-                console.log(json)
-        });
+        // fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.props.token, {
+        //     method:'GET',
+        //     headers: {
+        //         'Content-Type':'application/json'
+        //     },
+        // })
+        // .then(res => res.json())
+        // .catch(error => console.error('Error:', error))
+        // .then(json => {  
+        //     if(json.success)          
+        //         this.setState({routeObj : json.data[0]});
+        //     else
+        //         console.log(json)
+        // });
     }
 
     /*
