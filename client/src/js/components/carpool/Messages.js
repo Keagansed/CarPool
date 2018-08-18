@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 
 import app from '../../stores/FirebaseStore.js';
 import MessageStore  from '../../stores/MessagingStore.js';
+
 import CarpoolInfoModal from './CarpoolInfoModal.js';
 import { getFromStorage } from '../../utils/localStorage.js';
 import Message from './Message';
@@ -47,9 +48,8 @@ import "../../../css/components/Spinner.css"
      * Purpose: adds all messages to previous messages, sets 'carpoolID' and updates users.
      */
     componentWillMount() {
-        let obj = getFromStorage('sessionKey');
-        let { token } = obj;
-        
+        let token = getFromStorage('sessionKey').token;
+
         this.setState({
             token,
         })
@@ -103,9 +103,7 @@ import "../../../css/components/Spinner.css"
                 }
 
         });
-
-        MessageStore.getAllUsers(token);
-        
+   
     }
 
     //Switch off event listeners for firebase
@@ -223,6 +221,7 @@ import "../../../css/components/Spinner.css"
                                 this.state.messages.map((message) => {
                                     let userColour;
                                     let userName = MessageStore.getUsername(message.userID);
+              
                                     try{
                                         userColour = this.state.users[message.userID].colour;
                                     }catch(e) {

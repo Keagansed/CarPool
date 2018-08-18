@@ -6,9 +6,8 @@ import React, { Component } from 'react';
 import app from '../../stores/FirebaseStore.js'
 import CarpoolOffers from './CarpoolOffers';
 import { getFromStorage } from '../../utils/localStorage'
+import MessageStore  from '../../stores/MessagingStore.js';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.min.js';
 import 'firebase/database';
 import "../../../css/components/Spinner.css"
 
@@ -40,6 +39,11 @@ class Carpools extends Component {
      */
     componentDidMount() {
         this.setState({offers:<CarpoolOffers store={this.props.store} token={this.props.token}/>});
+
+        if(MessageStore.allUsers.length === 0){
+            MessageStore.getAllUsers(this.props.token);
+        }
+        
     }
 
     /*

@@ -9,19 +9,8 @@ class vouchStore {
     @observable allUsers = [];
     @observable token;
 
-    constructor(){
-        console.log("VouchStore: Call only once");
-
-        const obj = getFromStorage('sessionKey');
-        const { token } = obj;
-
-        this.token = token;
-        this.getAllUsers(token);   
-    }
-
-    @action getAllUsers = () => {
-
-        fetch('/api/account/profile/getAllUsers?token=' + this.token)
+    @action getAllUsers = (token) => {
+        fetch('/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .then(json => {
                 if(json.success){
@@ -34,11 +23,9 @@ class vouchStore {
     }
 
     @action getUsername = (userId) => {
-
         let found = false;
        
         for( let x = 0; x < this.allUsers.length && !found; x++){
-            
             if(this.allUsers[x]._id === userId){
                 found = true;
                 this.userName = this.allUsers[x].firstName;

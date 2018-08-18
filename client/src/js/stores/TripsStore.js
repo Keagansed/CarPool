@@ -33,18 +33,32 @@ class tripsStore {
             });
     }
 
+    
+    @action getUsername = (userId) => {
+
+        let found = false;
+       
+        for( let x = 0; x < this.allUsers.length && !found; x++){
+            
+            if(this.allUsers[x]._id === userId){
+                found = true;
+                return (this.allUsers[x].firstName);
+            }
+        }
+    }
+
     @action getUsernameSurname = (userId) => {
         let found = false;
         
         for( let x = 0; x < this.allUsers.length && !found; x++){
             if(this.allUsers[x]._id === userId){
                 found = true;
-                this.userNameSurname = this.allUsers[x].firstName+ " "+ this.allUsers[x].lastName;
-                return this.userNameSurname;
+                return (this.allUsers[x].firstName+ " "+ this.allUsers[x].lastName);
             }
         }
     
     }
+
 
     @action getAllTripData = (token,tripId ) => {
         fetch('/api/system/trip/getAllTripInfo?_id=' +tripId + '&token=' + token)

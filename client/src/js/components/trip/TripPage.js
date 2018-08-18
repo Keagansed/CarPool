@@ -36,23 +36,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
         
         TripsStore.getAllUsers(token);
         TripsStore.getAllTripData(token, this.props.match.params.tripID);
-        
     
-        fetch('/api/account/profile/getAllUsers?token=' + this.state.token)
-        .then(res => res.json())
-        .then(json => {
-            if (json.success) {
-                this.setState({user: json.data})
-            }
-        });
-    }
-
-    getUsernameSurname = (_id)=> {
-        for (let x in TripsStore.allUsers) {
-            if(TripsStore.allUsers[x]._id === _id) {
-                return TripsStore.allUsers[x].firstName + " " + TripsStore.allUsers[x].lastName;
-            }
-        }
     }
 
     getDateTime = ()=> {

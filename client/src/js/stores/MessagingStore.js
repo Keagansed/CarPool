@@ -1,18 +1,9 @@
 // File Type: Store
 
 import {  action, observable } from 'mobx';
-import { getFromStorage } from './../utils/localStorage.js';
 
 class messageStore {
     @observable allUsers=[];
-
-    constructor(){
-        let obj = getFromStorage('sessionKey');
-        let { token } = obj;
-
-        console.log("MessageStore: Call only once");
-        this.getAllUsers(token);
-    }
 
     @action getAllUsers = (token) => {
         fetch('/api/account/profile/getAllUsers?token=' + token)

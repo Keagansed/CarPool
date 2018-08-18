@@ -27,6 +27,7 @@ const hide = {
         }
     }
 
+
     toggle = (event)=> {
         this.setState(prevState => ({
             toggle: !prevState.toggle
@@ -55,7 +56,10 @@ const hide = {
     render(){
         let profilePic = VouchStore.getUserProfilePic(this.props.vouch.idBy);
         const profilePicture = "./../api/account/getImage?filename=" + profilePic;
-        
+
+        let userName = VouchStore.getUsername(this.props.vouch.idBy);
+        let userNameSurname = VouchStore.getUsernameSurname(this.props.vouch.idBy);
+
         let modal = [];
         modal.push(
             // Modal
@@ -63,7 +67,7 @@ const hide = {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">{VouchStore.getUsername(this.props.vouch.idBy)}'s Review</h5>
+                            <h5 className="modal-title fw-bold">{userName}'s Review</h5>
                             <button type="button" className="close" onClick={this.toggle} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
@@ -107,7 +111,7 @@ const hide = {
                                 <h5>{this.printStars(this.props.vouch.rating)}</h5>
                             </div>
                             <div className="col-12">
-                                {VouchStore.getUsernameSurname(this.props.vouch.idBy)}
+                                {userNameSurname}
                             </div>
                         </div>
                         <div className="col-3 vertical-right">

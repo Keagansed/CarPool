@@ -1,7 +1,9 @@
 // File Type: Component
 
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
+import ReviewStore from '../../stores/ReviewStore';
 import VouchStore from '../../stores/VouchStore';
 import UserReview from './UserReview';
 import { getFromStorage } from '../../utils/localStorage'
@@ -17,7 +19,7 @@ const hide = {
  * Purpose: An interface to allow the user to review other members of the Carpool after the Trip has concluded
  * This is a container component that holds and displays UserReview components
  */
-class ReviewTripModal extends Component{
+@observer class ReviewTripModal extends Component{
     constructor(props) {
         super(props);
     
@@ -27,11 +29,13 @@ class ReviewTripModal extends Component{
             vouches: []
         }
 
+        this.reviewStores = [];
+        this.userVouches = [];
         this.userReviews = [];
     }
 
-    componentWillMount(){
-        this.updateUserReviewsDisplay();
+    componentDidMount(){
+        this.updateUserReviews();
     }
 
     updateReview = (id, message)=> {
@@ -55,82 +59,62 @@ class ReviewTripModal extends Component{
         this.toggle();
     }
 
-    updateUserReviewsDisplay = ()=> {
-        let sessionKey = getFromStorage('sessionKey').token;
-
-        console.log(this.props.trip.users);
-        console.log(this.props.userList[0]);
-        for(let user in this.props.trip.users) {
-            
-            if(this.props.trip.users[user] === true){
-                fetch('/api/account/vouch/getVouches?idFor=' + user)
-                    .then(res => res.json())
-                    .then(vouches => {
-                        if (vouches.success){
-                            let previousVouches = this.state.vouches;
-                            previousVouches[user] = vouches.data;
-                            this.setState({vouches:previousVouches});
-                        }
-                    }).then(() => {
-                    let userReviews = [];
-                    try{
-                        for(let user in this.props.trip.users){
-                            if(this.state.vouches[user].length === 0){
-                                if(user !== sessionKey) {
-                                    this.userReviews[user] = {};
-                                    this.userReviews[user].stars = 1;
-                                    userReviews.push(
-                                        <UserReview 
-                                            id={user} 
-                                            key={Math.random()} 
-                                            user={this.props.user} 
-                                            updateReview={this.updateReview} 
-                                            updateStars={this.updateStars}
-                                        />
-                                    );
-                                }
-                            }else{
-                                let hasVouch = false;
-
-                                for(let vouch in this.state.vouches[user]){
-                                    if(
-                                        this.state.vouches[user][vouch].idBy === sessionKey && 
-                                        this.state.vouches[user][vouch].idFor === user && 
-                                        this.state.vouches[user][vouch].tripID === this.props.trip._id
-                                    ){
-                                        hasVouch = true;
-                                    }
-                                }
-                                if(user !== sessionKey && !hasVouch) {
-                                    this.userReviews[user] = {};
-                                    this.userReviews[user].stars = 1;
-                                    userReviews.push(
-                                        <UserReview 
-                                            id={user} 
-                                            key={Math.random()} 
-                                            user={this.props.userList} 
-                                            updateReview={this.updateReview}
-                                            updateStars={this.updateStars}
-                                        />
-                                    );
-                                }
-
-                            }
-                        }
-                    }
-                    catch (e){}
-                    this.setState({userReviews: userReviews});
-                });
-            }
-
+    updateUserReviews = () => {
+        if(typeof(this.props.trip) !== "undefined"){
+            for(let user in this.props.trip.users){
+                if(this.props.trip.users[user] === true){
+                    this.reviewStores[user] = new ReviewStore();
+                    this.reviewStores[user].getVouches(user);        
+                }  
+            }   
         }
     }
+
+    updateUserReviewsDisplay = ()=> {
+        let token = getFromStorage('sessionKey').token;
+        let userReviews = [];        
+        
+        for(let userId in this.reviewStores){
+
+            let hasVouch = false;
+            let vouchArr = this.reviewStores[userId].vouchesFor;
+
+            vouchArr.forEach(vouch => {
+                if(
+                    vouch.idBy === token && 
+                    vouch.idFor === userId && 
+                    vouch.tripID === this.props.trip._id
+                ){
+                    hasVouch = true;
+                }
+            });
+
+            if(userId !== token && !hasVouch) {
+                this.userReviews[userId] = {};
+                this.userReviews[userId].stars = 1;
+                userReviews.push(
+                    <UserReview 
+                        id={userId} 
+                        key={Math.random()} 
+                        user={this.props.userList} 
+                        updateReview={this.updateReview}
+                        updateStars={this.updateStars}
+                    />
+                );
+            }    
+
+            this.setState({userReviews: userReviews}); 
+        }
+
+    }
   
-    toggle = (event)=> {
+    toggle = (event) => {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+
         this.updateUserReviewsDisplay();
+        this.updateUserReviews();
     }
 
     render(){

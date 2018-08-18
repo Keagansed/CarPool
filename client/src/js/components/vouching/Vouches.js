@@ -2,6 +2,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
+import { getFromStorage } from './../../utils/localStorage';
 import VouchStore from './../../stores/VouchStore';
 import Vouch from './Vouch'
 
@@ -16,13 +17,13 @@ import Vouch from './Vouch'
     }
 
     componentDidMount() {
+        const token = getFromStorage('sessionKey').token;
         const idFor = this.props.userId;
-        VouchStore.getVouchesFor(idFor);
 
-        if(VouchStore.allUsers.length === 0){
-            console.log(VouchStore.allUsers.length + " NEED TO FIX!!! MOVE TO LOGIN");
-            VouchStore.getAllUsers();
-        }
+        VouchStore.getAllUsers(token);
+        VouchStore.getVouchesFor(idFor);
+        
+
     }
 
     render() {
