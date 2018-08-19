@@ -38,7 +38,8 @@ class matchesStore {
         Makes API calls to get all the routes
      */
     @action getAllRoutes = (token, routeId) => {
-        fetch('/api/system/carpool/getAllOtherCarpools?routeId=' + routeId + '&token=' + token,{//Get all Carpools that current route isn't in
+
+        fetch('/api/system/route/getRecommendedRoutes?token=' + token + '&routeId=' + routeId,{ 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -46,51 +47,77 @@ class matchesStore {
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(json =>{
-            if(json.success) {
-                // Array to store carpools that are retrieved
-                let carpools = json.data;
+        .then( json => {
+            console.log(json)
+            if(json) {
+                if(json.success) {       
+                    let { obj } = json;
 
-                this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
-            }else{
-                console.log("Unable to retrieve Carpools:" + json.message );
+                    if(obj.recommendedRoutes) {
+                        this.recommendedRoutes = json.obj.recommendedRoutes;
+                        this.loadingRoutes = false;
+                    }
+                    
+                    if(obj.recommendedCarpools)
+                        this.recommendedCarpools = json.obj.recommendedRoutes;
+                }
             }
-        });
 
-        fetch('/api/system/route/getOtherRoutes?token=' + token,{ //Get all OtherRoutes that are not the users
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
         })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {   
-            if(json.success) {
-                this.routes = json.data;
-            }else{
-                console.log("Unable to retrieve routes");
-            }
-        });
 
-        fetch('/api/system/route/getRoute?routeId=' + routeId + '&token=' + token,{ //Get current route and compare with OtherRoutes
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            if(json.success) {
-                this.filterRoutesByRadius(json.data[0], token);  
-                this.generateTimeWeights(json.data[0]);
-                this.getUsersAndGenerateTrustWeights(json.data[0], token);  // Reordering method is called through this function
-                this.loadingRoutes = false;
-            }else{
-                console.log(json.message);
-            }
-        });
+        // fetch('/api/system/carpool/getAllOtherCarpools?routeId=' + routeId + '&token=' + token,{//Get all Carpools that current route isn't in
+        //     method:'GET',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     },
+        // })
+        // .then(res => res.json())
+        // .catch(error => console.error('Error:', error))
+        // .then(json =>{
+        //     if(json.success) {
+        //         // Array to store carpools that are retrieved
+        //         let carpools = json.data;
+
+        //         this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
+        //     }else{
+        //         console.log("Unable to retrieve Carpools:" + json.message );
+        //     }
+        // });
+
+        // fetch('/api/system/route/getOtherRoutes?token=' + token,{ //Get all OtherRoutes that are not the users
+        //     method:'GET',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     },
+        // })
+        // .then(res => res.json())
+        // .catch(error => console.error('Error:', error))
+        // .then(json => {   
+        //     if(json.success) {
+        //         this.routes = json.data;
+        //     }else{
+        //         console.log("Unable to retrieve routes");
+        //     }
+        // });
+
+        // fetch('/api/system/route/getRoute?routeId=' + routeId + '&token=' + token,{ //Get current route and compare with OtherRoutes
+        //     method:'GET',
+        //     headers:{
+        //         'Content-Type':'application/json'
+        //     },
+        // })
+        // .then(res => res.json())
+        // .catch(error => console.error('Error:', error))
+        // .then(json => {
+        //     if(json.success) {
+        //         this.filterRoutesByRadius(json.data[0], token);  
+        //         this.generateTimeWeights(json.data[0]);
+        //         this.getUsersAndGenerateTrustWeights(json.data[0], token);  // Reordering method is called through this function
+        //         this.loadingRoutes = false;
+        //     }else{
+        //         console.log(json.message);
+        //     }
+        // });
     };
 
     /*

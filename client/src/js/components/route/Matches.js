@@ -153,7 +153,7 @@ import  "../../../css/components/Spinner.css"
             return(
                 <div className="scroll-vert">
                     <div> 
-                        {this.renderCarpools()}
+                        
                     </div>
                     <div> 
                         {this.renderRoutes()}

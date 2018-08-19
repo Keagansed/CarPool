@@ -3,6 +3,7 @@
 const express = require('express');
 
 const Route = require('../../models/Route.js');
+const routeMatcher = require('./Util/routeMatcher')
 
 // This router handles all API calls that only rely on the Route collection.
 const router = express.Router();
@@ -220,5 +221,26 @@ router.post('/updateRecommendedRoutes',(req,res,next) => {
             });
         }
     });
+})
+
+router.get('/getRecommendedRoutes', async (req,res,next) => {
+    const { query } = req;
+    const { token, routeId } = query;    
+
+    const obj = await routeMatcher.getRecommendedRoutes(token, routeId);
+    console.log(obj);
+
+    if(obj) {
+        res.status(200).send({
+            success: true,
+            message: "Successfully retrieved Recommended Routes/Carpools",
+            obj: obj,
+        });
+    }else {
+        res.status(500).send({
+            success: false,
+            message: "Failed to retrieve Recommended Routes/Carpools",
+        });
+    }
 })
 module.exports = router;

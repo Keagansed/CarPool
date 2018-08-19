@@ -1,25 +1,25 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose'); //============== Connect to mongodb ============
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let mongoose = require('mongoose'); //============== Connect to mongodb ============
 
-var indexRouter = require('./routes/index');
-let signUpRouter = require('./routes/api/signup.js');
-let signInRouter = require('./routes/api/signin.js');
-let verifyRouter = require('./routes/api/verify.js');
-let logoutRouter = require('./routes/api/logout.js');
-let vouchRouter = require('./routes/api/vouch.js');
-let profileRouter = require('./routes/api/profile.js');
-let uploadRouter = require('./routes/api/uploadFile.js');
-let getImageRouter = require('./routes/api/getImage.js');
-let routesRouter = require('./routes/api/route.js');
-let tripsRouter = require('./routes/api/trip.js');
-let carpoolRouter = require('./routes/api/carpool.js');
-let offerRouter = require('./routes/api/offers.js');
+const indexRouter = require('./routes/index');
+const signUpRouter = require('./routes/api/signup');
+const signInRouter = require('./routes/api/signin');
+const verifyRouter = require('./routes/api/verify');
+const logoutRouter = require('./routes/api/logout');
+const vouchRouter = require('./routes/api/vouch');
+const profileRouter = require('./routes/api/profile');
+const uploadRouter = require('./routes/api/uploadFile');
+const getImageRouter = require('./routes/api/getImage');
+const routesRouter = require('./routes/api/route');
+const tripsRouter = require('./routes/api/trip');
+const carpoolRouter = require('./routes/api/carpool');
+const offerRouter = require('./routes/api/offers');
 
-var app = express();
+let app = express();
 
 mongoose.connect('mongodb://localhost/carpool'); //========== Define db ================
 mongoose.connection.on('open', function() {
@@ -64,6 +64,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;
