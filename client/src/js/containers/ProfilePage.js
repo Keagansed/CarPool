@@ -26,8 +26,13 @@ import { getFromStorage } from '../utils/localStorage.js';
 	}
 
 	componentWillMount() {
-		let token = getFromStorage('sessionKey').token;
+		let obj = getFromStorage('sessionKey');
 		let userId = this.props.match.params._id;
+		let token;
+
+		if(obj) {
+			token = obj.token;
+		}
 
 		this.setState({
 			token,
