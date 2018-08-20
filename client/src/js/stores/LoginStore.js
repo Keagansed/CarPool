@@ -11,6 +11,9 @@ class loginStore {
     // Stores userID token as string
     @observable token = null;
 
+    // Stores toggle state of incorrect login modal
+    @observable toggleError = false;
+
     // Strores boolean value of whether or not the user has logged in
     @observable loggedIn = false;
 
@@ -47,6 +50,13 @@ class loginStore {
      */
     @action setToken = (token) => {
         this.token = token;
+    };
+
+    /*
+        Method to set toggleError to true or false
+     */
+    @action setToggleError = (_toggleError) => {
+        this.toggleError = _toggleError;
     };
 
     /*
@@ -128,6 +138,7 @@ class loginStore {
                 this.setLoggedIn(json.success);
                 return;
             }else{
+                this.setToggleError(true);
                 return;
             }
         })
