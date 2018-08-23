@@ -204,7 +204,7 @@ function validate(email, password) {
                         </form>
                         <div className="row">
                             {/* forgot password modal */}
-                            <Modal store={this.props.store}/>
+                            <Modal />
                         </div>
                         {/* login failed modal */}
                         {modal}

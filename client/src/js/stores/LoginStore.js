@@ -20,8 +20,15 @@ class loginStore {
     // Strores boolean value of whether or not the user has registered
     @observable registered = false;
 
+    // Stores string of email for forgotten password
+    @observable forgotEmail = '';
+
     // Stores string of email for login
     @observable lEmail = '';
+
+    // Stores error message to be displayed if email entered into forgotPasswordModal
+    // is not recognized
+    @observable noEmailError = '';
 
     // Stroes string of password for login
     @observable lPassword = '';
@@ -140,6 +147,32 @@ class loginStore {
             }else{
                 this.setToggleError(true);
                 return;
+            }
+        })
+    };
+
+    /*
+        Method to email a user a link to reset their password
+        Makes an API call to emailPassword to verify this
+     */
+    @action sendPassword = () => {
+        this.setRegistered(false);
+        fetch('/api/account/emailPassword',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                email: this.forgotEmail,
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success) {
+                this.noEmailError = '';
+            }else{
+                this.noEmailError = 'Email not recognized, please try again.';
             }
         })
     };
