@@ -23,13 +23,13 @@ router.get('/deleteRoute',(req,res,next) =>{
     const { routeId } = query;
 
     Offer.remove({
-        $or: {SenderRoute: routeId, RecieverRoute: routeId}
+        $or: [{SenderRoute: routeId}, {RecieverRoute: routeId}]
     },
     (err) => {
         if(err) {
             return res.send({
                 success: false,
-                message: err
+                message: "Database error: " + err,
             });
         }else{
             Route.remove({
