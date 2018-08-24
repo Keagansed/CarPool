@@ -9,6 +9,7 @@ class routesStore {
     @observable routes = [];
     @observable routeSuccess = false;
     @observable loadingRoutes = true;
+    @observable addingRoute = false;
     
     @observable originResult = {};
     @observable destinationResult = {};
@@ -35,6 +36,10 @@ class routesStore {
     
     @action setdestination = (destination) => {
         this.destination = destination;
+    }
+
+    @action doneAddingRoute = () => {
+        this.addingRoute = false;
     }
     
     @action getRoutes = (token) => {
@@ -63,8 +68,8 @@ Detailed description: https://stackoverflow.com/questions/14220321/how-do-i-retu
 General solution: https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function 
 */
     
-    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/, routeSuccess = this.routeSuccess, routes = this.routes) => {
-        
+    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/, routeSuccess = this.routeSuccess, routes = this.routes, doneAddingRoute = this.doneAddingRoute) => {
+        this.addingRoute = true;
         waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
                 function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints,){
 
@@ -112,6 +117,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                             
                             if(json.success){
                                 routes.push(json.data[json.data.length - 1]);
+                                alert('Route added successfully');
                             } else {
                                 console.log("Unable to retrieve routes");
                             }
@@ -122,6 +128,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                         console.log(json)
                         window.alert("Failed to create new route");
                     } 
+                    doneAddingRoute();
                 }) 
         })
         
