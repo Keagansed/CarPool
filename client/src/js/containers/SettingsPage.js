@@ -5,8 +5,8 @@ import React, { Component } from 'react';
 
 import AlertsSettings from './AlertsSettings';
 import Navbar from '../components/navigation/Navbar';
-import NavTabs from '../components/settings/NavTabs';
 import ProfileSettings from '../components/settings/ProfileSettings';
+import { SettingsNavTabs } from '../components/navigation/NavTabs';
 
 import { getFromStorage } from '../utils/localStorage.js';
 
@@ -65,7 +65,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         
         return(
             <div className="size-100 bg-purple">
-                <NavTabs store={this.props.store} token={token}/>
+                <SettingsNavTabs store={this.props.store} token={token}/>
                 <div className="padtop-50px padbot-50px">
                     {this.setTab()}
                 </div>

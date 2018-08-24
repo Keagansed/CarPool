@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
 import Navbar from '../components/navigation/Navbar';
-import NavTabs from '../components/profile/NavTabs';
+import { ProfileNavTabs } from '../components/navigation/NavTabs';
 import Trusts from '../components/profile/Trusts';
 import Vouches from '../components/vouching/Vouches';
 import VouchAverage from "../components/vouching/VouchAverage";
@@ -95,7 +95,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 								</div>
 						</div>
 						<div className="row">
-							<NavTabs store={this.props.store} token={token}/>
+							<ProfileNavTabs store={this.props.store} token={token}/>
 						</div>
 					</div>
 					<div className="padtop-300px padbot-50px">
