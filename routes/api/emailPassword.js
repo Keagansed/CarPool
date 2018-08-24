@@ -3,20 +3,17 @@
 const express = require('express');
 
 const User = require('../../models/User.js');
-const UserSession = require('../../models/UserSessions.js');
 
 // This router handles sending a user a link to reset their password if they have forgotton it
 const router = express.Router();
 
-// This method creates a document in the userSession collection and checks if the user exists in the User collection.
+// This method checks if the user exists in the User collection and sends a password reset link if they do.
 // Parameters: 
-//      email: String;  This is the email of the user trying to log in.
-//		password: String;  This is the password of the user trying to log in.
+//      email: String;  This is the email of the user trying to reset their password.
 // Return Value:
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
-//          token: String; The object id of the user in the User collection.
 router.post('/',(req,res,next)=>{
 	const { body } = req;
 	let { email } = body;
