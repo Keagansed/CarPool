@@ -39,57 +39,55 @@ router.post('/',(req,res,next)=>{
 			//generate reset password token
 			crypto.randomBytes(20, function(err, buf) {
 				var token = buf.toString('hex');
-				done(err, token);
-			});
-			//save reset password token
-			User.findOneAndUpdate({
-				email: email
-			},
-				{$set:{
-					ResetPasswordToken : token
-					}
+
+				//save reset password token
+				User.findOneAndUpdate({
+					email: email
 				},
-				{upsert: true},
-				(err)=>{
-					if (err) {
-						return res.send({
+					{$set:{
+						ResetPasswordToken : token
+						}
+					},
+					{upsert: true},
+					(err)=>{
+						if (err) {
+							return res.send({
+								success:false,
+								message:"Database error: " + err,
+							});
+						}
+					}
+				);
+				//send email with reset password link
+				var transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'iminsys.carpool@gmail.com',
+						pass: 'L1zD@nM@r'
+					}
+				});
+				const mailOptions = {
+					from: 'iminsys.carpool@gmail.com',
+					to: email,
+					subject: 'Carpool Password Reset',
+					text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+						'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+						'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+						'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+				};
+				transporter.sendMail(mailOptions, function (err, info) {
+					if(err){
+						return res.send({ 
 							success:false,
-							message:"Database error: " + err,
+							message:"Error sending email"
 						});
 					}else{
-						return res.send({success:true});
+						return res.send({ 
+							success:true,
+							message:"Email sent"
+						});
 					}
-				}
-			);
-			//send email with reset password link
-			var transporter = nodemailer.createTransport({
-				service: 'gmail',
-				auth: {
-					   user: 'iminsys.carpool@gmail.com',
-					   pass: 'L1zD@nM@r'
-				   }
-			});
-			const mailOptions = {
-				from: 'iminsys.carpool@gmail.com',
-				to: email,
-				subject: 'Carpool Password Reset',
-				text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-					'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-					'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-					'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-			};
-			transporter.sendMail(mailOptions, function (err, info) {
-				if(err){
-					return res.send({ 
-						success:false,
-						message:"Error with sending email"
-					});
-				}else{
-					return res.send({ 
-						success:true,
-						message:"Email sent"
-					});
-				}
+				});
 			});
 		}
 	});

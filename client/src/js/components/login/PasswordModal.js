@@ -72,7 +72,7 @@ function validate(email) {
     /*
     * Purpose: Calls the store.sendPassword() function
     */
-    handleLogin = (event) => {
+    sendPassword = (event) => {
         event.preventDefault();
         this.props.store.sendPassword();
     }
@@ -120,7 +120,7 @@ function validate(email) {
                                 </div>
                                 <div className="row">
                                     <button 
-                                        onClick={this.handleLogin} 
+                                        onClick={this.sendPassword} 
                                         type="submit" 
                                         className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold" 
                                         id="btnForgotPassword"
