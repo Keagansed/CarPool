@@ -49,7 +49,6 @@ class matchesStore {
             if(json) {
                 if(json.success) {       
                     let { obj } = json;
-                    console.log(obj.recommendedRoutes.every(route => route.hasOwnProperty("userObj")));
                     if(obj.recommendedRoutes) {
                         this.recommendedRoutes = obj.recommendedRoutes;
                         this.loadingRoutes = false;

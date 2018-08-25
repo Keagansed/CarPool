@@ -77,7 +77,7 @@ import  "../../../css/components/Spinner.css"
     * users. These matches are not already joined in a carpool.
     */
     renderRoutes = () => {
-        // console.log(this.props.store.recommendedRoutes.every(route => route.hasOwnProperty("userObj")));
+
         const Routes = this.props.store.recommendedRoutes.map(route =>                       
             <UserMatch 
                 key = {route._id} 

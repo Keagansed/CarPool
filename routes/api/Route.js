@@ -231,39 +231,40 @@ router.get('/getRecommendedRoutes', async (req,res,next) => {
     const obj = await routeMatcher.getRecommendedRoutes(token, routeId);
 
     if(obj) {
-    let promiseArr = [];
-
-    for (let index = 0; index < obj.recommendedRoutes.length; index++) {
-        console.log("Pushed: "+index);
-        promiseArr.push( 
-            User.find({
-                _id : obj.recommendedRoutes[index].userId,
-            },(err,data) => {
-                if(err) {
-                    console.log("Database error: " + err);
-                }else{
-                    obj.recommendedRoutes[index].userObj = data[0].toObject();
-                    console.log("Completed: "+index);
-                }
-            })
-        );    
-    }
-
-
+        let promiseArr = [];
+        //make all the individual requests
+        for (let index = 0; index < obj.recommendedRoutes.length; index++) {
+            promiseArr.push(
+                User.find({
+                    _id: obj.recommendedRoutes[index].userId,
+                })
+            )
+        }
+   
         Promise.all(promiseArr)
-        .then(() => {
-            
-            console.log("Return Object");
+        .then( 
+            //and only when they ALL have returned successfully 
+            data => {            
+                //update all your state at once
+                data.forEach((item, index) => {
+                    obj.recommendedRoutes[index].userObj = item[0]
+                });
+         
+            },err => {
+                //or return an error-message if anyone fails
+                res.status(500).send({
+                    success: false,
+                    message: "An error occured fetching Users: "+err,
+                });
+            }        
+        )
+        .then(()=>{
             return res.status(200).send({
                 success: true,
                 message: "Successfully retrieved Recommended Routes/Carpools",
                 obj: obj,
             });
-                     
         })
-        .catch((e) => {
-            throw "There was an error: "+e;
-        });
         
     }else {
         res.status(500).send({
