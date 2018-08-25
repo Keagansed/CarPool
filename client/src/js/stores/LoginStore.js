@@ -11,14 +11,27 @@ class loginStore {
     // Stores userID token as string
     @observable token = null;
 
+    // Stores toggle state of incorrect login modal
+    @observable toggleError = false;
+
     // Strores boolean value of whether or not the user has logged in
     @observable loggedIn = false;
 
     // Strores boolean value of whether or not the user has registered
     @observable registered = false;
 
+    // Stores string of email for forgotten password
+    @observable forgotEmail = '';
+
     // Stores string of email for login
     @observable lEmail = '';
+
+    // Stores error message to be displayed if email entered into forgotPasswordModal
+    // is not recognized
+    @observable noEmailError = '';
+
+    // Stores message to be displayed when user tries to reset password
+    @observable passwordChangeMessage = '';
 
     // Stroes string of password for login
     @observable lPassword = '';
@@ -41,12 +54,25 @@ class loginStore {
     // Stores string ID number for signup
     @observable sId = '';
 
+    //Store string for password when user is resetting password
+    @observable resetPass = '';
+
+    //Store string for password when user is resetting password
+    @observable resetToken = '';
+
     /*
         Method to set token to the token passed in as a parameter
         Token is string
      */
     @action setToken = (token) => {
         this.token = token;
+    };
+
+    /*
+        Method to set toggleError to true or false
+     */
+    @action setToggleError = (_toggleError) => {
+        this.toggleError = _toggleError;
     };
 
     /*
@@ -128,10 +154,68 @@ class loginStore {
                 this.setLoggedIn(json.success);
                 return;
             }else{
+                this.setToggleError(true);
                 return;
             }
         })
     };
+
+    /*
+        Method to email a user a link to reset their password
+        Makes an API call to emailPassword to verify this
+     */
+    @action sendPassword = () => {
+        this.setRegistered(false);
+        fetch('/api/account/emailPassword',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                email: this.forgotEmail,
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success) {
+                this.noEmailError = 'An email has been sent to you.';
+            }else{
+                this.noEmailError = 'You are not a registered user';
+            }
+        })
+    };
+
+    /*
+        Method to reset a user's password from the reset password page
+        and log the user in.
+     */
+    @action resetPassword = () => {
+        fetch('/api/account/resetPassword',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                token: this.resetToken,
+                password: this.resetPass,
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if (json.success){
+                this.passwordChangeMessage = 'Your password has been successfully changed';
+                setInStorage('sessionKey',{ token:json.token });
+                this.setToken(json.token);
+                this.setLoggedIn(json.success);
+                return;
+            }
+            else{
+                this.passwordChangeMessage = 'This password reset link is not valid';
+            }
+        });
+    }
 
     /*
         Method to log a user out

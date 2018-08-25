@@ -57,7 +57,12 @@ var UserSchema = new mongoose.Schema({
 		type:String,
 		default:'',
 		required:false
-	}
+	},
+	ResetPasswordToken:{
+		type:String,
+		default:'',
+		required:false
+	},
 });
 
 UserSchema.methods.generateHash= function(password){

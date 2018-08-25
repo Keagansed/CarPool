@@ -34,10 +34,8 @@ function validate(email, password) {
 @observer class Login extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         
         this.state ={
-            toggle: false,
             token:'',
             email: '',
             password: '',
@@ -47,15 +45,6 @@ function validate(email, password) {
                 password: false,
             },
         }; 
-    }
-
-    /*
-     * Purpose: toggles the visibility of the component.  
-     */
-    toggle(event) {
-        this.setState(prevState => ({
-            toggle: !prevState.toggle
-        }));
     }
 
     /*
@@ -102,8 +91,14 @@ function validate(email, password) {
             return;
         }
         this.props.store.authenticate(this.state.email, this.state.password);
-        //TODO: this toggle should only be called if authentication was unsuccessful
-        this.toggle();
+    }
+
+    /*
+    * Purpose: hide the incorrect login modal
+    */
+    hideModal = (event) => {
+        event.preventDefault();
+        this.props.store.setToggleError(false);
     }
 
     /*
@@ -136,18 +131,19 @@ function validate(email, password) {
         };
 
         const { loggedIn } = this.props.store;
+        const { toggleError } = this.props.store;
         const errors = validate(this.state.email, this.state.password);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
 
         var modal = [];
         modal.push(
             // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
+            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={toggleError ? display : hide}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Login Failed</h5>
-                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
+                            <button type="button" className="close" onClick={this.hideModal} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -208,7 +204,7 @@ function validate(email, password) {
                         </form>
                         <div className="row">
                             {/* forgot password modal */}
-                            <Modal />
+                            <Modal store={this.props.store}/>
                         </div>
                         {/* login failed modal */}
                         {modal}

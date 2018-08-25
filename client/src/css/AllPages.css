@@ -78,6 +78,12 @@ html, body{
 .mbottom-0{
     margin-bottom: 0;
 }
+.mbottom-05rem{
+    margin-bottom: 0.5rem;
+}
+.mtop-05rem{
+    margin-top: 0.5rem;
+}
 .mbottom-1rem{
     margin-bottom: 1rem;
 }
