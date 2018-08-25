@@ -170,9 +170,9 @@ class loginStore {
         .catch(error => console.error('Error:', error))
         .then(json=>{
             if(json.success) {
-                this.noEmailError = '';
+                this.noEmailError = 'An email has been sent to you.';
             }else{
-                this.noEmailError = 'Email not recognized, please try again.';
+                this.noEmailError = 'You are not a registered user';
             }
         })
     };

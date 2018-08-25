@@ -88,6 +88,9 @@ function validate(email) {
         };
         const errors = validate(this.state.email);
         const { noEmailError } = this.props.store;
+        let messageColor = "txt-green ";
+        if (noEmailError === 'You are not a registered user')
+            messageColor = "txt-red "
         const isDisabled = Object.keys(errors).some(x => errors[x]);
 
         var modal = [];
@@ -116,7 +119,7 @@ function validate(email) {
                                     /> 
                                 </div>
                                 <div className="row">
-                                    <p className="mx-auto txt-red mbottom-05rem mtop-05rem">{noEmailError}</p>
+                                    <p className={messageColor + "mx-auto mbottom-05rem mtop-05rem"}>{noEmailError}</p>
                                 </div>
                                 <div className="row">
                                     <button 
