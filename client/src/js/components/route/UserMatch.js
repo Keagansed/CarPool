@@ -96,11 +96,12 @@ const hide = {
     /*
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
-    */s
+    */
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
         // let profilePicture = "default.jpg";
-        let profilePicture, userFullName ;
+        let profilePicture, userFullName;
+        // console.log(this.props.userObj);
         if(
             typeof(this.props.userObj) !== "undefined" && 
             typeof(this.props.userObj.firstName) !== "undefined" && 
