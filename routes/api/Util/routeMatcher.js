@@ -29,6 +29,8 @@ let trustFactorWeights = [];
 // Array to store the time weights assigned to each recommended route
 let timeWeights = [];
 
+let userList = [];
+
 /*
     Method to get all routes relevant to the user
     Makes API calls to get all the routes
@@ -38,7 +40,6 @@ module.exports.getRecommendedRoutes = async (token, routeId) => {
     let obj = {};
 
     await getAllRoutes(token, routeId);
-    await getUsers();
 
     obj = {
         recommendedRoutes: recommendedRoutes,
@@ -94,28 +95,13 @@ getAllRoutes = async (token, routeId) => {
 
             filterRoutesByRadius(routes[0]);
             generateTimeWeights(routes[0]);
-            getUsersAndGenerateTrustWeights(routes[0]);            
+            getUsersAndGenerateTrustWeights(routes[0]);     
+            
             
         }
     })
 
 };
-
-getUsers = async () => {
-    await recommendedRoutes.forEach((route) => {
-        User.find({
-            _id : route.userId,
-        },(err,data) => {
-            if(err) {
-                console.log("Database error: " + err);
-            }else{
-                data = data[0].toObject();
-
-                route.user = data;
-            }
-        });
-    })
-}
 
 /*
     Method to filter all routes by their radius
@@ -134,6 +120,7 @@ filterRoutesByRadius = (routeObj) => {
     // Array to store recommended routes
     let recRoutes = [];
 
+    userList = [];
     recommendedRoutes = []; //reset store
 
     differenceArray = arrayCheck.generateDifferenceArray(routeObj.routesCompared, allRoutes, false);
@@ -162,6 +149,17 @@ filterRoutesByRadius = (routeObj) => {
         if(startWithinRadius && endWithinRadius) {
             recommendedRoutes.push(route);
             recRoutes.push(route);
+            // User.find({
+            //     _id : route.userId,
+            // },(err,data) => {
+            //     if(err) {
+            //         console.log("Database error: " + err);
+            //     }else{
+            //         userList.push(data[0].toObject());
+            //         let index = recommendedRoutes.indexOf(route);
+            //         recommendedRoutes[index].userObj = data[0].toObject();
+            //     }
+            // });
         }
     });
 

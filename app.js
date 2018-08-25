@@ -4,6 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let mongoose = require('mongoose'); //============== Connect to mongodb ============
+mongoose.Promise = Promise; //==============  Tell Mongoose to use the native Node.js promise library
 
 const indexRouter = require('./routes/index');
 const signUpRouter = require('./routes/api/signup');

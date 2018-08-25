@@ -54,7 +54,7 @@ const hide = {
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        this.routeStore1.getProfile(this.props.token, this.props.userId);
+        // this.routeStore1.getProfile(this.props.token, this.props.userId);
 
         this.routeStore1.getRoute(this.props.token, this.props.uRouteId);
         this.routeStore2.getRoute(this.props.token, this.props.routeId);
@@ -99,10 +99,17 @@ const hide = {
     */s
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
-
-        const profilePicture = "./../../api/account/getImage?filename="+this.routeStore1.userObj.profilePic;
-        let userFullName  = this.routeStore1.userObj.firstName + " "+this.routeStore1.userObj.lastName;
-
+        // let profilePicture = "default.jpg";
+        let profilePicture, userFullName ;
+        if(
+            typeof(this.props.userObj) !== "undefined" && 
+            typeof(this.props.userObj.firstName) !== "undefined" && 
+            typeof(this.props.userObj.lastName) !== "undefined"
+        ){
+            profilePicture = "./../../api/account/getImage?filename="+this.props.userObj.profilePic;
+            userFullName  = this.props.userObj.firstName + " "+this.props.userObj.lastName;
+        }
+    
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
             this.carpoolName = this.routeStore1.routeObj.routeName;
 

@@ -4,6 +4,7 @@ const express = require('express');
 
 const Route = require('../../models/Route.js');
 const routeMatcher = require('./Util/routeMatcher')
+const User = require('../../models/User.js');
 
 // This router handles all API calls that only rely on the Route collection.
 const router = express.Router();
@@ -228,14 +229,39 @@ router.get('/getRecommendedRoutes', async (req,res,next) => {
     const { token, routeId } = query;    
 
     const obj = await routeMatcher.getRecommendedRoutes(token, routeId);
-    console.log(obj);
 
     if(obj) {
-        res.status(200).send({
-            success: true,
-            message: "Successfully retrieved Recommended Routes/Carpools",
-            obj: obj,
+        let promiseArr = [];
+        for (let index = 0; index < obj.recommendedRoutes.length; index++) {
+
+            promiseArr.push(
+
+                User.find({
+                    _id : obj.recommendedRoutes[index].userId,
+                },(err,data) => {
+                    if(err) {
+                        console.log("Database error: " + err);
+                    }else{
+                        obj.recommendedRoutes[index].userObj = data[0].toObject();
+                    }
+                })
+                
+            );
+            
+        }
+    
+        Promise.all(promiseArr)
+        .then(() => {
+            res.status(200).send({
+                success: true,
+                message: "Successfully retrieved Recommended Routes/Carpools",
+                obj: obj,
+            });
+        })
+        .catch((e) => {
+            throw e;
         });
+        
     }else {
         res.status(500).send({
             success: false,

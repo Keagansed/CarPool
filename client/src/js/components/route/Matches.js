@@ -57,6 +57,7 @@ import  "../../../css/components/Spinner.css"
                 routeArr = {carpool.routes}
                 carpoolName = {carpool.carpoolName}
                 uRouteId = {this.props.routeId} //Own route ID
+                
             />
         )
 
@@ -92,6 +93,7 @@ import  "../../../css/components/Spinner.css"
                     route.repeat, 
                     route._id
                 )}
+                userObj = {route.userObj}
             />            
         )
         if(Routes.length > 0) {
