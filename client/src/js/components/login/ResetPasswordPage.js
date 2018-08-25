@@ -2,110 +2,58 @@
 
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-
-import Modal from '../components/login/PasswordModal';
-import { getFromStorage } from '../utils/localStorage.js';
-
-import logo  from "../../css/images/logo.png";
-
-const util = require('./../utils/idCheck');
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
+import logo  from "./../../../css/images/logo.png";
 
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
 */
-function validate(email, password) {
+function validate(password, password2) {
     return {
-        email: !util.ValidateEmail(email),
         password: password.length === 0,
+        password2: password2 !== password || password2.length === 0,
     };
 }
 
-
 /*
-* Purpose: Login page where the user enters login details to proceed to the HomePage
+* Purpose: Reset password page where user resets password
 */
-@observer class Login extends Component {
+@observer class ResetPasswordPage extends Component {
     constructor(props) {
         super(props);
+        this.props.store.resetToken = this.props.match.params.ResetPasswordToken;
         
         this.state ={
             token:'',
-            email: '',
             password: '',
+            password2: '',
 
             touched: {
-                email: false,
                 password: false,
+                password2: false,
             },
         }; 
     }
 
     /*
-    * Purpose: Check to see whether the user is already logged in
+    * Purpose: Sets the 'store.resetPass' variable to senders current value
     */
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        if(obj && obj.token) {
-            const { token } = obj;
-
-            fetch('/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.setToken(token);
-                    this.props.store.setLoggedIn(true);
-                }
-            })
-        }
-    }
-
-    /*
-    * Purpose: Sets the 'store.lEmail' variable to senders current value
-    */
-    updateLoginEmailValue = (event) => {
-        this.setState({ email: event.target.value });
-        this.props.store.lEmail = event.target.value;
-    }
-
-    /*
-    * Purpose: Sets the 'store.lPassword' variable to senders current value
-    */
-    updateLoginPasswordValue = (event) => {
+    updatePasswordValue = (event) => {
         this.setState({ password: event.target.value });
-        this.props.store.lPassword = event.target.value;
+        this.props.store.resetPass = event.target.value;
     }
 
     /*
-    * Purpose: Calls the store.authenticate() function
+    * Purpose: Sets the value of password2 for error checking purposes
     */
-    handleLogin = (event) => {
-        event.preventDefault();
-        if (!this.canBeSubmitted()) {
-            return;
-        }
-        this.props.store.authenticate(this.state.email, this.state.password);
-    }
-
-    /*
-    * Purpose: hide the incorrect login modal
-    */
-    hideModal = (event) => {
-        event.preventDefault();
-        this.props.store.setToggleError(false);
+    updatePassword2Value = (event) => {
+        this.setState({ password2: event.target.value });
     }
 
     /*
     * Purpose: Check whether all fields have been entered correctly
     */
     canBeSubmitted() {
-        const errors = validate(this.state.email, this.state.password);
+        const errors = validate(this.state.password, this.state.password2);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         return !isDisabled;
     }
@@ -119,6 +67,14 @@ function validate(email, password) {
         });
     }
 
+    /*
+    * Purpose: Calls the store.sendPassword() function
+    */
+    resetPassword = (event) => {
+        event.preventDefault();
+        this.props.store.resetPassword();
+    }
+
     render() {
         /*
         * Purpose: Only give fields red borders if the user has changed/access them
@@ -130,97 +86,59 @@ function validate(email, password) {
             return hasError ? shouldShow : false;
         };
 
-        const { loggedIn } = this.props.store;
-        const { toggleError } = this.props.store;
-        const errors = validate(this.state.email, this.state.password);
+        const errors = validate(this.state.password, this.state.password2);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
 
-        var modal = [];
-        modal.push(
-            // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={toggleError ? display : hide}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Login Failed</h5>
-                            <button type="button" className="close" onClick={this.hideModal} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+        return(
+            <div className="vertical-center bg-purple">
+                <div className="container-fluid">
+                    <div className="row">
+                        <img 
+                            className="img-fluid d-block mx-auto mbottom-2rem" 
+                            src={logo} 
+                            id="imgLogo" 
+                            alt="carpool_logo"
+                        /> 
+                    </div>
+                    <form>
+                        <div className="row">
+                            <input 
+                                onChange={this.updatePasswordValue} 
+                                type="password" 
+                                className={(shouldMarkError('password') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                onBlur={this.handleBlur('password')}
+                                placeholder="New Password" 
+                                id="inputPassword"
+                                value={this.state.password}
+                            /> 
+                        </div>
+                        <div className="row">
+                            <input 
+                                onChange={this.updatePassword2Value} 
+                                type="password" 
+                                className={(shouldMarkError('password2') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
+                                onBlur={this.handleBlur('password2')}
+                                placeholder="Confirm New Password"
+                                id="inputConfirmPassword"
+                                value={this.state.password2}
+                            /> 
+                        </div>
+                        <div className="row">
+                            <button 
+                                onClick={this.resetPassword} 
+                                type="submit" 
+                                className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" 
+                                id="btnLogin"
+                                disabled={isDisabled}
+                            >
+                                Change Password
                             </button>
                         </div>
-                        <div className="modal-body">
-                            You have entered an incorrect email or password.
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         );
-    
-        if(!loggedIn) {
-            return(
-                <div className="vertical-center bg-purple">
-                    <div className="container-fluid">
-                        <div className="row">
-                            <img 
-                                className="img-fluid d-block mx-auto mbottom-2rem" 
-                                src={logo} 
-                                id="imgLogo" 
-                                alt="carpool_logo"
-                            /> 
-                        </div>
-                        <form>
-                            <div className="row">
-                                <input 
-                                    onChange={this.updateLoginEmailValue} 
-                                    type="email" 
-                                    className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                                    onBlur={this.handleBlur('email')}
-                                    placeholder="Email" 
-                                    id="inputEmail"
-                                    value={this.state.email}
-                                /> 
-                            </div>
-                            <div className="row">
-                                <input 
-                                    onChange={this.updateLoginPasswordValue} 
-                                    type="password" 
-                                    className={(shouldMarkError('password') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                                    onBlur={this.handleBlur('password')}
-                                    placeholder="Password"
-                                    id="inputPassword"
-                                    value={this.state.password}
-                                /> 
-                            </div>
-                            <div className="row">
-                                <button 
-                                    onClick={this.handleLogin} 
-                                    type="submit" 
-                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" 
-                                    id="btnLogin"
-                                    disabled={isDisabled}
-                                >
-                                    Login
-                                </button>
-                            </div>
-                        </form>
-                        <div className="row">
-                            {/* forgot password modal */}
-                            <Modal />
-                        </div>
-                        {/* login failed modal */}
-                        {modal}
-                    </div>
-                </div>
-            );
-        }else {
-
-            return(               
-                 <Redirect to={{
-                     pathname: "/HomePage", 
-                 }}/>
-             ); 
-        }
     }
-
 }
 
-export default Login;
+export default ResetPasswordPage;

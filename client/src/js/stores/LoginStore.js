@@ -51,6 +51,12 @@ class loginStore {
     // Stores string ID number for signup
     @observable sId = '';
 
+    //Store string for password when user is resetting password
+    @observable resetPass = '';
+
+    //Store string for password when user is resetting password
+    @observable resetToken = '';
+
     /*
         Method to set token to the token passed in as a parameter
         Token is string
@@ -176,6 +182,33 @@ class loginStore {
             }
         })
     };
+
+    /*
+        Method to reset a user's password from the reset password page
+        and log the user in.
+     */
+    @action resetPassword = () => {
+        fetch('/api/account/resetPassword',{
+            method:"POST",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                token: this.resetToken,
+                password: this.resetPass,
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if (json.success){
+                alert("Password Changed");
+            }
+            else{
+                alert(json.message);
+            }
+        });
+    }
 
     /*
         Method to log a user out

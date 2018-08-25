@@ -9,6 +9,7 @@ import HomePage from "./containers/HomePage";
 import HomePageStore from './stores/HomePageStore';
 import LandingPage from "./containers/LandingPage";
 import LoginPage from "./containers/LoginPage";
+import ResetPasswordPage from "./components/login/ResetPasswordPage";
 import LoginStore from './stores/LoginStore';
 import MatchesPage from "./components/route/MatchesPage";
 import Messages from "./components/carpool/Messages";
@@ -34,6 +35,7 @@ class App extends Component {
 					<Route path={"/HomePage/Trip/:tripID"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <Messages {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
+					<Route path={"/reset/:ResetPasswordToken"} exact render={(props) => <ResetPasswordPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Settings"} exact render={(props) => <Settings {...props} store={SettingsPageStore}/>}/>
 					<Route path={"/newRoute"} exact component={NewRoute}/> 
 				</Switch>

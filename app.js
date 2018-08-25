@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 let signUpRouter = require('./routes/api/signup.js');
 let signInRouter = require('./routes/api/signin.js');
 let emailPasswordRouter = require('./routes/api/emailPassword.js');
+let resetPasswordRouter = require('./routes/api/resetPassword.js');
 let verifyRouter = require('./routes/api/verify.js');
 let logoutRouter = require('./routes/api/logout.js');
 let vouchRouter = require('./routes/api/vouch.js');
@@ -40,6 +41,7 @@ app.use('/', indexRouter);
 app.use('/api/account/signup', signUpRouter)
 app.use('/api/account/signin', signInRouter)
 app.use('/api/account/emailPassword', emailPasswordRouter)
+app.use('/api/account/resetPassword', resetPasswordRouter)
 app.use('/api/account/verify', verifyRouter)
 app.use('/api/account/logout', logoutRouter)
 app.use('/api/account/vouch', vouchRouter)
