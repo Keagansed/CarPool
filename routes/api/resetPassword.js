@@ -1,9 +1,9 @@
 // File Type: API endpoint
 
 const express = require('express');
-const crypto = require('crypto');
 
 const User = require('../../models/User.js');
+const UserSession = require('../../models/UserSessions.js');
 
 const router = express.Router();
 
@@ -24,7 +24,8 @@ router.post('/',(req,res,next)=>{
 				message:"Input error: Invalid Reset Password Token "
 			});
         }else{
-			password = users[0].generateHash(password);
+            password = users[0].generateHash(password);
+            //first change the user's stored password
 			User.findOneAndUpdate({
 				ResetPasswordToken: token
 			},
@@ -40,10 +41,30 @@ router.post('/',(req,res,next)=>{
 							message:"Database error: " + err,
 						});
 					}else{
-						return res.send({success:true});
+                        //if successful, create the user session
+						//create user session
+                        const user = users[0];
+                        const userSession = new UserSession();
+                        let date = new Date();
+                        userSession.userId = user._id;
+                        userSession.timestamp = date.toDateString();
+                        userSession.save((err) => {
+                            if(err) {
+                                return res.send({
+                                    success:false,
+                                    message:"Database error: " + err,
+                                });
+                            }else{
+                                return res.send({
+                                    success:true,
+                                    message:"Valid password reset and sign in",
+                                    token: userSession.userId 
+                                });
+                            }
+                        });
 					}
 				}
-			);
+            );
 		}
 	});
 });

@@ -30,6 +30,9 @@ class loginStore {
     // is not recognized
     @observable noEmailError = '';
 
+    // Stores message to be displayed when user tries to reset password
+    @observable passwordChangeMessage = '';
+
     // Stroes string of password for login
     @observable lPassword = '';
 
@@ -202,10 +205,14 @@ class loginStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if (json.success){
-                alert("Password Changed");
+                this.passwordChangeMessage = 'Your password has been successfully changed';
+                setInStorage('sessionKey',{ token:json.token });
+                this.setToken(json.token);
+                this.setLoggedIn(json.success);
+                return;
             }
             else{
-                alert(json.message);
+                this.passwordChangeMessage = 'This password reset link is not valid';
             }
         });
     }
