@@ -28,7 +28,7 @@ class Navbar extends Component {
                         </Link>
                     </div>
                     <div className="col-4 txt-center">
-                        <Link to={{pathname: "/ProfilePage/" + this.props.token, state: { token: this.props.token }}}>
+                        <Link to={{pathname: "/ProfilePage/" + this.props.token}}>
                             <i className="fa fa-user txt-purple txt-30px"></i>
                         </Link>
                     </div>

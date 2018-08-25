@@ -1,6 +1,6 @@
 // File Type: Store
 
-import { action, observable, toJS } from 'mobx';
+import { action, observable } from 'mobx';
 
 /*
  Provides a store for variables and methods for the matches page

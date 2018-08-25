@@ -32,12 +32,12 @@ const hide = {
     */
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
+        // this.toggle = this.toggle.bind(this);
   
         this.state = {
             token: '',
             //'toggle' represents the state of the modal - false indicates it is not being shown.
-            toggle: false,
+            toggle: false
         }
 
         this.routeArr = [];
@@ -61,10 +61,11 @@ const hide = {
 
     }
 
+    
     /*
     * The purpose of the toggle method is to switch the modal between being active and inactive.
     */
-    toggle(event) {
+    toggle = (event) => {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));

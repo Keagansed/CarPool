@@ -21,7 +21,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 	
 		this.state = {
 			token: "",
-			userId: 0
+			vouchesComponents: [],
 		};
 	}
 
@@ -36,10 +36,22 @@ import { getFromStorage } from '../utils/localStorage.js';
 
 		this.setState({
 			token,
-			userId: userId
+			vouchesComponents:[<Vouches key={userId} userId={userId}/>]
 		})
 
+
 		this.props.store.getProfile(token, userId);
+	}
+
+	componentDidUpdate(prevProps) {
+
+		if (this.props.match.params._id !== prevProps.match.params._id ) {
+			let userId = this.props.match.params._id;
+			this.setState({
+				vouchesComponents:[<Vouches key={userId} userId={userId}/>]
+			})
+			this.props.store.getProfile(this.state.token, userId);
+		}
 	}
 	
 	/*
@@ -49,7 +61,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         const { store } = this.props;
 
 		if(store.vouchTab === true) {
-			return <Vouches userId={this.state.userId}/>;
+			return this.state.vouchesComponents;
 		}
 		else if(store.trustTab === true) {
 			return <Trusts/>;
