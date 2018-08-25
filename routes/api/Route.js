@@ -231,38 +231,35 @@ router.get('/getRecommendedRoutes', async (req,res,next) => {
     const obj = await routeMatcher.getRecommendedRoutes(token, routeId);
 
     if(obj) {
-        let promiseArr = [];
-        let completed = 0;
-        for (let index = 0; index < obj.recommendedRoutes.length; index++) {
-            console.log("Pushed: "+index);
-            let queryPromise = User.find({
+    let promiseArr = [];
+
+    for (let index = 0; index < obj.recommendedRoutes.length; index++) {
+        console.log("Pushed: "+index);
+        promiseArr.push( 
+            User.find({
                 _id : obj.recommendedRoutes[index].userId,
             },(err,data) => {
                 if(err) {
                     console.log("Database error: " + err);
                 }else{
                     obj.recommendedRoutes[index].userObj = data[0].toObject();
-                    completed++;
-                    console.log("Success: "+index);
+                    console.log("Completed: "+index);
                 }
             })
-            promiseArr.push( queryPromise.exec() );
-            
-        }
-    
+        );    
+    }
+
+
         Promise.all(promiseArr)
         .then(() => {
-            if(completed === obj.recommendedRoutes.length){
-                console.log("Return Obj");
-                res.status(200).send({
-                    success: true,
-                    message: "Successfully retrieved Recommended Routes/Carpools",
-                    obj: obj,
-                });
-            }else {
-                console.log(":)");
-            }
             
+            console.log("Return Object");
+            return res.status(200).send({
+                success: true,
+                message: "Successfully retrieved Recommended Routes/Carpools",
+                obj: obj,
+            });
+                     
         })
         .catch((e) => {
             throw "There was an error: "+e;
