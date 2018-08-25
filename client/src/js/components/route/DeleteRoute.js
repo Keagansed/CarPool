@@ -1,6 +1,7 @@
 // File Type: Component
 
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 const display = {
     display: 'block'
@@ -10,14 +11,15 @@ const hide = {
 };
 
 /**
- * Purpose: An interface to allow the user to cancel a trip they are currently in 
+ * Purpose: An interface to allow the user to delete a route they have
  */
 class DeleteRoute extends Component{
     constructor(props) {
         super(props);
   
         this.state = {
-            toggle: false
+            toggle: false,
+            redirect: false,
         }
 
     }
@@ -26,6 +28,35 @@ class DeleteRoute extends Component{
         this.setState(prevState => ( {
             toggle: !prevState.toggle
         }));
+    }
+
+    delete = () => {
+        fetch('/api/system/route/deleteRoute?token=' + this.props.token + '&routeId=' + this.props.routeId, {
+            method:'GET',
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=> {
+
+                if(json.success) {
+                    alert('Route deleted');
+                }else{
+                    alert(json.message);
+                }
+
+            });
+        this.setRedirect();
+        this.toggle();
+    }
+
+    setRedirect = () => {
+        this.setState({redirect: true});
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect){
+            return(<Redirect to='/HomePage' />);
+        }
     }
 
     render(){
@@ -46,7 +77,7 @@ class DeleteRoute extends Component{
                                 <h6 className="fw-bold mx-auto">Are you sure you want to delete this route?</h6>
                             </div>
                             <div className="row">
-                                <button type="submit" className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnYesCancel">
+                                <button type="submit" onClick={this.delete} className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnYesCancel">
                                     Yes
                                 </button>
                                 <button type="submit" onClick={this.toggle} className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" id="btnNoCancel">
@@ -64,6 +95,7 @@ class DeleteRoute extends Component{
                     <i className="fa fa-trash"></i>
                 </button>
                 { modal }
+                {this.renderRedirect()}
             </div>
         );
     }

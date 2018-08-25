@@ -2,11 +2,55 @@
 
 const express = require('express');
 
+const Carpool = require('../../models/Carpool');
+const Offer = require('../../models/Offer');
 const Route = require('../../models/Route.js');
 
-// This router handles all API calls that only rely on the Route collection.
+// This router handles all API calls that mainly rely on the Route collection.
 const router = express.Router();
 let verify = require('../middleware/verify.js');
+
+// This method removes a document from the Route collection.
+// And removes any offers that use this route and removes a user from the carpool this route is part of.
+// Parameters: 
+//      routeId: String;  This is the object id of a document from the Route collection.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+router.get('/deleteRoute',(req,res,next) =>{
+    const { query } = req;
+    const { routeId } = query;
+
+    Offer.remove({
+        $or: [{SenderRoute: routeId}, {RecieverRoute: routeId}]
+    },
+    (err) => {
+        if(err) {
+            return res.send({
+                success: false,
+                message: "Database error: " + err,
+            });
+        }else{
+            Route.remove({
+                _id: routeId
+            },
+            (err) => {
+                if(err) {
+                    return res.send({
+                        success: false,
+                        message: "Database error: " + err,
+                    });
+                }else{
+                    return res.send({
+                        success: true,
+                        message: "route deleted",
+                    });
+                }
+            });
+        }
+    });
+})
 
 // This method creates a document in the Route collection.
 // Parameters: 

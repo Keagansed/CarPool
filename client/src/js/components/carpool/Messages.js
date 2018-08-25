@@ -50,7 +50,7 @@ class Messages extends Component {
         
         this.setState({
             token,
-        })
+        });
 
         const previousUsers = this.state.users;
         let previousMessages = this.state.messages;
@@ -90,7 +90,7 @@ class Messages extends Component {
         });
 
         const date = JSON.stringify(new Date());
-        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+this.state.token)
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
             .update({lastRefresh:date}).then(() => {
                 return {};
             }).catch(error => {
@@ -101,6 +101,7 @@ class Messages extends Component {
                 }
 
         });
+
 
         fetch('/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
@@ -130,7 +131,7 @@ class Messages extends Component {
      */
     getUsername = (_id) => {
 
-        for(var x in this.state.userList) {
+        for(let x in this.state.userList) {
 
             if(this.state.userList[x]._id === _id) {
                 return this.state.userList[x].firstName;
@@ -138,7 +139,7 @@ class Messages extends Component {
 
         }
 
-    }
+    };
 
     /*
      * Purpose:  adds a trip suggestion to the messages

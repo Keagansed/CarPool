@@ -49,9 +49,9 @@ class matchesStore {
         .then(json =>{
             if(json.success) {
                 // Array to store carpools that are retrieved
-                let carpools = json.data;
-
-                this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
+                this.allCarpools = json.data;
+                this.filterCarpools(token);
+                // this.filterCarpools(carpools,token); //remove Carpools that the user is already a part of
             }else{
                 console.log("Unable to retrieve Carpools:" + json.message );
             }
@@ -159,8 +159,8 @@ class matchesStore {
         Makes an API call to getRoutes in order to filter carpools by relevance
         Takes the caproolArr and the user's ID as arguments
      */
-    @action filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is already a part of
-        this.allCarpools = []; //reset carpool
+    @action filterCarpools = (token) => { //remove Carpools that the user is already a part of
+        let tempArr = []; //reset carpool
         fetch('/api/system/route/getRoutes?token='+token,{
             method:'GET',
             headers:{
@@ -171,7 +171,7 @@ class matchesStore {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success){
-                carpoolArr.forEach(carpoolObj => {
+                this.allCarpools.forEach(carpoolObj => {
                     // Boolean to store whether or not a route is contained in a carpool
                     let contains = false;
 
@@ -183,9 +183,11 @@ class matchesStore {
                         });
                     });
                     if(!contains) {
-                        this.allCarpools.push(carpoolObj);
+                        tempArr.push(carpoolObj);
                     }
-                })    
+                });
+                
+                this.allCarpools = tempArr;
             }else{
                 console.log(json.message);
             }

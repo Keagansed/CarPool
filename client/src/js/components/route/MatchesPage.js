@@ -34,7 +34,7 @@ import DeleteRoute from './DeleteRoute';
         const { token } = obj;
 
         this.setState({
-            token,
+            token: token,
         })
     }
 
@@ -61,7 +61,10 @@ import DeleteRoute from './DeleteRoute';
                             routeId={this.props.match.params._id} 
                             MatchesStore={MatchesStore}
                         />
-                        <DeleteRoute/>
+                        <DeleteRoute
+                            token={token} 
+                            routeId={this.props.match.params._id}
+                        />
                     </div>
                 </div>
                 {/* Padding is there for top and bottom navs*/}
