@@ -12,6 +12,7 @@ export const calcSecLvl = function(user, vouches){
     secLvl += reviewFactor(vouches) * 2;
     secLvl += experienceFactor(vouches) * 2;
     // secLvl += facebookConnected(user);
+    secLvl = Math.round(secLvl * 100) / 100;
     return secLvl;
 }
 
@@ -52,11 +53,15 @@ function reviewFactor(vouches){
         numVouches++;
         score = score + element.rating;
     });
-    if (numVouches < 10)
-        score = score / 3;
-    else if(numVouches < 30)
-        score = score / 2
-    score = score / numVouches;
+    if (numVouches === 0)
+        score = 0;
+    else {
+        if (numVouches < 10)
+            score = score / 3;
+        else if(numVouches < 30)
+            score = score / 2
+        score = score / numVouches;
+    }
     return score / 5;
 }
 

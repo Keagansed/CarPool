@@ -14,7 +14,7 @@ let verify = function(req, res, next) {
         if(err) {
             return res.send({ 
                 verifySuccess:false,
-                verifyMessage:"Error: Server Error"
+                verifyMessage:"Database error:" + err,
             });
         }
         
