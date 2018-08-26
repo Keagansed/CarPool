@@ -45,7 +45,6 @@ class matchesStore {
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then( json => {
-            
             if(json) {
                 if(json.success) {       
                     let { obj } = json;

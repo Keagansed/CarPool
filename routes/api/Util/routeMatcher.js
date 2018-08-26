@@ -58,8 +58,7 @@ getAllRoutes = async (token, routeId) => {
             } else {
                 const carpools = data.map(carpool => {
                     return carpool.toObject();
-                })                
-
+                });                
                 filterCarpools(carpools, token)
             }
         }
@@ -74,7 +73,7 @@ getAllRoutes = async (token, routeId) => {
         }else {
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
-            })
+            });
 
             allRoutes = routes;
         }
@@ -90,7 +89,7 @@ getAllRoutes = async (token, routeId) => {
         }else {
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
-            })
+            });
 
             filterRoutesByRadius(routes[0]);
             generateTimeWeights(routes[0]);
@@ -158,6 +157,7 @@ filterRoutesByRadius = (routeObj) => {
     if(recRoutes.length > 0) {
         updateRecommendedRoutes(recRoutes, routeObj._id);
     }
+
     if(differenceArray.length > 0) {
         updateRoutesCompared(differenceArray, routeObj._id);
     }
@@ -170,14 +170,14 @@ filterRoutesByRadius = (routeObj) => {
     Takes the caproolArr and the user's ID as arguments
     */
 filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is already a part of
-
+    allCarpools = [];
     Route.find({
         userId: token
     },
     (err,data) => {
         if(err) {
             console.log("Database error: " + err);
-        }else {
+        }else{
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             })
@@ -192,10 +192,13 @@ filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is alr
                         }
                     });
                 });
+
                 if(!contains) {
                     allCarpools.push(carpoolObj);
                 }
-            }) 
+
+            }); 
+
         }
     });
 
@@ -218,7 +221,7 @@ reorderRoutes = () => {
 
         for (j = 0; j < (size - i - 1); j++) {
 
-            if (weights[j] < weights[j + 1]) {
+            if(weights[j] < weights[j + 1]) {
                 // swap the weights of the corresponding routes
                 temp = weights[j];
                 weights[j] = weights[j + 1];
