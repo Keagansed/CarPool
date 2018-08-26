@@ -8,6 +8,7 @@ import app from '../stores/FirebaseStore.js'
  Provides a store for variables and methods for carpools
  */
 class carpoolStore {
+
     // Stores the string name of the carpool
     @observable carpoolName;
 

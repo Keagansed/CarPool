@@ -30,7 +30,6 @@ class CarpoolOffer extends Component {
         this.state = {
             token: '',
             toggle: false,
-            sender: [],
             deleted: false
         }
     }
@@ -51,19 +50,7 @@ class CarpoolOffer extends Component {
      * the user to the sender field in the state.
      */
     componentDidMount(){
-        fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.store.senderId,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {            
-            if (json.success){
-                this.setState({sender : json.data[0]});
-            }
-        })
+        this.props.store.getUserProfile(this.props.token);
     }
 
     /*
@@ -157,7 +144,7 @@ class CarpoolOffer extends Component {
                                 <h6 className="fw-bold mx-auto">Offer Sent By</h6>
                             </div>
                             <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                <div className="col-6">{this.state.sender.firstName +" "+ this.state.sender.lastName}</div>
+                                <div className="col-6">{this.props.store.userProfile.firstName +" "+ this.props.store.userProfile.lastName}</div>
                                 <div className="col-6 vertical-right">
                                     <Link to={"/ProfilePage/" + this.props.store.senderId}>View Profile</Link>
                                 </div>

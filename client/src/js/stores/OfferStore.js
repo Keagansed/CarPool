@@ -1,6 +1,6 @@
 // File Type: Store
 
-import { observable  } from 'mobx';
+import { action,observable  } from 'mobx';
 
 /*
     Provides a store for variables for carpool offers
@@ -24,6 +24,8 @@ class OfferStore {
     // Stores the boolean value of whether they are creating a new carpool or joining one
     @observable join = false;
 
+    @observable userProfile = {};
+    
     /*
         Constructor responsible for initializing variables for the offer
         All variables are string except join which is boolean
@@ -35,6 +37,24 @@ class OfferStore {
         this.recieverId = recieverId;
         this.recieverRoute = recieverRoute;
         this.join = join;
+    }
+
+    @action getUserProfile = (token) =>{
+        fetch('/api/account/profile?token=' + token + '&userId=' + this.senderId,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {            
+            if (json.success){
+                this.userProfile = json.data[0];
+            }else{
+                console.log(json);
+            }
+        })
     }
 }
 
