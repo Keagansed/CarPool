@@ -1,10 +1,13 @@
-import { observable, action, computed } from 'mobx';
-import { calcSecLvl } from '../utils/trustFactor.js'
+// File Type: Store
+
+import {  action, computed, observable } from 'mobx';
+
+import { calcSecLvl } from '../utils/trustFactor.js';
 
 class profileStore {
 
     @observable user = {};
-    @observable secLvl = 1;    
+    @observable secLvl = 0;    
     @observable profileFound = false;
     @observable token = null;
     @observable opacity = "opacity-0"; //This is to help with how the page looks while it's loading data
@@ -15,17 +18,32 @@ class profileStore {
     @computed get idNum() { return this.user.id}
     @computed get profilePic() { return this.user.profilePic };
 
-    @action getProfile = (token) => {        
-        fetch('/api/account/getProfile?_id=' + token)
+    @action getProfile = (token, userId) => {    
+
+        fetch('/api/account/profile?token=' + token + '&userId=' + userId)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
-            this.token = token;                   
-            this.user = json[0];
-            this.profileFound = true;
-            this.opacity = "";
-            this.setEdit();
-            this.secLvl = calcSecLvl(this.user);
+            if (json.success) {
+                this.token = token;                   
+                this.user = json.data[0];
+                this.profileFound = true;
+                this.opacity = "";
+                this.setEdit();
+
+                fetch('/api/account/vouch/getVouches?idFor=' + userId)
+                .then(res => res.json())
+                .then(vouches => {
+                    if (vouches.success) {
+                        this.secLvl = calcSecLvl(this.user, vouches.data);
+                    }else{
+                        console.log(vouches);
+                    }
+                });
+
+            }else{
+                console.log(json)
+            }
         })
     }
 

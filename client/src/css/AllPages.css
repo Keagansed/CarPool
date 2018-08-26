@@ -78,6 +78,12 @@ html, body{
 .mbottom-0{
     margin-bottom: 0;
 }
+.mbottom-05rem{
+    margin-bottom: 0.5rem;
+}
+.mtop-05rem{
+    margin-top: 0.5rem;
+}
 .mbottom-1rem{
     margin-bottom: 1rem;
 }
@@ -118,8 +124,12 @@ html, body{
 
 /* ============================================================================ */
 /*Text colours*/
+.txt-black{
+    color: black;
+}
+
 .txt-purple{
-    color: #140D4F;
+    color: #140D4F !important;
 }
 .txt-white{
     color: white !important;
@@ -170,7 +180,7 @@ html, body{
 /* ============================================================================ */
 /*Background colours*/
 .bg-aqua{
-    background-color: #6FEDB7;
+    background-color: #6FEDB7 !important;
 }
 .bg-grey{
     background-color: grey;
@@ -237,6 +247,9 @@ html, body{
 }
 .pad-10px{
     padding: 10px;
+}
+.padtop-10px{
+    padding-top: 10px;
 }
 .padtop-20px{
     padding-top: 20px;
@@ -386,6 +399,16 @@ button.btnTabWhiteActive.active{
 }
 
 /* ============================================================================ */
+/*AddRoute*/
+#inputRouteName,
+#inputRouteTime,
+#inputStartLocation{
+    background-color: rgba(0,0,0,0) !important;
+    color: white;
+    border: 0.05rem solid #6FEDB7;
+}
+
+/* ============================================================================ */
 /*LoginPage*/
 /* Forgot password modal */
 #inputEmail, #inputPassword{
@@ -412,6 +435,7 @@ input:-webkit-autofill:focus {
 #inputLastName,
 #inputID,
 #inputEmail,
+#inputPassword,
 #inputConfirmPassword
 {
     background-color: rgba(0,0,0,0) !important;
@@ -424,6 +448,15 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     transition: background-color 5000s ease-in-out 0s;
+}
+#inputFirstName.error, 
+#inputLastName.error,
+#inputID.error,
+#inputEmail.error,
+#inputPassword.error,
+#inputConfirmPassword.error
+{
+    border-color: red;
 } 
 /* ============================================================================ */
 /*Day of week selector*/
@@ -454,6 +487,14 @@ input:-webkit-autofill:focus {
     -webkit-text-fill-color: #140D4F;
     transition: background-color 5000s ease-in-out 0s;
 }
+#changeFirstName.error, 
+#changeLastName.error,
+#changeEmail.error,
+#changePasswordCurrent.error,
+#changePasswordNew.error
+{
+    border-color: red;
+} 
 
 /* ============================================================================ */
 /*Review Trip Modal*/
@@ -467,4 +508,15 @@ label {
 
 .tripSuggest{
     white-space:pre-wrap;
+}
+
+/* ============================================================================ */
+/*File inputs*/
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }

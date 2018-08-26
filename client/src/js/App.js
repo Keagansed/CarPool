@@ -5,21 +5,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './../css/AllPages.css'; 
 
-import HomePage from "./components/home/HomePage.js";
+import HomePage from "./containers/HomePage";
 import HomePageStore from './stores/HomePageStore';
-import LandingPage from "./components/landing/LandingPage.js";
-import LoginPage from "./components/login/LoginPage.js";
+import LandingPage from "./containers/LandingPage";
+import LoginPage from "./containers/LoginPage";
+import ResetPasswordPage from "./components/login/ResetPasswordPage";
 import LoginStore from './stores/LoginStore';
-import MatchesPage from "./components/home/routePage/matchesPage/MatchesPage";
-import TripPage from "./components/home/tripsPage/tripPage/TripPage";
-import Settings from "./components/settings/SettingsPage";
-import Messages from "./components/home/carpoolPage/chatPage/Messages";
-
-import NewRoute from "./components/homepage/routePage/NewRoute"
-import ProfilePage from "./components/profile/ProfilePage.js";
+import MatchesPage from "./components/route/MatchesPage";
+import Messages from "./components/carpool/Messages";
+import NewRoute from "./components/route/NewRoute"
+import ProfilePage from "./containers/ProfilePage";
 import ProfileStore from './stores/ProfileStore';
-import RegisterPage from "./components/register/RegisterPage.js";
+import RegisterPage from "./containers/RegisterPage";
+import Settings from "./containers/SettingsPage";
 import SettingsPageStore from "./stores/SettingsPageStore";
+import TripPage from "./components/trip/TripPage";
 
 class App extends Component {
 
@@ -35,16 +35,9 @@ class App extends Component {
 					<Route path={"/HomePage/Trip/:tripID"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Chat/:carpoolID/:carpoolName"} exact render={(props) => <Messages {...props} store={HomePageStore}/>}/>
 					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
+					<Route path={"/reset/:ResetPasswordToken"} exact render={(props) => <ResetPasswordPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Settings"} exact render={(props) => <Settings {...props} store={SettingsPageStore}/>}/>
-					{/* <Route path={"/profile/:_id"} exact render={(props) => <Profile {...props} store={ProfileStore}/>}/>
-					<Route path={"/ProfilePage/:_id"} exact render={(props) => <ProfilePage {...props} store={ProfileStore}/>}/>
-					<Route path={"/vouching/:_id"} exact component={Vouching}/>
-					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/>*/}
 					<Route path={"/newRoute"} exact component={NewRoute}/> 
-					{/* <Route path={"/vouching/:_id"} exact component={Vouching}/>
-					<Route path={"/verification/:_id"} exact component={VerificationDocuments}/> */}
-					{/* <Route path={"/newRoute"} exact component={NewRoute}/>*/}
-
 				</Switch>
 			</BrowserRouter>
 		);

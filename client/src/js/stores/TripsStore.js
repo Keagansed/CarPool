@@ -1,7 +1,14 @@
-import { observable, action } from 'mobx';
+// File Type: Store
+
+import { action, observable } from 'mobx';
+
 import { getFromStorage } from '../utils/localStorage.js'
 
 class tripsStore {
+
+    @observable allUsers = [];
+    @observable routeObj = {};
+    @observable tripObj = {};
 
     @observable tripName;
     @observable carpoolID;
@@ -11,8 +18,90 @@ class tripsStore {
     @observable users = {};
     @observable tripID;
 
-    @action addTrip = (suggestTrip,messageContent,users) => {
-        fetch('/api/system/addTrip',{
+    @observable trips =[];
+    @observable upcomingTrips = [];
+    @observable previousTrips = [];
+
+    @action getAllUsers = (token) => {
+        fetch('/api/account/profile/getAllUsers?token=' + token)
+            .then(res => res.json())
+            .then(json => {
+                if(json.success){
+                    this.allUsers = json.data;
+                }else{
+                    console.log(json);
+                    console.log("Failed to retrieve User list");
+                }
+            });
+    }
+
+    
+    @action getUsername = (userId) => {
+
+        let found = false;
+       
+        for( let x = 0; x < this.allUsers.length && !found; x++){
+            
+            if(this.allUsers[x]._id === userId){
+                found = true;
+                return (this.allUsers[x].firstName);
+            }
+        }
+    }
+
+    @action getUsernameSurname = (userId) => {
+        let found = false;
+        
+        for( let x = 0; x < this.allUsers.length && !found; x++){
+            if(this.allUsers[x]._id === userId){
+                found = true;
+                return (this.allUsers[x].firstName+ " "+ this.allUsers[x].lastName);
+            }
+        }
+    
+    }
+
+
+    @action getAllTripData = (token,tripId ) => {
+        fetch('/api/system/trip/getAllTripInfo?_id=' +tripId + '&token=' + token)
+        .then( res => res.json())
+        .then(json => {
+            if(json.success){
+                this.routeObj = json.routeData[0];
+                this.tripObj = json.tripData[0];
+            }else{
+                console.log(json);
+            }
+        });
+    }
+
+    @action getFilteredTrips = (token) =>{
+        fetch('/api/system/trip/getFilteredTrips?token='+token)
+        .then(res => res.json())
+        .then(json => {
+            if(json.success){
+                this.upcomingTrips = json.data.upcomingTripComponentsArr;
+                this.previousTrips = json.data.previousTripComponentsArr;
+            }else{
+                console.log(json);
+            }
+        });                                        
+    }
+
+    @action getTrip = (token) => {
+        fetch('/api/system/trip/getTrips?token='+ token)
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                this.trips = json.data
+            } else {
+                console.log(json);
+            }
+        });
+    }
+
+    @action addTrip = (suggestTrip, messageContent, users, token) => {
+        fetch('/api/system/trip/addTrip?token=' + token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -38,6 +127,33 @@ class tripsStore {
                 }
             })
         }
+
+    @action addTripWithoutFirebase = () => {
+        fetch('/api/system/trip/addTrip?token=' + getFromStorage('sessionKey').token,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                tripName: this.tripName,
+                carpoolID: this.carpoolID,
+                idBy: this.idBy,
+                dateTime: this.dateTime,
+                days: this.days,
+                users: this.users,
+                driver: this.idBy,
+            })
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success){
+
+            }else{
+                alert(json.message);
+            }
+        })
+    }
 
 }
 

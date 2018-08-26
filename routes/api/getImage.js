@@ -1,12 +1,11 @@
-const express = require('express');
-const path = require('path');
-const crypto = require('crypto');
-const mongoose = require('mongoose');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
+// File Type: API endpoint
 
-var router = express.Router(); 
+const express = require('express');
+const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
+
+// This router handles the retrival and reconstrution of an image stored in the DB.
+const router = express.Router(); 
 
 // Mongo URI
 const mongoURI = 'mongodb://localhost/carpool';
@@ -14,60 +13,47 @@ const mongoURI = 'mongodb://localhost/carpool';
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
 
-// Init gfs
+// Init gfs as a global variable
 let gfs;
 
+// Sets up the grid file storage after the mongo connection is established.
 conn.once('open', () => {
   // Init stream
   gfs = Grid(conn.db, mongoose.mongo);
   gfs.collection('uploads');
 });
 
-// Create storage engine
-const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
-
+// This method gets an image from the GFS colections in the DB.
+// Parameters: 
+//      filename: String;  is the name of the image to be retrieved.
+// Return Value:
+//      Response containing: 
+//          err: String; Contains the error message.
+//          or
+//          readstream: bitStream; the data of the image.
 router.get('/', (req, res, next) => {
 	gfs.files.findOne({ filename: req.query.filename }, (err, file) => {
 		// Check if file
-		if (!file || file.length === 0) {
-			return res.status(404).json({
-				err: 'No file exists',
-				filename: req.query
+		if(!file || file.length === 0) {
+			return res.send({
+				success: false,
+				message: 'File error: No file exists',
 			});
 		}
 		// Check if image
-		if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+		if(file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
 			// Read output to browser
 			const readstream = gfs.createReadStream(file.filename);
 			readstream.pipe(res);
-		} else {
-			res.status(404).json({
-				err: 'Not an image'
+		}else{
+			return res.send({
+				success: false,
+				message: 'File error: Not an image',
 			});
 		}
 	});
 });
 
 module.exports = router;
-
-
 
 

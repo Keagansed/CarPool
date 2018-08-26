@@ -1,33 +1,28 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose'); //============== Connect to mongodb ============
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let mongoose = require('mongoose'); //============== Connect to mongodb ============
+mongoose.Promise = Promise; //==============  Tell Mongoose to use the native Node.js promise library
 
 var indexRouter = require('./routes/index');
 let signUpRouter = require('./routes/api/signup.js');
 let signInRouter = require('./routes/api/signin.js');
+let emailPasswordRouter = require('./routes/api/emailPassword.js');
+let resetPasswordRouter = require('./routes/api/resetPassword.js');
 let verifyRouter = require('./routes/api/verify.js');
 let logoutRouter = require('./routes/api/logout.js');
-let submitVouchRouter = require('./routes/api/submitVouch.js');
-let getVouchesRouter = require('./routes/api/getVouches.js');
-let getProfileRouter = require('./routes/api/getProfile.js');
+let vouchRouter = require('./routes/api/vouch.js');
+let profileRouter = require('./routes/api/profile.js');
 let uploadRouter = require('./routes/api/uploadFile.js');
 let getImageRouter = require('./routes/api/getImage.js');
-let getAllUsersRouter = require('./routes/api/getAllUsers.js');
-let getUserRouter = require('./routes/api/getUser.js');
-let routesRouter = require('./routes/api/Route');
-let tripsRouter = require('./routes/api/addTrip');
-let respondToTripRouter = require('./routes/api/respondToTrip');
-let getTripsRouter = require('./routes/api/getTrips');
-let getTripRouter = require('./routes/api/getTrip');
-let cancelTripRouter = require('./routes/api/cancelTrip');
-let deleteTripRouter = require('./routes/api/deleteTrip');
-let carpoolRouter = require('./routes/api/carpool');
-let offerRouter = require('./routes/api/offers');
+let routesRouter = require('./routes/api/route.js');
+let tripsRouter = require('./routes/api/trip.js');
+let carpoolRouter = require('./routes/api/carpool.js');
+let offerRouter = require('./routes/api/offers.js');
 
-var app = express();
+let app = express();
 
 mongoose.connect('mongodb://localhost/carpool'); //========== Define db ================
 mongoose.connection.on('open', function() {
@@ -46,22 +41,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/account/signup', signUpRouter)
 app.use('/api/account/signin', signInRouter)
+app.use('/api/account/emailPassword', emailPasswordRouter)
+app.use('/api/account/resetPassword', resetPasswordRouter)
 app.use('/api/account/verify', verifyRouter)
 app.use('/api/account/logout', logoutRouter)
-app.use('/api/account/submitVouch', submitVouchRouter)
-app.use('/api/account/getVouches', getVouchesRouter)
-app.use('/api/account/getProfile', getProfileRouter)
+app.use('/api/account/vouch', vouchRouter)
+app.use('/api/account/profile', profileRouter)
 app.use('/api/account/uploadFile', uploadRouter)
 app.use('/api/account/getImage', getImageRouter)
-app.use('/api/account/getAllUsers', getAllUsersRouter)
-app.use('/api/account/getUser', getUserRouter)
 app.use('/api/system/route', routesRouter)
-app.use('/api/system/addTrip', tripsRouter)
-app.use('/api/system/respondToTrip', respondToTripRouter)
-app.use('/api/system/getTrips', getTripsRouter)
-app.use('/api/system/getTrip', getTripRouter)
-app.use('/api/system/cancelTrip', cancelTripRouter)
-app.use('/api/system/deleteTrip', deleteTripRouter)
+app.use('/api/system/trip', tripsRouter)
 app.use('/api/system/carpool', carpoolRouter)
 app.use('/api/system/offers', offerRouter)
 
@@ -80,6 +69,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;

@@ -1,7 +1,23 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
 const Vouch = require('../../models/Vouch.js');
+
+const router = express.Router();
+let verify = require('../middleware/verify.js');
+
+// This method creates a document in the Vouch collection.
+// Parameters: 
+//      tripID: String;  This is the Object id of the trip that the vouch is related too.
+//      idBy: String;  Object id of the creator of the vouch.
+//      idFor: String;  Object id of the user that the vouch is about.
+//      rating: Integer;  A rating out of 5.
+//      date: date;  Date the vouch was made.
+//      reviewBody: String;  Any extra comment about the vouch.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+router.use(verify);
 
 router.post('/',(req,res,next)=>{
 	const { body } = req;

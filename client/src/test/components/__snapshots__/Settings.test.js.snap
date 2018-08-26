@@ -61,7 +61,7 @@ exports[`Settings Page Component captures snapshot 1`] = `
         className="col-4 txt-center"
       >
         <a
-          href="/ProfilePage/undefined"
+          href="/ProfilePage/"
           onClick={[Function]}
         >
           <i

@@ -28,6 +28,10 @@ let TripSchema = new mongoose.Schema({
     driver:{
         type:String,
         required:true
+    },
+    recurringId:{
+        type:String,
+        required:true
     }
 });
 

@@ -1,9 +1,14 @@
-import { action, observable, toJS } from 'mobx';
-import { generateDifferenceArray, generateCarpoolArr } from './../utils/arrayCheck';
+// File Type: Store
 
+import { action, observable } from 'mobx';
+
+/*
+ Provides a store for variables and methods for the matches page
+ */
 class matchesStore {
-    
+    // Array to store routes
     @observable routes = [];
+<<<<<<< HEAD
     @observable allCarpools = [];
     @observable loadingRoutes = true;
     @observable recommendedRoutes = [];
@@ -75,39 +80,25 @@ class matchesStore {
 
         differenceArray = generateDifferenceArray(routeObj.routesCompared, toJS(this.routes), false);
         this.recommendedRoutes = generateDifferenceArray(routeObj.recommended, toJS(this.routes), true);
+=======
+>>>>>>> staging
 
-        differenceArray.forEach(route => {
-            routeStartLat = route.startLocation.lat;
-            routeStartLng = route.startLocation.lng;
-            routeEndtLat = route.endLocation.lat;
-            routeEndLng = route.endLocation.lng;
+    // Array to store all carpools
+    @observable allCarpools = [];
 
-            startWithinRadius =false;
-            endWithinRadius =false;
+    // Boolean to store whether or not routes are being loaded
+    @observable loadingRoutes = true;
 
-            routeObj.waypoints.forEach(obj => {
-                startDistance = this.calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
-                endDistance = this.calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
-                if(startDistance <= this.maxRadius){
-                    startWithinRadius = true;
-                }
-                if(endDistance <= this.maxRadius){
-                    endWithinRadius = true;
-                }
-            });
+    // Array to store routes that will be recommended
+    @observable recommendedRoutes = [];
 
-            if(startWithinRadius && endWithinRadius){
-                this.recommendedRoutes.push(route);
-                recRoutes.push(route);
-                
-            }    
-        });
+    // Array to store carpools that will be recommended
+    @observable recommendedCarpools = [];
 
-        if(this.allCarpools.length){
-            this.recommendedCarpools = generateCarpoolArr(this.allCarpools, this.recommendedRoutes);
-            // console.log(toJS(this.recommendedCarpools));
-        }
+    // Integer to store the maximum radius for carpools to be matched in km
+    @observable maxRadius = 2;
 
+<<<<<<< HEAD
         // console.log(toJS(this.recommendedRoutes));
         if(recRoutes.length > 0){
             this.updateRecommendedRoutes(recRoutes, routeObj._id);
@@ -116,14 +107,21 @@ class matchesStore {
             this.updateRoutesCompared(differenceArray, routeObj._id);
         }
     }
+=======
+    // Array to store the trust factor weights assigned the user of each of the recommended routes in order
+    @observable trustFactorWeights = [];
 
-    //================================================
-    //=============== HELPER FUNCTIONS ===============
-    //================================================
+    // Array to store the time weights assigned to each recommended route
+    @observable timeWeights = [];
+>>>>>>> staging
 
-    @action filterCarpools = (carpoolArr, userId) => { //remove Carpools that the user is already a part of
-        this.allCarpools = []; //reset carpool
-        fetch('/api/system/Route/getRoutes?userId='+userId,{
+    /*
+        Method to get all routes relevant to the user
+        Makes API calls to get all the routes
+     */
+    @action getAllRoutes = (token, routeId) => {
+
+        fetch('/api/system/route/getRecommendedRoutes?token=' + token + '&routeId=' + routeId,{ 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -131,75 +129,23 @@ class matchesStore {
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(json => {
-            if(json.success){
-                carpoolArr.forEach(carpoolObj => {
-                    let contains = false;
-                    carpoolObj.routes.forEach(routId => {
-                        json.data.forEach(routeObj => {
-                            if(routeObj._id === routId){
-                                contains = true;
-                            }
-                        });
-                    })
-                    if(!contains){
-                        this.allCarpools.push(carpoolObj);
+        .then( json => {
+            
+            if(json) {
+                if(json.success) {       
+                    let { obj } = json;
+                    if(obj.recommendedRoutes) {
+                        this.recommendedRoutes = obj.recommendedRoutes;
+                        this.loadingRoutes = false;
                     }
-                })    
-            }else{
-                console.log(json.message);
-            }
-        });
-    }
-
-    @action filterRoutesByTime = (routeObj) => {
-        let timeDifferences = [];   // time difference between routeObj and recRoute in minutes
-        let size = this.recommendedRoutes.length;
-        let temp, i, j;
-        // console.log('Route TIme ' + routeObj.time);
-
-        this.recommendedRoutes.forEach(route => {
-            timeDifferences.push(this.calcTimeDifference(routeObj.time, route.time));
-        });
-
-        for (i = 0; i < size - 1; i++) {
-            for (j = 0; j < (size - i - 1); j++) {
-                if (timeDifferences[j] > timeDifferences[j + 1]) {
-                    // swap the time differences of the routes
-                    temp = timeDifferences[j];
-                    timeDifferences[j] = timeDifferences[j + 1];
-                    timeDifferences[j + 1] = temp;
-
-                    // swap the corresponding recommended routes
-                    temp = this.recommendedRoutes[j];
-                    this.recommendedRoutes[j] = this.recommendedRoutes[j + 1];
-                    this.recommendedRoutes[j + 1] = temp;
+                    
+                    if(obj.recommendedCarpools)
+                        this.recommendedCarpools = obj.recommendedCarpools;
                 }
             }
-        }
 
-        // this.recommendedRoutes.forEach(route => {
-        //     let count = 0;
-        //     console.log("RecRoute " + count + ': ' + route.routeName + " @ " + route.time);
-        // });
-    }
-
-    @action updateRecommendedRoutes = (recommendedArray, routeId) => { 
-        let arrRouteId = [];
-        recommendedArray.forEach(element => {
-            arrRouteId.push(element._id);
-        });
-
-        fetch('/api/system/Route/updateRecommendedRoutes',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                arrRouteId: arrRouteId,
-                _id: routeId
-            })
         })
+<<<<<<< HEAD
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
@@ -267,8 +213,12 @@ class matchesStore {
         arrTime[1] = parseInt(arrTime[1], 10);
         return ((arrTime[0] * 60) + arrTime[1]);
     }
+=======
+    };
+>>>>>>> staging
 }
 
+// Singleton instance of MatchesStore class
 const  MatchesStore = new matchesStore();
 export default MatchesStore;
 
