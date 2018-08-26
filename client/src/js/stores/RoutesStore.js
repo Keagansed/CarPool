@@ -75,7 +75,7 @@ class routesStore {
                 this.routes = json.data;
                 this.loadingRoutes = false;
             } else {
-                console.log("Unable to retrieve routes");
+                console.log(json);
             }
         })
     }
