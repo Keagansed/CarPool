@@ -3,10 +3,71 @@
 let express = require('express');
 
 const Trip = require('../../models/Trip.js');
+const Carpool = require('../../models/Carpool.js');
+const Route = require('../../models/Route.js');
+
 let verify = require('../middleware/verify.js');
 
 // This router handles all API calls that only rely on the Trip collection.
 let router = express.Router();
+
+router.use(verify);
+
+
+// This method gets a Full trip with all details from Carpools and Routes
+// Parameters: 
+//      _id: String;  This is an object id of a Trip collection.
+// Return Value:
+//      Response containing: 
+//          data: JSON object of the first route in the Trip == TEMP!!!!!!
+router.get('/getAllTripInfo', function(req, res, next) {
+    const { query } = req;
+    const { _id } = query;
+
+    Trip.find({
+        _id : _id
+    },(err,tripData) => {
+        if(err) {
+            return res.send({
+                success:false,
+                message:"Database error: " + err,
+            });
+        }else{
+
+            Carpool.find({ _id: tripData[0].carpoolID },
+                (err, carpoolData) => {
+                    if (err) {
+                        return res.send({
+                            success: false,
+                            message: "Database error: " + err,
+                        });
+                    } else {
+  
+                        Route.find({
+                            _id: carpoolData[0].routes[0]
+                        },
+                        (err,routeData) => {
+                            if(err){
+                                return res.send({
+                                    success: false,
+                                    message: "Database error: " + err,
+                                })
+                            }else{
+                                res.send({
+                                    success: true,
+                                    message: "Route retrieved successfully",
+                                    routeData: routeData,
+                                    tripData: tripData
+
+                                });
+                            }
+                        });
+
+                    }
+                });
+        }
+    });
+});
 
 // This method creates a document in the Trip collection.
 // Parameters: 
@@ -21,8 +82,6 @@ let router = express.Router();
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
-router.use(verify);
-
 router.post('/addTrip',(req,res,next)=>{
     const { body } = req;
     const {

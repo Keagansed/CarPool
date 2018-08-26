@@ -1,13 +1,14 @@
 // File Type: Component
 
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import MapComponent from '../google/GeneralMapWrapper';
-import OffersStore from '../../stores/OffersStore'
+import OffersStore from '../../stores/OffersStore';
+import RouteStore from './../../stores/RouteStore';
 
-import { getFromStorage } from '../../utils/localStorage.js';
 
 //'display' is used to show the modal
 const display = {
@@ -23,7 +24,7 @@ const hide = {
 * route match on a route's page. When clicked on, a modal should be displayed which
 * gives users the option to send a carpool offer to the user who created the matching route.
 */
-class UserMatch  extends Component {
+@observer class UserMatch  extends Component {
     /*
     * The purpose of the constructor method is to instantiate fields to relevant values. The 'toggle'
     * field is set to false because the modal is not visible when the page is first loaded. 
@@ -31,30 +32,21 @@ class UserMatch  extends Component {
     */
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
+        // this.toggle = this.toggle.bind(this);
   
         this.state = {
             token: '',
-            //userName is used to store the id of the matched user's profile picture
-            userName: "",
-            //routeArr is used to store the routes of any carpool match temporarily when accessed
-            routeArr:[],
             //'toggle' represents the state of the modal - false indicates it is not being shown.
-            toggle: false,
-            //carpoolName is used to store the name of the suggested carpool
-            carpoolName:"",
-            //profilePic is used to store the id of the matched user's profile picture
-            profilePic:""
+            toggle: false
         }
-    }
 
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        let { token } = obj;
+        this.routeArr = [];
 
-        this.setState({
-            token,
-        }) 
+        //Create instance of store for component
+        this.routeStore1 = new RouteStore(); 
+        this.routeStore2 = new RouteStore(); 
+
+        this.carpoolName= "";
     }
 
     /*
@@ -62,65 +54,18 @@ class UserMatch  extends Component {
     * that need to take place after the component is rendered on the screen.
     */
     componentDidMount(){
-        fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.userId,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            if (json.success) {
-                this.setState({ 
-                    userName : (json.data[0].firstName +" "+ json.data[0].lastName),
-                    profilePic : json.data[0].profilePic
-                });
-            }
-        });
-        
-        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId + '&token=' + this.state.token,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            this.setState({
-                carpoolName : json.data[0].routeName,
-                routeArr:[...this.state.routeArr,{
-                    origin : json.data[0].startLocation,
-                    destination : json.data[0].endLocation
-                }]
-            });
-        });
+        // this.routeStore1.getProfile(this.props.token, this.props.userId);
 
-        fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.state.token, {
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            this.setState( {
-                carpoolName : json.data[0].routeName,
-                routeArr:[...this.state.routeArr,{
-                    origin : json.data[0].startLocation,
-                    destination : json.data[0].endLocation
-                }]
-            });
-        });
+        this.routeStore1.getRoute(this.props.token, this.props.uRouteId);
+        this.routeStore2.getRoute(this.props.token, this.props.routeId);
 
     }
 
+    
     /*
     * The purpose of the toggle method is to switch the modal between being active and inactive.
     */
-    toggle(event) {
+    toggle = (event) => {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
@@ -130,7 +75,14 @@ class UserMatch  extends Component {
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
     makeOffer = () => {
-        OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, this.props.userId, this.props.store._id, false);
+        OffersStore.makeOffer(
+            this.carpoolName, 
+            this.props.token, 
+            this.props.uRouteId, 
+            this.props.userId, 
+            this.props.store._id, 
+            false
+        );
         this.toggle();
     }
     
@@ -138,8 +90,8 @@ class UserMatch  extends Component {
     * The purpose of the handleCarpoolNameChange method is change the carpool name of the new
     * carpool for which an offer is being made. This name is stored in the carpoolName field.
     */
-    handleCarpoolNameChange(e) {
-        this.setState({carpoolName: e.target.value});
+    handleCarpoolNameChange = (e) => {
+        this.carpoolName =  e.target.value;
     }
 
     /*
@@ -148,8 +100,32 @@ class UserMatch  extends Component {
     */
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
-        const profilePicture = "./../../api/account/getImage?filename="+this.state.profilePic;
+        // let profilePicture = "default.jpg";
+        let profilePicture, userFullName;
+        // console.log(this.props.userObj);
+        if(
+            typeof(this.props.userObj) !== "undefined" && 
+            typeof(this.props.userObj.firstName) !== "undefined" && 
+            typeof(this.props.userObj.lastName) !== "undefined"
+        ){
+            profilePicture = "./../../api/account/getImage?filename="+this.props.userObj.profilePic;
+            userFullName  = this.props.userObj.firstName + " "+this.props.userObj.lastName;
+        }
     
+        if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
+            this.carpoolName = this.routeStore1.routeObj.routeName;
+
+            this.routeArr = [...this.routeArr, {
+                origin: this.routeStore1.routeObj.startLocation,
+                destination: this.routeStore1.routeObj.endLocation
+            }];
+    
+            this.routeArr = [...this.routeArr, {
+                origin: this.routeStore2.routeObj.startLocation,
+                destination: this.routeStore2.routeObj.endLocation
+            }];
+        }
+
         var modal = [];
         modal.push(
             // Modal
@@ -186,7 +162,7 @@ class UserMatch  extends Component {
                                 key={Math.random()}
                             >
                                 <div className="col-6">
-                                    {this.state.userName}
+                                    { userFullName }
                                 </div>
                                 <div className="col-6 vertical-right">
                                     <Link to={"/ProfilePage/"+this.props.userId}>View Profile</Link>
@@ -197,7 +173,7 @@ class UserMatch  extends Component {
                             </div>
                             <div className="row mbottom-10px">
                                 <div className="col-12">
-                                    <MapComponent routeArr={this.state.routeArr}/>
+                                    <MapComponent routeArr={this.routeArr}/>
                                 </div>                                
                             </div>
                             <div className="row">
@@ -212,8 +188,8 @@ class UserMatch  extends Component {
                                     <input 
                                         className="txt-center mbottom-0" 
                                         type="text" 
-                                        onChange={this.handleCarpoolNameChange.bind(this)} 
-                                        value={this.state.carpoolName} 
+                                        onChange={this.handleCarpoolNameChange}
+                                        placeholder={this.carpoolName}
                                     />
                                 </div>
                             </div>
@@ -251,7 +227,7 @@ class UserMatch  extends Component {
                         </div>
                         <div className="col-7">
                             <div className="col-12">
-                                <h5>{this.state.userName}</h5>
+                                <h5>{ userFullName }</h5>
                             </div>
                             <div className="col-12">
                                 1.2km Further

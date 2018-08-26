@@ -2,7 +2,7 @@
 
 import {  action, computed, observable } from 'mobx';
 
-import { calcSecLvl } from '../utils/trustFactor.js'
+import { calcSecLvl } from '../utils/trustFactor.js';
 
 class profileStore {
 
@@ -18,8 +18,9 @@ class profileStore {
     @computed get idNum() { return this.user.id}
     @computed get profilePic() { return this.user.profilePic };
 
-    @action getProfile = (token) => {        
-        fetch('/api/account/profile?token=' + token + '&userId=' + token)
+    @action getProfile = (token, userId) => {    
+
+        fetch('/api/account/profile?token=' + token + '&userId=' + userId)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
@@ -29,14 +30,19 @@ class profileStore {
                 this.profileFound = true;
                 this.opacity = "";
                 this.setEdit();
-                fetch('/api/account/vouch/getVouches?idFor=' + this.user._id)
+
+                fetch('/api/account/vouch/getVouches?idFor=' + userId)
                 .then(res => res.json())
-                .catch(error => console.error('Error:', error))
-                .then((json) => {
-                    if (json.success) {
-                        this.secLvl = calcSecLvl(this.user, json.data);
+                .then(vouches => {
+                    if (vouches.success) {
+                        this.secLvl = calcSecLvl(this.user, vouches.data);
+                    }else{
+                        console.log(vouches);
                     }
                 });
+
+            }else{
+                console.log(json)
             }
         })
     }

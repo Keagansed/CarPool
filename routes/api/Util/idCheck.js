@@ -1,4 +1,4 @@
-// File Type: Test Script
+// File Type: Backend Utility
 
 /*
     Method to validate email from a regular expression

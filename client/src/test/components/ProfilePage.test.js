@@ -61,6 +61,11 @@ describe('Profile Page Component', () => {
     beforeEach(() => {
         props = {
             store: ProfileStore,
+            match : {
+                params : {
+                    _id : "testID"
+                }
+            }
         };
         mountedProfilePage = undefined;
     });

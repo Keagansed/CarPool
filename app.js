@@ -1,9 +1,10 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var mongoose = require('mongoose'); //============== Connect to mongodb ============
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
+let mongoose = require('mongoose'); //============== Connect to mongodb ============
+mongoose.Promise = Promise; //==============  Tell Mongoose to use the native Node.js promise library
 
 var indexRouter = require('./routes/index');
 let signUpRouter = require('./routes/api/signup.js');
@@ -21,7 +22,7 @@ let tripsRouter = require('./routes/api/trip.js');
 let carpoolRouter = require('./routes/api/carpool.js');
 let offerRouter = require('./routes/api/offers.js');
 
-var app = express();
+let app = express();
 
 mongoose.connect('mongodb://localhost/carpool'); //========== Define db ================
 mongoose.connection.on('open', function() {
@@ -68,6 +69,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;

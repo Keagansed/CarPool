@@ -4,6 +4,8 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import TripsStore from './../../stores/TripsStore';
+
 import CancelTripModal from './CancelTripModal';
 import MapComponent from '../google/GeneralMapWrapper';
 import ReviewTripModal from './ReviewTripModal';
@@ -17,84 +19,29 @@ import { getFromStorage } from '../../utils/localStorage.js';
         super();
 
         this.state = {
-            token: '',
             loading: true,
-            trip:[],
-            carpool:[],
-            user:[]
         };
 
-        this.from = "";
-        this.longFrom = "";
-        this.latFrom = "";
-        this.to = "";
-        this.longTo = "";
-        this.latTo = "";
+        this.routeArr = [];
         this.reviewModal = [];
     }
 
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        const { token } = obj;
-
-        this.props.store.token = token;
+    componentDidMount() {
 
         this.setState({
-            token,
             loading: false,
-            routeArr:[]
         })
-    }
 
-    componentDidMount() {
+        const token = getFromStorage('sessionKey').token;
         
-        fetch('/api/system/trip/getTrip?_id=' + this.props.match.params.tripID + '&token=' + this.state.token)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    this.setState({trip : json.data});
-
-                    fetch('/api/system/carpool/getCarpool?_id='+this.state.trip[0].carpoolID)
-                        .then(res => res.json())
-                        .then(json => {
-
-                            fetch('/api/system/route/getRoute?routeId='+json.data[0].routes[0] + '&token=' + this.state.token)
-                                .then(res => res.json())
-                                .then(json => {
-                                     
-                                    this.from = json.data[0].startLocation.name;
-                                    this.to = json.data[0].endLocation.name;
-                                    this.setState({
-                                        routeArr:[...this.state.routeArr,{
-                                            origin : json.data[0].startLocation,
-                                            destination : json.data[0].endLocation
-                                        }]
-                                    });
-                                });
-                        });
-                    }
-            });
-
-        fetch('/api/account/profile/getAllUsers?token=' + this.state.token)
-        .then(res => res.json())
-        .then(json => {
-            if (json.success) {
-                this.setState({user: json.data})
-            }
-        });
-    }
-
-    getUsernameSurname = (_id)=> {
-        for (let x in this.state.user) {
-            if(this.state.user[x]._id === _id) {
-                return this.state.user[x].firstName + " " + this.state.user[x].lastName;
-            }
-        }
+        TripsStore.getAllUsers(token);
+        TripsStore.getAllTripData(token, this.props.match.params.tripID);
+    
     }
 
     getDateTime = ()=> {
         try{
-            let dateTime = new Date(this.state.trip[0].dateTime);
+            let dateTime = new Date(TripsStore.tripObj.dateTime);
 
             //get time
             let hours = dateTime.getHours();
@@ -124,29 +71,53 @@ import { getFromStorage } from '../../utils/localStorage.js';
         let tripName;
         let carpoolers = [];
         let driver = [];
+
+        let origin, destination;
+
+        if(typeof(TripsStore.routeObj.startLocation) !== "undefined"){
+            origin = TripsStore.routeObj.startLocation.name;
+            destination = TripsStore.routeObj.endLocation.name;
+
+            this.routeArr = [...this.routeArr, {
+                origin: TripsStore.routeObj.startLocation,
+                destination: TripsStore.routeObj.endLocation
+            }];
+
+        }
+
         try{
-            tripName = this.state.trip[0].tripName;
-            for(let user in this.state.trip[0].users){
-                if(user !== this.state.trip[0].driver){
-                    if(this.state.trip[0].users[user] === true)
+            tripName = TripsStore.tripObj.tripName;
+            for(let user in TripsStore.tripObj.users){
+                if(user !== TripsStore.tripObj.driver){
+                    if(TripsStore.tripObj.users[user] === true)
                         carpoolers.push(
                             <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                                <div className="col-6 txt-left">{this.getUsernameSurname(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
+                                <div className="col-6 txt-left">
+                                    {TripsStore.getUsernameSurname(user)}
+                                </div>
+                                <div className="col-6 vertical-right">
+                                    <a href={"/ProfilePage/"+user}>View Profile</a>
+                                </div>
                             </div>
                         );
                 }else{
                     driver.push(
                         <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                            <div className="col-6 txt-left">{this.getUsernameSurname(user)}</div><div className="col-6 vertical-right"><a href={"/ProfilePage/"+user}>View Profile</a></div>
+                            <div className="col-6 txt-left">
+                                {TripsStore.getUsernameSurname(user)}
+                            </div>
+                            <div className="col-6 vertical-right">
+                                <a href={"/ProfilePage/"+user}>View Profile</a>
+                            </div>
                         </div>
                     );
                 }
             }
 
-            if(new Date(this.state.trip[0].dateTime) < new Date()) {
-                this.reviewModal = (<ReviewTripModal trip={this.state.trip[0]} user={this.state.user}/>);
+            if(new Date(TripsStore.tripObj.dateTime) < new Date()) {
+                this.reviewModal = (<ReviewTripModal trip={TripsStore.tripObj} userList={TripsStore.allUsers}/>);
             }else{
-                this.reviewModal = (<CancelTripModal trip={this.state.trip[0]} user={this.state.user}/>);
+                this.reviewModal = (<CancelTripModal trip={TripsStore.tripObj} userList={TripsStore.allUsers}/>);
             }
 
         }
@@ -185,19 +156,24 @@ import { getFromStorage } from '../../utils/localStorage.js';
                             </div>
                             <div className="row">
                                 <div className="mx-auto padhor-5px txt-white txt-center">
-                                    <div><span className="fw-bold mx-auto txt-white">From: </span>{this.from}</div>
-                                    <div><span className="fw-bold mx-auto txt-white">To: </span>{this.to}</div>
+                                    <div><span className="fw-bold mx-auto txt-white">From: </span>{origin}</div>
+                                    <div><span className="fw-bold mx-auto txt-white">To: </span>{destination}</div>
                                 </div>
                             </div>
-                            <MapComponent routeArr={this.state.routeArr}/>
+
+                            <MapComponent routeArr={this.routeArr}/>
+
                             <div className="row mtop-10px bordbot-1px-dash-grey">
                                 <h6 className="fw-bold mx-auto txt-white">Driver</h6>
                             </div>
-                            {driver}
+
+                            { driver }
+
                             <div className="row mtop-10px bordbot-1px-dash-grey">
                                 <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
                             </div>
-                            {carpoolers}
+
+                            { carpoolers }
                         </div>
                 </div>
             );
@@ -236,7 +212,9 @@ import { getFromStorage } from '../../utils/localStorage.js';
                                 <div className="mx-auto txt-white mbottom-10px">The driver is dropping you off next.</div>
                                 <div className="mx-auto txt-white mbottom-10px">You need to pick up John Carpenter next.</div> */}
                             </div>
-                            <MapComponent routeArr={this.state.routeArr}/>
+
+                            <MapComponent routeArr={this.routeArr}/>
+
                             <div className="row mtop-10px bordbot-1px-dash-grey">
                                 <h6 className="fw-bold mx-auto txt-white">Driver</h6>
                             </div>

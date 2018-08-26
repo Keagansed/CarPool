@@ -20,23 +20,38 @@ import { getFromStorage } from '../utils/localStorage.js';
 		super();
 	
 		this.state = {
-			token: ""
+			token: "",
+			vouchesComponents: [],
 		};
 	}
 
 	componentWillMount() {
 		let obj = getFromStorage('sessionKey');
+		let userId = this.props.match.params._id;
 		let token;
-		
+
 		if(obj) {
 			token = obj.token;
 		}
 
 		this.setState({
 			token,
+			vouchesComponents:[<Vouches key={userId} userId={userId}/>]
 		})
 
-		this.props.store.getProfile(token);
+
+		this.props.store.getProfile(token, userId);
+	}
+
+	componentDidUpdate(prevProps) {
+
+		if (this.props.match.params._id !== prevProps.match.params._id ) {
+			let userId = this.props.match.params._id;
+			this.setState({
+				vouchesComponents:[<Vouches key={userId} userId={userId}/>]
+			})
+			this.props.store.getProfile(this.state.token, userId);
+		}
 	}
 	
 	/*
@@ -46,7 +61,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         const { store } = this.props;
 
 		if(store.vouchTab === true) {
-			return <Vouches _id={this.state.token}/>;
+			return this.state.vouchesComponents;
 		}
 		else if(store.trustTab === true) {
 			return <Trusts/>;
@@ -63,7 +78,13 @@ import { getFromStorage } from '../utils/localStorage.js';
 				<div>
 					<div className="container-fluid fixed-top bg-purple">
 						<div className="row height-150px bg-purple">
-							<img src={profilePicture} id="profilePic" className="mx-auto my-auto rounded-circle bord-5px-white" height="120" width="120" alt="s" />
+							<img 
+								src={profilePicture} 
+								id="profilePic" 
+								className="mx-auto my-auto rounded-circle bord-5px-white" 
+								height="120" 
+								width="120" 
+								alt="profilePic" />
 						</div>
 						<div className="row height-40px bg-purple">
 							<h4 className="mx-auto my-auto txt-white mbottom-0">{firstName} {lastName}</h4>
@@ -71,7 +92,8 @@ import { getFromStorage } from '../utils/localStorage.js';
 						<div className="row height-60px bg-purple padbot-10px">
 								<div className="col-6 bordright-1px-white my-auto">
 									<div className="col-12 txt-center txt-white">
-										<h6 className="mbottom-0"><VouchAverage _id={token}/> 
+										<h6 className="mbottom-0">
+											<VouchAverage /> 
 											<i className="fa fa-star txt-gold txt-15px"></i>
 										</h6>
 									</div>

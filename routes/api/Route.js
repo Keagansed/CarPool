@@ -5,6 +5,8 @@ const express = require('express');
 const Carpool = require('../../models/Carpool');
 const Offer = require('../../models/Offer');
 const Route = require('../../models/Route.js');
+const routeMatcher = require('./Util/routeMatcher')
+const User = require('../../models/User.js');
 
 // This router handles all API calls that mainly rely on the Route collection.
 const router = express.Router();
@@ -264,5 +266,55 @@ router.post('/updateRecommendedRoutes',(req,res,next) => {
             });
         }
     });
+})
+
+router.get('/getRecommendedRoutes', async (req,res,next) => {
+    const { query } = req;
+    const { token, routeId } = query;    
+
+    const obj = await routeMatcher.getRecommendedRoutes(token, routeId);
+
+    if(obj) {
+        let promiseArr = [];
+        //make all the individual requests
+        for (let index = 0; index < obj.recommendedRoutes.length; index++) {
+            promiseArr.push(
+                User.find({
+                    _id: obj.recommendedRoutes[index].userId,
+                })
+            )
+        }
+   
+        Promise.all(promiseArr)
+        .then( 
+            //and only when they ALL have returned successfully 
+            data => {            
+                //update all your state at once
+                data.forEach((item, index) => {
+                    obj.recommendedRoutes[index].userObj = item[0]
+                });
+         
+            },err => {
+                //or return an error-message if anyone fails
+                res.status(500).send({
+                    success: false,
+                    message: "An error occured fetching Users: "+err,
+                });
+            }        
+        )
+        .then(()=>{
+            return res.status(200).send({
+                success: true,
+                message: "Successfully retrieved Recommended Routes/Carpools",
+                obj: obj,
+            });
+        })
+        
+    }else {
+        res.status(500).send({
+            success: false,
+            message: "Failed to retrieve Recommended Routes/Carpools",
+        });
+    }
 })
 module.exports = router;

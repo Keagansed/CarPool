@@ -20,9 +20,10 @@ import GoogleMapComponent from './GoogleMap';
             <GoogleMapComponent coordsArray={coordsArray} />
         );
         
-        // If statement to ensure routes aren't null due to asynchronousity.
-        if(this.props.routeArr) {
-            this.props.routeArr.forEach(routeObj => {
+        
+        this.props.routeArr.forEach(routeObj => {
+            // If statement to ensure routes aren't null due to asynchronousity.
+            if(typeof(routeObj.origin) !== "undefined" && typeof(routeObj.destination) !== "undefined"){
                 let coords = {
                     olat:routeObj.origin.lat,
                     olng:routeObj.origin.lng,
@@ -30,8 +31,9 @@ import GoogleMapComponent from './GoogleMap';
                     dlng:routeObj.destination.lng
                 };
                 coordsArray.push(coords);
-            });
-        }
+            }       
+        });
+
         
         if(coordsArray.length) {
 

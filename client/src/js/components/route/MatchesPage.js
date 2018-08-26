@@ -42,8 +42,9 @@ import DeleteRoute from './DeleteRoute';
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
     */
-    render() {
+    render() {        
         const { token } = this.state;
+
         return (
             <div className="size-100 bg-purple">
                 <div className="fixed-top container-fluid height-50px bg-aqua">

@@ -57,6 +57,7 @@ import  "../../../css/components/Spinner.css"
                 routeArr = {carpool.routes}
                 carpoolName = {carpool.carpoolName}
                 uRouteId = {this.props.routeId} //Own route ID
+                
             />
         )
 
@@ -76,14 +77,24 @@ import  "../../../css/components/Spinner.css"
     * users. These matches are not already joined in a carpool.
     */
     renderRoutes = () => {
+
         const Routes = this.props.store.recommendedRoutes.map(route =>                       
             <UserMatch 
                 key = {route._id} 
                 token = {this.props.token}
-                routeId = {route._id}
-                uRouteId = {this.props.routeId}
+                routeId = {route._id} //matched route ID
+                uRouteId = {this.props.routeId} //own route ID
                 userId = {route.userId} 
-                store = {new RouteStore(route.routeName, route.startLocation, route.endLocation, route.days, route.time, route.repeat, route._id)}
+                store = {new RouteStore(
+                    route.routeName, 
+                    route.startLocation, 
+                    route.endLocation, 
+                    route.days, 
+                    route.time, 
+                    route.repeat, 
+                    route._id
+                )}
+                userObj = {route.userObj}
             />            
         )
         if(Routes.length > 0) {
@@ -145,7 +156,7 @@ import  "../../../css/components/Spinner.css"
             return(
                 <div className="scroll-vert">
                     <div> 
-                        {this.renderCarpools()}
+                        
                     </div>
                     <div> 
                         {this.renderRoutes()}
