@@ -275,6 +275,7 @@ router.get('/getRecommendedRoutes', async (req,res,next) => {
     const obj = await routeMatcher.getRecommendedRoutes(token, routeId);
 
     if(obj) {
+
         let promiseArr = [];
         //make all the individual requests
         for (let index = 0; index < obj.recommendedRoutes.length; index++) {

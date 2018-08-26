@@ -77,7 +77,6 @@ import  "../../../css/components/Spinner.css"
     * users. These matches are not already joined in a carpool.
     */
     renderRoutes = () => {
-
         const Routes = this.props.store.recommendedRoutes.map(route =>                       
             <UserMatch 
                 key = {route._id} 
@@ -156,7 +155,7 @@ import  "../../../css/components/Spinner.css"
             return(
                 <div className="scroll-vert">
                     <div> 
-                        
+                        {this.renderCarpools()}
                     </div>
                     <div> 
                         {this.renderRoutes()}

@@ -117,21 +117,30 @@ exports[`Login Page Component captures snapshot 1`] = `
                     className="row"
                   >
                     <input
-                      className="form-control mx-auto width-15rem brad-2rem mbottom-1rem"
-                      id="inputForgotEmail"
-                      name="Email"
+                      className=" form-control mx-auto width-15rem brad-2rem txt-purple settingInput"
+                      id="changeEmail"
+                      onBlur={[Function]}
+                      onChange={[Function]}
                       placeholder="Email"
-                      required="required"
                       type="email"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    className="row"
+                  >
+                    <p
+                      className="txt-green mx-auto mbottom-05rem mtop-05rem"
                     />
                   </div>
                   <div
                     className="row"
                   >
                     <button
-                      className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
+                      className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold"
+                      disabled={true}
                       id="btnForgotPassword"
-                      onClick={undefined}
+                      onClick={[Function]}
                       type="submit"
                     >
                       Send Me My Password
