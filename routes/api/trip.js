@@ -6,6 +6,7 @@ const Trip = require('../../models/Trip.js');
 const Carpool = require('../../models/Carpool.js');
 const Route = require('../../models/Route.js');
 
+let recurringTrips = require('./Util/recurringTrips.js')
 let verify = require('../middleware/verify.js');
 
 // This router handles all API calls that only rely on the Trip collection.
@@ -93,6 +94,7 @@ router.post('/addTrip',(req,res,next)=>{
         users,
         driver
     } = body;
+    const recurringId = Math.random();
 
     if(!tripName) {
         return res.send({
@@ -139,6 +141,7 @@ router.post('/addTrip',(req,res,next)=>{
     newTrip.days = days;
     newTrip.users = users;
     newTrip.driver = driver;
+    newTrip.recurringId = recurringId;
     newTrip.save((err,trip) => {
         if(err) {
             return res.send({
@@ -341,15 +344,39 @@ router.post('/respondToTrip',(req,res,next) => {
             {upsert: true},
             function(err) {
                 if(err) {
-                    return res.send({
+                    return res.status(500).send({
                         success:false,
                         message:"Database error: " + err,
                     });
                 }else{
-                    return res.send({success:true});
+                    return res.status(200).send({success:true});
                 }
             }
         );
+    });
+});
+
+router.get('/getFilteredTrips', (req, res, next) => {
+    const { query } = req;
+    const { token } = query;
+
+    Trip.find({['users.' + token]:true}, async (err,data) => {            
+        if(!err)
+        {
+            let updatedTrips = await recurringTrips.updateTrips(data);  
+            if(typeof updatedTrips !== "undefined"){
+                return res.status(200).send({
+                    success:true,
+                    message:"Successfully retrieved filtered trips",
+                    data: updatedTrips                                            
+                });
+            }else {
+                return res.status(500).send({
+                    success:false,
+                    message:"Failed to retrieve filtered trips",
+                });
+            }
+        }            
     });
 });
 

@@ -19,6 +19,8 @@ class tripsStore {
     @observable tripID;
 
     @observable trips =[];
+    @observable upcomingTrips = [];
+    @observable previousTrips = [];
 
     @action getAllUsers = (token) => {
         fetch('/api/account/profile/getAllUsers?token=' + token)
@@ -73,16 +75,29 @@ class tripsStore {
         });
     }
 
+    @action getFilteredTrips = (token) =>{
+        fetch('/api/system/trip/getFilteredTrips?token='+token)
+        .then(res => res.json())
+        .then(json => {
+            if(json.success){
+                this.upcomingTrips = json.data.upcomingTripComponentsArr;
+                this.previousTrips = json.data.previousTripComponentsArr;
+            }else{
+                console.log(json);
+            }
+        });                                        
+    }
+
     @action getTrip = (token) => {
         fetch('/api/system/trip/getTrips?token='+ token)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    this.trips = json.data
-                } else {
-                    console.log(json);
-                }
-            });
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                this.trips = json.data
+            } else {
+                console.log(json);
+            }
+        });
     }
 
     @action addTrip = (suggestTrip, messageContent, users, token) => {
@@ -129,15 +144,15 @@ class tripsStore {
                 driver: this.idBy,
             })
         })
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
-                if(json.success){
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success){
 
-                }else{
-                    alert(json.message);
-                }
-            })
+            }else{
+                alert(json.message);
+            }
+        })
     }
 
 }

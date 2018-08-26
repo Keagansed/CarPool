@@ -25,7 +25,7 @@ class CarpoolOffer extends Component {
      */
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
+        // this.toggle = this.toggle.bind(this);
   
         this.state = {
             token: '',
@@ -40,7 +40,7 @@ class CarpoolOffer extends Component {
      * opposite of the previous value. It called when the carpool offer, the modal close button,
      * or the accept/decline buttons are clicked.
      */
-    toggle(event) {
+    toggle = (event) => {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
