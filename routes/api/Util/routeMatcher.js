@@ -29,7 +29,6 @@ let trustFactorWeights = [];
 // Array to store the time weights assigned to each recommended route
 let timeWeights = [];
 
-let userList = [];
 
 /*
     Method to get all routes relevant to the user
@@ -149,17 +148,6 @@ filterRoutesByRadius = (routeObj) => {
         if(startWithinRadius && endWithinRadius) {
             recommendedRoutes.push(route);
             recRoutes.push(route);
-            // User.find({
-            //     _id : route.userId,
-            // },(err,data) => {
-            //     if(err) {
-            //         console.log("Database error: " + err);
-            //     }else{
-            //         userList.push(data[0].toObject());
-            //         let index = recommendedRoutes.indexOf(route);
-            //         recommendedRoutes[index].userObj = data[0].toObject();
-            //     }
-            // });
         }
     });
 
