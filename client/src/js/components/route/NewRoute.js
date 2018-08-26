@@ -1,6 +1,7 @@
 // File Type: Component
 
 import React, { Component } from 'react';
+import { observer } from 'mobx-react';
 
 import LocationSearchInput from '../google/GoogleAuto';
 import MapWrapper from '../google/MapWrapper';
@@ -11,7 +12,7 @@ import WeekdaySelector from './WeekdaySelector';
 * to add a route. The component consists of an add sign which opens a the add route page 
 * when clicked on.
 */
-class NewRouteModal extends Component{
+@observer class NewRouteModal extends Component {
     /*
     * The purpose of the constructor method is to instantiate fields to relevant values. The 'toggle'
     * field is set to false because the modal is not visible when the page is first loaded. 
@@ -19,7 +20,7 @@ class NewRouteModal extends Component{
     */
     constructor(props) {
         super(props);
-  
+
         this.state = {
             //stores the session token
             token: this.props.token,
@@ -97,7 +98,7 @@ class NewRouteModal extends Component{
             routeName,
             time
         } = this.state;
-        
+
         this.props.store.newRoute(token, time, routeName);
     }
 
@@ -106,59 +107,73 @@ class NewRouteModal extends Component{
     * It returns react elements and HTML using JSX.
     */
     render() {
-        return(
-            
+        let addingRoute;
+        if (this.props.store.addingRoute){
+            addingRoute = <div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
+        } else {
+            addingRoute =  <button
+                    onClick={this.handleAddRoute}
+                    className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+                >
+                    <b>Add Route</b>
+                </button>
+        }
+        return (
             <div className="container-fluid">
-                    <div className="row">
-                        <h6 className="fw-bold mx-auto padver-10px m-0 txt-white">Route Name</h6>
+                <div className="row">
+                    <h6 className="fw-bold mx-auto padver-10px m-0 txt-white">Route Name</h6>
+                </div>
+                <div className="row padbot-10px">
+                    <input
+                        id="inputRouteName"
+                        type="text"
+                        onChange={this.updateNameValue}
+                        className="col-10 form-control mx-auto brad-2rem"
+                        placeholder="e.g. Home to Work"
+                    />
+                </div>
+                <div className="row  padbot-10px">
+                    <h6 className="fw-bold mx-auto m-0 txt-white">Time</h6>
+                </div>
+                <div className="row padbot-10px">
+                    <input
+                        id="inputRouteTime"
+                        type="time"
+                        onChange={this.updateTimeValue}
+                        className="col-10 form-control mx-auto brad-2rem"
+                        placeholder="08:00"
+                    />
+                </div>
+                <div className="row  padbot-10px">
+                    <h6 className="fw-bold mx-auto m-0 txt-white">Repeat Weekly</h6>
+                </div>
+                <div className="row padbot-10px">
+                    <div className="mx-auto">
+                        <WeekdaySelector />
                     </div>
-                    <div className="row padbot-10px">
-                        <input 
-                            id="inputRouteName"
-                            type="text" 
-                            onChange={this.updateNameValue} 
-                            className="col-10 form-control mx-auto brad-2rem" 
-                            placeholder="e.g. Home to Work"
-                        /> 
-                    </div>
-                    <div className="row  padbot-10px">
-                        <h6 className="fw-bold mx-auto m-0 txt-white">Time</h6>
-                    </div>
-                    <div className="row padbot-10px">
-                        <input 
-                            id="inputRouteTime"
-                            type="time" 
-                            onChange={this.updateTimeValue} 
-                            className="col-10 form-control mx-auto brad-2rem" 
-                            placeholder="08:00"
-                        /> 
-                    </div>
-                    <div className="row  padbot-10px">
-                        <h6 className="fw-bold mx-auto m-0 txt-white">Repeat Weekly</h6>
-                    </div>
-                    <div className="row padbot-10px">
-                        <div className="mx-auto">
-                            <WeekdaySelector/>
-                        </div>
-                    </div>
-                    <div className="row  padbot-10px">
-                        <h6 className="fw-bold mx-auto m-0 txt-white">Start and End Locations</h6>
-                    </div>
-                    <div className="row padbot-10px">
-                        <LocationSearchInput placeholder="Start Location"/>   
-                    </div>
-                    <div className="row padbot-10px">
-                        <LocationSearchInput placeholder="End Location"/>   
-                    </div>
-                    <MapWrapper/>
-                    <div className="row padtop-10px">
-                        <button 
-                            onClick={this.handleAddRoute} 
-                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-                        >
-                            <b>Add Route</b>
-                        </button>
-                    </div>
+                </div>
+                <div className="row  padbot-10px">
+                    <h6 className="fw-bold mx-auto m-0 txt-white">Start and End Locations</h6>
+                </div>
+                <div className="row padbot-10px">
+                    <LocationSearchInput placeholder="Start Location" />
+                </div>
+                <div className="row padbot-10px">
+                    <LocationSearchInput placeholder="End Location" />
+                </div>
+                <MapWrapper />
+                <div className="row padtop-10px">
+                    {/* <button
+                        onClick={this.handleAddRoute}
+                        className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+                    >
+                        <b>Add Route</b>
+                    </button> */}
+                    {addingRoute}
+                </div>
             </div>
         );
     }
