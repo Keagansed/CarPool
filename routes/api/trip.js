@@ -147,6 +147,7 @@ router.post('/addTrip',(req,res,next)=>{
             });
         }else{
             return res.send({
+                trip:newTrip,
                 _id:newTrip._id,
                 success:true,
                 message:"Success: Added trip"
