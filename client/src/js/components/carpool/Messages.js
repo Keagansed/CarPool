@@ -51,7 +51,9 @@ class Messages extends Component {
         this.setState({
             token,
         });
+    }
 
+    componentDidMount() {
         const previousUsers = this.state.users;
         let previousMessages = this.state.messages;
 
@@ -90,7 +92,7 @@ class Messages extends Component {
         });
 
         const date = JSON.stringify(new Date());
-        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+getFromStorage('sessionKey').token)
+        app.database().ref().child('groupChats/'+this.props.match.params.carpoolID+"/users/"+this.state.token)
             .update({lastRefresh:date}).then(() => {
                 return {};
             }).catch(error => {
@@ -102,15 +104,13 @@ class Messages extends Component {
 
         });
 
-
-        fetch('/api/account/profile/getAllUsers?token=' + token)
+        fetch('/api/account/profile/getAllUsers?token=' + this.state.token)
             .then(res => res.json())
             .then(json => {
                 if (json.success) {
                     this.setState({userList: json.data})
                 }
             });
-        
     }
 
     //Switch off event listeners for firebase
