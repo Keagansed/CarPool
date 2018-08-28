@@ -72,15 +72,6 @@ describe('Login Page Component', () => {
         expect(container.length).toEqual(1)
     });
 
-    it('toggles visibility correctly', () => {
-        const event = {};
-        expect(instance.state.toggle).toEqual(false);
-        instance.toggle(event);
-        expect(instance.state.toggle).toEqual(true);
-        instance.toggle(event);
-        expect(instance.state.toggle).toEqual(false);
-    });
-
     it('updates login email value correctly', () => {
         const event = {target: {value: "test@email.com"}};
         expect(instance.state.email).toEqual('');
@@ -93,13 +84,6 @@ describe('Login Page Component', () => {
         expect(instance.state.password).toEqual('');
         instance.updateLoginPasswordValue(event);
         expect(instance.state.password).toEqual("1234");
-    })
-
-    it('handles login correctly', () => {
-        const event = {preventDefault: function() {}};
-        expect(instance.state.toggle).toEqual(false);
-        instance.handleLogin(event);
-        expect(instance.state.toggle).toEqual(true);
     })
 
     it('checks correct state variables correctly', () => {

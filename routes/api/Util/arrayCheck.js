@@ -53,19 +53,39 @@ module.exports.generateDifferenceArray = function(arrRouteId, arrRouteObj, conta
  */
 module.exports.generateCarpoolArr = function(arrCarpools,arrRecRoutes){
     let newArr=[];
+    let counter = 0;
 
     arrCarpools.forEach(function(carpoolObj){
         let contains = false;
         arrRecRoutes.forEach(function(routeObj){
-            if(carpoolObj.routes.includes(routeObj._id)){
-                contains = true;
+
+            while ((!contains) && (counter < carpoolObj.routes.length)) {
+
+                if(JSON.stringify(carpoolObj.routes[counter]) === JSON.stringify(routeObj._id)) {
+                    contains = true;
+                }else{
+                    counter++;
+                }
+
             }
         });
 
-        if(contains && !newArr.includes(carpoolObj)){
-            newArr.push(carpoolObj);
+        if(contains){
+            counter = 0;
+            contains = false;
+            while (!contains && (counter < newArr.length)){
+
+                if(newArr[counter] === carpoolObj) {
+                    contains = true;
+                }else{
+                    counter++;
+                }
+            }
+
+            if(!contains) {
+                newArr.push(carpoolObj);
+            }
         }
     });
-
     return newArr;
 }
