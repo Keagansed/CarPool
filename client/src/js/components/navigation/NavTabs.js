@@ -10,26 +10,6 @@ import { observer } from 'mobx-react';
 @observer export class HomeNavTabs extends Component {
 
     /*
-    * The purpose of the constructor method is to instantiate fields to relevant values. In this case
-    * the routeTabActive field is set to true because the "Routes" tab is active when the Home page is first
-    * loaded.
-    */
-    constructor() {
-        super()
-
-        this.state = {
-            //routeTabActive represents the status of the "Routes" tab.
-            routeTabActive: "active",
-            //carpoolTabActive represents the status of the "Carpools" tab.
-            carpoolTabActive: "",
-            //tripTabActive represents the status of the "Trips" tab.
-            tripTabActive: "", 
-            //addTabActive represents the status of the "Add" tab. 
-            addTabActive: "",  
-        }
-    }
-
-    /*
     * The purpose of the handleRouteToggle method is to set the "Routes" tab to active. The method
     * will also deactivate the other tabs.
     */
@@ -37,12 +17,6 @@ import { observer } from 'mobx-react';
         event.preventDefault();
 
         this.props.store.toggleToRoute();
-        this.setState({
-            routeTabActive: "active",
-            carpoolTabActive: "",
-            tripTabActive: "", 
-            addTabActive: "",
-        });
     }
 
     /*
@@ -53,12 +27,6 @@ import { observer } from 'mobx-react';
         event.preventDefault();
 
         this.props.store.toggleToCarpool();
-        this.setState({
-            routeTabActive: "",
-            carpoolTabActive: "active",
-            tripTabActive: "", 
-            addTabActive: "",
-        });
     }
 
     /*
@@ -69,24 +37,12 @@ import { observer } from 'mobx-react';
         event.preventDefault();
 
         this.props.store.toggleToTrip();
-        this.setState({
-            routeTabActive: "",
-            carpoolTabActive: "",
-            tripTabActive: "active", 
-            addTabActive: "",
-        });
     }
 
     handleAddToggle = (event) => {
         event.preventDefault();
 
         this.props.store.toggleToAdd();
-        this.setState({
-            routeTabActive: "",
-            carpoolTabActive: "",
-            tripTabActive: "", 
-            addTabActive: "active",
-        });
     }
 
     /*
@@ -99,25 +55,25 @@ import { observer } from 'mobx-react';
                 <div className="row font-20px height-100p">
                     <div className="col-12 pad-0">
                         <button 
-                            className={"btnTab col-3 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.routeTabActive} 
+                            className={"btnTab col-3 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.props.store.routeTabActive} 
                             onClick={this.handleRouteToggle}
                         >
                             Routes
                         </button>
                         <button 
-                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.carpoolTabActive} 
+                            className={"btnTab col-4 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.props.store.carpoolTabActive} 
                             onClick={this.handleCarPoolToggle}
                         >
                             Carpools
                         </button>
                         <button 
-                            className={"btnTab col-3 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.tripTabActive} 
+                            className={"btnTab col-3 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.props.store.tripTabActive} 
                             onClick={this.handleTripToggle}
                         >
                             Trips
                         </button>
                         <button 
-                            className={"btnTab col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.state.addTabActive} 
+                            className={"btnTab col-2 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px pad-0 " + this.props.store.addTabActive} 
                             onClick={this.handleAddToggle}
                         >
                             <i className="fa fa-plus"></i>

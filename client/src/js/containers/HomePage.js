@@ -39,11 +39,7 @@ import { getFromStorage } from '../utils/localStorage.js';
         })
         
         let { store } = this.props;
-
         store.token = token;
-        store.routeTab = true;
-        store.carpoolTab = false;
-        store.tripTab = false;
     }
 
     /*

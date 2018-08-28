@@ -12,11 +12,21 @@ class homePageStore {
     @observable tripTab = false;
     @observable addTab = false;
 
+    @observable routeTabActive = "active";
+    @observable carpoolTabActive = "";
+    @observable tripTabActive = ""; 
+    @observable addTabActive = "";  
+
     @action toggleToRoute = () => {
         this.carpoolTab = false;
         this.tripTab = false;
         this.routeTab = true;
         this.addTab = false;
+
+        this.carpoolTabActive = "";
+        this.tripTabActive = "";
+        this.routeTabActive = "active";
+        this.addTabActive = "";
     }
 
     @action toggleToCarpool = () => {
@@ -24,6 +34,11 @@ class homePageStore {
         this.tripTab = false;
         this.routeTab = false;
         this.addTab = false;
+
+        this.carpoolTabActive = "active";
+        this.tripTabActive = "";
+        this.routeTabActive = "";
+        this.addTabActive = "";
     }
 
     @action toggleToTrip = () => {
@@ -31,6 +46,11 @@ class homePageStore {
         this.tripTab = true;
         this.routeTab = false;
         this.addTab = false;
+
+        this.carpoolTabActive = "";
+        this.tripTabActive = "active";
+        this.routeTabActive = "";
+        this.addTabActive = "";
     }
 
     @action toggleToAdd = () => {
@@ -38,6 +58,11 @@ class homePageStore {
         this.tripTab = false;
         this.routeTab = false;
         this.addTab = true;
+
+        this.carpoolTabActive = "";
+        this.tripTabActive = "";
+        this.routeTabActive = "";
+        this.addTabActive = "active";
     }
 
 }
