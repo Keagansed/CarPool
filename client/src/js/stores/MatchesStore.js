@@ -35,8 +35,10 @@ class matchesStore {
         Makes API calls to get all the routes
      */
     @action getAllRoutes = (token, routeId) => {
+        this.recommendedRoutes = [];
+        this.recommendedCarpools = [];
         this.loadingRoutes = true;
-
+        
         fetch('/api/system/route/getRecommendedRoutes?token=' + token + '&routeId=' + routeId,{ 
             method:'GET',
             headers:{
@@ -53,7 +55,7 @@ class matchesStore {
                         this.recommendedRoutes = obj.recommendedRoutes;
                         this.loadingRoutes = false;
                     }
-                    
+
                     if(obj.recommendedCarpools)
                         this.recommendedCarpools = obj.recommendedCarpools;
                 }
