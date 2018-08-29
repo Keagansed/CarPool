@@ -108,4 +108,67 @@ router.post('/addCarpool', (req, res, next) => {
     });
 });
 
+/*
+    Removes a users route from the carpool with the given '_id' once they leave a carpool. 
+*/
+router.post('/removeRouteFromCarpool', (req, res, next) => {
+    const { body } = req;
+    const { _id, routeId } = body;
+
+    Carpool.find({
+        _id:_id
+    }, (err, carpool) => {
+
+        if(err) {
+            return res.status(500).send({
+                success: false,
+                message: "Database error: " + err,
+            });
+        }
+
+        if(carpool.length == 0) {
+            return res.status(404).send({
+                success: false,
+                message: "Return error: no such carpool",
+            });
+        }else{
+            let newRoutes = carpool[0].routes;
+            let index = newRoutes.indexOf(routeId);
+            if (index > -1) {
+                newRoutes = newRoutes.splice(index, 1);
+            
+                Carpool.findOneAndUpdate({
+                    _id: _id
+                },
+                    {
+                        $set:{
+                            routes: newRoutes
+                        }
+                    },
+                    {upsert: true},
+                    (err) => {
+                            if(err) {
+                                return res.status(500).send({
+                                    success: false,
+                                    message: "Database error: " + err,
+                                })
+                            }else{
+                                return res.status(200).send({
+                                    success: true,
+                                    message: "Success: removed route from carpool",
+                                })
+                            }
+                        }
+                );
+            }else{
+                return res.send(404).send({
+                    success: false,
+                    message: "Return error: route not found in carpool",
+                })
+            }
+        }
+
+    })    
+});
+
 module.exports = router;
