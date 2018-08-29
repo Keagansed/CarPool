@@ -92,6 +92,7 @@ router.post('/addCarpool', (req, res, next) => {
     const newCarpool = new Carpool();
     newCarpool.carpoolName = carpoolName;
     newCarpool.routes = routes;
+    newCarpool.groupChatID = "-1";
     newCarpool.save((err) => {
         if (err) {
             return res.send({
@@ -104,6 +105,86 @@ router.post('/addCarpool', (req, res, next) => {
                 success: true,
                 message: "Success: Added Carpool"
             });
+        }
+    });
+});
+
+// This method adds the groupChatID to an existing carpool.
+// Parameters:
+//      _id: String;  This is the object id of a document from the Carpool collection.
+//      groupChatID: String; This is the id of the newly created group chat.
+// Return Value:
+//      Response containing:
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+router.get('/updateGroupChatID', function (req, res, next) {
+    const { query } = req;
+    const { _id, groupChatID } = query;
+    console.log(_id);
+    console.log(groupChatID);
+    Carpool.findOneAndUpdate({
+            _id: _id
+        },
+        {$set:{
+            groupChatID : groupChatID
+        }
+        },
+        {upsert: true},
+        (err) => {
+            if(err) {
+                return res.send({
+                    success:false,
+                    message:"Database error: " + err,
+                });
+            }else{
+                return res.send({success:true});
+            }
+        }
+    );
+});
+
+// This method adds a user's route to an existing carpool.
+// Parameters:
+//      _id: String;  This is the object id of a document from the Carpool collection.
+//      routeID: String; This is the id of the user's route.
+// Return Value:
+//      Response containing:
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+router.post('/addRouteToCarpool', (req,res,next) => {
+    const { body } = req;
+    let { _id, routeID } = body;
+
+    Carpool.find({
+        _id: _id
+    },(err, carpool) => {
+        if(err) {
+            return res.send({
+                success:false,
+                message:"Database error: " + err
+            });
+        }else{
+            let routesArray = carpool.routes;
+            routesArray.push(routeID);
+            Carpool.findOneAndUpdate({
+                    _id: _id
+                },
+                {$set:{
+                    routes : routesArray
+                }
+                },
+                {upsert: true},
+                (err) => {
+                    if(err) {
+                        return res.send({
+                            success:false,
+                            message:"Database error: " + err,
+                        });
+                    }else{
+                        return res.send({success:true});
+                    }
+                }
+            );
         }
     });
 });

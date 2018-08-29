@@ -154,7 +154,7 @@ router.get('/getRoute',(req,res,next) => {
     },
     (err,data) => {
         if(err){
-            return res.send({
+            res.send({
                 success: false,
                 message: "Database error: " + err,
             })

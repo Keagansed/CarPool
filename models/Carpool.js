@@ -8,6 +8,10 @@ let CarpoolSchema = new mongoose.Schema({
     routes: {
         type: [],
         required:true
+    },
+    groupChatID: {
+        type: String,
+        required:false
     }
 });
 

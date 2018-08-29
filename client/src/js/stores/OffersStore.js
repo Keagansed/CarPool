@@ -68,6 +68,40 @@ class offersStore {
             
         })  
         
+    };
+
+    /*
+     Method to make an offer
+     Makes API call to store offer in database
+     Takes the carpoolName, senderId, senderRoute, receiverId, receiverRoute and join in as parameters,
+     all are string except join which is boolean
+     */
+    @action makeOfferToJoin = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join, carpoolID) => {
+        fetch('/api/system/offers/makeOfferToJoin?token=' + senderId,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                carpoolName: carpoolName,
+                senderId: senderId,
+                senderRoute: senderRoute,
+                recieverId: recieverId,
+                recieverRoute: recieverRoute,
+                join: join,
+                carpoolID: carpoolID
+            })
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                console.log(json);
+                if(json.success !== true) {
+                    window.alert("Failed to create new offer");
+                }
+
+            })
+
     }
 }
 

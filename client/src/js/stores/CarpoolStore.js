@@ -40,10 +40,26 @@ class carpoolStore {
             .catch(error => console.error('Error:', error))
             .then(json => {
                 if(json.success) {
-                    this.carpoolID = json._id;
-                    this.carpoolName = json.carpoolName;
-                    this.routes = json.routes;
-                    this.getCarpool(this.carpoolID, token);
+                    if(json.join){
+                        let groupChat = app.database().ref().child('groupChats/'+json.groupChatID);
+                        let users = app.database().ref().child('groupChats/'+json.groupChatID+'/users');
+                        groupChat.on('child_added', snap =>{
+                            if(snap.key === "users"){
+                                let dateStr = JSON.stringify(new Date());
+                                let users = snap.val();
+                                users[json.senderID] = {
+                                    lastRefresh: dateStr,
+                                    colour: this.getRandomColour()
+                                };
+                                app.database().ref().child('groupChats/'+json.groupChatID).update({users:users});
+                            }
+                        });
+                    } else{
+                        this.carpoolID = json._id;
+                        this.carpoolName = json.carpoolName;
+                        this.routes = json.routes;
+                        this.getCarpool(this.carpoolID, token);
+                    }
                 }else{
                     alert(json.message);
                 }
@@ -140,7 +156,21 @@ class carpoolStore {
                             users = users + "}";
                             users = JSON.parse(users);
                             this.groupChats = app.database().ref().child('groupChats');
-                            this.groupChats.push().set({name: this.carpoolName, users: users, carpoolID: this.carpoolID});
+                            let newKey = app.database().ref().child('groupChats').push().key;
+                            app.database().ref('groupChats/'+newKey).set({name: this.carpoolName, users: users, carpoolID: this.carpoolID});
+                            fetch('api/system/carpool/updateGroupChatID?_id=' + id + '&groupChatID=' + newKey,{
+                                method:'GET',
+                                headers:{
+                                    'Content-Type':'application/json'
+                                },
+                            }).then(res => res.json())
+                                .then(json => {
+                                    if (json.success) {
+                                        }
+                                        else {
+                                            window.alert(json.message);
+                                        }
+                                    });
                         }
                     });
                 });                     

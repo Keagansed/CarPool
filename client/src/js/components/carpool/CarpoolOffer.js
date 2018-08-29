@@ -95,6 +95,10 @@ class CarpoolOffer extends Component {
      * the deleted state to true and closes the modal.
      */
     handleAcceptInvite() {
+        if(this.props.store.join){
+
+        }
+
         CarpoolStore.addCarpool(this.props.offerId, this.props.token);
         this.setState({deleted: true});
         this.toggle();

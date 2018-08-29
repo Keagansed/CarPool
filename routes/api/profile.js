@@ -171,7 +171,7 @@ router.post('/getUserByName', (req,res,next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/updateEmail', (req,res,next) => {
 	const { body } = req;
-	const { token, email } = body;
+	let { token, email } = body;
 
 	email = email.toLowerCase();
 
