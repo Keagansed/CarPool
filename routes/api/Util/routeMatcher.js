@@ -50,6 +50,8 @@ module.exports.getRecommendedRoutes = async (token, routeId) => {
 
 
 getAllRoutes = async (token, routeId) => {
+    recommendedCarpools = [];
+    recommendedRoutes = [];
 
     await Carpool.find({ routes: { $nin: [routeId] } },
         (err, data) => {
@@ -58,7 +60,21 @@ getAllRoutes = async (token, routeId) => {
             } else {
                 const carpools = data.map(carpool => {
                     return carpool.toObject();
-                });                
+                }); 
+                
+                for (let index = 0; index < carpools.length; index++) {
+                    
+                    carpools[index].routes.forEach(route => {
+
+                        if(route.userId === token) {
+                            carpools.splice(index,1);
+                            index--;
+                        }
+                        
+                    });
+                    
+                }
+
                 filterCarpools(carpools, token)
             }
         }
@@ -185,9 +201,9 @@ filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is alr
             carpoolArr.forEach(carpoolObj => {
                 let contains = false;
 
-                carpoolObj.routes.forEach(routeId => {
+                carpoolObj.routes.forEach(route => {
                     routes.forEach(routeObj => {
-                        if(routeObj._id === routeId) {
+                        if(routeObj._id === route.id) {
                             contains = true;
                         }
                     });
