@@ -173,10 +173,10 @@ router.post('/updateEmail', (req,res,next) => {
 	const { body } = req;
 	const { token, email } = body;
 
-	email = email.toLowerCase();
+	let lemail = email.toLowerCase();
 
 	User.find({
-		email: email
+		email: lemail
 	},(err, users) => {
 		if(err) {
 			return res.send({
@@ -193,7 +193,7 @@ router.post('/updateEmail', (req,res,next) => {
 				_id: token
 			},
 				{$set:{
-					email : email
+					email : lemail
 					}
 				},
 				{upsert: true},
