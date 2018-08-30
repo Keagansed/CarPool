@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500');
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 /* ============================================================================ */
 /*Body & html elements */
 html, body{
@@ -6,6 +8,7 @@ html, body{
     margin:0 !important;
     padding:0 !important;
     font-family: Quicksand;
+    background-color: #140D4F;
 }
 
 /* ============================================================================ */
@@ -296,6 +299,10 @@ html, body{
 .padbot-0{
     padding-bottom: 0;
 }
+.padhor-0{
+    padding-left: 0px;
+    padding-right: 0px;
+}
 .padver-10px{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -368,6 +375,11 @@ input.bord-0:focus{
     height: 100%;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
+}
+.noScroll{
+    margin: 0;
+    height: 100%;
+    overflow: hidden !important;
 }
 /* To hide scrollbar on desktop browsers */
 ::-webkit-scrollbar {
@@ -520,3 +532,9 @@ label {
 	position: absolute;
 	z-index: -1;
 }
+
+/* ============================================================================ */
+/*Intro carousel*/
+.slick-dots li button:before {
+    color: white !important;
+  }

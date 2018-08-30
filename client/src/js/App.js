@@ -7,6 +7,7 @@ import './../css/AllPages.css';
 
 import HomePage from "./containers/HomePage";
 import HomePageStore from './stores/HomePageStore';
+import IntroPage from "./containers/IntroPage";
 import LandingPage from "./containers/LandingPage";
 import LoginPage from "./containers/LoginPage";
 import ResetPasswordPage from "./components/login/ResetPasswordPage";
@@ -30,6 +31,7 @@ class App extends Component {
 					<Route path={"/"} exact component={LandingPage}/>
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
+					<Route path={"/Introduction"} exact component={IntroPage}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/RouteMatches/:_id"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Trip/:tripID"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
