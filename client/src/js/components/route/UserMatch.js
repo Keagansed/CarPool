@@ -177,21 +177,12 @@ const hide = {
                                 </div>                                
                             </div>
                             <div className="row">
-                                <div className="col-12">
-                                    <h6 className="txt-center mbottom-0">
-                                        Carpool Name
-                                    </h6>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">
-                                <div className="col-6"> 
-                                    <input 
-                                        className="txt-center mbottom-0" 
-                                        type="text" 
-                                        onChange={this.handleCarpoolNameChange}
-                                        placeholder={this.carpoolName}
-                                    />
-                                </div>
+                                <input 
+                                    type="text" 
+                                    onChange={this.handleCarpoolNameChange}
+                                    className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput"
+                                    placeholder="Carpool Name"
+                                />
                             </div>
                             <div className="row">
                                 <button 
