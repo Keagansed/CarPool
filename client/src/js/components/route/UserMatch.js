@@ -94,6 +94,21 @@ const hide = {
         this.carpoolName =  e.target.value;
     }
 
+    genRouteArr = () => {
+        this.routeArr = [];
+
+        const routeObj1 = {
+            origin: this.routeStore1.routeObj.startLocation,
+            destination: this.routeStore1.routeObj.endLocation
+        };
+        const routeObj2 = {
+            origin: this.routeStore2.routeObj.startLocation,
+            destination: this.routeStore2.routeObj.endLocation
+        };
+
+        this.routeArr.push(routeObj1,routeObj2);
+    }
+
     /*
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
@@ -114,16 +129,21 @@ const hide = {
     
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
             this.carpoolName = this.routeStore1.routeObj.routeName;
-
-            this.routeArr = [...this.routeArr, {
-                origin: this.routeStore1.routeObj.startLocation,
-                destination: this.routeStore1.routeObj.endLocation
-            }];
+            
+            this.genRouteArr();
+            
+            
+            // this.routeArr = [...this.routeArr, {
+            //     origin: this.routeStore1.routeObj.startLocation,
+            //     destination: this.routeStore1.routeObj.endLocation
+            // }];
     
-            this.routeArr = [...this.routeArr, {
-                origin: this.routeStore2.routeObj.startLocation,
-                destination: this.routeStore2.routeObj.endLocation
-            }];
+            // this.routeArr = [...this.routeArr, {
+            //     origin: this.routeStore2.routeObj.startLocation,
+            //     destination: this.routeStore2.routeObj.endLocation
+            // }];
+
+            console.log('TCL: UserMatch -> render -> routeArr', this.routeArr);
         }
 
         var modal = [];
