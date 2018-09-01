@@ -1,156 +1,126 @@
-//File Type: Google Map Component
+import { observer } from "mobx-react";
+import React, { Component } from 'react';
+import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
 
-import { compose, withProps, lifecycle } from 'recompose';
-import { DirectionsRenderer, GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps";
-import React from 'react';
-
-/*
- * Purpose: the google maps component that shows the map with the selected route(s).
- */
-const GoogleMapComponent = compose(
+@observer class Map extends Component {
     
-    /*
-     * Purpose: specificies the properties of the map component and the lifecycle methods.
-     */
-    withProps({
-        googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyByiVkTN7KXkkNnPKUCVehZ970UdKw94YE&v=3.exp&libraries=geometry,drawing,places",
-        loadingElement: <div style={{ height: `200px`, width: '350px', margin: 'auto' }} />,
-        containerElement: <div style={{ height: `200px`, width: '350px', margin: 'auto'  }} />,
-        mapElement: <div style={{ height: `200px`, width: '350px', margin: 'auto'  }} />,
-    }),
-    withScriptjs,
-    withGoogleMap,
-    lifecycle({
+    constructor(props) {
+        super(props);
 
-        /*
-         * Purpose: renders the map component and creates the route(s) according to the provided coordinates.
-         */
-        componentDidMount() {
-            let DirectionsService = new window.google.maps.DirectionsService();
-            let numRoutes = this.props.coordsArray.coords.length;
+        this.state = {
+            directionArr :[]
+        };
+        
+        this.defaultOptions = {
+            mapTypeControl: false,
+            zoomControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+            draggableCursor: 'default',
+            draggingCursor: 'move'
+        };
 
-            // let waypts = [{'location': new google.maps.LatLng(45.658197,-73.636333),'stopover':true},{'location': "3 Ploughmans lane, Eldoraigne",'stopover':true}];
+        this.polyline1 = {
+            strokeColor: '#7D3C98',
+            strokeOpacity: 1.0,
+            strokeWeight: 2.5
+        };
+        this.polyline2 = {
+            strokeColor: '#138D75',
+            strokeOpacity: 0.7,
+            strokeWeight: 10
+        };
+        this.polyline3 = {
+            strokeColor: '#2E86C1',
+            strokeOpacity: 0.5,
+            strokeWeight: 17.5
+        };
+        this.polyline4 = {
+            strokeColor: '#D4AC0D',
+            strokeOpacity: 0.2,
+            strokeWeight: 17.5
+        };
 
-            // if(combined){
-            //     for(let i=1; i<numRoutes; i++){
-            //         let wayptsOriObj = {
-            //             'location': new window.google.maps.LatLng(this.props.coordsArray.coords[i].olat, this.props.coordsArray.coords[i].olng),
-            //             'stopover':true
-            //         }
-            //         let wayptsDestObj = {
-            //             'location': new window.google.maps.LatLng(this.props.coordsArray.coords[i].dlat, this.props.coordsArray.coords[i].dlng),
-            //             'stopover':true
-            //         }
-            //         waypts.push(wayptsOriObj);
-            //         waypts.push(wayptsDestObj);
-            //     }
-            // }
-
+        this.mounted = true; 
+        
+    }
+    
+    componentDidMount() {
+        
+        const DirectionsService = new window.google.maps.DirectionsService();
+        const coordsArray = this.props.coordsArray.coords;
+        
+        coordsArray.forEach((routeObj,index) => {
+            
             DirectionsService.route({
-                origin: new window.google.maps.LatLng(this.props.coordsArray.coords[0].olat, this.props.coordsArray.coords[0].olng),
-                destination: new window.google.maps.LatLng(this.props.coordsArray.coords[0].dlat, this.props.coordsArray.coords[0].dlng),
+                origin: new window.google.maps.LatLng(routeObj.olat, routeObj.olng),
+                destination: new window.google.maps.LatLng(routeObj.dlat, routeObj.dlng),
                 // waypoints:waypts,
                 optimizeWaypoints: true,
                 travelMode: window.google.maps.TravelMode.DRIVING,
             }, (result, status) => {
+                
+                if(this.mounted && status === window.google.maps.DirectionsStatus.OK ) {  
 
-                if(status === window.google.maps.DirectionsStatus.OK) {
-                    this.setState({
-                        directions: result
-                    });           
-                }else{
-                    //  console.error(`error fetching directions ${result}`);
-                }
-
-            });  
-            
-            if(numRoutes >= 2) {
-                DirectionsService.route({
-                        origin: new window.google.maps.LatLng(this.props.coordsArray.coords[1].olat, this.props.coordsArray.coords[1].olng),
-                        destination: new window.google.maps.LatLng(this.props.coordsArray.coords[1].dlat, this.props.coordsArray.coords[1].dlng),
-                        // waypoints:waypts,
-                        optimizeWaypoints: true,
-                        travelMode: window.google.maps.TravelMode.DRIVING,
-                    }, (result, status) => {
-
-                        if(status === window.google.maps.DirectionsStatus.OK) {
-                            this.setState({
-                                directionstwo: result
-                            });           
-                        }else{
-                            //  console.error(`error fetching directions ${result}`);
-                        }
-
-                    }); 
-            }
-
-            if(numRoutes >= 3) {
-                    DirectionsService.route({
-                            origin: new window.google.maps.LatLng(this.props.coordsArray.coords[2].olat, this.props.coordsArray.coords[2].olng),
-                            destination: new window.google.maps.LatLng(this.props.coordsArray.coords[2].dlat, this.props.coordsArray.coords[2].dlng),
-                            // waypoints:waypts,
-                            optimizeWaypoints: true,
-                            travelMode: window.google.maps.TravelMode.DRIVING,
-                        }, (result, status) => {
-
-                            if(status === window.google.maps.DirectionsStatus.OK) {
-                                this.setState({
-                                    directionsthree: result
-                                });           
-                            }else{
-                                //  console.error(`error fetching directions ${result}`);
-                            }
-
-                        }); 
-            }
-
-            if(numRoutes === 4) {
-                    DirectionsService.route({
-                            origin: new window.google.maps.LatLng(this.props.coordsArray.coords[3].olat, this.props.coordsArray.coords[3].olng),
-                            destination: new window.google.maps.LatLng(this.props.coordsArray.coords[3].dlat, this.props.coordsArray.coords[3].dlng),
-                            // waypoints:waypts,
-                            optimizeWaypoints: true,
-                            travelMode: window.google.maps.TravelMode.DRIVING,
-                        }, (result, status) => {
-
-                            if(status === window.google.maps.DirectionsStatus.OK) {
-                                this.setState({
-                                    directionsfour: result
-                                });           
-                            }else{
-                                //  console.error(`error fetching directions ${result}`);
-                            }
-
-                        }); 
-            }
-            
-        }
-    })
+                    this.setState(prevState => ({
+                        directionArr: [...prevState.directionArr,result]
+                    }));
+                    
+                }   
+                
+            }); 
+        });
         
-)(props =>
-        
-    <GoogleMap 
-    defaultZoom={7} 
-    defaultCenter={new window.google.maps.LatLng(-25.751435, 28.253808)}
-    options={{
-        ...defaultOptions
-    }}
-    >
-    
-    {props.directions && <DirectionsRenderer directions={props.directions}  />}
-    {props.directionstwo && <DirectionsRenderer directions={props.directionstwo} />}     
-    {props.directionsthree && <DirectionsRenderer directions={props.directionsthree}  />}  
-    {props.directionsfour && <DirectionsRenderer directions={props.directionsfour}  />}  
-    </GoogleMap>
-);
+    }
 
-const defaultOptions = {
-    mapTypeControl: false,
-    zoomControl: false,
-    streetViewControl: false,
-    fullscreenControl: false,
-    draggableCursor: 'default',
-    draggingCursor: 'move'
+    componentWillUnmount(){
+        this.mounted =false;        
+    }
+
+    render() {
+        const arr = this.state.directionArr.map(dirObj => dirObj);
+
+        const GoogleMapExample = withGoogleMap(props => (
+            <GoogleMap
+                defaultCenter = { { lat: -25.751435, lng: 28.253808 } }
+                defaultZoom = { 8 }
+                options={{
+                    ...this.defaultOptions
+                }}
+            >    
+                <DirectionsRenderer directions={arr[0]} options={{polylineOptions:this.polyline1}}  />
+                <DirectionsRenderer directions={arr[1]} options={{polylineOptions:this.polyline2}}  />
+                <DirectionsRenderer directions={arr[2]} options={{polylineOptions:this.polyline3}}  />
+                <DirectionsRenderer directions={arr[3]} options={{polylineOptions:this.polyline4}}  />
+            </GoogleMap>
+        ));
+
+        return(
+            <div>
+            <GoogleMapExample
+            loadingElement={<div style={{ height: `200px`, width: '350px', margin: 'auto' }} >Loading...</div>}
+            containerElement={ <div style={{ height: `200px`, width: '350px', margin: 'auto' }} />}
+            mapElement={ <div style={{ height: `200px`, width: '350px', margin: 'auto' }} /> }
+            />
+            </div>
+        );
+    }
 };
-    
-export default GoogleMapComponent;
+export default Map;
+
+// let waypts = [{'location': new google.maps.LatLng(45.658197,-73.636333),'stopover':true},{'location': "3 Ploughmans lane, Eldoraigne",'stopover':true}];
+        
+// if(combined){
+//     for(let i=1; i<numRoutes; i++){
+//         let wayptsOriObj = {
+//             'location': new window.google.maps.LatLng(this.props.coordsArray.coords[i].olat, this.props.coordsArray.coords[i].olng),
+//             'stopover':true
+//         }
+//         let wayptsDestObj = {
+//             'location': new window.google.maps.LatLng(this.props.coordsArray.coords[i].dlat, this.props.coordsArray.coords[i].dlng),
+//             'stopover':true
+//         }
+//         waypts.push(wayptsOriObj);
+//         waypts.push(wayptsDestObj);
+//     }
+// }

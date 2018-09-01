@@ -26,26 +26,9 @@ import GoogleMapComponent from './GoogleMap';
             dlat:RoutesStore.destination.lat,
             dlng:RoutesStore.destination.lng
         };
-
-        // let coords2 = {
-        //     olat:-25.841237,
-        //     olng:28.135862999999972,
-        //     dlat:-25.8564801,
-        //     dlng:28.18624239999997
-        // };
-
-        // let coords3 = {
-        //     olat:-25.871426,
-        //     olng:28.13726299999996,
-        //     dlat:-25.864881,
-        //     dlng:28.15995900000007
-        // };
         
         coordsArray.push(coords);
-        // coordsArray.push(coords2);
-        // coordsArray.push(coords3);
-        // console.log(coordsArray);
-
+  
         return(
             <GoogleMap coords={coordsArray} />
         ); 

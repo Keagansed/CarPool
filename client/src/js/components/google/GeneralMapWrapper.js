@@ -3,7 +3,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
-import GoogleMapComponent from './NewMap';
+import GoogleMapComponent from './GoogleMap';
 
 /*  
  * Purpose: wrapper class around GoogleMapComponent (High Order Component) to allow for easy rerender 

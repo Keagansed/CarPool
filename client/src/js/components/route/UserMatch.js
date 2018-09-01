@@ -132,18 +132,6 @@ const hide = {
             
             this.genRouteArr();
             
-            
-            // this.routeArr = [...this.routeArr, {
-            //     origin: this.routeStore1.routeObj.startLocation,
-            //     destination: this.routeStore1.routeObj.endLocation
-            // }];
-    
-            // this.routeArr = [...this.routeArr, {
-            //     origin: this.routeStore2.routeObj.startLocation,
-            //     destination: this.routeStore2.routeObj.endLocation
-            // }];
-
-            console.log('TCL: UserMatch -> render -> routeArr', this.routeArr);
         }
 
         var modal = [];
