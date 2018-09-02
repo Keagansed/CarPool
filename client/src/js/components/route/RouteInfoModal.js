@@ -45,6 +45,7 @@ const hide = {
     componentWillMount() {
         //Get own route 
         this.routeStore1.getRoute(this.props.token, this.props.routeId);
+        
     }
 
     /*
@@ -61,13 +62,14 @@ const hide = {
     * It returns react elements and HTML using JSX.
     */
     render() {
+
         let originName, destinationName;
 
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
             originName = this.routeStore1.routeObj.startLocation.name;
             destinationName = this.routeStore1.routeObj.endLocation.name;
 
-            this.routeArr = [...this.routeArr, {
+            this.routeArr = [{
                 origin: this.routeStore1.routeObj.startLocation,
                 destination: this.routeStore1.routeObj.endLocation
             }];
