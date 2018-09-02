@@ -58,7 +58,7 @@ module.exports.generateCarpoolArr = function(arrCarpools,arrRecRoutes){
     arrCarpools.forEach(function(carpoolObj){
         let contains = false;
         arrRecRoutes.forEach(function(routeObj){
-
+            counter = 0;
             while ((!contains) && (counter < carpoolObj.routes.length)) {
 
                 if(JSON.stringify(carpoolObj.routes[counter].id) === JSON.stringify(routeObj._id)) {
@@ -70,7 +70,7 @@ module.exports.generateCarpoolArr = function(arrCarpools,arrRecRoutes){
             }
         });
 
-        if(contains){
+        if(contains) {
             counter = 0;
             contains = false;
             while (!contains && (counter < newArr.length)){
