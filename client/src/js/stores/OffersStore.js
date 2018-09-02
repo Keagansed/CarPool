@@ -61,7 +61,7 @@ class offersStore {
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            console.log(json);
+            //console.log(json);
             if(json.success !== true) {
                 window.alert("Failed to create new offer");
             }

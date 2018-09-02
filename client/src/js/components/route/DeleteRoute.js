@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import app from '../../stores/FirebaseStore.js'
+
 const display = {
     display: 'block'
 };
@@ -40,6 +42,28 @@ class DeleteRoute extends Component{
 
                 if(json.success) {
                     alert('Route deleted');
+                    json.groupChatIds.forEach(groupChat => {
+                        app.database().ref()
+                            .child('groupChats/'+ groupChat)
+                            .once('value')
+                            .then(snapShot => {
+                                let newUsers = {};
+
+                                for(let user in snapShot.val().users) {
+                                    if (user !== this.props.token)
+                                        newUsers[user] = snapShot.val().users[user];
+                                }
+                                app.database().ref()
+                                    .child('groupChats/' + groupChat)
+                                    .update({users: newUsers})
+                                    .catch(error => {
+                                        return {
+                                            errorCode: error.code,
+                                            errorMessage: error.message
+                                        }
+                                    });
+                            });
+                    });
                 }else{
                     alert(json.message);
                 }
