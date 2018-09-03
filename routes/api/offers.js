@@ -202,7 +202,10 @@ router.get('/acceptInvite',(req,res,next) =>{
                     _id: data[0].CarpoolID
                 },
                 {$push:{
-                        routes: data[0].SenderRoute
+                        routes: { 
+                                    id: data[0].SenderRoute,
+                                    userId: data[0].SenderID
+                                }
                     }
                 },
                 (err,data) => {
@@ -240,8 +243,14 @@ router.get('/acceptInvite',(req,res,next) =>{
             // If creating a new carpool
             }else{                                  
                 const pool = new carpool();
-                pool.routes.push(data[0].SenderRoute);
-                pool.routes.push(data[0].RecieverRoute);
+                pool.routes.push({
+                    id: data[0].SenderRoute,
+                    userId: data[0].SenderID
+                });
+                pool.routes.push({
+                    id: data[0].RecieverRoute,
+                    userId: data[0].RecieverID
+                });
                 pool.carpoolName = data[0].CarpoolName;
                 pool.save((err) => {
                     if(err) {
