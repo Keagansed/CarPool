@@ -1,4 +1,5 @@
 const Route = require('../../../models/Route.js');
+const distanceCalculation = require('./distanceCalculation');
 
 class routeTree {
     open = [];
@@ -11,7 +12,6 @@ class routeTree {
     constructor(rusers, driverId) {
         rUsers = rusers;
         let route = null;
-        let driver = null;  
         let currentWaypoint = [];
         let visited = [];
         let unvisited = [];
@@ -41,7 +41,13 @@ class routeTree {
                 unvisited.push(startWP);                
             }
         }        
-        let startNode = new StateNode(currentWaypoint, startWP, null, visited, unvisited, null);   
+
+        let startNode = new StateNode(currentWaypoint, startWP, null, visited, unvisited, null);
+
+        startNode.calculateDistancesFromEach();
+        startNode.distanceFromStart = 0;  
+        startNode.updateHeuristic();
+
         open.push(startNode);
     }
 
@@ -53,7 +59,7 @@ class routeTree {
         while (!goalReached && !open.isEmpty()) {
             currentState = open.pop();
 
-            goalReached = isGoalState(currentState); //currently just returns false
+            goalReached = isGoalState(currentState);
 
             if(!goalReached) {
                 children = generateChildren(currentState);
@@ -113,15 +119,24 @@ class routeTree {
                 }                      
 
                 let temp = new StateNode(tempUsers, currentWaypoint, prevWaypoint, visited, unvisited, node);
-                
+                temp.calculateDistancesFromEach();
+                temp.calculateDistanceFromStart(node.distanceFromStart);
+                temp.updateHeuristic();
                 children.push(temp);   
             }
-        }  
+        } 
         
         return children;
     }
 
     isGoalState(state) {
+        if(state.unvisited.length === 0) {
+            let x = state.visited.length - 1;
+
+            if(state.visited[0].end === state.visited[x]) { //This is probably the worst line of code I've ever written :) - Michael
+                return true; 
+            }
+        }
         return false;
     }
 
@@ -136,18 +151,16 @@ class routeTree {
             }
         }
     }
-
-    
 }
 
 class StateNode {
     currentWaypoints = [];          // The users that are currently in the carpool (or the physical car)  => 
-    distanceToEachPoint = [];   // Distance from the current Waypoint to each of the next possible Waypoints
-    distanceFromStart = 0.0;    // Distance travelled so far from the start point
+    distanceToEachPoint = [];       // Distance from the current Waypoint to each of the next possible Waypoints
+    distanceFromStart = 0.0;        // Distance travelled so far from the start point
     currentWaypoint = null;
-    previousWaypoint = null;       // The previous state that lead to this state
-    visited = [];               // The waypoints that have been visited
-    unvisited = [];             // The waypoints that still need to be visited
+    previousWaypoint = null;        // The previous state that lead to this state
+    visited = [];                   // The waypoints that have been visited
+    unvisited = [];                 // The waypoints that still need to be visited
     heuristicVal = -1;
     parentNode = null;
 
@@ -170,7 +183,70 @@ class StateNode {
     get currentWaypoint () { return this.currentWaypoint; }
     get previousWaypoint () { return this.previousWaypoint; }
     get visited () { return this.visited; }
-    get unvisited () { return this.unvisited; }           
+    get unvisited () { return this.unvisited; }   
+    
+    // Calculates the distance between each of the unvisited waypoints and the current waypoint
+    // in order and returns an array with each of those distances. Then calculates the distance from the start.
+    calculateDistancesFromEach() {
+        let dist, distanceToEach = [];
+        
+        for(let i = 0; i < this.unvisited.length; i++) {
+            dist = distance(currentWaypoint, this.unvisited[i]);
+            distanceToEach.push(dist);
+        }
+
+        this.distanceToEachPoint = distanceToEach;
+
+    }
+
+    // Calculate the distance from the start waypoint to current waypoint by determining the distance from 
+    // the current waypoint and the previous waypoint and then adding that distance to the distanceFromStart
+    // of the previous state.
+    calculateDistanceFromStart(distance) {
+        dist = distance(this.currentWaypoint, this.previousWaypoint);
+        this.distanceFromStart = distance + dist;
+    }
+
+    //Calculate distance between waypoints (not actual driving distance, but physical difference).             
+    distance(waypoint1, waypoint2) {
+        let lat1 = waypoint1.latitude;
+        let lng1 = waypoint1.longitude;
+        let lat2 = waypoint2.latitude;
+        let lng2 = waypoint2.longitude;
+
+        let dist = distanceCalculation.calcDistance(lat1, lng1, lat2, lng2);
+
+        return dist;
+    }
+
+    /*
+        A*: f*(n) = g*(n) + h*(n);
+        g*(n) -> estimates the shortest path from the start node to the node n (current node)
+        h*(n) -> estimates the actual cost from the start node to the goal node that passes through 
+                node n
+    */
+    updateHeuristic() {
+        let g = this.distanceFromStart;
+        let h = calcHeuristic();
+
+        this.heuristicVal = g + h;
+    }
+
+    /* The actual heuristic value, f(n), is the distance of each of the current waypoints 
+       (each person in the car, including the driver) to the end waypoint (or location) of 
+       that person's route, as well as the physical distance from the start waypoint to the
+       current waypoint (not the distance travelled).
+    */
+    calcHeuristic() {
+        let heuristic = 0;
+
+        for(let i = 0; i < this.currentWaypoints.length; i++) {
+            heuristic += distance(this.currentWaypoints[i], this.currentWaypoints[i].end);
+        }
+
+        heuristic += this.distance(this.visited[0], this.currentWaypoint);
+        return heuristic;
+    }
 }
 
 /* 
@@ -211,10 +287,6 @@ class Waypoint {
     set isDriver (driver) { this.isDriver = driver; }
     get isDriver () { return this.isDriver; }
 
-    //Calculate distance between waypoints                
-    distance(otherPoint) {        
-        return 0;                
-    }
 }
 
 module.exports.routeTree;
