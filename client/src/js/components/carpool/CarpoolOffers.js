@@ -24,20 +24,44 @@ import OfferStore from '../../stores/OfferStore';
     * then returned unless there are no carpool offers.
     */
     renderOffers() {
-        const Offers = this.props.store.offers.map(offer =>             
-            <CarpoolOffer 
-                token={this.props.token} 
-                key={offer._id} 
-                offerId={offer._id} 
-                store={new OfferStore(
-                    offer.CarpoolName, 
-                    offer.SenderID, 
-                    offer.SenderRoute, 
-                    offer.RecieverID, 
-                    offer.RecieverRoute, 
-                    offer.JoinRequest
-                )}/>
-        )
+        const Offers = this.props.store.offers.map((offer) => {
+                if(!offer.JoinRequest){
+                    return(
+                        <CarpoolOffer
+                            token={this.props.token}
+                            key={offer._id}
+                            offerId={offer._id}
+                            store={new OfferStore(
+                                offer.CarpoolName,
+                                offer.SenderID,
+                                offer.SenderRoute,
+                                offer.RecieverID,
+                                offer.RecieverRoute,
+                                offer.JoinRequest,
+                                ""
+                            )}/>
+                    );
+                } else{
+                    return(
+                        <CarpoolOffer
+                            token={this.props.token}
+                            key={offer._id}
+                            offerId={offer._id}
+                            store={new OfferStore(
+                                offer.CarpoolName,
+                                offer.SenderID,
+                                offer.SenderRoute,
+                                offer.RecieverID,
+                                offer.RecieverRoute,
+                                offer.JoinRequest,
+                                offer.CarpoolID
+                            )}/>
+                    );
+                }
+
+            }
+
+        );
         
         if(Offers.length > 0) {
             

@@ -5,6 +5,7 @@ const express = require('express');
 const Carpool = require('../../models/Carpool');
 const Offer = require('../../models/Offer');
 const Route = require('../../models/Route.js');
+const Trip = require('../../models/Trip.js');
 const routeMatcher = require('./Util/routeMatcher')
 const User = require('../../models/User.js');
 
@@ -22,8 +23,10 @@ let verify = require('../middleware/verify.js');
 //          message: String;  Contains the error message or completion message.
 router.get('/deleteRoute',(req,res,next) =>{
     const { query } = req;
-    const { routeId } = query;
+    const { routeId, token } = query;
+    let carpoolIds = [];
 
+    // Remove offers
     Offer.remove({
         $or: [{SenderRoute: routeId}, {RecieverRoute: routeId}]
     },
@@ -34,22 +37,77 @@ router.get('/deleteRoute',(req,res,next) =>{
                 message: "Database error: " + err,
             });
         }else{
-            Route.remove({
-                _id: routeId
+            // get all carpools
+            Carpool.find({
+                routes: routeId
             },
-            (err) => {
+            (err, data) => {
                 if(err) {
                     return res.send({
                         success: false,
                         message: "Database error: " + err,
                     });
                 }else{
-                    return res.send({
-                        success: true,
-                        message: "route deleted",
+                    let e = false; // This is used to prevent multiple responses from being sent
+
+                    data.forEach(pool => {
+                        // save group chat ids
+                        carpoolIds.push(pool.groupChatID);
+
+                        if (!e) {
+                            const q = {
+                                carpoolID: pool._id,
+                                //dateTime: { $gte: new Date() },
+                            };
+                            q['users.'+ token] = true;
+                            console.log(JSON.stringify(q));
+                            // remove all upcoming trips the user is a part of
+                            Trip.remove(q,
+                            (err) => {
+                                if(err) {
+                                    e = true;
+                                    return res.send({
+                                        success: false,
+                                        message: "Database error: " + err,
+                                    });
+                                }
+                            });
+                        }
                     });
+
+                    if (!e) {
+                        Carpool.remove({
+                            routes: routeId
+                        },
+                        (err) => {
+                            if(err) {
+                                return res.send({
+                                    success: false,
+                                    message: "Database error: " + err,
+                                });
+                            }else{
+                                Route.remove({
+                                    _id: routeId
+                                },
+                                (err) => {
+                                    if(err) {
+                                        return res.send({
+                                            success: false,
+                                            message: "Database error: " + err,
+                                        });
+                                    }else{
+                                        return res.send({
+                                            success: true,
+                                            message: "route deleted",
+                                            groupChatIds: carpoolIds,
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                    }
                 }
-            });
+            })
         }
     });
 })
@@ -154,7 +212,7 @@ router.get('/getRoute',(req,res,next) => {
     },
     (err,data) => {
         if(err){
-            return res.send({
+            res.send({
                 success: false,
                 message: "Database error: " + err,
             })

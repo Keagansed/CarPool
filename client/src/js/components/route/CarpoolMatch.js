@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore';
 
@@ -80,8 +81,9 @@ class CarpoolMatch extends Component {
                 });
             }
         });
-        this.props.routeArr.forEach(routeId => {
-            fetch('/api/system/route/getRoute?routeId=' + routeId + '&token=' + this.state.token, {
+        this.props.routeArr.forEach(route => {
+            
+            fetch('/api/system/route/getRoute?routeId=' + route.id + '&token=' + this.state.token, {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -145,25 +147,82 @@ class CarpoolMatch extends Component {
     }
 
     /*
-    * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
-    */
-    makeOffer() {
-        fetch('/api/system/route/getRoute?routeId=' + this.props.routeArr[0], {
+     * The purpose of the makeOfferToJoin method is to send an offer to another user to join in an existing carpool.
+     */
+    makeOfferToJoin() {
+
+        fetch('/api/system/route/getRoute?routeId=' + this.props.routeArr[0].id + '&token=' + this.props.token, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
             },
         })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            if(json.success) {
-                OffersStore.makeOffer(this.state.carpoolName, this.props.token, this.props.uRouteId, json.data[0].userId, this.props.carpoolId, true);
-                this.toggle();
-            }else{
-                console.log("error: "+ json.message);
-            }
-        });
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(route => {
+                if(route.success) {
+
+                    fetch('/api/system/carpool/getCarpool?_id=' + this.props.carpoolId, {
+                        method:'GET',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                    })
+                        .then(res => res.json())
+                        .catch(error => console.error('Error:', error))
+                        .then(carpool => {
+                            let groupChatID = carpool.data[0].groupChatID;
+                            let users = app.database().ref().child('groupChats/'+groupChatID+"/users");
+                            let hasAdded = false;
+
+                            users.on('child_added', snap =>{
+                                if(carpool.success) {
+                                    if(!hasAdded){
+                                        OffersStore.makeOfferToJoin(carpool.data[0].carpoolName, this.props.token, this.props.uRouteId, route.data[0].userId, snap.key, true, this.props.carpoolId);
+                                        let groupChatMessages = app.database().ref().child('groupChats/'+groupChatID+'/messages');
+
+                                        fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token,{
+                                            method:'GET',
+                                            headers:{
+                                                'Content-Type':'application/json'
+                                            },
+                                        })
+                                            .then(res => res.json())
+                                            .catch(error => console.error('Error:', error))
+                                            .then(sender => {
+
+                                                fetch('/api/account/profile?token=' + this.props.token + '&userId=' + route.data[0].userId,{
+                                                    method:'GET',
+                                                    headers:{
+                                                        'Content-Type':'application/json'
+                                                    },
+                                                })
+                                                    .then(res => res.json())
+                                                    .catch(error => console.error('Error:', error))
+                                                    .then(receiver => {
+                                                        if (receiver.success && sender.success){
+                                                            groupChatMessages.push().set({
+                                                                userID: "Server",
+                                                                messageContent: (sender.data[0].firstName + " " + sender.data[0].lastName + " has requested to join your carpool. The invite has been sent to " + receiver.data[0].firstName + " " + receiver.data[0].lastName +  "."),
+                                                                dateTime: JSON.stringify(new Date()),
+                                                                tripSuggest:false
+                                                            });
+                                                        }
+                                                    });
+                                            });
+                                        hasAdded = true;
+                                    }
+                                }else{
+                                    console.log("error: "+ carpool.message);
+                                }
+                            });
+                        });
+
+                    this.toggle();
+                }else{
+                    console.log("error: "+ route.message);
+                }
+            });
     }
 
     /*
@@ -214,7 +273,7 @@ class CarpoolMatch extends Component {
                             </div>
                             <div className="row">
                                 <button 
-                                    onClick={this.makeOffer.bind(this)} 
+                                    onClick={this.makeOfferToJoin.bind(this)}
                                     type="submit" 
                                     className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" 
                                     id="btnNewRoute"
