@@ -210,17 +210,18 @@ module.exports = class routeTree {
         state with the lowest heuristic value (f(n)) will be chosen first.
     */
     sort() {
-        for (let i = 0; i < (this.open.length - 1); i++) {
-            for (let j = 0; j < (this.open.length - i - 1); j++) {
 
-                if(this.open[j].heuristicVal > this.open[j+1].heuristicVal) {
-                    let temp = this.open[j];
-                    this.open[j] = this.open[j+1];
-                    this.open[j+1] = temp;
-                }
+        for (let i = 1; i < this.open.length; ++i) {
+            let temp = this.open[i];
+            let j = i - 1;
 
+            while (j >= 0 && this.open[j].heuristicVal > temp.heuristicVal) {
+                this.open[j+1] = this.open[j];
+                j--;
             }
+            this.open[j+1] = temp;
         }
+
     }
 
     /*
@@ -344,6 +345,9 @@ class StateNode {
 
     set parentNode (node) { this._parentNode = node; }
     get parentNode () { return this._parentNode; }
+
+    set heuristicVal (hVal) { this._heuristicVal = hVal; }
+    get heuristicVal () { return this._heuristicVal; }
     
     /*
         Calculates the distance between each of the unvisited waypoints and the current waypoint
@@ -400,20 +404,43 @@ class StateNode {
     }
 
     /* 
-        The actual heuristic value, f(n), is the distance of each of the current waypoints 
-        (each person in the car, including the driver) to the end waypoint (or location) of 
-        that person's route, as well as the physical distance from the start waypoint to the
-        current waypoint (not the distance travelled). Can also add the number of states that
+        The actual heuristic value, f(n), is the distance from the current waypoint to the end 
+        waypoint (or location) or start waypoint in currentWaypoints (or person in the car) 
+        as well as the physical distance from the start waypoint (drivers start waypoint) to the
+        current waypoint (not the distance travelled). Also adds the distance from the previousWaypoint
+        to the currentWaypoint. Adds 1 to the heuristic for each start waypoint that has not been unvisited
+        (basically every person that hasn't been picked up yet). Can also add the number of states that
         have been expanded.
+
+        Note - Problem with the heuristic: the algorithm will tend towards the state that drops off
+                a user rather than picking up a new user because the state without one users' start/end
+                calculation will be a lower heuristic than one with the both the user that will be dropped
+                off as well as the new route that it picked up. Need a better heuristic. Refer to test
+                data where the algorithm chooses to drop off User 3 rather than pick up User 4 which would
+                have been better after dropping off User 2.
+        Update - dropping off User 3 might actually be better because of the distance from the drop off
+                location/waypoint of User 2 (the previous waypoint) to end of 3 compared to the start of 4.
     */
     calcHeuristic() {
         let heuristic = 0;
 
+        if (this.previousWaypoint !== null) {
+            heuristic += this.distance(this.previousWaypoint, this.currentWaypoint);
+        }
+
         for(let i = 0; i < this._currentWaypoints.length; i++) {
-            heuristic += this.distance(this._currentWaypoints[i], this._currentWaypoints[i].end);
+            heuristic += this.distance(this._currentWaypoint, this._currentWaypoints[i].end);
         }
 
         heuristic += this.distance(this._visited[0], this._currentWaypoint);
+
+        // Add 1 for every start waypoint (User) that has not been visited
+        for (let i = 0; i < this.unvisited.length; i++) {
+            if (this.unvisited[i].start === undefined) {
+                heuristic++;
+            }
+        }
+
         return heuristic;
     }
 }
