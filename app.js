@@ -158,4 +158,5 @@ let AI = new routeTree(obj, obj[0].user._id);
 let out = AI.calcOptimalRoute();
 console.log(out);
 
+
 module.exports = app;

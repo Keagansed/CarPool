@@ -143,8 +143,7 @@ module.exports = class routeTree {
                 let prevWaypoint = node.currentWaypoint;
 
                 visited.push(currentWaypoint);
-                // unvisited.splice(i, 1);   
-                // i--;         
+                unvisited.splice(i, 1);            
 
                 let tempUsers = [];
                 node.currentWaypoints.forEach((wp) => {
@@ -168,7 +167,18 @@ module.exports = class routeTree {
                 temp.calculateDistancesFromEach();
                 temp.calculateDistanceFromStart(node.distanceFromStart);
                 temp.updateHeuristic();
-                children.push(temp);   
+                children.push(temp);  
+
+                visited = [];
+                unvisited = [];
+                
+                node.visited.forEach((wp) => {
+                    visited.push(wp);
+                });
+        
+                node.unvisited.forEach((wp) => {
+                    unvisited.push(wp);
+                });
             }
         } 
         
@@ -222,11 +232,12 @@ module.exports = class routeTree {
         let path = this.getPath(finalState); 
         let tripPath = [];
         let temp;
-        let isStart = false;
+        
 
         for (let i = 0; i < path.length; i++) {
+            let isStart = false;
 
-            if(path[i].start !== undefined) {
+            if(path[i].start === undefined) {
                 isStart = true;
             }
 
@@ -256,6 +267,8 @@ module.exports = class routeTree {
             path.push(node.currentWaypoint);
             node = node.parentNode;
         }
+
+        path.push(node.currentWaypoint);
 
         path.reverse();
 
