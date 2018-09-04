@@ -12,9 +12,6 @@ class carpoolStore {
     // Stores the string name of the carpool
     @observable carpoolName;
 
-    // Stores the string users in the carpool
-    users = "";
-
     // Stores the array of routes the carpool is for
     @observable routes = [];
 
@@ -42,7 +39,7 @@ class carpoolStore {
                 if(json.success) {
                     if(json.join){
                         let groupChat = app.database().ref().child('groupChats/'+json.groupChatID);
-                        let users = app.database().ref().child('groupChats/'+json.groupChatID+'/users');
+                        //let users = app.database().ref().child('groupChats/'+json.groupChatID+'/users');
                         groupChat.on('child_added', snap =>{
                             if(snap.key === "users"){
                                 let dateStr = JSON.stringify(new Date());

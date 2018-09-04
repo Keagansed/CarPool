@@ -538,3 +538,10 @@ label {
 .slick-dots li button:before {
     color: white !important;
   }
+
+/* ============================================================================ */
+/*Landing Page*/
+#logo-256{
+    height: 256px;
+    width: 256px;
+}

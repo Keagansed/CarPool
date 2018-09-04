@@ -3,8 +3,6 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import LoginStore from '../stores/LoginStore'
-
 import logo  from "../../css/images/logo.png";
 
 /*
@@ -17,7 +15,7 @@ class LandingPage extends Component {
 
     render() {
         return(
-            <div className="vertical-center bg-purple">
+            <div className="vertical-center bg-white">
                 <div className="container-fluid">
                     <div className="row">
                         <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} alt="carpool_logo" id="logo-256"/> 

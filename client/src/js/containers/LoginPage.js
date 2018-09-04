@@ -163,7 +163,7 @@ function validate(email, password) {
                             <img 
                                 className="img-fluid d-block mx-auto mbottom-2rem" 
                                 src={logo} 
-                                id="imgLogo" 
+                                id="logo-256"
                                 alt="carpool_logo"
                             /> 
                         </div>
