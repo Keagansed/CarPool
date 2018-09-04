@@ -1,16 +1,28 @@
-const Route = require('../../../models/Route.js');
-const distanceCalculation = require('./distanceCalculation');
+// File Type: Utility
 
+const distanceCalculation = require('./distanceCalculation');
+const Route = require('../../../models/Route.js');
+
+/*
+    Requires an array of objects that contains the user and their route as well as the userID
+    of the driver. GL HF :).
+*/
 class routeTree {
-    open = [];
-    closed = [];
-    children = [];
-    searchDepth = 0;
-    statesExpanded = 0;
-    rUsers = []; // object with user object and route object together => {route:{}, user:{}}
+    // open = [];
+    // closed = [];
+    // children = [];
+    // searchDepth = 0;
+    // statesExpanded = 0;
+    // rUsers = []; // object with user object and route object together => {route:{}, user:{}}
 
     constructor(rusers, driverId) {
-        rUsers = rusers;
+        this.open = [];
+        this.closed = [];
+        this.children = [];
+        this.searchDepth = 0;
+        this.statesExpanded = 0;
+        this.rUsers = rusers;
+
         let route = null;
         let currentWaypoint = [];
         let visited = [];
@@ -18,9 +30,9 @@ class routeTree {
         let startWP = null;
         let endWP = null;
         
-        for(i = 0; i < rUsers.length; i++) {
-            user = rUsers[i].user;
-            route = rUsers[i].route;
+        for(i = 0; i < this.rUsers.length; i++) {
+            user = this.rUsers[i].user;
+            route = this.rUsers[i].route;
 
             startWP = new Waypoint(route.startLocation.lat, route.startLocation.lng, route._id);
             endWP = new Waypoint(route.endLocation.lat, route.endLocation.lng, route._id);
@@ -48,7 +60,7 @@ class routeTree {
         startNode.distanceFromStart = 0;  
         startNode.updateHeuristic();
 
-        open.push(startNode);
+        this.open.push(startNode);
     }
 
     /*
@@ -60,22 +72,22 @@ class routeTree {
         let currentState = null;
         let goalReached = false;
 
-        while (!goalReached && (open.length > 0)) {
-            currentState = open.pop();
+        while (!goalReached && (this.open.length > 0)) {
+            currentState = this.open.pop();
 
             goalReached = this.isGoalState(currentState);
 
             if(!goalReached) {
-                children = this.generateChildren(currentState);
+                this.children = this.generateChildren(currentState);
                 statesExpanded++;
 
-                for(let i = 0; i < children.length; i++) {
-                    open.push(children.pop());
+                for(let i = 0; i < this.children.length; i++) {
+                    this.open.push(this.children.pop());
                 }
-                children = [];
+                this.children = [];
                 this.sort();
 
-                closed.add(currentState);
+                this.closed.add(currentState);
             }
         }
 
@@ -249,22 +261,25 @@ class routeTree {
            it's 'currentWaypoint' which is the current states previousWaypoint. 
 */
 class StateNode {
-    currentWaypoints = [];          // The users that are currently in the carpool (or the physical car)  => 
-    distanceToEachPoint = [];       // Distance from the current Waypoint to each of the next possible Waypoints
-    distanceFromStart = 0.0;        // Distance travelled so far from the start point
-    currentWaypoint = null;
-    previousWaypoint = null;        // The previous state that lead to this state
-    visited = [];                   // The waypoints that have been visited
-    unvisited = [];                 // The waypoints that still need to be visited
-    heuristicVal = -1;
-    parentNode = null;
+    // currentWaypoints = [];          // The users that are currently in the carpool (or the physical car)  => 
+    // distanceToEachPoint = [];       // Distance from the current Waypoint to each of the next possible Waypoints
+    // distanceFromStart = 0.0;        // Distance travelled so far from the start point
+    // currentWaypoint = null;
+    // previousWaypoint = null;        // The previous state that lead to this state
+    // visited = [];                   // The waypoints that have been visited
+    // unvisited = [];                 // The waypoints that still need to be visited
+    // heuristicVal = -1;
+    // parentNode = null;
 
     constructor(currentUsers, currentWaypoint, previousWaypoint, visited, unvisited, parent){
-        this.currentUsers = currentUsers;        
+        this.currentWaypoints = currentUsers;
+        this.distanceToEachPoint = [];       // Distance from the current Waypoint to each of the next possible Waypoints
+        this.distanceFromStart = 0.0;     
         this.currentWaypoint = currentWaypoint;
         this.previousWaypoint = previousWaypoint;
         this.visited  = visited;
         this.unvisited = unvisited;
+        this.heuristicVal = -1;
         this.parentNode = parent;
     }
 
@@ -289,7 +304,7 @@ class StateNode {
         let dist, distanceToEach = [];
         
         for(let i = 0; i < this.unvisited.length; i++) {
-            dist = this.distance(currentWaypoint, this.unvisited[i]);
+            dist = this.distance(this.currentWaypoint, this.unvisited[i]);
             distanceToEach.push(dist);
         }
 
@@ -372,13 +387,14 @@ class Waypoint {
     get longitude () { return this.longitude; }
 
     set route (routeId) {
-        Route.findOne({
-            _id: routeId
-        }, (err, route) => {
-            if(!err) {
-                this.route = route;
-            }
-        })
+        // Route.findOne({
+        //     _id: routeId
+        // }, (err, route) => {
+        //     if(!err) {
+        //         this.route = route;
+        //     }
+        // })
+        this.route = routeId;
     } 
     get route () { return this.route; }       
 
