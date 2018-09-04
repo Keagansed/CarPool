@@ -7,7 +7,7 @@ const Route = require('../../../models/Route.js');
     Requires an array of objects that contains the user and their route as well as the userID
     of the driver. GL HF :).
 */
-class routeTree {
+module.exports = class routeTree {
     // open = [];
     // closed = [];
     // children = [];
@@ -24,37 +24,40 @@ class routeTree {
         this.rUsers = rusers;
 
         let route = null;
-        let currentWaypoint = [];
+        let currentWaypoints = [];
+        let currentWaypoint = null;
         let visited = [];
         let unvisited = [];
         let startWP = null;
         let endWP = null;
         
-        for(i = 0; i < this.rUsers.length; i++) {
-            user = this.rUsers[i].user;
-            route = this.rUsers[i].route;
+        for(let i = 0; i < this.rUsers.length; i++) {
+            
+            let user = this.rUsers[i].user;
+            let route = this.rUsers[i].route;
 
-            startWP = new Waypoint(route.startLocation.lat, route.startLocation.lng, route._id);
+            startWP = new Waypoint(route.startLocation.lat, route.startLocation.lng, route._id);            
             endWP = new Waypoint(route.endLocation.lat, route.endLocation.lng, route._id);
             
-            startWP.end(endWP);
-            endWP.start(startWP);
+            startWP.end = endWP;
+            endWP.start = startWP;
 
             unvisited.push(endWP);
             
             if(user._id === driverId) {
-                startWP.isDriver(true);
-                endWP.isDriver(true);
+                startWP.isDriver = true;
+                endWP.isDriver = true;
                 
                 visited.push(startWP);
 
-                currentWaypoint.push(startWP);
+                currentWaypoints.push(startWP);
+                currentWaypoint = startWP;
             }else{
                 unvisited.push(startWP);                
             }
-        }        
+        }     
 
-        let startNode = new StateNode(currentWaypoint, startWP, null, visited, unvisited, null);
+        let startNode = new StateNode(currentWaypoints, currentWaypoint, null, visited, unvisited, null);
 
         startNode.calculateDistancesFromEach();
         startNode.distanceFromStart = 0;  
@@ -73,21 +76,23 @@ class routeTree {
         let goalReached = false;
 
         while (!goalReached && (this.open.length > 0)) {
-            currentState = this.open.pop();
+            let array = this.open.splice(0,1);
+            currentState = array[0];
 
             goalReached = this.isGoalState(currentState);
 
             if(!goalReached) {
                 this.children = this.generateChildren(currentState);
-                statesExpanded++;
+                // statesExpanded++;
 
-                for(let i = 0; i < this.children.length; i++) {
+                while(this.children.length > 0) {
                     this.open.push(this.children.pop());
                 }
-                this.children = [];
+                
+                // this.children = [];
                 this.sort();
 
-                this.closed.add(currentState);
+                this.closed.push(currentState);
             }
         }
 
@@ -105,21 +110,29 @@ class routeTree {
     */
     generateChildren(node) {
         let children = [];
-        let visited = node.visited;
-        let unvisited = node.unvisited;
+        let visited = [];
+        let unvisited = [];
 
-        for(let i = 0; i < unvisited.length; i++) {
+        node.visited.forEach((wp) => {
+            visited.push(wp);
+        });
+
+        node.unvisited.forEach((wp) => {
+            unvisited.push(wp);
+        });
+
+        for(let i = 0; i < unvisited.length; i++) {                        
             let currentWaypoint = unvisited[i];
             let allow = true;
             
             if(unvisited.length > 1) {
                 if(currentWaypoint.isDriver) {
-                    allow = false                 
+                    allow = false;                 
                 }  
             }
             
-            if(currentWaypoint.end === null) {
-                let x = node.currentWaypoints.indexOf(currentWaypoint);
+            if(currentWaypoint.end === undefined) {
+                let x = node.currentWaypoints.indexOf(currentWaypoint.start);
 
                 if(x === -1) {
                     allow = false;
@@ -130,22 +143,27 @@ class routeTree {
                 let prevWaypoint = node.currentWaypoint;
 
                 visited.push(currentWaypoint);
-                unvisited.splice(i, 1);            
+                // unvisited.splice(i, 1);   
+                // i--;         
 
-                let tempUsers = node.currentWaypoints;
+                let tempUsers = [];
+                node.currentWaypoints.forEach((wp) => {
+                    tempUsers.push(wp);
+                })
 
-                if(currentWaypoint.start === null) {
+                if(currentWaypoint.start === undefined) {
                     tempUsers.push(currentWaypoint);
                 }else{
                     for(let j = 0; j < tempUsers.length; j++) {
 
                         if(tempUsers[j].end === currentWaypoint) {
                             tempUsers.splice(j, 1);
+                            j--;
                         } 
 
                     } 
-                }                      
-
+                }
+                
                 let temp = new StateNode(tempUsers, currentWaypoint, prevWaypoint, visited, unvisited, node);
                 temp.calculateDistancesFromEach();
                 temp.calculateDistanceFromStart(node.distanceFromStart);
@@ -182,13 +200,13 @@ class routeTree {
         state with the lowest heuristic value (f(n)) will be chosen first.
     */
     sort() {
-        for (let i = 0; i < (open.length - 1); i++) {
-            for (let j = 0; j < (open.length - i - 1); j++) {
+        for (let i = 0; i < (this.open.length - 1); i++) {
+            for (let j = 0; j < (this.open.length - i - 1); j++) {
 
-                if(open[j].heuristicVal > open[j+1].heuristicVal) {
-                    let temp = open[j];
-                    open[j] = open[j+1];
-                    open[j+1] = temp;
+                if(this.open[j].heuristicVal > this.open[j+1].heuristicVal) {
+                    let temp = this.open[j];
+                    this.open[j] = this.open[j+1];
+                    this.open[j+1] = temp;
                 }
 
             }
@@ -208,7 +226,7 @@ class routeTree {
 
         for (let i = 0; i < path.length; i++) {
 
-            if(path[i].start !== null) {
+            if(path[i].start !== undefined) {
                 isStart = true;
             }
 
@@ -232,20 +250,14 @@ class routeTree {
     */
     getPath(state) {
         let node = state;
-        let path = [], temp;
+        let path = [];
 
         while (node.parentNode !== null) { 
             path.push(node.currentWaypoint);
             node = node.parentNode;
         }
 
-        for (let i = 0; i < (path.length - 1); i++) {   // Swaps path to be in order of traversal
-            for (let j = path.length; j > i; j--) {
-                temp = path[j];
-                path[j] = path[j-1];
-                path[j-1] = temp;
-            }
-        }
+        path.reverse();
 
         return path;
     }
@@ -272,28 +284,53 @@ class StateNode {
     // parentNode = null;
 
     constructor(currentUsers, currentWaypoint, previousWaypoint, visited, unvisited, parent){
-        this.currentWaypoints = currentUsers;
-        this.distanceToEachPoint = [];       // Distance from the current Waypoint to each of the next possible Waypoints
-        this.distanceFromStart = 0.0;     
-        this.currentWaypoint = currentWaypoint;
-        this.previousWaypoint = previousWaypoint;
-        this.visited  = visited;
-        this.unvisited = unvisited;
-        this.heuristicVal = -1;
-        this.parentNode = parent;
+        this._currentWaypoints = currentUsers;
+        this._distanceToEachPoint = [];       // Distance from the current Waypoint to each of the next possible Waypoints
+        this._distanceFromStart = 0.0;     
+        this._currentWaypoint = currentWaypoint;
+        this._previousWaypoint = previousWaypoint;
+        this._visited  = visited;
+        this._unvisited = unvisited;
+        this._heuristicVal = -1;
+        this._parentNode = parent;
     }
 
     // Getters and setters
-    set distanceFromStart (distance) { this.distanceFromStart = distance; }
-    get distanceFromStart () { return this.distanceFromStart; }
-    
-    set distanceToEachPoint (distance) { this.distanceToEachPoint = distance; }
-    get distanceToEachPoint () { return this.distanceToEachPoint; }
+    set currentWaypoints (waypoints) {
+        for(let i = 0; i < waypoints.length; i++) {
+            this._currentWaypoints.push(waypoints[i]);
+        }
+    }
+    get currentWaypoints () { return this._currentWaypoints; }
 
-    get currentWaypoint () { return this.currentWaypoint; }
-    get previousWaypoint () { return this.previousWaypoint; }
-    get visited () { return this.visited; }
-    get unvisited () { return this.unvisited; }   
+    set distanceFromStart (distance) { 
+        for(let i = 0; i < distance.length; i++) {
+            this._distanceFromStart.push(distance[i]);
+        }
+     }
+    get distanceFromStart () { return this._distanceFromStart; }
+    
+    set distanceToEachPoint (distance) { 
+        for(let i = 0; i < distance.length; i++) {
+            this._distanceToEachPoint.push(distance[i]);
+        } 
+    }
+    get distanceToEachPoint () { return this._distanceToEachPoint; }
+
+    set currentWaypoint (waypoint) { this._currentWaypoint = waypoint; }
+    get currentWaypoint () { return this._currentWaypoint; }
+
+    set previousWaypoint (waypoint) { this._previousWaypoint = waypoint; }
+    get previousWaypoint () { return this._previousWaypoint; }
+
+    set visited (visited) { this._visited = visited; }
+    get visited () { return this._visited; }
+
+    set unvisited (unvisited) { this._unvisited = unvisited; }
+    get unvisited () { return this._unvisited; }
+
+    set parentNode (node) { this._parentNode = node; }
+    get parentNode () { return this._parentNode; }
     
     /*
         Calculates the distance between each of the unvisited waypoints and the current waypoint
@@ -304,11 +341,11 @@ class StateNode {
         let dist, distanceToEach = [];
         
         for(let i = 0; i < this.unvisited.length; i++) {
-            dist = this.distance(this.currentWaypoint, this.unvisited[i]);
+            dist = this.distance(this._currentWaypoint, this._unvisited[i]);
             distanceToEach.push(dist);
         }
 
-        this.distanceToEachPoint = distanceToEach;
+        this._distanceToEachPoint = distanceToEach;
 
     }
 
@@ -318,8 +355,8 @@ class StateNode {
         of the previous state.
     */
     calculateDistanceFromStart(distance) {
-        dist = this.distance(this.currentWaypoint, this.previousWaypoint);
-        this.distanceFromStart = distance + dist;
+        let dist = this.distance(this._currentWaypoint, this._previousWaypoint);
+        this._distanceFromStart = distance + dist;
     }
 
     /*
@@ -343,10 +380,10 @@ class StateNode {
                 node n
     */
     updateHeuristic() {
-        let g = this.distanceFromStart;
+        let g = this._distanceFromStart;
         let h = this.calcHeuristic();
 
-        this.heuristicVal = g + h;
+        this._heuristicVal = g + h;
     }
 
     /* 
@@ -359,11 +396,11 @@ class StateNode {
     calcHeuristic() {
         let heuristic = 0;
 
-        for(let i = 0; i < this.currentWaypoints.length; i++) {
-            heuristic += this.distance(this.currentWaypoints[i], this.currentWaypoints[i].end);
+        for(let i = 0; i < this._currentWaypoints.length; i++) {
+            heuristic += this.distance(this._currentWaypoints[i], this._currentWaypoints[i].end);
         }
 
-        heuristic += this.distance(this.visited[0], this.currentWaypoint);
+        heuristic += this.distance(this._visited[0], this._currentWaypoint);
         return heuristic;
     }
 }
@@ -373,18 +410,18 @@ class StateNode {
 */
 class Waypoint {
     constructor(lat, long, routeId) {
-        this.latitude = lat; //Latitude coordinate for the waypoint
-        this.longitude = long; //Longitude coordinate for the waypoint
-        this.route(routeId); //Gets and stores the entire route object associated with this waypoint
-        this.isDriver = false;
+        this._latitude = lat; //Latitude coordinate for the waypoint
+        this._longitude = long; //Longitude coordinate for the waypoint
+        this._route =routeId; //Gets and stores the entire route object associated with this waypoint
+        this._isDriver = false;
     }
     
     // Getters and Setters        
-    set latitude (lat) { this.latitude = lat; } 
-    get latitude () { return this.latitude; }
+    set latitude (lat) { this._latitude = lat; }
+    get latitude () { return this._latitude; }
 
-    set longitude (long) { this.longitude = long; }
-    get longitude () { return this.longitude; }
+    set longitude (long) { this._longitude = long; }
+    get longitude () { return this._longitude; }
 
     set route (routeId) {
         // Route.findOne({
@@ -394,19 +431,17 @@ class Waypoint {
         //         this.route = route;
         //     }
         // })
-        this.route = routeId;
+        this._route = routeId;
     } 
-    get route () { return this.route; }       
+    get route () { return this._route; }       
 
-    set start (waypoint) { this.start = waypoint; }
-    get start () { return this.start; }
+    set start (waypoint) { this._start = waypoint; }
+    get start () { return this._start; }
 
-    set end (waypoint) { this.end = waypoint; }
-    get end () { return this.end; }    
+    set end (waypoint) { this._end = waypoint; }
+    get end () { return this._end; }    
 
-    set isDriver (driver) { this.isDriver = driver; }
-    get isDriver () { return this.isDriver; }
+    set isDriver (driver) { this._isDriver = driver; }
+    get isDriver () { return this._isDriver; }
 
 }
-
-module.exports.routeTree;
