@@ -63,18 +63,18 @@ getAllRoutes = async (token, routeId) => {
                     return carpool.toObject();
                 }); 
                 
-                for (let index = 0; index < carpools.length; index++) {
+                // for (let index = 0; index < carpools.length; index++) {
                     
-                    carpools[index].routes.forEach(route => {
+                //     carpools[index].routes.forEach(route => {
 
-                        if(route.userId === token) {
-                            carpools.splice(index,1);
-                            index--;
-                        }
+                //         if(route.userId === token) {
+                //             carpools.splice(index,1);
+                //             index--;
+                //         }
                         
-                    });
+                //     });
                     
-                }
+                // }
 
                 filterCarpools(carpools, token)
             }
@@ -137,6 +137,7 @@ filterRoutesByRadius = (routeObj) => {
 
     userList = [];
     recommendedRoutes = []; //reset store
+    recommendedCarpools = []; //reset store
 
     differenceArray = arrayCheck.generateDifferenceArray(routeObj.routesCompared, allRoutes, false);
     recommendedRoutes = arrayCheck.generateDifferenceArray(routeObj.recommended, allRoutes, true);
@@ -188,6 +189,7 @@ filterRoutesByRadius = (routeObj) => {
     */
 filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is already a part of
     allCarpools = [];
+
     Route.find({
         userId: token
     },
@@ -198,20 +200,20 @@ filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is alr
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             })
-
+            
             carpoolArr.forEach(carpoolObj => {
                 let contains = false;
 
                 carpoolObj.routes.forEach(route => {
-                    routes.forEach(routeObj => {
-                        if(routeObj._id === route.id) {
-                            contains = true;
-                        }
-                    });
+                    const pos = routes.map((routeObj) =>  routeObj._id ).indexOf(route);
+                    if(pos !== -1){
+                        contains = true;
+                    }
                 });
 
                 if(!contains) {
                     allCarpools.push(carpoolObj);
+                    
                 }
 
             }); 
