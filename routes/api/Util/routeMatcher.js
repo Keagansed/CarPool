@@ -1,6 +1,7 @@
 // File Type: Backend Utility
 
 const arrayCheck = require('./arrayCheck');
+const distanceCalculation = require('./distanceCalculation');
 const trustFactor = require('./trustFactor');
 
 const Carpool = require('../../../models/Carpool.js');
@@ -150,8 +151,8 @@ filterRoutesByRadius = (routeObj) => {
         endWithinRadius =false;
 
         routeObj.waypoints.forEach(obj => {
-            startDistance = calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
-            endDistance = calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
+            startDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
+            endDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
             if(startDistance <= maxRadius) {
                 startWithinRadius = true;
             }
@@ -437,40 +438,40 @@ updateRoutesCompared = (differenceArray, routeId) => {
     });
 };
 
-/*
-    Helper function to calculate the distance between two points
-    Takes in long and lat for both points as an argument
-    Calls helper function degreesToRadians to make a conversion
-    Returns the distance as a double
-    */
-calcDistance = (lat1, lng1, lat2, lng2) => {
-    // Integer radius of the earth
-    let earthRadiusKm = 6371;
+// /*
+//     Helper function to calculate the distance between two points
+//     Takes in long and lat for both points as an argument
+//     Calls helper function degreesToRadians to make a conversion
+//     Returns the distance as a double
+//     */
+// calcDistance = (lat1, lng1, lat2, lng2) => {
+//     // Integer radius of the earth
+//     let earthRadiusKm = 6371;
 
-    // Destination latitude in radians
-    let dLat = degreesToRadians(lat2 - lat1);
+//     // Destination latitude in radians
+//     let dLat = degreesToRadians(lat2 - lat1);
 
-    // Destination longitude in radians
-    let dLon = degreesToRadians(lng2 - lng1);
+//     // Destination longitude in radians
+//     let dLon = degreesToRadians(lng2 - lng1);
 
-    lat1 = degreesToRadians(lat1);
-    lat2 = degreesToRadians(lat2);
+//     lat1 = degreesToRadians(lat1);
+//     lat2 = degreesToRadians(lat2);
 
-    let a = Math.sin(dLat/2) * Math.sin(dLat / 2) +
-            Math.sin(dLon/2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+//     let a = Math.sin(dLat/2) * Math.sin(dLat / 2) +
+//             Math.sin(dLon/2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
 
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    return earthRadiusKm * c;
-};
+//     return earthRadiusKm * c;
+// };
 
-/*
-    Helper function to convert the measurement in degrees to radians
-    Returns integer value as radians
-    */
-degreesToRadians = (degrees) => {
-    return degrees * Math.PI / 180;
-};
+// /*
+//     Helper function to convert the measurement in degrees to radians
+//     Returns integer value as radians
+//     */
+// degreesToRadians = (degrees) => {
+//     return degrees * Math.PI / 180;
+// };
 
 /*
     Method to calculate the difference between the times in minutes
