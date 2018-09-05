@@ -78,6 +78,12 @@ html, body{
 .mbottom-10px{
     margin-bottom: 10px;
 }
+.mbottom-16px{
+    margin-bottom: 16px;
+}
+.mbottom-20px{
+    margin-bottom: 20px;
+}
 .mbottom-0{
     margin-bottom: 0;
 }
@@ -136,6 +142,9 @@ html, body{
 }
 .txt-white{
     color: white !important;
+}
+.txt-white-faded{
+    color: rgba(255,255,255,0.5) !important;
 }
 .txt-gold{
     color: gold !important;
@@ -206,6 +215,9 @@ html, body{
 .bg-red{
     background-color: red;
 }
+.bg-orange{
+    background-color: orange;
+}
 
 /* ============================================================================ */
 /*Widths*/
@@ -256,6 +268,9 @@ html, body{
 }
 .padtop-20px{
     padding-top: 20px;
+}
+.padtop-30px{
+    padding-top: 30px;
 }
 .padtop-300px{
     padding-top: 300px;
@@ -540,8 +555,38 @@ label {
   }
 
 /* ============================================================================ */
-/*Landing Page*/
+/*Logo sizes*/
 #logo-256{
     height: 256px;
     width: 256px;
+}
+
+/* ============================================================================ */
+/*Info Page*/
+#infoHeader{
+    background-image: url(./images/Rectangle.svg);
+    height: 450px; /* You must set a specified height */
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+@media screen and (min-width: 1001px) {
+    h1 {
+        font-size: 40px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    h1 {
+        font-size: 25px;
+    }
+}
+@media screen and (min-width: 1001px) {
+    h3 {
+        font-size: 25px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    h3 {
+        font-size: 20px;
+    }
 }
