@@ -250,18 +250,35 @@ import "../../../css/components/Spinner.css"
 
                                     }else{
 
-                                        return(
-                                            <Message 
-                                                token={this.state.token}
-                                                messageContent={message.messageContent} 
-                                                messageID={message.id} 
-                                                userID={message.userID} 
-                                                userName={userName}
-                                                userColour={userColour} 
-                                                dateTime={message.dateTime} 
-                                                key={message.id}
-                                            />
-                                        );
+                                        if (message.userID === "Server"){
+                                            return(
+                                                <Message
+                                                    token={this.state.token}
+                                                    messageContent={message.messageContent}
+                                                    messageID={message.id}
+                                                    userID={message.userID}
+                                                    userName={"Server"}
+                                                    userColour={userColour}
+                                                    dateTime={message.dateTime}
+                                                    key={message.id}
+                                                />
+                                            );
+                                        } else {
+                                            return(
+                                                <Message
+                                                    token={this.state.token}
+                                                    messageContent={message.messageContent}
+                                                    messageID={message.id}
+                                                    userID={message.userID}
+                                                    userName={userName}
+                                                    userColour={userColour}
+                                                    dateTime={message.dateTime}
+                                                    key={message.id}
+                                                />
+                                            );
+                                        }
+
+
 
                                     }
 

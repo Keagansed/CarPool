@@ -51,6 +51,24 @@ class carpoolStore {
                                 app.database().ref().child('groupChats/'+json.groupChatID).update({users:users});
                             }
                         });
+                        fetch('/api/account/profile?token=' + json.senderID + '&userId=' + json.senderID,{
+                            method:'GET',
+                            headers:{
+                                'Content-Type':'application/json'
+                            },
+                        })
+                            .then(res => res.json())
+                            .catch(error => console.error('Error:', error))
+                            .then(sender => {
+                                let groupChatMessages = app.database().ref().child('groupChats/'+json.groupChatID+'/messages');
+                                groupChatMessages.push().set({
+                                    userID: "Server",
+                                    messageContent: (sender.data[0].firstName + " " + sender.data[0].lastName + " has joined your carpool."),
+                                    dateTime: JSON.stringify(new Date()),
+                                    tripSuggest:false
+                                });
+                            });
+
                     } else{
                         this.carpoolID = json._id;
                         this.carpoolName = json.carpoolName;
