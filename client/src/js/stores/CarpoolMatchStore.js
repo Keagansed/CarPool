@@ -1,8 +1,6 @@
 // File Type: Store
 
 import { action, observable } from 'mobx';
-import { Link } from 'react-router-dom';
-import React from 'react';
 
 class CarpoolMatchStore {
 
@@ -39,22 +37,7 @@ class CarpoolMatchStore {
                     .catch(error => console.error('Error:', error))
                     .then(json => {
                         if (json.success){
-                            let memberComponent = (
-                                <div 
-                                    className="row bordbot-1px-dash-grey" 
-                                    key={Math.random()}
-                                >
-                                    <div className="col-6">
-                                        {json.data[0].firstName+' '+json.data[0].lastName}
-                                    </div>
-                                    <div className="col-6 vertical-right">
-                                        <Link to={"/ProfilePage/"+json.data[0]._id}>View Profile</Link>
-                                    </div>
-                                </div>
-                            )
-                            
-                            this.carpoolMembers.push(memberComponent);
-                            console.log('TCL: CarpoolMatchStore -> @actiongetRoute -> this.carpoolMembers', this.carpoolMembers.length);
+                            this.carpoolMembers.push(json.data[0]);
                         }
                     });
                 

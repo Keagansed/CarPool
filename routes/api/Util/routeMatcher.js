@@ -63,19 +63,6 @@ getAllRoutes = async (token, routeId) => {
                     return carpool.toObject();
                 }); 
                 
-                // for (let index = 0; index < carpools.length; index++) {
-                    
-                //     carpools[index].routes.forEach(route => {
-
-                //         if(route.userId === token) {
-                //             carpools.splice(index,1);
-                //             index--;
-                //         }
-                        
-                //     });
-                    
-                // }
-
                 filterCarpools(carpools, token)
             }
         }
@@ -205,7 +192,7 @@ filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is alr
                 let contains = false;
 
                 carpoolObj.routes.forEach(route => {
-                    const pos = routes.map((routeObj) =>  routeObj._id ).indexOf(route);
+                    const pos = routes.map((routeObj) =>(routeObj._id).toString()).indexOf(route);
                     if(pos !== -1){
                         contains = true;
                     }
@@ -213,7 +200,6 @@ filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is alr
 
                 if(!contains) {
                     allCarpools.push(carpoolObj);
-                    
                 }
 
             }); 

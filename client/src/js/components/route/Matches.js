@@ -63,12 +63,6 @@ import  "../../../css/components/Spinner.css"
 
         if(Carpools.length) {
             return Carpools;
-        }else{
-            // return(
-            //     <h5 className="txt-center mtop-10px txt-white">
-            //         No carpools found
-            //     </h5>
-            // );
         }
     }
 
