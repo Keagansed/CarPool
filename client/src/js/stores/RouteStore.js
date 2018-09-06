@@ -6,7 +6,6 @@ class RouteStore {
 
     @observable userObj = {};
     @observable routeObj = {};
-    @observable fetchedFlag = false;
 
     @observable routeName = '';
     @observable startLocation = '';
@@ -46,7 +45,6 @@ class RouteStore {
     }
 
     @action getRoute = (token, routeId) => {
-        this.fetchedFlag = false; //fetching data
 
         fetch('/api/system/route/getRoute?routeId='+  routeId + '&token=' + token, { 
             method:'GET',
@@ -59,7 +57,6 @@ class RouteStore {
         .then(json => {
             if(json.success) {
                 this.routeObj = json.data[0];
-                this.fetchedFlag = true;
                 // console.log(toJS(this.routeObj));
 
             }else{

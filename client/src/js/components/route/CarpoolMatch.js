@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore';
+import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
 
 import { getFromStorage } from '../../utils/localStorage.js';
 
@@ -42,18 +43,10 @@ class CarpoolMatch extends Component {
             //carpoolMembers is used to store the members of any carpool match temporarily when accessed
             carpoolMembers:[],
             //routeArr is used to store the routes of any carpool match temporarily when accessed
-            routeArr:[], 
-            token: ''
+            routeArr:[]
         }
-    }
 
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        let { token } = obj;
-
-        this.setState({
-            token,
-        }) 
+        this.carpoolMatchStore = new CarpoolMatchStore();
     }
 
     /*
@@ -61,7 +54,17 @@ class CarpoolMatch extends Component {
     * that need to take place before the component is rendered on the screen.
     */
     componentDidMount() {
-        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId + '&token=' + this.state.token, {
+        const obj = getFromStorage('sessionKey');
+        let { token } = obj;
+
+        this.carpoolMatchStore.getRoute(token, this.props.uRouteId);
+
+        this.props.routeArr.forEach(route => {
+            this.carpoolMatchStore.getRoute(token, route)
+        });
+
+        
+        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId + '&token=' + token, {
                 method:'GET',
                 headers: {
                     'Content-Type':'application/json'
@@ -72,6 +75,8 @@ class CarpoolMatch extends Component {
         .catch(error => console.error('Error:', error))
         .then(json => {
             if(json.success){
+                console.log('TCL: CarpoolMatch -> componentDidMount -> carpoolName', json.data[0].routeName);
+                
                 this.setState({
                     carpoolName : json.data[0].routeName,
                     routeArr:[...this.state.routeArr,{
@@ -79,11 +84,14 @@ class CarpoolMatch extends Component {
                         destination : json.data[0].endLocation
                     }]
                 });
+            }else{
+                console.log(json);
             }
         });
+
         this.props.routeArr.forEach(route => {
             
-            fetch('/api/system/route/getRoute?routeId=' + route.id + '&token=' + this.state.token, {
+            fetch('/api/system/route/getRoute?routeId=' + route + '&token=' + token, {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -101,7 +109,7 @@ class CarpoolMatch extends Component {
                     });
                 
 
-                    fetch('/api/account/profile?token=' + this.props.token + '&userId=' + json.data[0].userId,{
+                    fetch('/api/account/profile?token=' + token + '&userId=' + json.data[0].userId,{
                         method:'GET',
                         headers:{
                             'Content-Type':'application/json'
@@ -178,7 +186,14 @@ class CarpoolMatch extends Component {
                             users.on('child_added', snap =>{
                                 if(carpool.success) {
                                     if(!hasAdded){
-                                        OffersStore.makeOfferToJoin(carpool.data[0].carpoolName, this.props.token, this.props.uRouteId, route.data[0].userId, snap.key, true, this.props.carpoolId);
+                                        OffersStore.makeOfferToJoin(
+                                            carpool.data[0].carpoolName, 
+                                            this.props.token, 
+                                            this.props.uRouteId, 
+                                            route.data[0].userId, 
+                                            snap.key, true, 
+                                            this.props.carpoolId
+                                        );
                                         let groupChatMessages = app.database().ref().child('groupChats/'+groupChatID+'/messages');
 
                                         fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token,{
@@ -262,13 +277,13 @@ class CarpoolMatch extends Component {
                             <div className="row bordbot-1px-dash-grey">
                                 <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
                             </div>
-                                {this.state.carpoolMembers}
+                                {this.carpoolMatchStore.carpoolMembers}
                             <div className="row mtop-10px">
                                 <h6 className="fw-bold mx-auto">Route Comparison</h6>
                             </div>
                             <div className="row mbottom-10px">
                                 <div className="col-12">
-                                    <MapComponent routeArr={this.state.routeArr}/>
+                                    <MapComponent routeArr={this.carpoolMatchStore.routeArr}/>
                                 </div>                                
                             </div>
                             <div className="row">
