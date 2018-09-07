@@ -69,6 +69,7 @@ class tripsStore {
             if(json.success){
                 this.routeObj = json.routeData[0];
                 this.tripObj = json.tripData[0];
+                console.log(json);
             }else{
                 console.log(json);
             }

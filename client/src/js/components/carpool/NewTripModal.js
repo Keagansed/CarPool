@@ -80,7 +80,7 @@ const hide = {
 
         for(let user in this.props.users) {
 
-            if(document.getElementById(user).checked) {
+            if(user !== TripsStore.idBy && document.getElementById(user).checked) {
 
                 if(user === getFromStorage('sessionKey').token) {
                     TripsStore.users[user] = true;  
@@ -144,9 +144,12 @@ const hide = {
 
         for(let user in this.props.users) {
 
-            if(document.getElementById(user).checked) {
+            if(user !== TripsStore.idBy && document.getElementById(user).checked) {
                 userNames = userNames + MessageStore.getUsername(user) + " ";
                 users[user]=true;
+            }else{
+                userNames = userNames + MessageStore.getUsername(TripsStore.idBy) + " ";
+                users[TripsStore.idBy]=true;
             }
 
         }
@@ -168,7 +171,8 @@ const hide = {
         document.getElementById("weekday-sun").checked = false;
 
         for(let user in this.props.users) {
-            document.getElementById(user).checked = false;
+            if(user !== TripsStore.idBy)
+                document.getElementById(user).checked = false;
         }
 
         this.toggle();
@@ -183,14 +187,24 @@ const hide = {
         let users = [];
 
         for(let user in this.props.users) {
-            users.push(
-                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
-                    <div className="col-6 vertical-right">
-                        <input id={user} onChange={this.updateUsers} type="checkbox"/>
+            if (user !== TripsStore.idBy){
+                users.push(
+                    <div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                        <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
+                        <div className="col-6 vertical-right">
+                            <input id={user} onChange={this.updateUsers} type="checkbox"/>
+                        </div>
                     </div>
-                </div>
-            );
+                );
+            }else{
+                TripsStore.users[user] = true;
+                users.push(
+                    <div className="row bordbot-1px-dash-grey" key={Math.random()}>
+                        <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
+                    </div>
+                );
+            }
+
         }
 
         var modal = [];
