@@ -50,7 +50,6 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
         const coordsArray = this.props.coordsArray.coords;
         
         
-        console.log('TCL: Map -> componentDidMount -> coordsArray', coordsArray.length);
         coordsArray.forEach((routeObj) => {
             
             DirectionsService.route({
