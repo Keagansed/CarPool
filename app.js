@@ -23,11 +23,22 @@ let carpoolRouter = require('./routes/api/carpool.js');
 let offerRouter = require('./routes/api/offers.js');
 
 let app = express();
-
-mongoose.connect('mongodb://localhost/carpool'); //========== Define db ================
-mongoose.connection.on('open', function() {
-	console.log('Mongoose connected');
+const option = {
+    socketTimeoutMS: 30000,
+    keepAlive: true,
+    reconnectTries: 30000
+};
+//========== Define db ================
+mongoose.connect('mongodb://localhost/carpool',option)
+.then(() => {
+    console.log('Mongoose connected');
+})
+.catch((err) => {
+    console.log('Error on start: ' + err.stack);
+    process.exit(1);
 });
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

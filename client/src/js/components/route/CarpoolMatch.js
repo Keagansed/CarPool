@@ -12,8 +12,6 @@ import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
 import tempGroupPic from '../../../css/images/profile_default.png';
 import { observer } from "mobx-react";
 
-import { toJS } from 'mobx';
-
 //'display' is used to show the modal
 const display = {
     display: 'block'
