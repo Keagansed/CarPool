@@ -73,6 +73,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
         let driver = [];
 
         let origin, destination;
+        console.log('TCL: render -> TripsStore.routeObj', TripsStore.routeObj);
 
         if(typeof(TripsStore.routeObj.startLocation) !== "undefined"){
             origin = TripsStore.routeObj.startLocation.name;

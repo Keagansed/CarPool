@@ -58,7 +58,7 @@ const hide = {
         this.carpoolMatchStore.getRoute(this.props.token, this.props.uRouteId);
 
         this.props.routeArr.forEach(route => {
-            this.carpoolMatchStore.getRoute(this.props.token, route)
+            this.carpoolMatchStore.getRoute(this.props.token, route.id)
         });
        
     }

@@ -43,6 +43,8 @@ router.get('/getAllTripInfo', function(req, res, next) {
                             message: "Database error: " + err,
                         });
                     } else {
+                        console.log(carpoolData[0].routes[0]);
+                        
                         Route.find({
                             _id: carpoolData[0].routes[0].id
                         },

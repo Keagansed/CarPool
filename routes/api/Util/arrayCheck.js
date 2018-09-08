@@ -61,7 +61,7 @@ module.exports.generateCarpoolArr = function(arrCarpools,arrRecRoutes){
             counter = 0;
             while ((!contains) && (counter < carpoolObj.routes.length)) {
 
-                if(JSON.stringify(carpoolObj.routes[counter]) === JSON.stringify(routeObj._id)) {
+                if(JSON.stringify(carpoolObj.routes[counter].id) === JSON.stringify(routeObj._id)) {
                     contains = true;
                 }else{
                     counter++;
