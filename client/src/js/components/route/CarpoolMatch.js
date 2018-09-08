@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore';
-
-import { getFromStorage } from '../../utils/localStorage.js';
+import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
 
 //Just using temporarily for demonstration purposes - remove when not needed anymore
 import tempGroupPic from '../../../css/images/profile_default.png';
+import { observer } from "mobx-react";
 
 //'display' is used to show the modal
 const display = {
@@ -26,7 +26,7 @@ const hide = {
 * carpool match on a route's page. When clicked on, a modal should be displayed which
 * gives users the option to request to join the carpool.
 */
-class CarpoolMatch extends Component {
+@observer class CarpoolMatch extends Component {
     /*
     * The purpose of the constructor method is to instantiate fields to relevant values. The 'toggle'
     * field is set to false because the modal is not visible when the page is first loaded. 
@@ -34,7 +34,6 @@ class CarpoolMatch extends Component {
     */
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
   
         this.state = {
             //'toggle' represents the state of the modal - false indicates it is not being shown.
@@ -42,18 +41,12 @@ class CarpoolMatch extends Component {
             //carpoolMembers is used to store the members of any carpool match temporarily when accessed
             carpoolMembers:[],
             //routeArr is used to store the routes of any carpool match temporarily when accessed
-            routeArr:[], 
-            token: ''
+            routeArr:[]
         }
-    }
 
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        let { token } = obj;
-
-        this.setState({
-            token,
-        }) 
+        this.routeArr = [];
+        this.carpoolMembers = [];
+        this.carpoolMatchStore = new CarpoolMatchStore();
     }
 
     /*
@@ -61,86 +54,43 @@ class CarpoolMatch extends Component {
     * that need to take place before the component is rendered on the screen.
     */
     componentDidMount() {
-        fetch('/api/system/route/getRoute?routeId=' + this.props.uRouteId + '&token=' + this.state.token, {
-                method:'GET',
-                headers: {
-                    'Content-Type':'application/json'
-                },
-            }
-        )
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            if(json.success){
-                this.setState({
-                    carpoolName : json.data[0].routeName,
-                    routeArr:[...this.state.routeArr,{
-                        origin : json.data[0].startLocation,
-                        destination : json.data[0].endLocation
-                    }]
-                });
-            }
-        });
+
+        this.carpoolMatchStore.getRoute(this.props.token, this.props.uRouteId);
+
         this.props.routeArr.forEach(route => {
-            
-            fetch('/api/system/route/getRoute?routeId=' + route.id + '&token=' + this.state.token, {
-                method:'GET',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-            })
-            .then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json => {
-                if(json.success){
-                    this.setState( {
-                        routeArr:[...this.state.routeArr, {
-                            origin : json.data[0].startLocation,
-                            destination : json.data[0].endLocation
-                        }]
-                    });
-                
-
-                    fetch('/api/account/profile?token=' + this.props.token + '&userId=' + json.data[0].userId,{
-                        method:'GET',
-                        headers:{
-                            'Content-Type':'application/json'
-                        },
-                    })
-                    .then(res => res.json())
-                    .catch(error => console.error('Error:', error))
-                    .then(json => {
-                        if (json.success){
-                            let memberComponent = (
-                                <div 
-                                    className="row bordbot-1px-dash-grey" 
-                                    key={Math.random()}
-                                >
-                                    <div className="col-6">
-                                        {json.data[0].firstName+' '+json.data[0].lastName}
-                                    </div>
-                                    <div className="col-6 vertical-right">
-                                        <Link to={"/ProfilePage/"+json.data[0]._id}>View Profile</Link>
-                                    </div>
-                                </div>
-                            )
-                            this.setState({ 
-                                carpoolMembers : [...this.state.carpoolMembers,memberComponent]
-                            });
-                        }
-                    });
-                }
-
-            });
+            this.carpoolMatchStore.getRoute(this.props.token, route)
         });
-
-        
+       
     }
 
+    generateUserProfileLinks = () => {
+        // console.log(toJS(this.carpoolMatchStore.carpoolMembers));
+        this.carpoolMembers = [];
+        this.carpoolMembers = [];
+
+        this.carpoolMatchStore.carpoolMembers.forEach(userObj =>{
+            const memberComponent = (
+                <div 
+                    className="row bordbot-1px-dash-grey"
+                    key={Math.random()}
+                >
+                    <div className="col-6">
+                        {userObj.firstName+' '+userObj.lastName}
+                    </div>
+                    <div className="col-6 vertical-right">
+                        <Link to={"/ProfilePage/"+userObj._id}>View Profile</Link>
+                    </div>
+                </div>
+            )
+            this.carpoolMembers.push(memberComponent);
+        });
+        this.routeArr = this.carpoolMatchStore.routeArr.slice();
+        
+    } 
     /*
     * The purpose of the toggle method is to switch the modal between being active and inactive.
     */
-    toggle(event) {
+    toggle = (event) => {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
@@ -178,7 +128,14 @@ class CarpoolMatch extends Component {
                             users.on('child_added', snap =>{
                                 if(carpool.success) {
                                     if(!hasAdded){
-                                        OffersStore.makeOfferToJoin(carpool.data[0].carpoolName, this.props.token, this.props.uRouteId, route.data[0].userId, snap.key, true, this.props.carpoolId);
+                                        OffersStore.makeOfferToJoin(
+                                            carpool.data[0].carpoolName, 
+                                            this.props.token, 
+                                            this.props.uRouteId, 
+                                            route.data[0].userId, 
+                                            snap.key, true, 
+                                            this.props.carpoolId
+                                        );
                                         let groupChatMessages = app.database().ref().child('groupChats/'+groupChatID+'/messages');
 
                                         fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token,{
@@ -230,6 +187,7 @@ class CarpoolMatch extends Component {
     * It returns react elements and HTML using JSX.
     */
     render() {
+        this.generateUserProfileLinks();
         var modal = [];
         // Push the content of the modal to the array
         modal.push(
@@ -262,13 +220,13 @@ class CarpoolMatch extends Component {
                             <div className="row bordbot-1px-dash-grey">
                                 <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
                             </div>
-                                {this.state.carpoolMembers}
+                                {this.carpoolMembers}
                             <div className="row mtop-10px">
                                 <h6 className="fw-bold mx-auto">Route Comparison</h6>
                             </div>
                             <div className="row mbottom-10px">
                                 <div className="col-12">
-                                    <MapComponent routeArr={this.state.routeArr}/>
+                                    <MapComponent routeArr={this.routeArr}/>
                                 </div>                                
                             </div>
                             <div className="row">

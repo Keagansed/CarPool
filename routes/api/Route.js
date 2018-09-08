@@ -361,9 +361,7 @@ router.get('/getRecommendedRoutes', async (req,res,next) => {
                 });
             }        
         )
-        .then(()=>{
-            console.log('TCL: obj', obj);
-            
+        .then(()=>{            
             return res.status(200).send({
                 success: true,
                 message: "Successfully retrieved Recommended Routes/Carpools",

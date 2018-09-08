@@ -46,11 +46,12 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
     }
     
     componentDidMount() {
-        
         const DirectionsService = new window.google.maps.DirectionsService();
         const coordsArray = this.props.coordsArray.coords;
         
-        coordsArray.forEach((routeObj,index) => {
+        
+        console.log('TCL: Map -> componentDidMount -> coordsArray', coordsArray.length);
+        coordsArray.forEach((routeObj) => {
             
             DirectionsService.route({
                 origin: new window.google.maps.LatLng(routeObj.olat, routeObj.olng),
@@ -78,7 +79,7 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
     }
 
     render() {
-        const arr = this.state.directionArr.map(dirObj => dirObj);
+        const arr = this.state.directionArr.slice();
 
         const GoogleMapExample = withGoogleMap(props => (
             <GoogleMap
