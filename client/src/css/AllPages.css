@@ -191,31 +191,40 @@ html, body{
 
 /* ============================================================================ */
 /*Background colours*/
-.bg-aqua{
+.bg-aqua,
+.bg-aqua:hover{
     background-color: #6FEDB7 !important;
 }
-.bg-grey{
+.bg-grey,
+.bg-grey:hover{
     background-color: grey;
 }
-.bg-lightgrey{
+.bg-lightgrey,
+.bg-lightgrey:hover{
     background-color: lightgrey;
 }
-.bg-purple{
+.bg-purple,
+.bg-purple:hover{
     background-color: #140D4F;
 }
-.bg-trans{
+.bg-trans,
+.bg-trans:hover{
     background-color: rgba(0,0,0,0);
 }
-.bg-whitelight{
+.bg-whitelight,
+.bg-whitelight:hover{
     background-color: rgba(255, 255, 255, 0.349);
 }
-.bg-green{
+.bg-green,
+.bg-green:hover{
     background-color: green;
 }
-.bg-red{
+.bg-red,
+.bg-red:hover{
     background-color: red;
 }
-.bg-orange{
+.bg-orange,
+.bg-orange:hover{
     background-color: orange;
 }
 
@@ -590,3 +599,16 @@ label {
         font-size: 20px;
     }
 }
+
+/* ============================================================================ */
+/*Remove bootstrap box shadows and other effects on buttons*/
+.btn{
+    -webkit-transition-property: none !important;
+    -moz-transition-property: none !important;
+    -o-transition-property: none !important;
+    transition-property: none !important;
+}
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }
