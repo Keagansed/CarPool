@@ -230,7 +230,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
         }else {
             return(               
                 <Redirect to={{
-                    pathname: "/Login", 
+                    pathname: "/Introduction", 
                 }}/>
             );
         }
