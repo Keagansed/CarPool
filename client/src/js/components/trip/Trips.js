@@ -10,45 +10,53 @@ import { getFromStorage } from '../../utils/localStorage.js'
 /**
  * Purpose: An container to store and display all the Trip components of the user
  */
-@observer class Trips  extends Component {
-    
-    componentDidMount(){
+@observer class Trips extends Component {
+
+    componentDidMount() {
         let obj = getFromStorage('sessionKey');
         let token;
 
-        if(obj) {
+        if (obj) {
             token = obj.token;
         }
 
         TripsStore.getFilteredTrips(token);
-    }    
+    }
 
     renderPreviousTrips = () => {
-        const prev = TripsStore.previousTrips.map((trip) =>             
-            <Trip trip={trip} key={Math.random()}/>            
+        const prev = TripsStore.previousTrips.map((trip) =>
+            <Trip trip={trip} key={Math.random()} />
         )
 
-        if(prev.length > 0) {
+        if (prev.length > 0) {
             return prev;
-        }else {
-            return "No Previous Trips"
+        } else {
+            return (
+                <h5 className="txt-center mtop-10px txt-white">
+                    No Previous Trips
+                </h5>
+            );
         }
-    } 
+    }
 
     renderUpcomingTrips = () => {
-        const upcoming = TripsStore.upcomingTrips.map((trip) =>             
-            <Trip trip={trip} key={Math.random()}/>
+        const upcoming = TripsStore.upcomingTrips.map((trip) =>
+            <Trip trip={trip} key={Math.random()} />
         )
 
-        if(upcoming.length > 0) {
+        if (upcoming.length > 0) {
             return upcoming;
-        }else {
-            return "No Upcoming Trips"
+        } else {
+            return (
+                <h5 className="txt-center mtop-10px txt-white">
+                    No Upcoming Trips
+                </h5>
+            );
         }
-    } 
+    }
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="scroll-vert">
                 <div className="pad-10px bg-whitelight txt-white">
                     <h4 className="mbottom-0">Upcoming Trips</h4>
@@ -65,7 +73,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
                 <div className="txt-white">
                     {this.renderPreviousTrips()}
                 </div>
-                
+
             </div>
         );
     }
