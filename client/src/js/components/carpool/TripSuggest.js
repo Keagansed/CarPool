@@ -51,6 +51,24 @@ const hide = {
                     </div>
                 </div>
             )});
+        }else if (typeof this.props.usersResponded[this.props.token] !== 'undefined'){
+            if (this.props.usersResponded[this.props.token]){
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-12">
+                            <p className="txt-aqua">Accepted</p>
+                        </div>
+                    </div>
+                )});
+            }else {
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-12">
+                            <p className="txt-red">Rejected</p>
+                        </div>
+                    </div>
+                )});
+            }
         }else{
             this.setState({buttons : (
                 <div className="row txt-white padleft-10px padright-10px padtop-0" key={Math.random()}>

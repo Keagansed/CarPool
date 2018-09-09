@@ -384,11 +384,12 @@ updateRecommendedRoutes = (recommendedArray, routeId) => {
     Route.update({
         _id: routeId 
     },{
-        $push:{
-            recommended: {
-                $each: arrRouteId
-            }
-        }
+        recommended: arrRouteId
+        // $push:{                             
+        //     recommended: {
+        //         $each: arrRouteId
+        //     }
+        // }
     },
     (err) => {
         if(err) {
@@ -413,11 +414,12 @@ updateRoutesCompared = (differenceArray, routeId) => {
     Route.update({
         _id: routeId 
     }, {
-        $push:{
-            routesCompared: {
-                $each: arrRouteId
-            }
-        }
+        routesCompared: arrRouteId
+        // $push:{
+        //     routesCompared: {
+        //         $each: arrRouteId
+        //     }
+        // }
     },
     (err) => {
         if(err) {
