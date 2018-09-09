@@ -1,6 +1,8 @@
 // File Type: API endpoint
 
 const express = require('express');
+// converts a string to a mongo objectID. Note: can be removed if the recomended array stores string instead of ObjectIDs
+const ObjectId = require('mongodb').ObjectID;
 
 const Carpool = require('../../models/Carpool');
 const Offer = require('../../models/Offer');
@@ -96,11 +98,28 @@ router.get('/deleteRoute',(req,res,next) =>{
                                             message: "Database error: " + err,
                                         });
                                     }else{
-                                        return res.send({
-                                            success: true,
-                                            message: "route deleted",
-                                            groupChatIds: carpoolIds,
-                                        });
+                                        // Removing the route from the recomended list of other routes
+                                        Route.update(
+                                            {},
+                                            {
+                                                $pull: { recommended: ObjectId(routeId) }
+                                            },
+                                            { multi: true },
+                                            (err) => {
+                                                if (err) {
+                                                    return res.send({
+                                                        success: false,
+                                                        message: "Database error: " + err,
+                                                    });
+                                                }else{
+                                                    return res.send({
+                                                        success: true,
+                                                        message: "route deleted",
+                                                        groupChatIds: carpoolIds,
+                                                    });
+                                                }
+                                            }
+                                            );
                                     }
                                 });
                             }
