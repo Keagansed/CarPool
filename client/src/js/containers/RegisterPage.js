@@ -144,7 +144,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
                 <div className="vertical-center bg-purple">
                     <div className="container-fluid">
                         <div className="row">
-                                <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} id="logo-256" alt="carpool_logo"/> 
+                                <img className="img-fluid d-block mx-auto mbottom-1rem" src={logo} id="logo-256" alt="carpool_logo"/> 
                         </div>
                         <form>
                             <div className="row">
@@ -230,7 +230,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
         }else {
             return(               
                 <Redirect to={{
-                    pathname: "/Login", 
+                    pathname: "/Introduction", 
                 }}/>
             );
         }

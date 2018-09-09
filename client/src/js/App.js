@@ -8,6 +8,7 @@ import './../css/AllPages.css';
 import HomePage from "./containers/HomePage";
 import HomePageStore from './stores/HomePageStore';
 import IntroPage from "./containers/IntroPage";
+import InfoPage from "./containers/InfoPage";
 import LandingPage from "./containers/LandingPage";
 import LoginPage from "./containers/LoginPage";
 import ResetPasswordPage from "./components/login/ResetPasswordPage";
@@ -28,7 +29,8 @@ class App extends Component {
 		return(
 			<BrowserRouter>
 				<Switch>
-					<Route path={"/"} exact component={LandingPage}/>
+					<Route path={"/"} exact component={InfoPage}/>
+					<Route path={"/Landing"} exact component={LandingPage}/>
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Introduction"} exact component={IntroPage}/>
