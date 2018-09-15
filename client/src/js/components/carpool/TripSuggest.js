@@ -70,7 +70,6 @@ const hide = {
                 )});
             }
         }else{
-            console.log(this.props.users);
             if (typeof this.props.users[this.props.token] !== 'undefined'){
                 this.setState({buttons : (
                     <div className="row txt-white padleft-10px padright-10px padtop-0" key={Math.random()}>
