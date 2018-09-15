@@ -47,7 +47,7 @@ const hide = {
             this.setState({buttons : (
                 <div className="row txt-white padtop-0" key={Math.random()}>
                     <div className="col-12">
-                        <p className="txt-aqua">Accepted</p>
+                        <p className="txt-grey">You suggested this trip</p>
                     </div>
                 </div>
             )});
@@ -70,20 +70,31 @@ const hide = {
                 )});
             }
         }else{
-            this.setState({buttons : (
-                <div className="row txt-white padleft-10px padright-10px padtop-0" key={Math.random()}>
-                    <div className="col-6">
-                        <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">
-                            Accept
-                        </button>
+            console.log(this.props.users);
+            if (typeof this.props.users[this.props.token] !== 'undefined'){
+                this.setState({buttons : (
+                    <div className="row txt-white padleft-10px padright-10px padtop-0" key={Math.random()}>
+                        <div className="col-6">
+                            <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">
+                                Accept
+                            </button>
+                        </div>
+                        <div className="col-6">
+                            <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
+                                Reject
+                            </button>
+                        </div>
+                    </div>)
+                });
+            }else {
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-12">
+                            <p className="txt-grey">You are not part of this trip</p>
+                        </div>
                     </div>
-                    <div className="col-6">
-                        <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
-                            Reject
-                        </button>
-                    </div>
-                </div>)
-            });
+                )});
+            }
         }
     }
 
