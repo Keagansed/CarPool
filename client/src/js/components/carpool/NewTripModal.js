@@ -144,9 +144,11 @@ const hide = {
 
         for(let user in this.props.users) {
 
-            if(user !== TripsStore.idBy && document.getElementById(user).checked) {
-                userNames = userNames + MessageStore.getUsername(user) + " ";
-                users[user]=true;
+            if(user !== TripsStore.idBy) {
+                if(document.getElementById(user).checked){
+                    userNames = userNames + MessageStore.getUsername(user) + " ";
+                    users[user]=true;
+                }
             }else{
                 userNames = userNames + MessageStore.getUsername(TripsStore.idBy) + " ";
                 users[TripsStore.idBy]=true;

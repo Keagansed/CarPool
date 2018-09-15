@@ -128,7 +128,6 @@ class Message extends Component {
                 </div>
             );
         }else{
-           
             return(
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
