@@ -54,43 +54,36 @@ getAllRoutes = async (token, routeId) => {
     recommendedCarpools = [];
     recommendedRoutes = [];
 
-    await Carpool.find({ routes: { $nin: [routeId] } },
-        (err, data) => {
-            if (err) {
-                console.log("Database error: " + err);
-            } else {
-                const carpools = data.map(carpool => {
-                    return carpool.toObject();
-                }); 
-            
-                filterCarpools(carpools, token)
-            }
+    await Carpool.find({ routes: { $nin: [routeId] } }).then(
+        data => {
+            const carpools = data.map(carpool => {
+                return carpool.toObject();
+            }); 
+        
+            filterCarpools(carpools, token)
+        }, err => {
+            console.log("Database error: " + err);
         }
-    );
+    )
 
     await Route.find({
         userId: {$ne: token}
-    },
-    (err,data) => {
-        if(err) {
-            console.log("Database error: " + err);
-        }else {
+    }).then(
+        data => {
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             });
 
             allRoutes = routes;
+        }, err => {
+            console.log("Database error: " + err);
         }
-    });
+    )
 
     await Route.find({
         _id: routeId
-    },
-    (err,data) =>  {
-        
-        if(err){
-            console.log("Database error: " + err);
-        }else {
+    }).then(
+        data => {
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             });
@@ -98,10 +91,12 @@ getAllRoutes = async (token, routeId) => {
             filterRoutesByRadius(routes[0]);
             generateTimeWeights(routes[0]);
             getUsersAndGenerateTrustWeights(routes[0]);     
-            
-            
+
+        }, err=> {
+            console.log("Database error: " + err);
         }
-    })
+    )
+    
 
 };
 
