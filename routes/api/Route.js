@@ -41,7 +41,7 @@ router.get('/deleteRoute',(req,res,next) =>{
         }else{
             // get all carpools
             Carpool.find({
-                routes: routeId
+                routes: { $elemMatch: { id: routeId}}
             },
             (err, data) => {
                 if(err) {
@@ -62,7 +62,7 @@ router.get('/deleteRoute',(req,res,next) =>{
                                 //dateTime: { $gte: new Date() },
                             };
                             q['users.'+ token] = true;
-                            console.log(JSON.stringify(q));
+                            // console.log(JSON.stringify(q));
                             // remove all upcoming trips the user is a part of
                             Trip.remove(q,
                             (err) => {
@@ -79,7 +79,8 @@ router.get('/deleteRoute',(req,res,next) =>{
 
                     if (!e) {
                         Carpool.remove({
-                            routes: routeId
+                            routes: { $elemMatch: { id: routeId}},
+                            'routes.1': {$exists: false}
                         },
                         (err) => {
                             if(err) {
@@ -88,38 +89,57 @@ router.get('/deleteRoute',(req,res,next) =>{
                                     message: "Database error: " + err,
                                 });
                             }else{
-                                Route.remove({
-                                    _id: routeId
+                                Carpool.update({
+                                    routes: { $elemMatch: { id: routeId}}
                                 },
+                                {
+                                    $pull: {routes: { id: routeId }}
+                                },
+                                { multi: true },
                                 (err) => {
-                                    if(err) {
+                                    if (err){
                                         return res.send({
                                             success: false,
                                             message: "Database error: " + err,
                                         });
                                     }else{
-                                        // Removing the route from the recomended list of other routes
-                                        Route.update(
-                                            {},
-                                            {
-                                                $pull: { recommended: ObjectId(routeId) }
-                                            },
-                                            { multi: true },
-                                            (err) => {
-                                                if (err) {
-                                                    return res.send({
-                                                        success: false,
-                                                        message: "Database error: " + err,
-                                                    });
-                                                }else{
-                                                    return res.send({
-                                                        success: true,
-                                                        message: "route deleted",
-                                                        groupChatIds: carpoolIds,
-                                                    });
-                                                }
+                                        Route.remove({
+                                            _id: routeId
+                                        },
+                                        (err) => {
+                                            if(err) {
+                                                return res.send({
+                                                    success: false,
+                                                    message: "Database error: " + err,
+                                                });
+                                            }else{
+                                                // Removing the route from the recomended list of other routes
+                                                Route.update(
+                                                    {},
+                                                    {
+                                                        $pull: { 
+                                                            recommended: routeId,
+                                                            routesCompared: routeId
+                                                        }
+                                                    },
+                                                    { multi: true },
+                                                    (err) => {
+                                                        if (err) {
+                                                            return res.send({
+                                                                success: false,
+                                                                message: "Database error: " + err,
+                                                            });
+                                                        }else{
+                                                            return res.send({
+                                                                success: true,
+                                                                message: "route deleted",
+                                                                groupChatIds: carpoolIds,
+                                                            });
+                                                        }
+                                                    }
+                                                    );
                                             }
-                                            );
+                                        });
                                     }
                                 });
                             }

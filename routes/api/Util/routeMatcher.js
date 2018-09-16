@@ -5,6 +5,7 @@ const distanceCalculation = require('./distanceCalculation');
 const trustFactor = require('./trustFactor');
 
 const Carpool = require('../../../models/Carpool.js');
+const Offer = require('../../../models/Offer.js');
 const Route = require('../../../models/Route.js');
 const User = require('../../../models/User.js');
 const Vouch = require('../../../models/Vouch.js');
@@ -65,9 +66,29 @@ getAllRoutes = async (token, routeId) => {
             console.log("Database error: " + err);
         }
     )
+    
+    let ignore = [];
+    await Offer.find({
+        $or: [
+            {SenderRoute: routeId},
+            {RecieverRoute: routeId}
+        ]
+    }).then(
+        data => {
+            data.forEach(off => {
+                if (off.SenderRoute === routeId)
+                    ignore.push(off.RecieverRoute);
+                else 
+                    ignore.push(off.SenderRoute);
+            });
+        }, err => {
+            console.log("Database error: " + err);
+        }
+    )
 
     await Route.find({
-        userId: {$ne: token}
+        _id: {$nin: ignore},
+        userId: {$ne: token},
     }).then(
         data => {
             const routes = data.map(dataObj => {
@@ -373,18 +394,18 @@ updateRecommendedRoutes = (recommendedArray, routeId) => {
     let arrRouteId = [];
 
     recommendedArray.forEach(element => {
-        arrRouteId.push(element._id);
+        arrRouteId.push(element._id.toHexString());
     });
 
     Route.update({
         _id: routeId 
     },{
-        recommended: arrRouteId
-        // $push:{                             
-        //     recommended: {
-        //         $each: arrRouteId
-        //     }
-        // }
+        // recommended: arrRouteId
+        $push:{                             
+            recommended: {
+                $each: arrRouteId
+            }
+        }
     },
     (err) => {
         if(err) {
@@ -403,18 +424,18 @@ updateRoutesCompared = (differenceArray, routeId) => {
     let arrRouteId = [];
 
     differenceArray.forEach(element => {
-        arrRouteId.push(element._id);
+        arrRouteId.push(element._id.toHexString());
     });
 
     Route.update({
         _id: routeId 
     }, {
-        routesCompared: arrRouteId
-        // $push:{
-        //     routesCompared: {
-        //         $each: arrRouteId
-        //     }
-        // }
+        // routesCompared: arrRouteId
+        $push:{
+            routesCompared: {
+                $each: arrRouteId
+            }
+        }
     },
     (err) => {
         if(err) {
