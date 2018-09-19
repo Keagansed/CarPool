@@ -575,9 +575,10 @@ label {
 #infoHeader{
     background-image: url(./images/Rectangle.svg);
     height: 450px; /* You must set a specified height */
-    background-position: top; /* Center the image */
+    background-position: bottom; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
+    background-color: #140D4F;
 }
 @media screen and (min-width: 1001px) {
     h1 {

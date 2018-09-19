@@ -12,7 +12,7 @@ class InfoPage extends Component {
     render() {
         return(
             <div>
-                <div className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 bg-purple brad-0" id="infoHeader">
+                <div className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 brad-0" id="infoHeader">
                     <div className="container text-center pad-0">
                         <div className="mbottom-10px">
                             <h1 className="mbottom-0 txt-purple">The Iminsys Carpool Platform</h1>
