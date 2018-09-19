@@ -42,7 +42,7 @@ class Carpools extends Component {
     }
 
     /*
-     * Purpose: sets the state of the 'offers' field.
+     * Purpose: sets the state of the 'offers' field and fetches other necessary data
      */
     componentDidMount() {
         this.setState({ offers: <CarpoolOffers store={this.props.store} token={this.props.token} /> });
@@ -51,12 +51,6 @@ class Carpools extends Component {
             MessageStore.getAllUsers(this.props.token);
         }
 
-    }
-
-    /*
-     * Purpose: acquires the data for the chat and changes loading state once acquired.
-     */
-    componentWillMount() {
         const previousChats = this.state.groupChats;
         let previousChatsData = [];
 
@@ -96,11 +90,9 @@ class Carpools extends Component {
     renderLoading = () => {
 
         return(
-            <div>
-                <div className="spinner">
-                    <div className="double-bounce1"></div>
-                    <div className="double-bounce2"></div>
-                </div>
+            <div className="spinner">
+                <div className="double-bounce1"></div>
+                <div className="double-bounce2"></div>
             </div>
         )
     }

@@ -79,44 +79,15 @@ import OfferStore from '../../stores/OfferStore';
     }
 
     /*
-    * Purpose: displays a spinner while the carpools are loading.
-    */
-    renderLoading = () => {
-
-        return(
-            <div>
-                <div className="spinner">
-                    <div className="double-bounce1"></div>
-                    <div className="double-bounce2"></div>
-                </div>
-            </div>
-        )
-    }
-
-    /*
     * Purpose: renders the loading spinner if the carpool offers have not yet been loaded. Once the
     * offers have been loaded then they are rendered.
     */
     render() {
-
-        if(this.props.store.loadingOffers) {
-
-            return(
-                <div className="scroll-vert">
-                    {this.renderLoading()}
-                </div>
-            );
-
-        }else{
-
-            return(
-                <div>
-                    {this.renderOffers()}
-                </div>
-            );
-            
-        }
-
+        return(
+            <div>
+                {this.renderOffers()}
+            </div>
+        );
     }
 }
 

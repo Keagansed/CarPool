@@ -10,9 +10,6 @@ class offersStore {
     // Array to store carpool offers
     @observable offers = [];
 
-    // Boolean to store whether or not the offers are still being loaded from the database
-    @observable loadingOffers = true;
-
     /*
         Method to make an API call to get all offers for a user from their ID
         Takes user's ID in as parameter token which is a string
@@ -29,7 +26,6 @@ class offersStore {
         .then(json => {
             if(json.success) {
                 this.offers = json.data;
-                this.loadingOffers = false;
             }else{
                 console.log("Unable to retrieve offers");
             }
