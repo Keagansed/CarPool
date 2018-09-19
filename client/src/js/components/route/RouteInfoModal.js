@@ -138,7 +138,7 @@ const hide = {
                                 </div>                                
                             </div>
                             <div className="row">
-                                <div className="col-12">
+                                <div className="col-12 padhor-15px">
                                     <MapComponent routeArr={this.routeArr}/>
                                 </div>                                
                             </div>

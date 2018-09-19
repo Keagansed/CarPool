@@ -57,7 +57,6 @@ class profileStore {
             if (json.success) {
                 this.token = token;                   
                 this.user = json.data[0];
-                console.log(this.user);
                 this.profileFound = true;
                 this.opacity = "";
                 this.setEdit();

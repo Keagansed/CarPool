@@ -98,9 +98,9 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
         return(
             <div>
             <GoogleMapExample
-            loadingElement={<div style={{ height: `200px`, width: '350px', margin: 'auto' }} >Loading...</div>}
-            containerElement={ <div style={{ height: `200px`, width: '350px', margin: 'auto' }} />}
-            mapElement={ <div style={{ height: `200px`, width: '350px', margin: 'auto' }} /> }
+            loadingElement={<div style={{ height: `200px`, width: '100%', margin: 'auto' }} >Loading...</div>}
+            containerElement={ <div style={{ height: `200px`, width: '100%', margin: 'auto' }} />}
+            mapElement={ <div style={{ height: `200px`, width: '100%', margin: 'auto' }} /> }
             />
             </div>
         );
