@@ -95,37 +95,30 @@ class loginStore {
 
     /*
         Method that makes an API call to register the user
-        First checks if the passwords match, if they do then the API call is made
      */
     @action signUp = () => {
-        if(this.sPassword1 !== this.sPassword2) {
-            alert("Passwords do not match");
-        }
-        else{
-            fetch('/api/account/signup',{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                    firstName: this.sFName,
-                    lastName: this.sLName,
-                    email: this.sEmail,
-                    id: this.sId,
-                    password: this.sPassword1
-                })
+        fetch('/api/account/signup',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                firstName: this.sFName,
+                lastName: this.sLName,
+                email: this.sEmail,
+                id: this.sId,
+                password: this.sPassword1
             })
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
-                if(json.success) {
-                    alert("Successfully signed up!!");
-                    this.setRegistered(true);
-                }else{
-                    alert(json.message);
-                }
-            })
-        }
+        })
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success) {
+                this.setRegistered(true);
+            }else{
+                alert(json.message);
+            }
+        })
     };
 
     /*
@@ -165,6 +158,7 @@ class loginStore {
         Makes an API call to emailPassword to verify this
      */
     @action sendPassword = () => {
+        this.noEmailError = 'An email is being sent to you...';
         this.setRegistered(false);
         fetch('/api/account/emailPassword',{
             method:'POST',
