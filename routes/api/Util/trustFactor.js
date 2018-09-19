@@ -33,7 +33,9 @@ function hasDocs(user){
         temp++;
     if (user.CarRegistration !== "")
         temp++;
-    return temp / 4;
+    if (user.ClearanceCertificate !== "")
+        temp++;
+    return temp / 5;
 }
 
 // function facebookConnected(user){

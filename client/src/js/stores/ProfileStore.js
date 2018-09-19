@@ -35,6 +35,12 @@ class profileStore {
         else
             return true;
     };
+    @computed get hasClearance() { 
+        if (this.user.ClearanceCertificate === "")
+            return false;
+        else
+            return true;
+    };
     @computed get hasCarPic() { 
         if (this.user.CarPic === "")
             return false;
