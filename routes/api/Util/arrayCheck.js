@@ -27,13 +27,14 @@ module.exports.generateDifferenceArray = function(arrRouteId, arrRouteObj, conta
     let newArr=[];
 
     arrRouteObj.forEach(function(obj){
-        let contains = false;
+        let contains = arrRouteId.includes(obj._id.toHexString());
+        // let contains = false;
 
-        arrRouteId.forEach(function(routeId){
-            if(routeId === obj._id){
-                contains = true;
-            }
-        });
+        // arrRouteId.forEach(function(routeId){
+        //     if(routeId === obj._id){
+        //         contains = true;
+        //     }
+        // });
         if(containsFlag && contains){
             newArr.push(obj);
         } else if(!containsFlag && !contains){

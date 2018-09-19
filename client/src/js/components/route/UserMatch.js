@@ -37,7 +37,8 @@ const hide = {
         this.state = {
             token: '',
             //'toggle' represents the state of the modal - false indicates it is not being shown.
-            toggle: false
+            toggle: false,
+            hidden: false, // set to "display: none" to hide div after making an offer
         }
 
         this.routeArr = [];
@@ -83,6 +84,9 @@ const hide = {
             this.props.store._id, 
             false
         );
+        this.setState({
+            hidden: true
+        });
         this.toggle();
     }
     
@@ -207,44 +211,48 @@ const hide = {
                 </div>
             </div>
         );
-
-        return(
-            <div>
-                <div 
-                    className="container-fluid bg-purple bordbot-2px-white" 
-                    onClick={this.toggle}
-                >
-                    <div className="row txt-white padver-10px">
-                        <div className="col-2">
-                                <img 
-                                    src={profilePicture} 
-                                    className="mx-auto my-auto rounded-circle bord-2px-white" 
-                                    height="60" 
-                                    width="60" 
-                                    alt="s" 
-                                />
-                        </div>
-                        <div className="col-7">
-                            <div className="col-12">
-                                <h5>{ userFullName }</h5>
+        
+        if (this.state.hidden){
+            return(<div></div>)
+        }else{
+            return(
+                <div>
+                    <div 
+                        className="container-fluid bg-purple bordbot-2px-white" 
+                        onClick={this.toggle}
+                    >
+                        <div className="row txt-white padver-10px">
+                            <div className="col-2">
+                                    <img 
+                                        src={profilePicture} 
+                                        className="mx-auto my-auto rounded-circle bord-2px-white" 
+                                        height="60" 
+                                        width="60" 
+                                        alt="s" 
+                                    />
                             </div>
-                            <div className="col-12">
-                                1.2km Further
+                            <div className="col-7">
+                                <div className="col-12">
+                                    <h5>{ userFullName }</h5>
+                                </div>
+                                <div className="col-12">
+                                    1.2km Further
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-3 vertical-right">
-                            <div className="col-12">
-                                <h5><i className="fa fa-handshake-o"></i></h5>
-                            </div>
-                            <div className="col-12">
-                                {this.props.store.time}
+                            <div className="col-3 vertical-right">
+                                <div className="col-12">
+                                    <h5><i className="fa fa-handshake-o"></i></h5>
+                                </div>
+                                <div className="col-12">
+                                    {this.props.store.time}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {modal}
                 </div>
-                {modal}
-            </div>
-        );
+            );
+        }
     }
 }
 
