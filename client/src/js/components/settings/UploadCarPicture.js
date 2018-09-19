@@ -47,7 +47,7 @@ class UploadCarPictureSetting extends Component {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/api/account/uploadFile/CarPic', true);
+        xhr.open('POST', '/api/account/uploadFile/CarPic?token=' + this.props.token, true);
         xhr.onreadystatechange = res =>
         {            
             if(xhr.readyState === XMLHttpRequest.DONE)

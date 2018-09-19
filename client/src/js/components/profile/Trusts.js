@@ -15,13 +15,7 @@ class Trusts  extends Component {
         return(
             <div className="scroll-vert">
                 {/*Just an example, logic must be added... */}
-                <TrustItem />   
-                <TrustItem /> 
-                <TrustItem /> 
-                <TrustItem /> 
-                <TrustItem /> 
-                <TrustItem />                                                          
-                <TrustItem /> 
+                <TrustItem store={this.props.store}/>   
             </div>
         );
     }

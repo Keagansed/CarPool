@@ -17,6 +17,31 @@ class profileStore {
     @computed get email() { return this.user.email}
     @computed get idNum() { return this.user.id}
     @computed get profilePic() { return this.user.profilePic };
+    @computed get hasCarRegistration() { 
+        if (this.user.CarRegistration === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasIdDocument() { 
+        console.log(this.user.IdDocument);
+        if (this.user.IdDocument === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasdriversLicense() { 
+        if (this.user.driversLicense === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasCarPic() { 
+        if (this.user.CarPic === "")
+            return false;
+        else
+            return true;
+    };
 
     @action getProfile = (token, userId) => {    
 
@@ -27,6 +52,7 @@ class profileStore {
             if (json.success) {
                 this.token = token;                   
                 this.user = json.data[0];
+                console.log(this.user);
                 this.profileFound = true;
                 this.opacity = "";
                 this.setEdit();

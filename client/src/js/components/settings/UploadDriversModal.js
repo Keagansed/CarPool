@@ -55,7 +55,7 @@ class UploadDriversSetting extends Component {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/api/account/uploadFile/driversLicense', true);
+        xhr.open('POST', '/api/account/uploadFile/driversLicense?token=' + this.props.token, true);
         xhr.onreadystatechange = res => {            
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 alert("Successfully uploaded");

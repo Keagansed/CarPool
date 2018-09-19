@@ -64,7 +64,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 			return this.state.vouchesComponents;
 		}
 		else if(store.trustTab === true) {
-			return <Trusts/>;
+			return <Trusts store={this.props.store}/>;
 		}
 	}
 	

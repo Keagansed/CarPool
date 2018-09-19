@@ -55,7 +55,7 @@ class UploadIDSetting extends Component {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/api/account/uploadFile/IdDocument', true);
+        xhr.open('POST', '/api/account/uploadFile/IdDocument?token=' + this.props.token, true);
         xhr.onreadystatechange = res => {            
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 alert("Successfully uploaded");
