@@ -24,7 +24,6 @@ class profileStore {
             return true;
     };
     @computed get hasIdDocument() { 
-        console.log(this.user.IdDocument);
         if (this.user.IdDocument === "")
             return false;
         else
