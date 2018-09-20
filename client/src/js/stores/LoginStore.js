@@ -228,14 +228,17 @@ class loginStore {
         if(obj && obj.token) {
 
           //Stores token to be verified as string
-          const { token } = obj;
+            const { token } = obj;
 
-          fetch('/api/account/logout?token='+token)
-           .then(res => res.json())
-           .then(json => {
-                this.setLoggedIn(false);
-                this.setToken('');
-           });
+            fetch('/api/account/logout?token='+token)
+            .then(res => res.json())
+            .then(json => {
+            this.setRegistered(false);
+            this.setLoggedIn(false);
+            this.setToken('');
+
+            setInStorage('sessionKey', {});
+            });
         }
     };
 
