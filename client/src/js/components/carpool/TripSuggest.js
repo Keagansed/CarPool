@@ -259,7 +259,7 @@ const hide = {
                     routeArr = json.data[0];
                     if(typeof routeArr !== "undefined"){                
                         this.setState({
-                            routeArr: [routeArr.optimalTrip]
+                            routeArr: routeArr.optimalTrip
                         })                  
                     }
                     
@@ -301,7 +301,7 @@ const hide = {
                                 </div>
                             </div>
                             <div>
-                                <MapComponent routeArr={this.state.routeArr}/>
+                                <MapComponent routeArr={this.state.routeArr} combined={true}/>
                             </div>
                             <div className="row padtop-0">
                                 <div className="col-12">

@@ -73,17 +73,15 @@ import { getFromStorage } from '../../utils/localStorage.js';
         let driver = [];
 
         let origin, destination;
-        console.log('TCL: render -> TripsStore.routeObj', TripsStore.routeObj);
 
-        if(typeof(TripsStore.routeObj.startLocation) !== "undefined"){
+        if(typeof(TripsStore.tripObj.optimalTrip) !== "undefined"){
+            this.routeArr = TripsStore.tripObj.optimalTrip;
+        }
+        if( typeof(TripsStore.routeObj.startLocation) !== "undefined" &&
+            typeof(TripsStore.routeObj.endLocation) !== "undefined"){
+                
             origin = TripsStore.routeObj.startLocation.name;
             destination = TripsStore.routeObj.endLocation.name;
-
-            this.routeArr = [...this.routeArr, {
-                origin: TripsStore.routeObj.startLocation,
-                destination: TripsStore.routeObj.endLocation
-            }];
-
         }
 
         try{
@@ -124,111 +122,60 @@ import { getFromStorage } from '../../utils/localStorage.js';
         }
         catch(E) {}
         
-        // TODO: add logic... if trip is NOT live, return this, else return live trip details
-        // For now: to see live route interface change line below to "if (false) {"
-        if (true) {
-            return(
-                <div className="size-100 bg-purple">
-                        <div className="fixed-top container-fluid height-50px bg-aqua">
-                            <div className="row font-20px height-100p">
-                                <Link to={`/HomePage`} className="col-2 txt-center">
-                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                        <i className="fa fa-chevron-circle-left txt-center"></i>
-                                    </button>
-                                </Link>
-                                <div className="col-8 txt-center">
-                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                        {tripName}
-                                    </button>
-                                </div>
-                                {this.reviewModal}
+        return(
+            <div className="size-100 bg-purple">
+                    <div className="fixed-top container-fluid height-50px bg-aqua">
+                        <div className="row font-20px height-100p">
+                            <Link to={`/HomePage`} className="col-2 txt-center">
+                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                    <i className="fa fa-chevron-circle-left txt-center"></i>
+                                </button>
+                            </Link>
+                            <div className="col-8 txt-center">
+                                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+                                    {tripName}
+                                </button>
+                            </div>
+                            {this.reviewModal}  
+                        </div>
+                        
+                    </div>
+                    {/* Padding is there for top and bottom navs*/}
+                    <div className="padtop-50px container-fluid">
+                        <div className="row mtop-10px">
+                            <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
+                        </div>
+                        <div className="row">
+                            <div className="mx-auto txt-white">{this.getDateTime()}</div>
+                        </div>
+                        <div className="row mtop-10px">
+                            <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
+                        </div>
+                        <div className="row">
+                            <div className="mx-auto padhor-5px txt-white txt-center">
+                                <div><span className="fw-bold mx-auto txt-white">From: </span>{origin}</div>
+                                <div><span className="fw-bold mx-auto txt-white">To: </span>{destination}</div>
                             </div>
                         </div>
-                        {/* Padding is there for top and bottom navs*/}
-                        <div className="padtop-50px container-fluid">
-                            <div className="row mtop-10px">
-                                <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
-                            </div>
-                            <div className="row">
-                                <div className="mx-auto txt-white">{this.getDateTime()}</div>
-                            </div>
-                            <div className="row mtop-10px">
-                                <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
-                            </div>
-                            <div className="row">
-                                <div className="mx-auto padhor-5px txt-white txt-center">
-                                    <div><span className="fw-bold mx-auto txt-white">From: </span>{origin}</div>
-                                    <div><span className="fw-bold mx-auto txt-white">To: </span>{destination}</div>
-                                </div>
-                            </div>
 
-                            <MapComponent routeArr={this.routeArr}/>
+                        <MapComponent routeArr={this.routeArr} combined={true}/>
 
-                            <div className="row mtop-10px bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto txt-white">Driver</h6>
-                            </div>
-
-                            { driver }
-
-                            <div className="row mtop-10px bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
-                            </div>
-
-                            { carpoolers }
+                        <div className="row mtop-10px bordbot-1px-dash-grey">
+                            <h6 className="fw-bold mx-auto txt-white">Driver</h6>
                         </div>
-                </div>
-            );
-        }else{
-            return(
-                <div className="size-100 bg-purple">
-                        <div className="fixed-top container-fluid height-50px bg-aqua">
-                            <div className="row font-20px height-100p">
-                                <Link to={`/HomePage`} className="col-2 txt-center">
-                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                        <i className="fa fa-chevron-circle-left txt-center"></i>
-                                    </button>
-                                </Link>
-                                <div className="col-8 txt-center">
-                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                        {tripName}
-                                    </button>
-                                </div>
-                                <div className="col-2 txt-center">
-                                    <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                        <i className="fa fa-asterisk"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Padding is there for top and bottom navs*/}
-                        <div className="padtop-50px container-fluid">
-                            <div className="row mtop-10px">
-                                <h6 className="fw-bold mx-auto txt-white">This trip is live</h6>
-                            </div>
-                            <div className="row">
-                                <div className="mx-auto txt-white mbottom-10px">The driver is picking up John Carpenter next.</div>
-                                {/* Other examples...
-                                <div className="mx-auto txt-white mbottom-10px">The driver is picking you up next.</div>
-                                <div className="mx-auto txt-white mbottom-10px">The driver is dropping you John Carpenter next.</div>
-                                <div className="mx-auto txt-white mbottom-10px">The driver is dropping you off next.</div>
-                                <div className="mx-auto txt-white mbottom-10px">You need to pick up John Carpenter next.</div> */}
-                            </div>
 
-                            <MapComponent routeArr={this.routeArr}/>
+                        { driver }
 
-                            <div className="row mtop-10px bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto txt-white">Driver</h6>
-                            </div>
-                            {driver}
-                            <div className="row mtop-10px bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
-                            </div>
-                            {carpoolers}
+                        <div className="row mtop-10px bordbot-1px-dash-grey">
+                            <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
                         </div>
-                </div>
-            );
-        }
+
+                        { carpoolers }
+                    </div>
+            </div>
+        );
     }
+    
 }
 
 export default TripPage;

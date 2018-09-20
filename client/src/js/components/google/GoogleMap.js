@@ -47,12 +47,11 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
     
     componentDidMount() {
         const DirectionsService = new window.google.maps.DirectionsService();
-        const coordsArray = this.props.coordsArray.coords;
-        console.log('TCL: Map -> componentDidMount -> coordsArray', coordsArray);
+        let coordsArray = this.props.coordsArray.coords;
            
-        if(this.props.combined){   
+        if(this.props.combined){ 
             let wayPointsArr = [];
-
+            
             const origin = new window.google.maps.LatLng(coordsArray[0].lat, coordsArray[0].lng);
             const destination = new window.google.maps.LatLng(coordsArray[coordsArray.length-1].lat, coordsArray[coordsArray.length-1].lng);
         
@@ -63,7 +62,6 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
                 }
                 wayPointsArr.push(wayPointObj);
             }
-            console.log('TCL: Map -> componentDidMount -> wayPointsArr', wayPointsArr);
 
             DirectionsService.route({
                 origin: origin,
