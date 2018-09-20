@@ -154,21 +154,26 @@ filterRoutesByRadius = (routeObj) => {
         startWithinRadius =false;
         endWithinRadius =false;
 
-        routeObj.waypoints.forEach(obj => {
-            startDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
-            endDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
-            if(startDistance <= maxRadius) {
-                startWithinRadius = true;
+        dest2destDistance = distanceCalculation.calcDistance(routeObj.endLocation.lat,routeObj.endLocation.lng,routeEndtLat,routeEndLng);
+        
+        if(dest2destDistance <= maxRadius){
+            routeObj.waypoints.forEach(obj => {
+                startDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
+                endDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
+                if(startDistance <= maxRadius) {
+                    startWithinRadius = true;
+                }
+                if(endDistance <= maxRadius) {
+                    endWithinRadius = true;
+                }
+            });
+    
+            if(startWithinRadius && endWithinRadius) {
+                recommendedRoutes.push(route);
+                recRoutes.push(route);
             }
-            if(endDistance <= maxRadius) {
-                endWithinRadius = true;
-            }
-        });
-
-        if(startWithinRadius && endWithinRadius) {
-            recommendedRoutes.push(route);
-            recRoutes.push(route);
         }
+       
     });
 
     if(allCarpools.length) {
