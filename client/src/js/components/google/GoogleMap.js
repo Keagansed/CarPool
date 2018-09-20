@@ -49,14 +49,16 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
         const DirectionsService = new window.google.maps.DirectionsService();
         const coordsArray = this.props.coordsArray.coords;
         console.log('TCL: Map -> componentDidMount -> coordsArray', coordsArray);
-        let wayPointsArr = [];
-        
+           
         if(this.props.combined){   
-            const origin = new window.google.maps.LatLng(coordsArray[0].olat, coordsArray[0].olng);
-            const destination = new window.google.maps.LatLng(coordsArray[0].dlat, coordsArray[0].dlng);
-            for(let i = 1; i < coordsArray.length; i++){
+            let wayPointsArr = [];
+
+            const origin = new window.google.maps.LatLng(coordsArray[0].lat, coordsArray[0].lng);
+            const destination = new window.google.maps.LatLng(coordsArray[coordsArray.length-1].lat, coordsArray[coordsArray.length-1].lng);
+        
+            for(let i = 1; i < coordsArray.length-1; i++){
                 const wayPointObj = {
-                    'location': new window.google.maps.LatLng(coordsArray[i].olat, coordsArray[i].olng),
+                    'location': new window.google.maps.LatLng(coordsArray[i].lat, coordsArray[i].lng),
                     'stopover':true
                 }
                 wayPointsArr.push(wayPointObj);
