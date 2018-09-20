@@ -16,8 +16,11 @@ import GoogleMapComponent from './GoogleMap';
      */
     render() {
         let coordsArray = [];
+        let combined = false;
+        typeof this.props.combined !== "undefined" ? combined = this.props.combined : combined =false;
+        
         let GoogleMap = (coordsArray) => ( 
-            <GoogleMapComponent coordsArray={coordsArray} />
+            <GoogleMapComponent coordsArray={coordsArray} combined={combined}/>
         );
         
         

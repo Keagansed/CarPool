@@ -48,14 +48,25 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
     componentDidMount() {
         const DirectionsService = new window.google.maps.DirectionsService();
         const coordsArray = this.props.coordsArray.coords;
+        console.log('TCL: Map -> componentDidMount -> coordsArray', coordsArray);
+        let wayPointsArr = [];
         
-        
-        coordsArray.forEach((routeObj) => {
-            
+        if(this.props.combined){   
+            const origin = new window.google.maps.LatLng(coordsArray[0].olat, coordsArray[0].olng);
+            const destination = new window.google.maps.LatLng(coordsArray[0].dlat, coordsArray[0].dlng);
+            for(let i = 1; i < coordsArray.length; i++){
+                const wayPointObj = {
+                    'location': new window.google.maps.LatLng(coordsArray[i].olat, coordsArray[i].olng),
+                    'stopover':true
+                }
+                wayPointsArr.push(wayPointObj);
+            }
+            console.log('TCL: Map -> componentDidMount -> wayPointsArr', wayPointsArr);
+
             DirectionsService.route({
-                origin: new window.google.maps.LatLng(routeObj.olat, routeObj.olng),
-                destination: new window.google.maps.LatLng(routeObj.dlat, routeObj.dlng),
-                // waypoints:waypts,
+                origin: origin,
+                destination: destination,
+                waypoints:wayPointsArr,
                 optimizeWaypoints: true,
                 travelMode: window.google.maps.TravelMode.DRIVING,
             }, (result, status) => {
@@ -69,8 +80,30 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
                 }   
                 
             }); 
-        });
-        
+
+        }else{
+            coordsArray.forEach((routeObj) => {
+            
+                DirectionsService.route({
+                    origin: new window.google.maps.LatLng(routeObj.olat, routeObj.olng),
+                    destination: new window.google.maps.LatLng(routeObj.dlat, routeObj.dlng),
+                    // waypoints:waypts,
+                    optimizeWaypoints: true,
+                    travelMode: window.google.maps.TravelMode.DRIVING,
+                }, (result, status) => {
+                    
+                    if(this.mounted && status === window.google.maps.DirectionsStatus.OK ) {  
+    
+                        this.setState(prevState => ({
+                            directionArr: [...prevState.directionArr,result]
+                        }));
+                        
+                    }   
+                    
+                }); 
+            });
+        }
+          
     }
 
     componentWillUnmount(){
