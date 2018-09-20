@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js'
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
