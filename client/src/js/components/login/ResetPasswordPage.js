@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 
 import logo  from "./../../../css/images/logo.png";
 import { getFromStorage } from './../../utils/localStorage';
+import ServerURL from '../../utils/server';
 
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
@@ -45,7 +46,7 @@ function validate(password, password2) {
         if(obj && obj.token) {
             const { token } = obj;
 
-            fetch('/api/account/verify?token='+token)
+            fetch(ServerURL + '/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
                 if(json.success) {

@@ -3,6 +3,7 @@
 import { action, observable } from 'mobx';
 
 import app from '../stores/FirebaseStore.js'
+import ServerURL from '../utils/server';
 
 /*
  Provides a store for variables and methods for carpools
@@ -27,7 +28,7 @@ class carpoolStore {
         Calls getRandomColour
      */
     @action addCarpool = (offerId, token) => {
-        fetch('/api/system/offers/acceptInvite?offerId=' + offerId + '&token=' + token,{
+        fetch(ServerURL + '/api/system/offers/acceptInvite?offerId=' + offerId + '&token=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -51,7 +52,7 @@ class carpoolStore {
                                 app.database().ref().child('groupChats/'+json.groupChatID).update({users:users});
                             }
                         });
-                        fetch('/api/account/profile?token=' + json.senderID + '&userId=' + json.senderID,{
+                        fetch(ServerURL + '/api/account/profile?token=' + json.senderID + '&userId=' + json.senderID,{
                             method:'GET',
                             headers:{
                                 'Content-Type':'application/json'
@@ -117,7 +118,7 @@ class carpoolStore {
         It then takes the carpool that was created in the mongoDB database and creates a group chat on firebase
      */
     @action getCarpool(id, token) {
-        fetch('/api/system/carpool/getCarpool?_id=' + id,{
+        fetch(ServerURL + '/api/system/carpool/getCarpool?_id=' + id,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -144,7 +145,7 @@ class carpoolStore {
                 let date = "\\\"" +  dateStr.substr(1,dateStr.length - 2) + "\\\"";
 
                 this.routes.forEach(route => {
-                    fetch('api/system/route/getRoute?routeId=' + route.id + '&token=' + token,{
+                    fetch(ServerURL + 'api/system/route/getRoute?routeId=' + route.id + '&token=' + token,{
                         method:'GET',
                         headers:{
                             'Content-Type':'application/json'
@@ -173,7 +174,7 @@ class carpoolStore {
                             this.groupChats = app.database().ref().child('groupChats');
                             let newKey = app.database().ref().child('groupChats').push().key;
                             app.database().ref('groupChats/'+newKey).set({name: this.carpoolName, users: users, carpoolID: this.carpoolID});
-                            fetch('api/system/carpool/updateGroupChatID?_id=' + id + '&groupChatID=' + newKey,{
+                            fetch(ServerURL + 'api/system/carpool/updateGroupChatID?_id=' + id + '&groupChatID=' + newKey,{
                                 method:'GET',
                                 headers:{
                                     'Content-Type':'application/json'

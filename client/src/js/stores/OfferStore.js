@@ -1,6 +1,7 @@
 // File Type: Store
 
 import { action,observable  } from 'mobx';
+import ServerURL from '../utils/server';
 
 /*
     Provides a store for variables for carpool offers
@@ -44,7 +45,7 @@ class OfferStore {
     }
 
     @action getUserProfile = (token) =>{
-        fetch('/api/account/profile?token=' + token + '&userId=' + this.senderId,{
+        fetch(ServerURL + '/api/account/profile?token=' + token + '&userId=' + this.senderId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

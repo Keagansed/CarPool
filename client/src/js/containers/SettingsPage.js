@@ -9,6 +9,7 @@ import ProfileSettings from '../components/settings/ProfileSettings';
 import { SettingsNavTabs } from '../components/navigation/NavTabs';
 
 import { getFromStorage } from '../utils/localStorage.js';
+import ServerURL from '../utils/server';
 
 /*
 * Purpose: Container page for all the settings components
@@ -30,7 +31,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 
         if(obj && obj.token) {
             const { token } = obj;
-            fetch('/api/account/verify?token='+token)
+            fetch(ServerURL + '/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
                 if(json.success) {

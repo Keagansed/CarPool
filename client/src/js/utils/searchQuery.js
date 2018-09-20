@@ -1,10 +1,11 @@
 // File Type: Utility, General use functions
 
+import ServerURL from '../utils/server';
 /**
  * Purpose: Functions to find specific user profiles based on their name
  */
 export const searchUsers = (_name) => {
-    return fetch('/api/account/getUser',{
+    return fetch(ServerURL + '/api/account/getUser',{
         method:'POST',
         headers:{
             'Content-Type':'application/json'

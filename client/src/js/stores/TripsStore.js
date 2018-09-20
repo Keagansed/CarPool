@@ -3,6 +3,7 @@
 import { action, observable } from 'mobx';
 
 import { getFromStorage } from '../utils/localStorage.js'
+import ServerURL from '../utils/server';
 
 class tripsStore {
 
@@ -23,7 +24,7 @@ class tripsStore {
     @observable previousTrips = [];
 
     @action getAllUsers = (token) => {
-        fetch('/api/account/profile/getAllUsers?token=' + token)
+        fetch(ServerURL + '/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .then(json => {
                 if(json.success){
@@ -63,7 +64,7 @@ class tripsStore {
 
 
     @action getAllTripData = (token,tripId ) => {
-        fetch('/api/system/trip/getAllTripInfo?_id=' +tripId + '&token=' + token)
+        fetch(ServerURL + '/api/system/trip/getAllTripInfo?_id=' +tripId + '&token=' + token)
         .then( res => res.json())
         .then(json => {
             if(json.success){
@@ -77,7 +78,7 @@ class tripsStore {
     }
 
     @action getFilteredTrips = (token) =>{
-        fetch('/api/system/trip/getFilteredTrips?token='+token)
+        fetch(ServerURL + '/api/system/trip/getFilteredTrips?token='+token)
         .then(res => res.json())
         .then(json => {
             if(json.success){
@@ -90,7 +91,7 @@ class tripsStore {
     }
 
     @action getTrip = (token) => {
-        fetch('/api/system/trip/getTrips?token='+ token)
+        fetch(ServerURL + '/api/system/trip/getTrips?token='+ token)
         .then(res => res.json())
         .then(json => {
             if (json.success) {
@@ -102,7 +103,7 @@ class tripsStore {
     }
 
     @action addTrip = (suggestTrip, messageContent, users, token) => {
-        fetch('/api/system/trip/addTrip?token=' + token,{
+        fetch(ServerURL + '/api/system/trip/addTrip?token=' + token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -130,7 +131,7 @@ class tripsStore {
         }
 
     @action addTripWithoutFirebase = () => {
-        fetch('/api/system/trip/addTrip?token=' + getFromStorage('sessionKey').token,{
+        fetch(ServerURL + '/api/system/trip/addTrip?token=' + getFromStorage('sessionKey').token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
