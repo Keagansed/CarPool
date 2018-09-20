@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Landing Page Component captures snapshot 1`] = `
+<div
+  className="scroll-vert txt-white"
+>
+  Alerts Settings
+</div>
+`;
