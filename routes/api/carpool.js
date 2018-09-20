@@ -54,8 +54,6 @@ router.get('/leaveCarpool', function (req, res, next) {
                     message: "Database error: " + err,
                 });
             } else {
-                console.log(data);
-
                 let routes = data[0].routes;
                 routes.forEach((route) => {
                     if (route.userId === token){
