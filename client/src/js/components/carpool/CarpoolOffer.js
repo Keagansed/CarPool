@@ -80,12 +80,12 @@ class CarpoolOffer extends Component {
     /*
      * Purpose: returns the size of the carpool based on the value of 'join' in the carpool store
      */
-    getCarpoolSize() {
+    getJoinOrCreate() {
 
         if(this.props.store.join) {
-            return 5;
+            return "Join an existing carpool";
         }else{
-            return 1;
+            return "Create a new carpool";
         }
 
     }
@@ -183,7 +183,7 @@ class CarpoolOffer extends Component {
                                     <h5>{this.props.store.CarpoolName}</h5>
                                 </div>
                                 <div className="col-12">
-                                    {this.getCarpoolSize()} Members
+                                    {this.getJoinOrCreate()}
                                 </div>
                             </div>
                             <div className="col-3 vertical-right">
