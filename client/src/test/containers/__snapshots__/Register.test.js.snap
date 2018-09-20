@@ -12,7 +12,7 @@ exports[`Register Component captures snapshot 1`] = `
     >
       <img
         alt="carpool_logo"
-        className="img-fluid d-block mx-auto mbottom-1rem"
+        className="img-fluid d-block mx-auto mbottom-1rem mtop-16px"
         id="logo-256"
         src="logo.png"
       />

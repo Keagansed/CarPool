@@ -8,7 +8,7 @@ exports[`IntroPage Component captures snapshot 1`] = `
     className="container-fluid pad-0"
   >
     <div
-      className="slick-slider slick-initialized"
+      className="slick-slider size-100 slick-initialized"
       dir="ltr"
     >
       <div
@@ -66,7 +66,7 @@ exports[`IntroPage Component captures snapshot 1`] = `
               >
                 <img
                   alt="slideOne"
-                  className="img-fluid d-block mx-auto"
+                  className="img-fluid d-block mx-auto size-100"
                   src="Intro_0.png"
                 />
               </div>
@@ -97,7 +97,7 @@ exports[`IntroPage Component captures snapshot 1`] = `
               >
                 <img
                   alt="slideTwo"
-                  className="img-fluid d-block mx-auto"
+                  className="img-fluid d-block mx-auto size-100"
                   src="Intro_1.png"
                 />
               </div>
@@ -128,7 +128,7 @@ exports[`IntroPage Component captures snapshot 1`] = `
               >
                 <img
                   alt="slideThree"
-                  className="img-fluid d-block mx-auto"
+                  className="img-fluid d-block mx-auto size-100"
                   src="Intro_2.png"
                 />
               </div>
@@ -159,7 +159,7 @@ exports[`IntroPage Component captures snapshot 1`] = `
               >
                 <img
                   alt="slideFour"
-                  className="img-fluid d-block mx-auto"
+                  className="img-fluid d-block mx-auto size-100"
                   src="Intro_3.png"
                 />
               </div>

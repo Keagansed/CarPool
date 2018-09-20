@@ -22,8 +22,7 @@ exports[`Carpool Offer Component captures snapshot 1`] = `
         <div
           className="col-12"
         >
-          5
-           Members
+          Join an existing carpool
         </div>
       </div>
       <div
@@ -115,13 +114,13 @@ exports[`Carpool Offer Component captures snapshot 1`] = `
             </div>
           </div>
           <div
-            className="row bordbot-1px-dash-grey"
+            className="row"
           >
-            <div
-              className="col-6"
+            <p
+              className="mx-auto mbottom-0"
             >
               Asking to join your existing carpool
-            </div>
+            </p>
           </div>
           <div
             className="row mtop-10px "

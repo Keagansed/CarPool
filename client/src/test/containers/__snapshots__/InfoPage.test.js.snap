@@ -3,7 +3,7 @@
 exports[`InfoPage Component captures snapshot 1`] = `
 <div>
   <div
-    className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 bg-purple"
+    className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 brad-0"
     id="infoHeader"
   >
     <div
