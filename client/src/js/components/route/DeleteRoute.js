@@ -41,7 +41,6 @@ class DeleteRoute extends Component{
             .then(json=> {
 
                 if(json.success) {
-                    alert('Route deleted');
                     json.groupChatIds.forEach(groupChat => {
                         app.database().ref()
                             .child('groupChats/'+ groupChat)
@@ -64,13 +63,14 @@ class DeleteRoute extends Component{
                                     });
                             });
                     });
+                    this.toggle();
+                    this.setRedirect();
                 }else{
+                    this.toggle();
                     alert(json.message);
                 }
-
+                
             });
-        this.setRedirect();
-        this.toggle();
     }
 
     setRedirect = () => {

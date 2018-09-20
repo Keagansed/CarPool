@@ -503,7 +503,8 @@ input:-webkit-autofill:focus {
 #inputConfirmPassword.error,
 #inputRouteName.error,
 #inputRouteTime.error,
-#inputStartLocation.error
+#inputStartLocation.error,
+#inputCarpoolName.error
 {
     border-color: red;
 } 

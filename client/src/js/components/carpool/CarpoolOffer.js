@@ -62,14 +62,14 @@ class CarpoolOffer extends Component {
 
         if(this.props.store.join) {
             temp.push(
-                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">Asking to join your existing carpool</div>
+                <div className="row" key={Math.random()}>
+                    <p className="mx-auto mbottom-0">Asking to join your existing carpool</p>
                 </div>
             );
         }else{
             temp.push(
-                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">This is an invite to create a new carpool</div>
+                <div className="row" key={Math.random()}>
+                    <p className="mx-auto mbottom-0">This is an invite to create a new carpool</p>
                 </div>
             );
         }

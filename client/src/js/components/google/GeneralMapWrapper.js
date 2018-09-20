@@ -10,41 +10,40 @@ import GoogleMapComponent from './GoogleMap';
  * of component when state variable changes.
  */
 @observer class MapWrapper extends Component {
-
     /*
      * Purpose: renders the component in the DOM. 
      */
     render() {
         let coordsArray = [];
-        let GoogleMap = (coordsArray) => ( 
+        let GoogleMap = (coordsArray) => (
             <GoogleMapComponent coordsArray={coordsArray} />
         );
-        
-        
+
+
         this.props.routeArr.forEach(routeObj => {
             // If statement to ensure routes aren't null due to asynchronousity.
-            if(typeof(routeObj.origin) !== "undefined" && typeof(routeObj.destination) !== "undefined"){
+            if (typeof (routeObj.origin) !== "undefined" && typeof (routeObj.destination) !== "undefined") {
                 let coords = {
-                    olat:routeObj.origin.lat,
-                    olng:routeObj.origin.lng,
-                    dlat:routeObj.destination.lat,
-                    dlng:routeObj.destination.lng
+                    olat: routeObj.origin.lat,
+                    olng: routeObj.origin.lng,
+                    dlat: routeObj.destination.lat,
+                    dlng: routeObj.destination.lng
                 };
                 coordsArray.push(coords);
-            }       
+            }
         });
 
-        
-        if(coordsArray.length) {
 
-            return(
-                <GoogleMap coords={coordsArray}/>
-            ); 
+        if (coordsArray.length) {
 
-        }else{
+            return (
+                <GoogleMap coords={coordsArray} />
+            );
 
-            return("");
-            
+        } else {
+
+            return ("");
+
         }
 
     }
