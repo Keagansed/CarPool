@@ -135,7 +135,7 @@ class loginStore {
      */
     @action authenticate = () => {
         this.setRegistered(false);
-        fetch('/api/account/signin',{
+        fetch(global.proxy + '/api/account/signin',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
