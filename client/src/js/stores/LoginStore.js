@@ -3,6 +3,7 @@
 import { action, observable } from 'mobx';
 
 import { getFromStorage, setInStorage } from '../utils/localStorage.js'
+import ServerURL from '../utils/server';
 
 /*
  Provides a store for variables and methods for the login page
@@ -97,28 +98,33 @@ class loginStore {
         Method that makes an API call to register the user
      */
     @action signUp = () => {
-        fetch('/api/account/signup',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                firstName: this.sFName,
-                lastName: this.sLName,
-                email: this.sEmail,
-                id: this.sId,
-                password: this.sPassword1
+        if(this.sPassword1 !== this.sPassword2) {
+            alert("Passwords do not match");
+        }
+        else{
+            fetch(ServerURL + '/api/account/signup',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    firstName: this.sFName,
+                    lastName: this.sLName,
+                    email: this.sEmail,
+                    id: this.sId,
+                    password: this.sPassword1
+                })
             })
-        })
-        .then(res=>res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json=>{
-            if(json.success) {
-                this.setRegistered(true);
-            }else{
-                alert(json.message);
-            }
-        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success) {
+                    this.setRegistered(true);
+                }else{
+                    alert(json.message);
+                }
+            })
+        }
     };
 
     /*
@@ -128,7 +134,7 @@ class loginStore {
      */
     @action authenticate = () => {
         this.setRegistered(false);
-        fetch('/api/account/signin',{
+        fetch(ServerURL + '/api/account/signin',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -138,13 +144,14 @@ class loginStore {
                 password: this.lPassword
             })
         })
-        .then(res=>res.json())
+        .then(res=> res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
             if(json.success) {
                 setInStorage('sessionKey',{ token:json.token });
                 this.setToken(json.token);
                 this.setLoggedIn(json.success);
+                console.log(json);
                 return;
             }else{
                 this.setToggleError(true);
@@ -160,7 +167,7 @@ class loginStore {
     @action sendPassword = () => {
         this.noEmailError = 'An email is being sent to you...';
         this.setRegistered(false);
-        fetch('/api/account/emailPassword',{
+        fetch(ServerURL + '/api/account/emailPassword',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -185,7 +192,7 @@ class loginStore {
         and log the user in.
      */
     @action resetPassword = () => {
-        fetch('/api/account/resetPassword',{
+        fetch(ServerURL + '/api/account/resetPassword',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -222,14 +229,17 @@ class loginStore {
         if(obj && obj.token) {
 
           //Stores token to be verified as string
-          const { token } = obj;
+            const { token } = obj;
 
-          fetch('/api/account/logout?token='+token)
-           .then(res => res.json())
-           .then(json => {
-                this.setLoggedIn(false);
-                this.setToken('');
-           });
+            fetch(ServerURL + '/api/account/logout?token='+token)
+            .then(res => res.json())
+            .then(json => {
+            this.setRegistered(false);
+            this.setLoggedIn(false);
+            this.setToken('');
+
+            setInStorage('sessionKey', {});
+            });
         }
     };
 

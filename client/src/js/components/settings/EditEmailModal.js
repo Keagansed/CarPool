@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 
+import ServerURL from '../../utils/server';
+
 const util = require('./../../utils/idCheck');
 // Used as a css prop
 const display = {
@@ -70,7 +72,7 @@ class EditEmailModal extends Component {
     * the update was successful
     */
     changeEmail(){
-        fetch('/api/account/profile/updateEmail?token=' + this.props.token,{
+        fetch(ServerURL + '/api/account/profile/updateEmail?token=' + this.props.token,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

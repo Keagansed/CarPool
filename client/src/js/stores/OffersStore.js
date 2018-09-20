@@ -1,6 +1,7 @@
 // File Type: Store
 
 import { action, observable  } from 'mobx';
+import ServerURL from '../utils/server';
 
 /*
     Provides a store for variables and methods for the making and getting carpool offers
@@ -15,7 +16,7 @@ class offersStore {
         Takes user's ID in as parameter token which is a string
      */
     @action getOffers = (token) => {
-        fetch('/api/system/offers/getOffers?token=' + token,{
+        fetch(ServerURL + '/api/system/offers/getOffers?token=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -40,7 +41,7 @@ class offersStore {
         all are string except join which is boolean
      */
     @action makeOffer = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join) => {        
-        fetch('/api/system/offers/makeOffer?token=' + senderId,{
+        fetch(ServerURL + '/api/system/offers/makeOffer?token=' + senderId,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -73,7 +74,7 @@ class offersStore {
      all are string except join which is boolean
      */
     @action makeOfferToJoin = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join, carpoolID) => {
-        fetch('/api/system/offers/makeOfferToJoin?token=' + senderId,{
+        fetch(ServerURL + '/api/system/offers/makeOfferToJoin?token=' + senderId,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

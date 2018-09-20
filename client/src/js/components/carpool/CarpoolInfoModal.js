@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js'
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -93,6 +94,23 @@ const hide = {
 
             });
         });
+
+        fetch(ServerURL + '/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success) {
+
+                }else{
+                    alert(json.message);
+                }
+
+            })
     }
 
     /*
@@ -129,7 +147,7 @@ const hide = {
                     key={Math.random()}
                 >
                     <div className="col-6 txt-left">
-                        {MessageStore.getUsername(user)}
+                        { MessageStore.getUsername(user) }
                     </div>
                     <div className="col-6 vertical-right">
                         <Link to={"/ProfilePage/"+user}>View Profile</Link>

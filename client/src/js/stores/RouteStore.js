@@ -1,6 +1,7 @@
 // File Type: Store
 
 import { action, observable } from 'mobx';
+import ServerURL from '../utils/server';
 
 class RouteStore {
 
@@ -26,7 +27,7 @@ class RouteStore {
     }
 
     @action getProfile = (token, userId ) => {
-        fetch('/api/account/profile?token=' + token + '&userId=' + userId,{
+        fetch(ServerURL + '/api/account/profile?token=' + token + '&userId=' + userId,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -46,7 +47,7 @@ class RouteStore {
 
     @action getRoute = (token, routeId) => {
 
-        fetch('/api/system/route/getRoute?routeId='+  routeId + '&token=' + token, { 
+        fetch(ServerURL + '/api/system/route/getRoute?routeId='+  routeId + '&token=' + token, { 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

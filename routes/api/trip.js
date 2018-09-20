@@ -6,6 +6,7 @@ const Trip = require('../../models/Trip.js');
 const Carpool = require('../../models/Carpool.js');
 const Route = require('../../models/Route.js');
 
+let routeTree = require('./Util/optimalTrip.js');
 let recurringTrips = require('./Util/recurringTrips.js')
 let verify = require('../middleware/verify.js');
 
@@ -93,7 +94,8 @@ router.post('/addTrip',(req,res,next)=>{
         dateTime,
         days,
         users,
-        driver
+        driver,
+        optimalTrip,
     } = body;
     const recurringId = Math.random();
 
@@ -133,6 +135,12 @@ router.post('/addTrip',(req,res,next)=>{
             message:"Input error: Driver cannot be blank!"
         });
     }
+    if(!optimalTrip.length > 0) {
+        return res.send({
+            success:false,
+            message:"Input error: No optimal trip!"
+        });
+    }
 
     const newTrip = new Trip();
     newTrip.tripName = tripName;
@@ -143,6 +151,7 @@ router.post('/addTrip',(req,res,next)=>{
     newTrip.users = users;
     newTrip.driver = driver;
     newTrip.recurringId = recurringId;
+    newTrip.optimalTrip = optimalTrip;    
     newTrip.save((err,trip) => {
         if(err) {
             return res.send({
@@ -362,8 +371,7 @@ router.get('/getFilteredTrips', (req, res, next) => {
     const { token } = query;
 
     Trip.find({['users.' + token]:true}, async (err,data) => {            
-        if(!err)
-        {
+        if(!err) {
             let updatedTrips = await recurringTrips.updateTrips(data);  
             if(typeof updatedTrips !== "undefined"){
                 return res.status(200).send({
@@ -379,6 +387,100 @@ router.get('/getFilteredTrips', (req, res, next) => {
             }
         }            
     });
+});
+
+router.post('/optimalTrip', async (req, res) => {
+    const { body } = req;
+    const { carpoolID, users, driverId } = body;
+
+    if((carpoolID === "") || (users === null) || (driverId === "")) {
+        return res.status(500).send({
+            success: false,
+            message:"Invalid parameters",
+        });
+    }
+
+    let rUsers = [];
+    let carpoolPromiseArr = [];
+    let routePromiseArr = [];
+
+     
+    carpoolPromiseArr.push( Carpool.findOne({ 
+        _id: carpoolID 
+    }));
+
+    await Promise.all(carpoolPromiseArr)
+    .then(
+        (data) => {            
+            data.forEach((carpool) => {
+
+                let { routes } = carpool;
+                 
+                routes.forEach(route => {
+                    if(users.includes(route.userId)) {
+
+                        routePromiseArr.push(Route.findOne({ 
+                            _id: route.id 
+                        }));
+                    }
+                }); 
+                
+            })           
+        }, (err) => {
+            return res.status(500).send({
+                success: false,
+                message:"Failed to retrieve carpool object", err,
+            });
+        }    
+    ) 
+
+    await Promise.all(routePromiseArr)
+        .then( 
+            (data) => {       
+                data.forEach((route) => {
+                    let temp = {
+                        route: {
+                            _id: route.id,
+                            startLocation: route.startLocation,
+                            endLocation: route.endLocation,
+                        },
+                        user: {
+                            _id: route.userId,
+                        }
+                    }
+
+                    rUsers.push(temp);
+                });
+
+            }, (err) => {
+                return res.status(500).send({
+                    success: false,
+                    message:"Failed to retrieve route objects",
+                });
+            }
+        )
+        .then(async () => {
+
+            if(rUsers.length > 1) {
+                let AI = new routeTree(rUsers, driverId);
+                let optimalTrip = await AI.calcOptimalRoute();
+
+                if(optimalTrip !== null) {
+                    return res.status(200).send({
+                        success: true,
+                        message: "Successfully created optimal trip",
+                        optimalTrip,
+                    });
+                }
+
+            }else {
+                return res.status(500).send({
+                    success: false,
+                    message: "Could not create user/route object"
+                });
+            }
+        })
+
 });
 
 module.exports = router;

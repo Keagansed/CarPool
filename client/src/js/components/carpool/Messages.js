@@ -36,6 +36,7 @@ import "../../../css/components/Spinner.css"
             userList:[]
         };
 
+        MessageStore.getAllUsers(getFromStorage('sessionKey').token);
         this.addMessage = this.addMessage.bind(this);
         this.suggestTrip = this.suggestTrip.bind(this);
         this.updateLastRefresh = this.updateLastRefresh.bind(this);
@@ -190,7 +191,6 @@ import "../../../css/components/Spinner.css"
         }
 
         if(verify) { 
-            
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -205,6 +205,7 @@ import "../../../css/components/Spinner.css"
                                 users={this.state.users} 
                                 carpoolName={this.props.match.params.carpoolName} 
                                 carpoolID={this.props.match.params.carpoolID}
+                                mongoCarpoolID={this.state.carpoolID}
                             />
                             <NewTripModal 
                                 token={this.state.token}

@@ -7,6 +7,7 @@ import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore';
 import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
+import ServerURL from '../../utils/server';
 
 //Just using temporarily for demonstration purposes - remove when not needed anymore
 import tempGroupPic from '../../../css/images/profile_default.png';
@@ -101,7 +102,7 @@ const hide = {
      */
     makeOfferToJoin() {
 
-        fetch('/api/system/route/getRoute?routeId=' + this.props.routeArr[0].id + '&token=' + this.props.token, {
+        fetch(ServerURL + '/api/system/route/getRoute?routeId=' + this.props.routeArr[0].id + '&token=' + this.props.token, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -112,7 +113,7 @@ const hide = {
             .then(route => {
                 if(route.success) {
 
-                    fetch('/api/system/carpool/getCarpool?_id=' + this.props.carpoolId, {
+                    fetch(ServerURL + '/api/system/carpool/getCarpool?_id=' + this.props.carpoolId, {
                         method:'GET',
                         headers:{
                             'Content-Type':'application/json'
@@ -138,7 +139,7 @@ const hide = {
                                         );
                                         let groupChatMessages = app.database().ref().child('groupChats/'+groupChatID+'/messages');
 
-                                        fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token,{
+                                        fetch(ServerURL + '/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token,{
                                             method:'GET',
                                             headers:{
                                                 'Content-Type':'application/json'
@@ -148,7 +149,7 @@ const hide = {
                                             .catch(error => console.error('Error:', error))
                                             .then(sender => {
 
-                                                fetch('/api/account/profile?token=' + this.props.token + '&userId=' + route.data[0].userId,{
+                                                fetch(ServerURL + '/api/account/profile?token=' + this.props.token + '&userId=' + route.data[0].userId,{
                                                     method:'GET',
                                                     headers:{
                                                         'Content-Type':'application/json'

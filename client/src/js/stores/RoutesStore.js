@@ -3,6 +3,7 @@
 import { action, observable  } from 'mobx';
 
 import { waypointGenerator } from './../utils/waypointGenerator';
+import ServerURL from '../utils/server';
 
 import HomePageStore from './HomePageStore';
 
@@ -44,7 +45,7 @@ class routesStore {
 
     @action getAllUsers = (token) => {
 
-        fetch('/api/account/profile/getAllUsers?token=' + token)
+        fetch(ServerURL + '/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(json => {
@@ -64,7 +65,7 @@ class routesStore {
     }
     
     @action getRoutes = (token) => {
-        fetch('/api/system/route/getRoutes?token=' + token,{
+        fetch(ServerURL + '/api/system/route/getRoutes?token=' + token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -94,7 +95,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
         waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
                 function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints,){
 
-                fetch('/api/system/route/newRoute?token=' + token,{
+                fetch(ServerURL + '/api/system/route/newRoute?token=' + token,{
                     method:'POST',
                     headers:{
                         'Content-Type':'application/json'
@@ -126,7 +127,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                     if(json.success === true) {
                         routeSuccess = true;
 
-                        fetch('/api/system/route/getRoutes?token=' + token,{
+                        fetch(ServerURL + '/api/system/route/getRoutes?token=' + token,{
                             method:'GET',
                             headers:{
                                 'Content-Type':'application/json'

@@ -47,15 +47,26 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
     
     componentDidMount() {
         const DirectionsService = new window.google.maps.DirectionsService();
-        const coordsArray = this.props.coordsArray.coords;
-        
-        
-        coordsArray.forEach((routeObj) => {
+        let coordsArray = this.props.coordsArray.coords;
+           
+        if(this.props.combined){ 
+            let wayPointsArr = [];
             
+            const origin = new window.google.maps.LatLng(coordsArray[0].lat, coordsArray[0].lng);
+            const destination = new window.google.maps.LatLng(coordsArray[coordsArray.length-1].lat, coordsArray[coordsArray.length-1].lng);
+        
+            for(let i = 1; i < coordsArray.length-1; i++){
+                const wayPointObj = {
+                    'location': new window.google.maps.LatLng(coordsArray[i].lat, coordsArray[i].lng),
+                    'stopover':true
+                }
+                wayPointsArr.push(wayPointObj);
+            }
+
             DirectionsService.route({
-                origin: new window.google.maps.LatLng(routeObj.olat, routeObj.olng),
-                destination: new window.google.maps.LatLng(routeObj.dlat, routeObj.dlng),
-                // waypoints:waypts,
+                origin: origin,
+                destination: destination,
+                waypoints:wayPointsArr,
                 optimizeWaypoints: true,
                 travelMode: window.google.maps.TravelMode.DRIVING,
             }, (result, status) => {
@@ -69,8 +80,30 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
                 }   
                 
             }); 
-        });
-        
+
+        }else{
+            coordsArray.forEach((routeObj) => {
+            
+                DirectionsService.route({
+                    origin: new window.google.maps.LatLng(routeObj.olat, routeObj.olng),
+                    destination: new window.google.maps.LatLng(routeObj.dlat, routeObj.dlng),
+                    // waypoints:waypts,
+                    optimizeWaypoints: true,
+                    travelMode: window.google.maps.TravelMode.DRIVING,
+                }, (result, status) => {
+                    
+                    if(this.mounted && status === window.google.maps.DirectionsStatus.OK ) {  
+    
+                        this.setState(prevState => ({
+                            directionArr: [...prevState.directionArr,result]
+                        }));
+                        
+                    }   
+                    
+                }); 
+            });
+        }
+          
     }
 
     componentWillUnmount(){

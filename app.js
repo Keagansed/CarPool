@@ -29,7 +29,7 @@ const option = {
     reconnectTries: 30000
 };
 //========== Define db ================
-mongoose.connect('mongodb://localhost/carpool',option)
+mongoose.connect('mongodb://localhost:27017/carpool',option)
 .then(() => {
     console.log('Mongoose connected');
 })
@@ -48,6 +48,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req,res,next) => {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	next();
+});
 
 app.use('/', indexRouter);
 app.use('/api/account/signup', signUpRouter)

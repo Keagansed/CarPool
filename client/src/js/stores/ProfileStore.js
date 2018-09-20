@@ -3,6 +3,7 @@
 import {  action, computed, observable } from 'mobx';
 
 import { calcSecLvl } from '../utils/trustFactor.js';
+import ServerURL from '../utils/server';
 
 class profileStore {
 
@@ -50,7 +51,7 @@ class profileStore {
 
     @action getProfile = (token, userId) => {    
 
-        fetch('/api/account/profile?token=' + token + '&userId=' + userId)
+        fetch(ServerURL + '/api/account/profile?token=' + token + '&userId=' + userId)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
@@ -61,7 +62,7 @@ class profileStore {
                 this.opacity = "";
                 this.setEdit();
 
-                fetch('/api/account/vouch/getVouches?idFor=' + userId)
+                fetch(ServerURL + '/api/account/vouch/getVouches?idFor=' + userId)
                 .then(res => res.json())
                 .then(vouches => {
                     if (vouches.success) {
@@ -109,7 +110,7 @@ class profileStore {
 
     @action editSubmit = () => {
 
-        fetch('/api/account/updateProfile',{
+        fetch(ServerURL + '/api/account/updateProfile',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
