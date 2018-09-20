@@ -44,7 +44,7 @@ class EditRouteModal extends Component{
     componentDidMount(){
 
         
-        // fetch('/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.props.token, {
+        // fetch(ServerURL + '/api/system/route/getRoute?routeId=' + this.props.routeId + '&token=' + this.props.token, {
         //     method:'GET',
         //     headers: {
         //         'Content-Type':'application/json'

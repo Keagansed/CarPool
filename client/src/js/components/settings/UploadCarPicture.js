@@ -1,6 +1,7 @@
 // File Type: Component
 
 import React, { Component } from 'react';
+import ServerURL from '../../utils/server';
 
 // Used as a css prop
 const display = {
@@ -47,7 +48,7 @@ class UploadCarPictureSetting extends Component {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/api/account/uploadFile/CarPic?token=' + this.props.token, true);
+        xhr.open('POST', ServerURL + '/api/account/uploadFile/CarPic?token=' + this.props.token, true);
         xhr.onreadystatechange = res =>
         {            
             if(xhr.readyState === XMLHttpRequest.DONE)

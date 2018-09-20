@@ -17,10 +17,15 @@ const router = express.Router();
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
 //          token: String; The object id of the user in the User collection.
+
+
 router.post('/',(req,res,next)=>{
 	const { body } = req;
 	const{ password } = body;
 	let { email } = body;
+	// res.setHeader('Access-Control-Allow-Methods', 'POST');
+	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	// res.setHeader('Access-Control-Max-Age', 86400);
 
 	if(!email) {
 		return res.send({ 

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
 import CarpoolStore from '../../stores/CarpoolStore'
+import ServerURL from '../../utils/server'
 
 const display = {
     display: 'block'
@@ -109,7 +110,7 @@ class CarpoolOffer extends Component {
      * and closes the modal.
      */
     handleDeclineInvite() {
-        fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
+        fetch(ServerURL + '/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

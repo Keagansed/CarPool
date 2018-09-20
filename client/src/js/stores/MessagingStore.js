@@ -1,13 +1,14 @@
 // File Type: Store
 
 import {  action, observable } from 'mobx';
+import ServerURL from '../utils/server';
 
 class messageStore {
     @observable allUsers = [];
     @observable optimalTrip = [];
 
     @action getAllUsers = (token) => {
-        fetch('/api/account/profile/getAllUsers?token=' + token)
+        fetch(ServerURL + '/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .then(json => {
                 if(json.success){

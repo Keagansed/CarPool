@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import app from '../../stores/FirebaseStore.js'
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -33,7 +34,7 @@ class DeleteRoute extends Component{
     }
 
     delete = () => {
-        fetch('/api/system/route/deleteRoute?token=' + this.props.token + '&routeId=' + this.props.routeId, {
+        fetch(ServerURL + '/api/system/route/deleteRoute?token=' + this.props.token + '&routeId=' + this.props.routeId, {
             method:'GET',
         })
             .then(res=>res.json())

@@ -7,6 +7,7 @@ import MapComponent from '../google/GeneralMapWrapper';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js';
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -198,7 +199,7 @@ const hide = {
         });
 
         this.buttons = this.state.buttons;
-        fetch('/api/system/trip/respondToTrip?token=' + this.props.token,{
+        fetch(ServerURL + '/api/system/trip/respondToTrip?token=' + this.props.token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

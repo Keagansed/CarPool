@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 
+import ServerURL from '../../utils/server';
+
 // Used as a css prop
 const display = {
     display: 'block'
@@ -79,7 +81,7 @@ class EditNameModal extends Component {
     * the update was successful
     */
     changeName(){
-        fetch('/api/account/profile/updateName?token=' + this.props.token,{
+        fetch(ServerURL + '/api/account/profile/updateName?token=' + this.props.token,{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'

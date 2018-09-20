@@ -3,6 +3,7 @@
 import { action, observable } from 'mobx';
 
 import { getFromStorage } from '../utils/localStorage.js'
+import ServerURL from '../utils/server';
 
 class vouchStore {
     @observable vouchesFor = [];
@@ -10,7 +11,7 @@ class vouchStore {
     @observable token;
 
     @action getAllUsers = (token) => {
-        fetch('/api/account/profile/getAllUsers?token=' + token)
+        fetch(ServerURL + '/api/account/profile/getAllUsers?token=' + token)
             .then(res => res.json())
             .then(json => {
                 if(json.success){
@@ -64,7 +65,7 @@ class vouchStore {
 
     @action getVouchesFor= (idFor) => {
 
-        fetch('/api/account/vouch/getVouches?idFor=' + idFor)
+        fetch(ServerURL + '/api/account/vouch/getVouches?idFor=' + idFor)
         .then(res => res.json())
         .then(vouches => {
             if (vouches.success) {
@@ -79,7 +80,7 @@ class vouchStore {
     @action submitVouch(tripID, idFor, rating, reviewBody, token){
         if(reviewBody!== undefined){
             const obj = getFromStorage('sessionKey');
-            fetch('/api/account/vouch/submitVouch?token=' + token,{
+            fetch(ServerURL + '/api/account/vouch/submitVouch?token=' + token,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

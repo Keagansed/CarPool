@@ -1,6 +1,7 @@
 // File Type: Store
 
 import { action, observable } from 'mobx';
+import ServerURL from '../utils/server';
 
 /*
  Provides a store for variables and methods for the matches page
@@ -39,7 +40,7 @@ class matchesStore {
         this.recommendedCarpools = [];
         this.loadingRoutes = true;
         
-        fetch('/api/system/route/getRecommendedRoutes?token=' + token + '&routeId=' + routeId,{ 
+        fetch(ServerURL + '/api/system/route/getRecommendedRoutes?token=' + token + '&routeId=' + routeId,{ 
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
