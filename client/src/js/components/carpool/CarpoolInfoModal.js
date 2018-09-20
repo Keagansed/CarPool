@@ -94,7 +94,7 @@ const hide = {
             });
         });
 
-        fetch('/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
+        fetch(ServerURL + '/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
