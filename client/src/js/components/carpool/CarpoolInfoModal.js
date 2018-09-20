@@ -93,6 +93,23 @@ const hide = {
 
             });
         });
+
+        fetch('/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+            .then(res=>res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json=>{
+                if(json.success) {
+
+                }else{
+                    alert(json.message);
+                }
+
+            })
     }
 
     /*
