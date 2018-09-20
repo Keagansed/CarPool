@@ -135,7 +135,7 @@ class tripsStore {
 
                 console.log(optimalTrip);
                 
-                fetch('/api/system/trip/addTrip?token=' + token,{
+                fetch(ServerURL + '/api/system/trip/addTrip?token=' + token,{
                     method:'POST',
                     headers:{
                         'Content-Type':'application/json'

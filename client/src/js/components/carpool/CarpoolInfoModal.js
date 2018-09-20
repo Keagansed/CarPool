@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js'
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -94,7 +95,7 @@ const hide = {
             });
         });
 
-        fetch('/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
+        fetch(ServerURL + '/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
             method:'GET',
             headers:{
                 'Content-Type':'application/json'

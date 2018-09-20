@@ -252,7 +252,7 @@ const hide = {
     renderMap = async (tripId) => {
         let routeArr = [];
 
-        await fetch('/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
+        await fetch(ServerURL + '/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
         .then(res => res.json())
         .then(json => {
             if(json) {
