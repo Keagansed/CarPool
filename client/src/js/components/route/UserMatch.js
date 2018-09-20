@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore';
 import RouteStore from './../../stores/RouteStore';
-
+import ServerURL from '../../utils/server';
 
 //'display' is used to show the modal
 const display = {
@@ -127,7 +127,7 @@ const hide = {
             typeof(this.props.userObj.firstName) !== "undefined" && 
             typeof(this.props.userObj.lastName) !== "undefined"
         ){
-            profilePicture = "./../../api/account/getImage?filename="+this.props.userObj.profilePic;
+            profilePicture = ServerURL + "/api/account/getImage?filename="+this.props.userObj.profilePic;
             userFullName  = this.props.userObj.firstName + " "+this.props.userObj.lastName;
         }
     
