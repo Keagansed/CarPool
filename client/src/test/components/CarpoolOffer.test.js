@@ -28,7 +28,7 @@ describe('Carpool Offer Component', () => {
         };
         container = shallow(<MemoryRouter><CarpoolOffer {...props}/></MemoryRouter>);
         instance = container.instance();
-    })
+    });
 
     it ('captures snapshot', () => {
         const renderedValue = renderer.create(<MemoryRouter><CarpoolOffer {...props}/></MemoryRouter>).toJSON()

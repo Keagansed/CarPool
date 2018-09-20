@@ -19,15 +19,15 @@ class MockStore {
             RecieverRout : {},
             JoinRequest : false
         });
-    }
+    };
 
     makeOffer = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join, carpoolID) => {
         createCarpoolOffer = true;
-    }
+    };
 
     makeOfferToJoin = () => {
         joinCarpoolOffer = true;
-    }
+    };
 }
 
 describe('Carpool Offers Component', () => {
@@ -42,7 +42,7 @@ describe('Carpool Offers Component', () => {
         // };
         container = shallow(<CarpoolOffers store={mockStore} token="1234"/>);
         instance = container.instance();
-    })
+    });
 
     it ('captures snapshot', () => {
         const renderedValue = renderer.create(<MemoryRouter><CarpoolOffers store={mockStore} token="1234"/></MemoryRouter>).toJSON()

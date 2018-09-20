@@ -28,7 +28,7 @@ describe('Login Store test functions', () => {
             loggedIn : true,
             lEmail : '',
             lPassword : ''
-        }
+        };
 
         LoginStore.setLoggedIn(true);
 

@@ -44,12 +44,12 @@ class MockStore {
         this.setRegistered(false);
         this.setToken("testtoken123");
         this.setLoggedIn(true);
-    }
+    };
 
     logout = () => {
         this.setLoggedIn(false);
         this.setToken('');
-    }
+    };
 
 }
 
@@ -77,27 +77,27 @@ describe('Login Page Component', () => {
         expect(instance.state.email).toEqual('');
         instance.updateLoginEmailValue(event);
         expect(instance.state.email).toEqual("test@email.com");
-    })
+    });
 
     it('updates login password value correctly', () => {
         const event = {target: {value: "1234"}};
         expect(instance.state.password).toEqual('');
         instance.updateLoginPasswordValue(event);
         expect(instance.state.password).toEqual("1234");
-    })
+    });
 
     it('checks correct state variables correctly', () => {
         expect(instance.canBeSubmitted()).toEqual(true);
-    })
+    });
 
     it('check state variables correctly with incorrect email', () => {
         instance.state.email = "invalidemail";
         expect(instance.canBeSubmitted()).toEqual(false);
-    })
+    });
 
     it('check state variables correctly with incorrect password', () => {
         instance.state.email = "test@email.com";
         instance.state.password = "";
         expect(instance.canBeSubmitted()).toEqual(false);
-    })
+    });
 });
