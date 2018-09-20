@@ -3,7 +3,8 @@
 import {  action, observable } from 'mobx';
 
 class messageStore {
-    @observable allUsers=[];
+    @observable allUsers = [];
+    @observable optimalTrip = [];
 
     @action getAllUsers = (token) => {
         fetch('/api/account/profile/getAllUsers?token=' + token)
@@ -57,6 +58,12 @@ class messageStore {
                 return this.userProfilePicName;
             }
         }
+
+    }
+
+    @action getOptimalTrip = (tripId, token) => {
+
+        
 
     }
 }

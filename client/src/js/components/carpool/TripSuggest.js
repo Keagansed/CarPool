@@ -3,6 +3,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
+import MapComponent from '../google/GeneralMapWrapper';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js';
@@ -244,6 +245,34 @@ const hide = {
         this.buttons = this.state.buttons;
     }
 
+    renderMap = async (tripId) => {
+        // MessageStore.getOptimalTrip(tripID, getFromStorage('sessionKey').token);
+
+        // let routeArr = MessageStore.optimalTrip;
+        let routeArr = [];
+
+        await fetch('/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
+        .then(res => res.json())
+        .then(json => {
+            if(json) {
+                if(json.success) {
+                    routeArr = json.data.optimalTrip;
+                }else {
+                    console.error(json.message);
+                }
+
+            }else {
+                console.error("Server Error")
+            }
+        });
+
+        return (
+            <div>
+                <MapComponent routeArr={routeArr}/>
+            </div>
+        )
+    }
+
     /*
      * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
@@ -271,7 +300,7 @@ const hide = {
                                 </div>
                             </div>
                             <div>
-                                { this.props.children }
+                                { this.renderMap(this.props.tripID) }
                             </div>
                             <div className="row padtop-0">
                                 <div className="col-12">
