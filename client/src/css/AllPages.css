@@ -497,7 +497,10 @@ input:-webkit-autofill:focus {
 #inputID.error,
 #inputEmail.error,
 #inputPassword.error,
-#inputConfirmPassword.error
+#inputConfirmPassword.error,
+#inputRouteName.error,
+#inputRouteTime.error,
+#inputStartLocation.error
 {
     border-color: red;
 } 

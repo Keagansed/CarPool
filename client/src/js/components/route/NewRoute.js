@@ -8,6 +8,18 @@ import MapWrapper from '../google/MapWrapper';
 import WeekdaySelector from './WeekdaySelector';
 
 /*
+* Purpose: Validate whether all of the fields are valid - true if there are errors
+*/
+function validate(routeName, routeTime, startLoc, endLoc) {
+    return {
+        routeName: routeName.length === 0 || routeName.length > 50,
+        routeTime: routeTime === "",
+        startLoc: startLoc.length === 0,
+        endLoc: endLoc.length === 0,
+    };
+}
+
+/*
 * The purpose of this NewRouteModal class is to provide a component that allows a user
 * to add a route. The component consists of an add sign which opens a the add route page 
 * when clicked on.
@@ -22,16 +34,20 @@ import WeekdaySelector from './WeekdaySelector';
         super(props);
 
         this.state = {
-            //stores the session token
             token: this.props.token,
-            //stores the routeName
             routeName: '',
-            // startLocation: '',
-            // endLocation: '',
-            //stores the route time
-            time: '00:00',
+            startLocation: '',
+            endLocation: '',
+            time: '',
             //whether or not the route repeats
             repeat: false,
+
+            touched: {
+                routeName: false,
+                startLocation: false,
+                endLocation: false,
+                time: false,
+            },
         }
     }
 
@@ -46,45 +62,46 @@ import WeekdaySelector from './WeekdaySelector';
         })
     }
 
-    // updateStartValue = (event) => {
-    //     event.preventDefault();
+    /*
+    * The purpose of the updateNameValue method is to change the value of the startLocation field.
+    */
+    updateStartValue = (event) => {
+        event.preventDefault();
+        console.log(event.target.value);
+        this.setState({
+            startLocation: event.target.value
+        })
+    }
 
-    //     this.setState({
-    //         startLocation: event.target.value
-    //     })
-    // }
+    /*
+    * The purpose of the updateNameValue method is to change the value of the endLocation field.
+    */
+    updateEndValue = (event) => {
+        event.preventDefault();
 
-    // updateEndValue = (event) => {
-    //     event.preventDefault();
-
-    //     this.setState({
-    //         endLocation: event.target.value
-    //     })
-    // }
+        this.setState({
+            endLocation: event.target.value
+        })
+    }
 
     /*
     * The purpose of the updateTimeValue method is to change the value of the time field.
     */
     updateTimeValue = (event) => {
         event.preventDefault();
-
         this.setState({
             time: event.target.value
         })
     }
 
-    // updateRepeatValue = (event) => {
-    //     event.preventDefault();
-
-    //     let value = false;
-
-    //     if(event.target.value === 'on')
-    //         value = true;
-
-    //     this.setState({
-    //         repeat: value
-    //     })
-    // }
+    /*
+    * Purpose: Check whether all fields have been entered correctly
+    */
+    canBeSubmitted() {
+        const errors = validate(this.state.routeName, this.state.time, this.state.startLocation, this.state.endLocation);
+        const isDisabled = Object.keys(errors).some(x => errors[x]);
+        return !isDisabled;
+    }
 
     /*
     * The purpose of the handleAddRoute method is to add the route for which details
@@ -92,6 +109,10 @@ import WeekdaySelector from './WeekdaySelector';
     */
     handleAddRoute = (event) => {
         event.preventDefault();
+
+        if (!this.canBeSubmitted()) {
+            return;
+        }
 
         const {
             token,
@@ -103,23 +124,45 @@ import WeekdaySelector from './WeekdaySelector';
     }
 
     /*
+    * Purpose: Give fields that have been entered incorrectly red borders
+    */
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true },
+        });
+    }
+
+    /*
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
     */
     render() {
+        /*
+        * Purpose: Only give fields red borders if the user has changed/access them
+        * and they are still not valid.
+        */
+        const shouldMarkError = (field) => {
+            const hasError = errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
+        const errors = validate(this.state.routeName, this.state.time, this.state.startLocation, this.state.endLocation);
+        const isDisabled = Object.keys(errors).some(x => errors[x]);
+
         let addingRoute;
-        if (this.props.store.addingRoute){
+        if (this.props.store.addingRoute) {
             addingRoute = <div className="spinner">
-                    <div className="double-bounce1"></div>
-                    <div className="double-bounce2"></div>
-                </div>
+                <div className="double-bounce1"></div>
+                <div className="double-bounce2"></div>
+            </div>
         } else {
-            addingRoute =  <button
-                    onClick={this.handleAddRoute}
-                    className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-                >
-                    <b>Add Route</b>
-                </button>
+            addingRoute = <button
+                onClick={this.handleAddRoute}
+                className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+                disabled={isDisabled}
+            >
+                <b>Add Route</b>
+            </button>
         }
         return (
             <div className="container-fluid">
@@ -131,8 +174,10 @@ import WeekdaySelector from './WeekdaySelector';
                         id="inputRouteName"
                         type="text"
                         onChange={this.updateNameValue}
-                        className="col-10 form-control mx-auto brad-2rem"
+                        onBlur={this.handleBlur('routeName')}
+                        className={(shouldMarkError('routeName') ? "error" : "") + " col-10 form-control mx-auto brad-2rem"}
                         placeholder="e.g. Home to Work"
+                        value={this.state.routeName}
                     />
                 </div>
                 <div className="row  padbot-10px">
@@ -143,8 +188,9 @@ import WeekdaySelector from './WeekdaySelector';
                         id="inputRouteTime"
                         type="time"
                         onChange={this.updateTimeValue}
-                        className="col-10 form-control mx-auto brad-2rem"
-                        placeholder="08:00"
+                        onBlur={this.handleBlur('routeTime')}
+                        className={(shouldMarkError('routeTime') ? "error" : "") + " col-10 form-control mx-auto brad-2rem"}
+                        value={this.state.time}
                     />
                 </div>
                 <div className="row  padbot-10px">
@@ -159,7 +205,9 @@ import WeekdaySelector from './WeekdaySelector';
                     <h6 className="fw-bold mx-auto m-0 txt-white">Start and End Locations</h6>
                 </div>
                 <div className="row padbot-10px">
-                    <LocationSearchInput placeholder="Start Location" />
+                    <LocationSearchInput 
+                        placeholder="Start Location"
+                    />
                 </div>
                 <div className="row padbot-10px">
                     <LocationSearchInput placeholder="End Location" />
