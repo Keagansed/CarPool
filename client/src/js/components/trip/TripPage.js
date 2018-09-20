@@ -10,6 +10,7 @@ import CancelTripModal from './CancelTripModal';
 import MapComponent from '../google/GeneralMapWrapper';
 import ReviewTripModal from './ReviewTripModal';
 import { getFromStorage } from '../../utils/localStorage.js';
+import { generateURL } from '../../utils/generateGoogleMapURL';
 
 /**
  * Purpose: An interface to allow the user to set up a Trip with members inside a Carpool
@@ -73,13 +74,17 @@ import { getFromStorage } from '../../utils/localStorage.js';
         let driver = [];
 
         let origin, destination;
-
+        let googleURL;
         if(typeof(TripsStore.tripObj.optimalTrip) !== "undefined"){
             this.routeArr = TripsStore.tripObj.optimalTrip;
+            googleURL = (generateURL(this.routeArr));
+            console.log(googleURL)
+            console.log('TCL: TripPage -> render -> googleURL', googleURL);
+            
         }
         if( typeof(TripsStore.routeObj.startLocation) !== "undefined" &&
             typeof(TripsStore.routeObj.endLocation) !== "undefined"){
-                
+
             origin = TripsStore.routeObj.startLocation.name;
             destination = TripsStore.routeObj.endLocation.name;
         }
@@ -172,6 +177,13 @@ import { getFromStorage } from '../../utils/localStorage.js';
 
                         { carpoolers }
                     </div>
+
+                    <a
+                        href={googleURL}
+                        className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+                    >
+                        Begin Route
+                    </a>
             </div>
         );
     }
