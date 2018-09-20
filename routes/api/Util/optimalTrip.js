@@ -16,6 +16,7 @@ module.exports = class routeTree {
     // rUsers = []; // object with user object and route object together => {route:{}, user:{}}
 
     constructor(rusers, driverId) {
+
         this.open = [];
         this.closed = [];
         this.children = [];

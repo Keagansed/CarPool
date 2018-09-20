@@ -102,32 +102,72 @@ class tripsStore {
     }
 
     @action addTrip = (suggestTrip, messageContent, users, token) => {
-        fetch('/api/system/trip/addTrip?token=' + token,{
-            method:'POST',
+
+        let keys = Object.keys(users);
+        let userIds = [];
+        let i = 0;
+
+        for (var key in users) {
+            if(users[key] === true) {
+                userIds.push(keys[i]);
+            }
+            i++;
+        }
+
+        fetch('/api/system/trip/optimalTrip?token=' + token, {
+            method: 'POST',
             headers:{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                tripName: this.tripName,
                 carpoolID: this.carpoolID,
-                idBy: this.idBy,
-                dateTime: this.dateTime,
-                days: this.days,
-                users: this.users,
-                driver: this.idBy,
+                users: userIds,
+                driverId: this.idBy,
             })
         })
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
-                if(json.success){
-                    this.tripID = json._id;
-                    suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
-                }else{
-                    alert(json.message);
-                }
-            })
-        }
+        .then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json => {
+            if(json.success){
+                
+                let { optimalTrip } = json;
+
+                console.log(optimalTrip);
+                
+                fetch('/api/system/trip/addTrip?token=' + token,{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        tripName: this.tripName,
+                        carpoolID: this.carpoolID,
+                        idBy: this.idBy,
+                        dateTime: this.dateTime,
+                        days: this.days,
+                        users: this.users,
+                        driver: this.idBy,
+                        optimalTrip: optimalTrip,
+
+                    })
+                })
+                .then(res=>res.json())
+                .catch(error => console.error('Error:', error))
+                .then(json=>{
+                    if(json.success){
+                        this.tripID = json._id;
+                        suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
+                    }else{
+                        alert(json.message);
+                    }
+                })
+
+            }else{
+                alert(json.message);
+            }
+        })
+            
+    }
 
     @action addTripWithoutFirebase = () => {
         fetch('/api/system/trip/addTrip?token=' + getFromStorage('sessionKey').token,{

@@ -32,6 +32,10 @@ let TripSchema = new mongoose.Schema({
     recurringId:{
         type:String,
         required:true
+    },
+    optimalTrip: {
+        type: {},
+        required: true
     }
 });
 

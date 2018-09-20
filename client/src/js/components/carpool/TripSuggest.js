@@ -270,6 +270,9 @@ const hide = {
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                { this.props.children }
+                            </div>
                             <div className="row padtop-0">
                                 <div className="col-12">
                                     <div className="col-12">

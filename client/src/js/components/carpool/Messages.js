@@ -9,6 +9,7 @@ import MessageStore  from '../../stores/MessagingStore.js';
 
 import CarpoolInfoModal from './CarpoolInfoModal.js';
 import { getFromStorage } from '../../utils/localStorage.js';
+import MapComponent from '../google/GeneralMapWrapper';
 import Message from './Message';
 import MessageForm from './MessageForm';
 import NewTripModal from './NewTripModal';
@@ -159,6 +160,14 @@ import "../../../css/components/Spinner.css"
         return false;
     }
 
+    renderMap = () => {
+        let routeArr = [];
+
+        return (
+            <MapComponent routeArr={routeArr}/>
+        )
+    }
+
     /*
      * Purpose: renders the component in the DOM. Displays a spinner if the messages are still loading or if the user cannot be verified.
      * The colour of the senders name is also different for each person. 
@@ -245,7 +254,9 @@ import "../../../css/components/Spinner.css"
                                                 userColour={userColour} 
                                                 dateTime={message.dateTime} 
                                                 key={message.id}
-                                            />
+                                            >
+                                                { this.renderMap() }
+                                            </TripSuggest>
                                         );
 
                                     }else{
