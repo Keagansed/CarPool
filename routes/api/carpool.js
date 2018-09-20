@@ -35,6 +35,58 @@ router.get('/getAllOtherCarpools', function (req, res, next) {
         });
 });
 
+// This method removes a user from a carpool.
+// Parameters:
+//      _id: String;  This is the object id of a document from the Carpool collection.
+// Return Value:
+//      Response containing:
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
+//          data: JSON object; Contains the data from the DB query.
+router.get('/leaveCarpool', function (req, res, next) {
+    const { query } = req;
+    const { _id, token } = query;
+    Carpool.find({ _id: _id },
+        (err, data) => {
+            if (err) {
+                return res.send({
+                    success: false,
+                    message: "Database error: " + err,
+                });
+            } else {
+                console.log(data);
+
+                let routes = data[0].routes;
+                routes.forEach((route) => {
+                    if (route.userId === token){
+                        let index = routes.indexOf(route);
+                        routes.splice(index,1);
+                    }
+                });
+
+                Carpool.findOneAndUpdate({
+                        _id: _id
+                    },
+                    {$set:{
+                        routes : routes
+                    }
+                    },
+                    {upsert: true},
+                    (err) => {
+                        if(err) {
+                            return res.send({
+                                success:false,
+                                message:"Database error: " + err,
+                            });
+                        }else{
+                            return res.send({success:true});
+                        }
+                    }
+                );
+            }
+        });
+});
+
 // This method gets a specific carpool document from the Carpool collection.
 // Parameters: 
 //      _id: String;  This is the object id of a document from the Carpool collection.
