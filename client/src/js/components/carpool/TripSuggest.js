@@ -3,6 +3,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
+import MapComponent from '../google/GeneralMapWrapper';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js';
@@ -30,7 +31,8 @@ const hide = {
 
         this.state = {
             buttons: [],
-            toggle: false
+            toggle: false,
+            routeArr: []
         };
         this.messageContent = props.messageContent;
         this.messageID = props.messageID;
@@ -104,6 +106,8 @@ const hide = {
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        this.renderMap(this.props.tripID);
     }
 
     /*
@@ -244,6 +248,32 @@ const hide = {
         this.buttons = this.state.buttons;
     }
 
+    renderMap = async (tripId) => {
+        let routeArr = [];
+
+        await fetch('/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
+        .then(res => res.json())
+        .then(json => {
+            if(json) {
+                if(json.success) {
+                    routeArr = json.data[0];
+                    if(typeof routeArr !== "undefined"){                
+                        this.setState({
+                            routeArr: [routeArr.optimalTrip]
+                        })                  
+                    }
+                    
+                }else {
+                    console.error(json.message);
+                }
+
+            }else {
+                console.error("Server Error")
+            }
+        });
+
+    }
+
     /*
      * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
@@ -269,6 +299,9 @@ const hide = {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div>
+                                <MapComponent routeArr={this.state.routeArr}/>
                             </div>
                             <div className="row padtop-0">
                                 <div className="col-12">
