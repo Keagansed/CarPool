@@ -63,7 +63,7 @@ const hide = {
     */
     render() {
 
-        let originName, destinationName, firstCommaIndex;
+        let originName, destinationName;
 
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
             originName = this.routeStore1.routeObj.startLocation.name;

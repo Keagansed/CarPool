@@ -20,18 +20,18 @@ class IntroPage extends React.Component {
         return (
             <div className="bg-purple vertical-center">
                 <div className="container-fluid pad-0">
-                    <Slider {...settings}>
+                    <Slider {...settings} className="size-100">
                         <div>
-                            <img className="img-fluid d-block mx-auto" src={slide_1} alt="slideOne"/>
+                            <img className="img-fluid d-block mx-auto size-100" src={slide_1} alt="slideOne"/>
                         </div>
                         <div>
-                            <img className="img-fluid d-block mx-auto" src={slide_2} alt="slideTwo"/>
+                            <img className="img-fluid d-block mx-auto size-100" src={slide_2} alt="slideTwo"/>
                         </div>
                         <div>
-                            <img className="img-fluid d-block mx-auto" src={slide_3} alt="slideThree"/>
+                            <img className="img-fluid d-block mx-auto size-100" src={slide_3} alt="slideThree"/>
                         </div>
                         <div>
-                            <img className="img-fluid d-block mx-auto" src={slide_4} alt="slideFour"/>
+                            <img className="img-fluid d-block mx-auto size-100" src={slide_4} alt="slideFour"/>
                         </div>
                         <div className="txt-center">
                             <p className="txt-center txt-white mx-auto">Now that you now how the Carpool Platform works, all you need to do is log into your account to get started!</p>

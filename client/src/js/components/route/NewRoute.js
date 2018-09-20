@@ -6,7 +6,6 @@ import { observer } from 'mobx-react';
 import LocationSearchInput from '../google/GoogleAuto';
 import MapWrapper from '../google/MapWrapper';
 import WeekdaySelector from './WeekdaySelector';
-import HomePageStore from './../../stores/HomePageStore';
 
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
@@ -122,7 +121,6 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         } = this.state;
 
         this.props.store.newRoute(token, time, routeName);
-        HomePageStore.toggleToRoute();
     }
 
     /*
