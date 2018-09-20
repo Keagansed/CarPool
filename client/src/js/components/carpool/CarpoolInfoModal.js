@@ -146,7 +146,7 @@ const hide = {
                     key={Math.random()}
                 >
                     <div className="col-6 txt-left">
-                        {MessageStore.getUsername(user)}
+                        { MessageStore.getUsername(user) }
                     </div>
                     <div className="col-6 vertical-right">
                         <Link to={"/ProfilePage/"+user}>View Profile</Link>

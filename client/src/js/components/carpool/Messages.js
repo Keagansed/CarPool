@@ -36,6 +36,7 @@ import "../../../css/components/Spinner.css"
             userList:[]
         };
 
+        MessageStore.getAllUsers(getFromStorage('sessionKey').token);
         this.addMessage = this.addMessage.bind(this);
         this.suggestTrip = this.suggestTrip.bind(this);
         this.updateLastRefresh = this.updateLastRefresh.bind(this);
