@@ -6,6 +6,7 @@ import { observer } from 'mobx-react';
 import LocationSearchInput from '../google/GoogleAuto';
 import MapWrapper from '../google/MapWrapper';
 import WeekdaySelector from './WeekdaySelector';
+import HomePageStore from './../../stores/HomePageStore';
 
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
@@ -36,8 +37,8 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         this.state = {
             token: this.props.token,
             routeName: '',
-            startLocation: '',
-            endLocation: '',
+            startLocation: 'temporary - remove when location check figured out',
+            endLocation: 'temporary - remove when location check figured out',
             time: '',
             //whether or not the route repeats
             repeat: false,
@@ -62,27 +63,27 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         })
     }
 
-    /*
-    * The purpose of the updateNameValue method is to change the value of the startLocation field.
-    */
-    updateStartValue = (event) => {
-        event.preventDefault();
-        console.log(event.target.value);
-        this.setState({
-            startLocation: event.target.value
-        })
-    }
+    // /*
+    // * The purpose of the updateNameValue method is to change the value of the startLocation field.
+    // */
+    // updateStartValue = (event) => {
+    //     event.preventDefault();
+    //     console.log(event.target.value);
+    //     this.setState({
+    //         startLocation: event.target.value
+    //     })
+    // }
 
-    /*
-    * The purpose of the updateNameValue method is to change the value of the endLocation field.
-    */
-    updateEndValue = (event) => {
-        event.preventDefault();
+    // /*
+    // * The purpose of the updateNameValue method is to change the value of the endLocation field.
+    // */
+    // updateEndValue = (event) => {
+    //     event.preventDefault();
 
-        this.setState({
-            endLocation: event.target.value
-        })
-    }
+    //     this.setState({
+    //         endLocation: event.target.value
+    //     })
+    // }
 
     /*
     * The purpose of the updateTimeValue method is to change the value of the time field.
@@ -121,6 +122,7 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         } = this.state;
 
         this.props.store.newRoute(token, time, routeName);
+        HomePageStore.toggleToRoute();
     }
 
     /*

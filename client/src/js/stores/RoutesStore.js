@@ -135,7 +135,6 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                             
                             if(json.success){
                                 routes.push(json.data[json.data.length - 1]);
-                                alert('Route added successfully');
                             } else {
                                 console.log("Unable to retrieve routes");
                             }
