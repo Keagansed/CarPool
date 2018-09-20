@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer';
 import { shallow } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 
-describe('Landing Page Component', () => {
+describe('IntroPage Component', () => {
 
     it ('captures snapshot', () => {
         const renderedValue = renderer.create(<MemoryRouter><IntroPage /></MemoryRouter>).toJSON()

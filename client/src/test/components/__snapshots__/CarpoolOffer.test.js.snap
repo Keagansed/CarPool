@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Carpool Offer Component captures snapshot 1`] = `
+<div>
+  <div
+    className="container-fluid bg-purple bordbot-2px-white"
+    onClick={[Function]}
+  >
+    <div
+      className="row txt-white padver-10px"
+    >
+      <div
+        className="col-9"
+      >
+        <div
+          className="col-12"
+        >
+          <h5>
+            Carpool
+          </h5>
+        </div>
+        <div
+          className="col-12"
+        >
+          5
+           Members
+        </div>
+      </div>
+      <div
+        className="col-3 vertical-right"
+      >
+        <div
+          className="col-12"
+        >
+          <h5>
+            <i
+              className="fa fa-info-circle"
+            />
+          </h5>
+        </div>
+        <div
+          className="col-12"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="modal"
+    id="myModal"
+    role="dialog"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+    tabIndex="-1"
+  >
+    <div
+      className="modal-dialog"
+      role="document"
+    >
+      <div
+        className="modal-content"
+      >
+        <div
+          className="modal-header bg-aqua"
+        >
+          <h5
+            className="modal-title fw-bold"
+          >
+            Carpool
+          </h5>
+          <button
+            aria-label="Close"
+            className="close"
+            onClick={[Function]}
+            type="button"
+          >
+            <span
+              aria-hidden="true"
+            >
+              ×
+            </span>
+          </button>
+        </div>
+        <div
+          className="modal-body"
+        >
+          <div
+            className="row bordbot-1px-dash-grey"
+          >
+            <h6
+              className="fw-bold mx-auto"
+            >
+              Offer Sent By
+            </h6>
+          </div>
+          <div
+            className="row bordbot-1px-dash-grey mbottom-10px"
+          >
+            <div
+              className="col-6"
+            >
+              undefined undefined
+            </div>
+            <div
+              className="col-6 vertical-right"
+            >
+              <a
+                href="/ProfilePage/123"
+                onClick={[Function]}
+              >
+                View Profile
+              </a>
+            </div>
+          </div>
+          <div
+            className="row bordbot-1px-dash-grey"
+          >
+            <div
+              className="col-6"
+            >
+              Asking to join your existing carpool
+            </div>
+          </div>
+          <div
+            className="row mtop-10px "
+          >
+            <button
+              className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-green txt-white fw-bold"
+              onClick={[Function]}
+            >
+              Accept
+            </button>
+            <button
+              className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-red txt-white fw-bold"
+              onClick={[Function]}
+            >
+              Decline
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

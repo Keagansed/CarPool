@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Landing Page Component captures snapshot 1`] = `
+exports[`InfoPage Component captures snapshot 1`] = `
 <div>
   <div
     className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 bg-purple"

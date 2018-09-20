@@ -1,17 +1,17 @@
 import React from 'react';
-import AlertsSettings from '../../js/containers/AlertsSettings';
+import CarpoolInfoModal from '../../js/components/carpool/CarpoolInfoModal';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
-describe('AlertsSettings Component', () => {
+describe('CarpoolInfoModal Component', () => {
 
     it ('captures snapshot', () => {
-        const renderedValue = renderer.create(<AlertsSettings />).toJSON()
+        const renderedValue = renderer.create(<CarpoolInfoModal />).toJSON()
         expect(renderedValue).toMatchSnapshot();
     });
 
     it ('renders correctly', () => {
-        let wrapper = shallow(<AlertsSettings />)
+        let wrapper = shallow(<CarpoolInfoModal />)
         expect(wrapper.length).toEqual(1);
     });
 });
