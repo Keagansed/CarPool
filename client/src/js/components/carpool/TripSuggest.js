@@ -31,7 +31,8 @@ const hide = {
 
         this.state = {
             buttons: [],
-            toggle: false
+            toggle: false,
+            routeArr: []
         };
         this.messageContent = props.messageContent;
         this.messageID = props.messageID;
@@ -105,6 +106,8 @@ const hide = {
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        this.renderMap(this.props.tripID);
     }
 
     /*
@@ -246,9 +249,6 @@ const hide = {
     }
 
     renderMap = async (tripId) => {
-        // MessageStore.getOptimalTrip(tripID, getFromStorage('sessionKey').token);
-
-        // let routeArr = MessageStore.optimalTrip;
         let routeArr = [];
 
         await fetch('/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
@@ -256,7 +256,13 @@ const hide = {
         .then(json => {
             if(json) {
                 if(json.success) {
-                    routeArr = json.data.optimalTrip;
+                    routeArr = json.data[0];
+                    if(typeof routeArr !== "undefined"){                
+                        this.setState({
+                            routeArr: [routeArr.optimalTrip]
+                        })                  
+                    }
+                    
                 }else {
                     console.error(json.message);
                 }
@@ -266,11 +272,6 @@ const hide = {
             }
         });
 
-        return (
-            <div>
-                <MapComponent routeArr={routeArr}/>
-            </div>
-        )
     }
 
     /*
@@ -300,7 +301,7 @@ const hide = {
                                 </div>
                             </div>
                             <div>
-                                { this.renderMap(this.props.tripID) }
+                                <MapComponent routeArr={this.state.routeArr}/>
                             </div>
                             <div className="row padtop-0">
                                 <div className="col-12">
