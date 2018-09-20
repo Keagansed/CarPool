@@ -145,7 +145,7 @@ class carpoolStore {
                 let date = "\\\"" +  dateStr.substr(1,dateStr.length - 2) + "\\\"";
 
                 this.routes.forEach(route => {
-                    fetch(ServerURL + 'api/system/route/getRoute?routeId=' + route.id + '&token=' + token,{
+                    fetch(ServerURL + '/api/system/route/getRoute?routeId=' + route.id + '&token=' + token,{
                         method:'GET',
                         headers:{
                             'Content-Type':'application/json'
