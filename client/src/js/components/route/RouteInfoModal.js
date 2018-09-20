@@ -63,11 +63,13 @@ const hide = {
     */
     render() {
 
-        let originName, destinationName;
+        let originName, destinationName, firstCommaIndex;
 
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
             originName = this.routeStore1.routeObj.startLocation.name;
+            originName = originName.slice(0, originName.indexOf(",", originName.indexOf(",") + 1));
             destinationName = this.routeStore1.routeObj.endLocation.name;
+            destinationName = destinationName.slice(0, destinationName.indexOf(",", destinationName.indexOf(",") + 1));
 
             this.routeArr = [{
                 origin: this.routeStore1.routeObj.startLocation,
@@ -131,9 +133,11 @@ const hide = {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="txt-center mbottom-0">
-                                        <p>{ originName }</p>
-                                        <p>To</p>
-                                        <p>{ destinationName }</p>
+                                        <p>
+                                            { originName }<br></br>
+                                            to<br></br>
+                                            { destinationName }
+                                        </p>
                                     </div>
                                 </div>                                
                             </div>
