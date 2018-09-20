@@ -42,12 +42,12 @@ class MockStore {
         this.setRegistered(false);
         this.setToken("testtoken123");
         this.setLoggedIn(true);
-    }
+    };
 
     logout = () => {
         this.setLoggedIn(false);
         this.setToken('');
-    }
+    };
 
 }
 

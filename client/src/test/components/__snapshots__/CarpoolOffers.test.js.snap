@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Carpool Offers Component captures snapshot 1`] = `
+<div
+  className="scroll-vert"
+>
+  <div>
+    <div
+      className="spinner"
+    >
+      <div
+        className="double-bounce1"
+      />
+      <div
+        className="double-bounce2"
+      />
+    </div>
+  </div>
+</div>
+`;
