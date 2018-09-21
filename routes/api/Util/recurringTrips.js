@@ -77,6 +77,7 @@ module.exports.updateTrips = async (trips) => {
             newTrip.users = trip.users;
             newTrip.recurringId = trip.recurringId;
             newTrip.driver = trip.driver;
+            newTrip.optimalTrip = trip.optimalTrip;
 
             upcomingTripComponentsArr.push(newTrip); 
             newTrip.save((err) => {

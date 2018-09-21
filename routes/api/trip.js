@@ -28,7 +28,7 @@ router.get('/getAllTripInfo', function(req, res, next) {
 
     Trip.find({
         _id : _id
-    },(err,tripData) => {
+    },(err,tripData) => {        
         if(err) {
             return res.send({
                 success:false,
@@ -43,9 +43,7 @@ router.get('/getAllTripInfo', function(req, res, next) {
                             success: false,
                             message: "Database error: " + err,
                         });
-                    } else {
-                        console.log(carpoolData[0].routes[0]);
-                        
+                    } else {                        
                         Route.find({
                             _id: carpoolData[0].routes[0].id
                         },
