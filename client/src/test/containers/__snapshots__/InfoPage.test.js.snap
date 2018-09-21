@@ -24,7 +24,7 @@ exports[`InfoPage Component captures snapshot 1`] = `
         <img
           alt="carpool_logo"
           id="logo-256"
-          src="logo-gif-loop.gif"
+          src="logo-gif-no-loop.gif"
         />
       </div>
       <div
