@@ -71,13 +71,13 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
     render() {
         let tripName;
         let carpoolers = <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                            <div className="col-9 txt-left">
-                                No other carpoolers
+            <div className="col-9 txt-left">
+                No other carpoolers
                             </div>
-                            <div className="col-3 vertical-right">
-                                
-                            </div>
-                        </div>;
+            <div className="col-3 vertical-right">
+
+            </div>
+        </div>;
         let driver = [];
 
         let origin, destination;
@@ -103,16 +103,16 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
                 if (user !== TripsStore.tripObj.driver) {
                     if (TripsStore.tripObj.users[user] === true)
                         carpoolers = [];
-                        carpoolers.push(
-                            <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                                <div className="col-6 txt-left">
-                                    {TripsStore.getUsernameSurname(user)}
-                                </div>
-                                <div className="col-6 vertical-right">
-                                    <a href={"/ProfilePage/" + user}>View Profile</a>
-                                </div>
+                    carpoolers.push(
+                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
+                            <div className="col-6 txt-left">
+                                {TripsStore.getUsernameSurname(user)}
                             </div>
-                        );
+                            <div className="col-6 vertical-right">
+                                <a href={"/ProfilePage/" + user}>View Profile</a>
+                            </div>
+                        </div>
+                    );
                 } else {
                     driver.push(
                         <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
@@ -139,7 +139,7 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
         return (
             <div className="size-100 bg-purple">
                 <div className="fixed-top container-fluid height-50px bg-aqua">
-                    <div className="row font-20px height-100p">
+                    <div className="row height-100p">
                         <Link to={`/HomePage`} className="col-2 txt-center">
                             <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
                                 <i className="fa fa-chevron-circle-left txt-center"></i>
@@ -152,7 +152,6 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
                         </div>
                         {this.reviewModal}
                     </div>
-
                 </div>
                 {/* Padding is there for top and bottom navs*/}
                 <div className="padtop-50px container-fluid">
@@ -190,14 +189,15 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
                     </div>
 
                     {carpoolers}
-                </div>
-                <div className="row padtop-10px">
-                    <a
-                        href={googleURL}
-                        className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-                    >
-                        Begin Route
-                    </a>
+
+                    <div className="row padtop-10px">
+                        <a
+                            href={googleURL}
+                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+                        >
+                            <b>Begin Route</b>
+                        </a>
+                    </div>
                 </div>
             </div>
         );

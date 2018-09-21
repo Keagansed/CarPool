@@ -304,7 +304,7 @@ const hide = {
                             <div>
                                 <MapComponent routeArr={this.state.routeArr} combined={true}/>
                             </div>
-                            <div className="row padtop-0">
+                            <div className="row padtop-10px">
                                 <div className="col-12">
                                     <div className="col-12">
                                         {this.state.buttons}
