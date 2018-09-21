@@ -34,15 +34,15 @@ class Trip  extends Component {
             <div className="container-fluid bg-purple bordbot-2px-white">
                 <Link to={`/HomePage/Trip/`+this.props.trip._id}>
                     <div className="row txt-white padver-10px">
-                        <div className="col-8">
-                            <div className="col-12">
+                        <div className="col-9 padright-0">
+                            <div className="col-12 padright-0">
                                 <h5>{this.props.trip.tripName}</h5>
                             </div>
-                            <div className="col-12">
+                            <div className="col-12 padright-0">
                                 {date} @ {time}
                             </div>
                         </div>
-                        <div className="col-4 vertical-right">
+                        <div className="col-3 vertical-right">
                             <div className="col-12">
                                 <h5><i className="fa fa-chevron-circle-right"></i></h5>
                             </div>
