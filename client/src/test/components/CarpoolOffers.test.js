@@ -6,7 +6,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 class MockStore {
     offers = [];
-    loadingOffers = true;
     createCarpoolOffer = false;
     joinCarpoolOffer = false;
 
@@ -25,27 +24,24 @@ class MockStore {
         createCarpoolOffer = true;
     };
 
-    makeOfferToJoin = () => {
+    makeOfferToJoin = (carpoolName, senderId, senderRoute, recieverId, recieverRoute, join, carpoolID) => {
         joinCarpoolOffer = true;
     };
 }
 
 describe('Carpool Offers Component', () => {
-    let props, container, instance, mockStore;
+    let token, container, instance, mockStore;
 
     beforeEach(() => {
         mockStore = new MockStore();
+        token = "testtoken123";
         
-        // props = {
-        //     store: mockStore,
-        //     token: "1234"
-        // };
-        container = shallow(<CarpoolOffers store={mockStore} token="1234"/>);
+        container = shallow(<CarpoolOffers store={mockStore} token={token}/>);
         instance = container.instance();
     });
 
     it ('captures snapshot', () => {
-        const renderedValue = renderer.create(<MemoryRouter><CarpoolOffers store={mockStore} token="1234"/></MemoryRouter>).toJSON()
+        const renderedValue = renderer.create(<MemoryRouter><CarpoolOffers store={mockStore} token={token}/></MemoryRouter>).toJSON()
         expect(renderedValue).toMatchSnapshot();
     });
 
@@ -53,7 +49,7 @@ describe('Carpool Offers Component', () => {
         expect(container.length).toEqual(1);
     });
 
-    it('does something productive', () => {
+    it('populates the offers', () => {
         expect(instance.props.store.offers.length).toEqual(1);
     });
 
