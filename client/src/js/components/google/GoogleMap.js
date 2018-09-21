@@ -48,7 +48,7 @@ import { DirectionsRenderer,GoogleMap, withGoogleMap } from 'react-google-maps';
     componentDidMount() {
         const DirectionsService = new window.google.maps.DirectionsService();
         let coordsArray = this.props.coordsArray.coords;
-           
+
         if(this.props.combined){ 
             let wayPointsArr = [];
             
