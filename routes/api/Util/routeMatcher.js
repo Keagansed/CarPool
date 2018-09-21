@@ -23,7 +23,7 @@ let recommendedRoutes = [];
 let recommendedCarpools = [];
 
 // Integer to store the maximum radius for carpools to be matched in km
-let maxRadius = 2;
+let maxRadius = 3;
 
 // Array to store the trust factor weights assigned the user of each of the recommended routes in order
 let trustFactorWeights = [];
