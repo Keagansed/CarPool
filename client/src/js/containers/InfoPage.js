@@ -3,7 +3,7 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import logo  from "../../css/images/logo-gif-loop.gif";
+import logo  from "../../css/images/logo-gif-no-loop.gif";
 
 /*
 * Purpose: Landing page compenent is the first page the user sees when opening the app
