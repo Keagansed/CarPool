@@ -75,14 +75,14 @@ const hide = {
         }else{
             if (typeof this.props.users[this.props.token] !== 'undefined'){
                 this.setState({buttons : (
-                    <div className="row txt-white padleft-10px padright-10px padtop-0" key={Math.random()}>
-                        <div className="col-6">
-                            <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-6 padright-5px">
+                            <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold">
                                 Accept
                             </button>
                         </div>
-                        <div className="col-6">
-                            <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
+                        <div className="col-6 padleft-5px">
+                            <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
                                 Reject
                             </button>
                         </div>
@@ -343,7 +343,7 @@ const hide = {
                     this.buttons = (
                         <div className="row txt-white padtop-0" key={Math.random()}>
                             <div className="col-12">
-                                <p className="txt-aqua">Accepted</p>
+                                <p className="txt-aqua mbottom-0">Accepted</p>
                             </div>
                         </div>
                     );
@@ -353,7 +353,7 @@ const hide = {
                     this.buttons = (
                         <div className="row txt-white padtop-0" key={Math.random()}>
                             <div className="col-12">
-                                <p className="txt-red">Rejected</p>
+                                <p className="txt-red mbottom-0">Rejected</p>
                             </div>
                         </div>
                     );

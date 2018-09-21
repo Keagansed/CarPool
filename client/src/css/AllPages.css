@@ -314,6 +314,12 @@ html, body{
 .padright-0{
     padding-right: 0;
 }
+.padright-5px{
+    padding-right: 5px;
+}
+.padleft-5px{
+    padding-left: 5px;
+}
 .padright-10px{
     padding-right: 10px;
 }
