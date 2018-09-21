@@ -146,10 +146,10 @@ const hide = {
                     className="row bordbot-1px-dash-grey" 
                     key={Math.random()}
                 >
-                    <div className="col-6 txt-left">
+                    <div className="col-7 txt-left padright-0">
                         { MessageStore.getUsername(user) }
                     </div>
-                    <div className="col-6 vertical-right">
+                    <div className="col-5 vertical-right">
                         <Link to={"/ProfilePage/"+user}>View Profile</Link>
                     </div>
                 </div>

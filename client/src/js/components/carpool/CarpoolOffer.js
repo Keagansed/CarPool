@@ -149,8 +149,8 @@ class CarpoolOffer extends Component {
                                 <h6 className="fw-bold mx-auto">Offer Sent By</h6>
                             </div>
                             <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                <div className="col-6">{this.props.store.userProfile.firstName +" "+ this.props.store.userProfile.lastName}</div>
-                                <div className="col-6 vertical-right">
+                                <div className="col-7 padright-0">{this.props.store.userProfile.firstName +" "+ this.props.store.userProfile.lastName}</div>
+                                <div className="col-5 vertical-right">
                                     <Link to={"/ProfilePage/" + this.props.store.senderId}>View Profile</Link>
                                 </div>
                             </div>                           

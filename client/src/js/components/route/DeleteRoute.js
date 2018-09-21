@@ -119,7 +119,7 @@ class DeleteRoute extends Component{
                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px"  onClick={this.toggle}>
                     <i className="fa fa-trash"></i>
                 </button>
-                { modal }
+                {modal}
                 {this.renderRedirect()}
             </div>
         );

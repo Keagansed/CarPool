@@ -10,7 +10,7 @@ import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
 import ServerURL from '../../utils/server';
 
 //Just using temporarily for demonstration purposes - remove when not needed anymore
-import tempGroupPic from '../../../css/images/profile_default.png';
+import tempGroupPic from '../../../css/images/group.png';
 import { observer } from "mobx-react";
 
 //'display' is used to show the modal
@@ -75,10 +75,10 @@ const hide = {
                     className="row bordbot-1px-dash-grey"
                     key={Math.random()}
                 >
-                    <div className="col-6">
+                    <div className="col-7">
                         {userObj.firstName+' '+userObj.lastName}
                     </div>
-                    <div className="col-6 vertical-right">
+                    <div className="col-5 vertical-right">
                         <Link to={"/ProfilePage/"+userObj._id}>View Profile</Link>
                     </div>
                 </div>
@@ -263,9 +263,9 @@ const hide = {
                                     alt="s" 
                                 />
                         </div>
-                        <div className="col-7">
-                            <div className="col-12">
-                                <h5>{"Carpool: "+this.props.carpoolName}</h5>
+                        <div className="col-7 padright-0">
+                            <div className="col-12 padright-0">
+                                <h5>{this.props.carpoolName}</h5>
                             </div>
                             <div className="col-12">
                                 1.5km Further

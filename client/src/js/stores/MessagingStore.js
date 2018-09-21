@@ -28,7 +28,7 @@ class messageStore {
             
             if(this.allUsers[x]._id === userId){
                 found = true;
-                this.userName = this.allUsers[x].firstName;
+                this.userName = this.allUsers[x].firstName + " " + this.allUsers[x].lastName ;
                 return this.userName;
             }
         }

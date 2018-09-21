@@ -152,7 +152,7 @@ const hide = {
                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px"  onClick={this.toggle}>
                     <i className="fa fa-star"></i>
                 </button>
-                {modal}
+                { modal }
             </div>
         );
     }

@@ -3,7 +3,7 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
-import MessageStore  from '../../stores/MessagingStore.js';
+import MessageStore from '../../stores/MessagingStore.js';
 import TripsStore from '../../stores/TripsStore'
 import WeekdaySelector from './WeekdaySelector';
 import { getFromStorage } from '../../utils/localStorage.js'
@@ -26,7 +26,7 @@ const hide = {
     constructor(props) {
         super(props);
 
-        this.state ={
+        this.state = {
             toggle: false
         };
     }
@@ -37,13 +37,13 @@ const hide = {
      */
     updateTime = event => {
         let time = document.getElementById("inputTripTime").value;
-       
-        if(time) {
+
+        if (time) {
             let hours = time.split(":")[0];
             let minutes = time.split(":")[1];
             hours = hours % 12 || 12;
             hours = hours < 10 ? "0" + hours : hours;
-            TripsStore.dateTime.setHours(hours,minutes,0,0);
+            TripsStore.dateTime.setHours(hours, minutes, 0, 0);
         }
 
         TripsStore.tripName = this.props.carpoolName;
@@ -78,13 +78,13 @@ const hide = {
      */
     updateUsers = event => {
 
-        for(let user in this.props.users) {
+        for (let user in this.props.users) {
 
-            if(user !== TripsStore.idBy && document.getElementById(user).checked) {
+            if (user !== TripsStore.idBy && document.getElementById(user).checked) {
 
-                if(user === getFromStorage('sessionKey').token) {
-                    TripsStore.users[user] = true;  
-                }else{
+                if (user === getFromStorage('sessionKey').token) {
+                    TripsStore.users[user] = true;
+                } else {
                     TripsStore.users[user] = false;
                 }
 
@@ -97,11 +97,11 @@ const hide = {
     /*
      * Purpose: toggles the visibility of this modal component
      */
-    toggle = (event)=> {
+    toggle = (event) => {
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
-    }    
+    }
 
     /*
      * Purpose: aqcuires the information provided in the html form elements and creates a new message and trip
@@ -109,57 +109,58 @@ const hide = {
      * renders the modal invisible.
      */
     suggestTrip() {
-        let days = ""; 
+        let days = "";
 
-        if(document.getElementById("weekday-mon").checked) {
+        if (document.getElementById("weekday-mon").checked) {
             days = days + "Mon ";
         }
 
-        if(document.getElementById("weekday-tue").checked) {
+        if (document.getElementById("weekday-tue").checked) {
             days = days + "Tue ";
         }
 
-        if(document.getElementById("weekday-wed").checked) {
+        if (document.getElementById("weekday-wed").checked) {
             days = days + "Wed ";
         }
 
-        if(document.getElementById("weekday-thu").checked) {
+        if (document.getElementById("weekday-thu").checked) {
             days = days + "Thu ";
         }
 
-        if(document.getElementById("weekday-fri").checked) {
+        if (document.getElementById("weekday-fri").checked) {
             days = days + "Fri ";
         }
 
-        if(document.getElementById("weekday-sat").checked) {
+        if (document.getElementById("weekday-sat").checked) {
             days = days + "Sat ";
         }
 
-        if(document.getElementById("weekday-sun").checked) {
+        if (document.getElementById("weekday-sun").checked) {
             days = days + "Sun ";
         }
 
         let userNames = "";
         let users = [];
 
-        for(let user in this.props.users) {
-
-            if(user !== TripsStore.idBy) {
-                if(document.getElementById(user).checked){
-                    userNames = userNames + MessageStore.getUsername(user) + " ";
-                    users[user]=true;
+        for (let user in this.props.users) {
+            console.log(this.props.users[this.props.users.length - 1]);
+            console.log(user);
+            if (user !== TripsStore.idBy) {
+                if (document.getElementById(user).checked) {
+                    userNames = userNames + MessageStore.getUsername(user).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
+                    users[user] = true;
                 }
-            }else{
-                userNames = userNames + MessageStore.getUsername(TripsStore.idBy) + " ";
-                users[TripsStore.idBy]=true;
+            } else {
+                userNames = userNames + MessageStore.getUsername(TripsStore.idBy).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
+                users[TripsStore.idBy] = true;
             }
-
         }
+        userNames = userNames.substr(0, userNames.lastIndexOf(", "));
 
-        let messageContent = 
+        let messageContent =
             document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
             "Days: " + days + "\r\n" +
-            "Members: " +  userNames;
+            "Members: " + userNames;
 
         document.getElementById("inputTripTime").value = "";
         document.getElementById("inputTripDate").value = "";
@@ -172,8 +173,8 @@ const hide = {
         document.getElementById("weekday-sat").checked = false;
         document.getElementById("weekday-sun").checked = false;
 
-        for(let user in this.props.users) {
-            if(user !== TripsStore.idBy)
+        for (let user in this.props.users) {
+            if (user !== TripsStore.idBy)
                 document.getElementById(user).checked = false;
         }
 
@@ -185,24 +186,24 @@ const hide = {
     /*
      * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
-    render(){
+    render() {
         let users = [];
 
-        for(let user in this.props.users) {
-            if (user !== TripsStore.idBy){
+        for (let user in this.props.users) {
+            if (user !== TripsStore.idBy) {
                 users.push(
                     <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                        <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
-                        <div className="col-6 vertical-right">
-                            <input id={user} onChange={this.updateUsers} type="checkbox"/>
+                        <div className="col-9 txt-left">{MessageStore.getUsername(user)}</div>
+                        <div className="col-3 vertical-right">
+                            <input id={user} onChange={this.updateUsers} type="checkbox" />
                         </div>
                     </div>
                 );
-            }else{
+            } else {
                 TripsStore.users[user] = true;
                 users.push(
                     <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                        <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
+                        <div className="col-9 txt-left">{MessageStore.getUsername(user)}</div>
                     </div>
                 );
             }
@@ -228,22 +229,22 @@ const hide = {
                                         <h6 className="fw-bold mx-auto">First Time and Date</h6>
                                     </div>
                                     <div className="row padbot-10px">
-                                        <input 
-                                            type="time" 
-                                            onChange={this.updateTime} 
-                                            className="col-5 form-control mx-auto brad-2rem" 
-                                            placeholder="Time" 
-                                            required="required" 
-                                            name="Time" 
+                                        <input
+                                            type="time"
+                                            onChange={this.updateTime}
+                                            className="col-5 form-control mx-auto brad-2rem"
+                                            placeholder="Time"
+                                            required="required"
+                                            name="Time"
                                             id="inputTripTime"
                                         />
-                                        <input 
-                                            type="date" 
-                                            onChange={this.updateDate} 
-                                            className="col-5 form-control mx-auto brad-2rem" 
-                                            placeholder="Date" 
-                                            required="required" 
-                                            name="Date" 
+                                        <input
+                                            type="date"
+                                            onChange={this.updateDate}
+                                            className="col-5 form-control mx-auto brad-2rem"
+                                            placeholder="Date"
+                                            required="required"
+                                            name="Date"
                                             id="inputTripDate"
                                         />
                                     </div>
@@ -252,19 +253,19 @@ const hide = {
                                     </div>
                                     <div className="row padbot-10px">
                                         <div className="mx-auto">
-                                            <WeekdaySelector updateDays={this.updateDays}/>
+                                            <WeekdaySelector updateDays={this.updateDays} />
                                         </div>
                                     </div>
                                     <div className="row bordbot-1px-dash-grey">
                                         <h6 className="fw-bold mx-auto">Participants</h6>
                                     </div>
                                     {users}
-                                    <div className="row padtop-20px">
+                                    <div className="row padtop-10px">
                                         <div className="col-1"></div>
                                         <div className="col-10">
-                                            <a 
-                                                onClick={() => this.suggestTrip()} 
-                                                className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold" 
+                                            <a
+                                                onClick={() => this.suggestTrip()}
+                                                className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold"
                                                 id="btnSuggestTrip"
                                             >
                                                 Suggest
@@ -280,7 +281,7 @@ const hide = {
             </div>
         );
 
-        return(
+        return (
             <div className="col-2 txt-center">
                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.toggle}>
                     <i className="fa fa-car"></i>
