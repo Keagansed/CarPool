@@ -40,6 +40,12 @@ var UserSchema = new mongoose.Schema({
 		default:'',
 		required:false
 	},
+	ClearanceCertificate:
+	{
+		type:String,
+		default:'',
+		required:false
+	},
 	IdDocument:
 	{
 		type:String,
