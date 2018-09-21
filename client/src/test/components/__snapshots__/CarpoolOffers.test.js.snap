@@ -99,12 +99,12 @@ exports[`Carpool Offers Component captures snapshot 1`] = `
               className="row bordbot-1px-dash-grey mbottom-10px"
             >
               <div
-                className="col-6"
+                className="col-7 padright-0"
               >
                 undefined undefined
               </div>
               <div
-                className="col-6 vertical-right"
+                className="col-5 vertical-right"
               >
                 <a
                   href="/ProfilePage/sender123"
