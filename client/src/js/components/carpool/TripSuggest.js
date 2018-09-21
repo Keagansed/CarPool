@@ -50,7 +50,7 @@ const hide = {
             this.setState({buttons : (
                 <div className="row txt-white padtop-0" key={Math.random()}>
                     <div className="col-12">
-                        <p className="txt-grey">You suggested this trip</p>
+                        <p className="txt-grey mbottom-0">You suggested this trip</p>
                     </div>
                 </div>
             )});
@@ -59,7 +59,7 @@ const hide = {
                 this.setState({buttons : (
                     <div className="row txt-white padtop-0" key={Math.random()}>
                         <div className="col-12">
-                            <p className="txt-aqua">Accepted</p>
+                            <p className="txt-aqua mbottom-0">Accepted</p>
                         </div>
                     </div>
                 )});
@@ -67,7 +67,7 @@ const hide = {
                 this.setState({buttons : (
                     <div className="row txt-white padtop-0" key={Math.random()}>
                         <div className="col-12">
-                            <p className="txt-red">Rejected</p>
+                            <p className="txt-red mbottom-0">Rejected</p>
                         </div>
                     </div>
                 )});
@@ -92,7 +92,7 @@ const hide = {
                 this.setState({buttons : (
                     <div className="row txt-white padtop-0" key={Math.random()}>
                         <div className="col-12">
-                            <p className="txt-grey">You are not part of this trip</p>
+                            <p className="txt-grey mbottom-0">You are not part of this trip</p>
                         </div>
                     </div>
                 )});
@@ -329,7 +329,7 @@ const hide = {
             this.buttons = (
                 <div className="row txt-white padtop-0" key={Math.random()}>
                     <div className="col-12">
-                        <p className="txt-grey">You suggested this trip</p>
+                        <p className="txt-grey mbottom-0">You suggested this trip</p>
                     </div>
                 </div>
             );
