@@ -143,29 +143,19 @@ const hide = {
         let users = [];
 
         for (let user in this.props.users) {
-
+            console.log(this.props.users[this.props.users.length - 1]);
+            console.log(user);
             if (user !== TripsStore.idBy) {
                 if (document.getElementById(user).checked) {
-                    if (this.props.users.indexOf(user) === (this.props.users.length - 1)) {
-                        userNames = userNames + MessageStore.getUsername(user).substr(0, MessageStore.getUsername(user).indexOf(" "));
-                        users[user] = true;
-                    } else {
-                        userNames = userNames + MessageStore.getUsername(user) + ", ";
-                        users[user] = true;
-                    }
-
+                    userNames = userNames + MessageStore.getUsername(user).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
+                    users[user] = true;
                 }
             } else {
-                if (this.props.users.indexOf(user) === (this.props.users.length - 1)) {
-                    userNames = userNames + MessageStore.getUsername(TripsStore.idBy);
-                    users[TripsStore.idBy] = true;
-                } else {
-                    userNames = userNames + MessageStore.getUsername(TripsStore.idBy) + ", ";
-                    users[TripsStore.idBy] = true;
-                }
+                userNames = userNames + MessageStore.getUsername(TripsStore.idBy).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
+                users[TripsStore.idBy] = true;
             }
-
         }
+        userNames = userNames.substr(0, userNames.lastIndexOf(", "));
 
         let messageContent =
             document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
@@ -203,8 +193,8 @@ const hide = {
             if (user !== TripsStore.idBy) {
                 users.push(
                     <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                        <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
-                        <div className="col-6 vertical-right">
+                        <div className="col-9 txt-left">{MessageStore.getUsername(user)}</div>
+                        <div className="col-3 vertical-right">
                             <input id={user} onChange={this.updateUsers} type="checkbox" />
                         </div>
                     </div>
@@ -213,7 +203,7 @@ const hide = {
                 TripsStore.users[user] = true;
                 users.push(
                     <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                        <div className="col-6 txt-left">{MessageStore.getUsername(user)}</div>
+                        <div className="col-9 txt-left">{MessageStore.getUsername(user)}</div>
                     </div>
                 );
             }
@@ -270,7 +260,7 @@ const hide = {
                                         <h6 className="fw-bold mx-auto">Participants</h6>
                                     </div>
                                     {users}
-                                    <div className="row padtop-20px">
+                                    <div className="row padtop-10px">
                                         <div className="col-1"></div>
                                         <div className="col-10">
                                             <a

@@ -395,7 +395,7 @@ const hide = {
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
                     <div className="row padver-10px padbot-10px" onClick={this.toggle}>
-                        <div className="col-6">
+                        <div className="col-9">
                             <div className={"col-12 "+this.props.userColour}>
                                 <h5>You</h5>
                             </div>
@@ -403,7 +403,7 @@ const hide = {
                                 Suggested a trip.
                             </div>
                         </div>
-                        <div className="col-6 vertical-right txt-grey">
+                        <div className="col-3 vertical-right txt-grey">
                             <div className="col-12">
                                 <h6>{dat}</h6>
                             </div>
@@ -422,7 +422,7 @@ const hide = {
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     <div  onClick={this.toggle}>
                         <div className="row padver-10px padbot-0">
-                            <div className="col-6">
+                            <div className="col-9">
                                 <div className={"col-12 "+this.props.userColour}>
                                     <h5>{MessageStore.getUsername(this.props.userID)}</h5>
                                 </div>
@@ -430,7 +430,7 @@ const hide = {
                                     {/* Empty for now */}
                                 </div>
                             </div>
-                            <div className="col-6 vertical-right txt-grey">
+                            <div className="col-3 vertical-right txt-grey">
                                 <div className="col-12">
                                     <h6>{dat}</h6>
                                 </div>
