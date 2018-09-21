@@ -120,7 +120,7 @@ const hide = {
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
         // let profilePicture = "default.jpg";
-        let profilePicture, userFullName;
+        let profilePicture, userFullName, userPartName;
         // console.log(this.props.userObj);
         if(
             typeof(this.props.userObj) !== "undefined" && 
@@ -129,6 +129,7 @@ const hide = {
         ){
             profilePicture = ServerURL + "/api/account/getImage?filename="+this.props.userObj.profilePic;
             userFullName  = this.props.userObj.firstName + " "+this.props.userObj.lastName;
+            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
         }
     
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
@@ -173,10 +174,10 @@ const hide = {
                                 className="row bordbot-1px-dash-grey mbottom-10px" 
                                 key={Math.random()}
                             >
-                                <div className="col-6">
+                                <div className="col-7">
                                     { userFullName }
                                 </div>
-                                <div className="col-6 vertical-right">
+                                <div className="col-5 vertical-right">
                                     <Link to={"/ProfilePage/"+this.props.userId}>View Profile</Link>
                                 </div>
                             </div>                           
@@ -231,9 +232,9 @@ const hide = {
                                         alt="s" 
                                     />
                             </div>
-                            <div className="col-7">
-                                <div className="col-12">
-                                    <h5>{ userFullName }</h5>
+                            <div className="col-7 padright-0">
+                                <div className="col-12 padright-0">
+                                    <h5>{ userPartName }</h5>
                                 </div>
                                 <div className="col-12">
                                     1.2km Further
