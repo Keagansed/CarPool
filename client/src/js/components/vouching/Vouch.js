@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
 import VouchStore from './../../stores/VouchStore';
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -55,7 +56,7 @@ const hide = {
 
     render(){
         let profilePic = VouchStore.getUserProfilePic(this.props.vouch.idBy);
-        const profilePicture = "./../api/account/getImage?filename=" + profilePic;
+        const profilePicture = ServerURL + "/api/account/getImage?filename=" + profilePic;
 
         let userName = VouchStore.getUsername(this.props.vouch.idBy);
         let userNameSurname = VouchStore.getUsernameSurname(this.props.vouch.idBy);

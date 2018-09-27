@@ -1,9 +1,11 @@
 // File Type: Backend Utility
 
 const arrayCheck = require('./arrayCheck');
+const distanceCalculation = require('./distanceCalculation');
 const trustFactor = require('./trustFactor');
 
 const Carpool = require('../../../models/Carpool.js');
+const Offer = require('../../../models/Offer.js');
 const Route = require('../../../models/Route.js');
 const User = require('../../../models/User.js');
 const Vouch = require('../../../models/Vouch.js');
@@ -21,7 +23,7 @@ let recommendedRoutes = [];
 let recommendedCarpools = [];
 
 // Integer to store the maximum radius for carpools to be matched in km
-let maxRadius = 2;
+let maxRadius = 4;
 
 // Array to store the trust factor weights assigned the user of each of the recommended routes in order
 let trustFactorWeights = [];
@@ -39,54 +41,70 @@ module.exports.getRecommendedRoutes = async (token, routeId) => {
     let obj = {};
 
     await getAllRoutes(token, routeId);
-
+    
     obj = {
         recommendedRoutes: recommendedRoutes,
         recommendedCarpools: recommendedCarpools,
     }        
-
+    
     return obj;
 }
 
 
 getAllRoutes = async (token, routeId) => {
+    recommendedCarpools = [];
+    recommendedRoutes = [];
 
-    await Carpool.find({ routes: { $nin: [routeId] } },
-        (err, data) => {
-            if (err) {
-                console.log("Database error: " + err);
-            } else {
-                const carpools = data.map(carpool => {
-                    return carpool.toObject();
-                });                
-                filterCarpools(carpools, token)
-            }
+    await Carpool.find({ routes: { $nin: [routeId] } }).then(
+        data => {
+            const carpools = data.map(carpool => {
+                return carpool.toObject();
+            }); 
+        
+            filterCarpools(carpools, token)
+        }, err => {
+            console.log("Database error: " + err);
         }
-    );
+    )
+    
+    let ignore = [];
+    await Offer.find({
+        $or: [
+            {SenderRoute: routeId},
+            {RecieverRoute: routeId}
+        ]
+    }).then(
+        data => {
+            data.forEach(off => {
+                if (off.SenderRoute === routeId)
+                    ignore.push(off.RecieverRoute);
+                else 
+                    ignore.push(off.SenderRoute);
+            });
+        }, err => {
+            console.log("Database error: " + err);
+        }
+    )
 
     await Route.find({
-        userId: {$ne: token}
-    },
-    (err,data) => {
-        if(err) {
-            console.log("Database error: " + err);
-        }else {
+        _id: {$nin: ignore},
+        userId: {$ne: token},
+    }).then(
+        data => {
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             });
 
             allRoutes = routes;
+        }, err => {
+            console.log("Database error: " + err);
         }
-    });
+    )
 
     await Route.find({
         _id: routeId
-    },
-    (err,data) =>  {
-        
-        if(err){
-            console.log("Database error: " + err);
-        }else {
+    }).then(
+        data => {
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             });
@@ -94,10 +112,12 @@ getAllRoutes = async (token, routeId) => {
             filterRoutesByRadius(routes[0]);
             generateTimeWeights(routes[0]);
             getUsersAndGenerateTrustWeights(routes[0]);     
-            
-            
+
+        }, err=> {
+            console.log("Database error: " + err);
         }
-    })
+    )
+    
 
 };
 
@@ -120,6 +140,7 @@ filterRoutesByRadius = (routeObj) => {
 
     userList = [];
     recommendedRoutes = []; //reset store
+    recommendedCarpools = []; //reset store
 
     differenceArray = arrayCheck.generateDifferenceArray(routeObj.routesCompared, allRoutes, false);
     recommendedRoutes = arrayCheck.generateDifferenceArray(routeObj.recommended, allRoutes, true);
@@ -133,21 +154,26 @@ filterRoutesByRadius = (routeObj) => {
         startWithinRadius =false;
         endWithinRadius =false;
 
-        routeObj.waypoints.forEach(obj => {
-            startDistance = calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
-            endDistance = calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
-            if(startDistance <= maxRadius) {
-                startWithinRadius = true;
+        dest2destDistance = distanceCalculation.calcDistance(routeObj.endLocation.lat,routeObj.endLocation.lng,routeEndtLat,routeEndLng);
+        
+        if(dest2destDistance <= maxRadius){
+            routeObj.waypoints.forEach(obj => {
+                startDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeStartLat, routeStartLng);
+                endDistance = distanceCalculation.calcDistance(obj.lat, obj.lng, routeEndtLat, routeEndLng);
+                if(startDistance <= maxRadius) {
+                    startWithinRadius = true;
+                }
+                if(endDistance <= maxRadius) {
+                    endWithinRadius = true;
+                }
+            });
+    
+            if(startWithinRadius && endWithinRadius) {
+                recommendedRoutes.push(route);
+                recRoutes.push(route);
             }
-            if(endDistance <= maxRadius) {
-                endWithinRadius = true;
-            }
-        });
-
-        if(startWithinRadius && endWithinRadius) {
-            recommendedRoutes.push(route);
-            recRoutes.push(route);
         }
+       
     });
 
     if(allCarpools.length) {
@@ -171,6 +197,7 @@ filterRoutesByRadius = (routeObj) => {
     */
 filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is already a part of
     allCarpools = [];
+
     Route.find({
         userId: token
     },
@@ -181,16 +208,15 @@ filterCarpools = (carpoolArr, token) => { //remove Carpools that the user is alr
             const routes = data.map(dataObj => {
                 return dataObj.toObject();
             })
-
+            
             carpoolArr.forEach(carpoolObj => {
                 let contains = false;
 
-                carpoolObj.routes.forEach(routeId => {
-                    routes.forEach(routeObj => {
-                        if(routeObj._id === routeId) {
-                            contains = true;
-                        }
-                    });
+                carpoolObj.routes.forEach(route => {
+                    const pos = routes.map((routeObj) =>(routeObj._id).toString()).indexOf(route.id);
+                    if(pos !== -1){
+                        contains = true;
+                    }
                 });
 
                 if(!contains) {
@@ -373,13 +399,14 @@ updateRecommendedRoutes = (recommendedArray, routeId) => {
     let arrRouteId = [];
 
     recommendedArray.forEach(element => {
-        arrRouteId.push(element._id);
+        arrRouteId.push(element._id.toHexString());
     });
 
     Route.update({
         _id: routeId 
     },{
-        $push:{
+        // recommended: arrRouteId
+        $push:{                             
             recommended: {
                 $each: arrRouteId
             }
@@ -402,12 +429,13 @@ updateRoutesCompared = (differenceArray, routeId) => {
     let arrRouteId = [];
 
     differenceArray.forEach(element => {
-        arrRouteId.push(element._id);
+        arrRouteId.push(element._id.toHexString());
     });
 
     Route.update({
         _id: routeId 
     }, {
+        // routesCompared: arrRouteId
         $push:{
             routesCompared: {
                 $each: arrRouteId
@@ -421,40 +449,6 @@ updateRoutesCompared = (differenceArray, routeId) => {
     });
 };
 
-/*
-    Helper function to calculate the distance between two points
-    Takes in long and lat for both points as an argument
-    Calls helper function degreesToRadians to make a conversion
-    Returns the distance as a double
-    */
-calcDistance = (lat1, lng1, lat2, lng2) => {
-    // Integer radius of the earth
-    let earthRadiusKm = 6371;
-
-    // Destination latitude in radians
-    let dLat = degreesToRadians(lat2 - lat1);
-
-    // Destination longitude in radians
-    let dLon = degreesToRadians(lng2 - lng1);
-
-    lat1 = degreesToRadians(lat1);
-    lat2 = degreesToRadians(lat2);
-
-    let a = Math.sin(dLat/2) * Math.sin(dLat / 2) +
-            Math.sin(dLon/2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-    return earthRadiusKm * c;
-};
-
-/*
-    Helper function to convert the measurement in degrees to radians
-    Returns integer value as radians
-    */
-degreesToRadians = (degrees) => {
-    return degrees * Math.PI / 180;
-};
 
 /*
     Method to calculate the difference between the times in minutes

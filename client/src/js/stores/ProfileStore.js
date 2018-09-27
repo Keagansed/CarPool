@@ -3,6 +3,7 @@
 import {  action, computed, observable } from 'mobx';
 
 import { calcSecLvl } from '../utils/trustFactor.js';
+import ServerURL from '../utils/server';
 
 class profileStore {
 
@@ -17,10 +18,40 @@ class profileStore {
     @computed get email() { return this.user.email}
     @computed get idNum() { return this.user.id}
     @computed get profilePic() { return this.user.profilePic };
+    @computed get hasCarRegistration() { 
+        if (this.user.CarRegistration === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasIdDocument() { 
+        if (this.user.IdDocument === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasdriversLicense() { 
+        if (this.user.driversLicense === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasClearance() { 
+        if (this.user.ClearanceCertificate === "")
+            return false;
+        else
+            return true;
+    };
+    @computed get hasCarPic() { 
+        if (this.user.CarPic === "")
+            return false;
+        else
+            return true;
+    };
 
     @action getProfile = (token, userId) => {    
 
-        fetch('/api/account/profile?token=' + token + '&userId=' + userId)
+        fetch(ServerURL + '/api/account/profile?token=' + token + '&userId=' + userId)
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
 		.then((json) => {
@@ -31,7 +62,7 @@ class profileStore {
                 this.opacity = "";
                 this.setEdit();
 
-                fetch('/api/account/vouch/getVouches?idFor=' + userId)
+                fetch(ServerURL + '/api/account/vouch/getVouches?idFor=' + userId)
                 .then(res => res.json())
                 .then(vouches => {
                     if (vouches.success) {
@@ -79,7 +110,7 @@ class profileStore {
 
     @action editSubmit = () => {
 
-        fetch('/api/account/updateProfile',{
+        fetch(ServerURL + '/api/account/updateProfile',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'

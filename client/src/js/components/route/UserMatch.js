@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import MapComponent from '../google/GeneralMapWrapper';
 import OffersStore from '../../stores/OffersStore';
 import RouteStore from './../../stores/RouteStore';
-
+import ServerURL from '../../utils/server';
 
 //'display' is used to show the modal
 const display = {
@@ -37,7 +37,8 @@ const hide = {
         this.state = {
             token: '',
             //'toggle' represents the state of the modal - false indicates it is not being shown.
-            toggle: false
+            toggle: false,
+            hidden: false, // set to "display: none" to hide div after making an offer
         }
 
         this.routeArr = [];
@@ -83,6 +84,9 @@ const hide = {
             this.props.store._id, 
             false
         );
+        this.setState({
+            hidden: true
+        });
         this.toggle();
     }
     
@@ -94,6 +98,21 @@ const hide = {
         this.carpoolName =  e.target.value;
     }
 
+    genRouteArr = () => {
+        this.routeArr = [];
+
+        const routeObj1 = {
+            origin: this.routeStore1.routeObj.startLocation,
+            destination: this.routeStore1.routeObj.endLocation
+        };
+        const routeObj2 = {
+            origin: this.routeStore2.routeObj.startLocation,
+            destination: this.routeStore2.routeObj.endLocation
+        };
+
+        this.routeArr.push(routeObj1,routeObj2);
+    }
+
     /*
     * The purpose of the render method is to enable the rendering of this component.
     * It returns react elements and HTML using JSX.
@@ -101,29 +120,23 @@ const hide = {
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
         // let profilePicture = "default.jpg";
-        let profilePicture, userFullName;
+        let profilePicture, userFullName, userPartName;
         // console.log(this.props.userObj);
         if(
             typeof(this.props.userObj) !== "undefined" && 
             typeof(this.props.userObj.firstName) !== "undefined" && 
             typeof(this.props.userObj.lastName) !== "undefined"
         ){
-            profilePicture = "./../../api/account/getImage?filename="+this.props.userObj.profilePic;
+            profilePicture = ServerURL + "/api/account/getImage?filename="+this.props.userObj.profilePic;
             userFullName  = this.props.userObj.firstName + " "+this.props.userObj.lastName;
+            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
         }
     
         if(typeof(this.routeStore1.routeObj.routeName) !== "undefined"){
             this.carpoolName = this.routeStore1.routeObj.routeName;
-
-            this.routeArr = [...this.routeArr, {
-                origin: this.routeStore1.routeObj.startLocation,
-                destination: this.routeStore1.routeObj.endLocation
-            }];
-    
-            this.routeArr = [...this.routeArr, {
-                origin: this.routeStore2.routeObj.startLocation,
-                destination: this.routeStore2.routeObj.endLocation
-            }];
+            
+            this.genRouteArr();
+            
         }
 
         var modal = [];
@@ -161,10 +174,10 @@ const hide = {
                                 className="row bordbot-1px-dash-grey mbottom-10px" 
                                 key={Math.random()}
                             >
-                                <div className="col-6">
+                                <div className="col-7">
                                     { userFullName }
                                 </div>
-                                <div className="col-6 vertical-right">
+                                <div className="col-5 vertical-right">
                                     <Link to={"/ProfilePage/"+this.props.userId}>View Profile</Link>
                                 </div>
                             </div>                           
@@ -177,21 +190,12 @@ const hide = {
                                 </div>                                
                             </div>
                             <div className="row">
-                                <div className="col-12">
-                                    <h6 className="txt-center mbottom-0">
-                                        Carpool Name
-                                    </h6>
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">
-                                <div className="col-6"> 
-                                    <input 
-                                        className="txt-center mbottom-0" 
-                                        type="text" 
-                                        onChange={this.handleCarpoolNameChange}
-                                        placeholder={this.carpoolName}
-                                    />
-                                </div>
+                                <input 
+                                    type="text" 
+                                    onChange={this.handleCarpoolNameChange}
+                                    className="form-control mx-auto width-15rem brad-2rem mbottom-1rem txt-purple settingInput"
+                                    placeholder="Carpool Name"
+                                />
                             </div>
                             <div className="row">
                                 <button 
@@ -208,44 +212,48 @@ const hide = {
                 </div>
             </div>
         );
-
-        return(
-            <div>
-                <div 
-                    className="container-fluid bg-purple bordbot-2px-white" 
-                    onClick={this.toggle}
-                >
-                    <div className="row txt-white padver-10px">
-                        <div className="col-2">
-                                <img 
-                                    src={profilePicture} 
-                                    className="mx-auto my-auto rounded-circle bord-2px-white" 
-                                    height="60" 
-                                    width="60" 
-                                    alt="s" 
-                                />
-                        </div>
-                        <div className="col-7">
-                            <div className="col-12">
-                                <h5>{ userFullName }</h5>
+        
+        if (this.state.hidden){
+            return(<div></div>)
+        }else{
+            return(
+                <div>
+                    <div 
+                        className="container-fluid bg-purple bordbot-2px-white" 
+                        onClick={this.toggle}
+                    >
+                        <div className="row txt-white padver-10px">
+                            <div className="col-2">
+                                    <img 
+                                        src={profilePicture} 
+                                        className="mx-auto my-auto rounded-circle bord-2px-white" 
+                                        height="60" 
+                                        width="60" 
+                                        alt="s" 
+                                    />
                             </div>
-                            <div className="col-12">
-                                1.2km Further
+                            <div className="col-7 padright-0">
+                                <div className="col-12 padright-0">
+                                    <h5>{ userPartName }</h5>
+                                </div>
+                                <div className="col-12">
+                                    1.2km Further
+                                </div>
                             </div>
-                        </div>
-                        <div className="col-3 vertical-right">
-                            <div className="col-12">
-                                <h5><i className="fa fa-handshake-o"></i></h5>
-                            </div>
-                            <div className="col-12">
-                                {this.props.store.time}
+                            <div className="col-3 vertical-right">
+                                <div className="col-12">
+                                    <h5><i className="fa fa-handshake-o"></i></h5>
+                                </div>
+                                <div className="col-12">
+                                    {this.props.store.time}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {modal}
                 </div>
-                {modal}
-            </div>
-        );
+            );
+        }
     }
 }
 

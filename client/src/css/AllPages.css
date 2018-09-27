@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500');
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 /* ============================================================================ */
 /*Body & html elements */
 html, body{
@@ -6,6 +8,7 @@ html, body{
     margin:0 !important;
     padding:0 !important;
     font-family: Quicksand;
+    background-color: #140D4F;
 }
 
 /* ============================================================================ */
@@ -72,8 +75,17 @@ html, body{
 .mbottom-05rem{
     margin-bottom: 0.5rem;
 }
+.mbottom-8px{
+    margin-bottom: 8px;
+}
 .mbottom-10px{
     margin-bottom: 10px;
+}
+.mbottom-16px{
+    margin-bottom: 16px;
+}
+.mbottom-20px{
+    margin-bottom: 20px;
 }
 .mbottom-0{
     margin-bottom: 0;
@@ -95,6 +107,9 @@ html, body{
 }
 .mtop-10px{
     margin-top: 10px;
+}
+.mtop-16px{
+    margin-top: 16px;
 }
 .mtop-0{
     margin-top: 0;
@@ -133,6 +148,9 @@ html, body{
 }
 .txt-white{
     color: white !important;
+}
+.txt-white-faded{
+    color: rgba(255,255,255,0.5) !important;
 }
 .txt-gold{
     color: gold !important;
@@ -179,29 +197,41 @@ html, body{
 
 /* ============================================================================ */
 /*Background colours*/
-.bg-aqua{
+.bg-aqua,
+.bg-aqua:hover{
     background-color: #6FEDB7 !important;
 }
-.bg-grey{
+.bg-grey,
+.bg-grey:hover{
     background-color: grey;
 }
-.bg-lightgrey{
+.bg-lightgrey,
+.bg-lightgrey:hover{
     background-color: lightgrey;
 }
-.bg-purple{
+.bg-purple,
+.bg-purple:hover{
     background-color: #140D4F;
 }
-.bg-trans{
+.bg-trans,
+.bg-trans:hover{
     background-color: rgba(0,0,0,0);
 }
-.bg-whitelight{
+.bg-whitelight,
+.bg-whitelight:hover{
     background-color: rgba(255, 255, 255, 0.349);
 }
-.bg-green{
+.bg-green,
+.bg-green:hover{
     background-color: green;
 }
-.bg-red{
+.bg-red,
+.bg-red:hover{
     background-color: red;
+}
+.bg-orange,
+.bg-orange:hover{
+    background-color: orange;
 }
 
 /* ============================================================================ */
@@ -254,6 +284,9 @@ html, body{
 .padtop-20px{
     padding-top: 20px;
 }
+.padtop-30px{
+    padding-top: 30px;
+}
 .padtop-300px{
     padding-top: 300px;
 }
@@ -281,6 +314,12 @@ html, body{
 .padright-0{
     padding-right: 0;
 }
+.padright-5px{
+    padding-right: 5px;
+}
+.padleft-5px{
+    padding-left: 5px;
+}
 .padright-10px{
     padding-right: 10px;
 }
@@ -296,6 +335,10 @@ html, body{
 .padbot-0{
     padding-bottom: 0;
 }
+.padhor-0{
+    padding-left: 0px;
+    padding-right: 0px;
+}
 .padver-10px{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -303,6 +346,10 @@ html, body{
 .padhor-5px{
     padding-left: 5px;
     padding-right: 5px;
+}
+.padhor-15px{
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* ============================================================================ */
@@ -368,6 +415,11 @@ input.bord-0:focus{
     height: 100%;
     -webkit-overflow-scrolling: touch;
     overflow-y: scroll;
+}
+.noScroll{
+    margin: 0;
+    height: 100%;
+    overflow: hidden !important;
 }
 /* To hide scrollbar on desktop browsers */
 ::-webkit-scrollbar {
@@ -454,7 +506,11 @@ input:-webkit-autofill:focus {
 #inputID.error,
 #inputEmail.error,
 #inputPassword.error,
-#inputConfirmPassword.error
+#inputConfirmPassword.error,
+#inputRouteName.error,
+#inputRouteTime.error,
+#inputStartLocation.error,
+#inputCarpoolName.error
 {
     border-color: red;
 } 
@@ -520,3 +576,60 @@ label {
 	position: absolute;
 	z-index: -1;
 }
+
+/* ============================================================================ */
+/*Intro carousel*/
+.slick-dots li button:before {
+    color: white !important;
+  }
+
+/* ============================================================================ */
+/*Logo sizes*/
+#logo-256{
+    height: 256px;
+    width: 256px;
+}
+
+/* ============================================================================ */
+/*Info Page*/
+#infoHeader{
+    background-image: url(./images/Rectangle.svg);
+    height: 450px; /* You must set a specified height */
+    background-position: bottom; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    background-color: #140D4F;
+}
+@media screen and (min-width: 1001px) {
+    h1 {
+        font-size: 40px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    h1 {
+        font-size: 25px;
+    }
+}
+@media screen and (min-width: 1001px) {
+    h3 {
+        font-size: 25px;
+    }
+}
+@media screen and (max-width: 1000px) {
+    h3 {
+        font-size: 20px;
+    }
+}
+
+/* ============================================================================ */
+/*Remove bootstrap box shadows and other effects on buttons*/
+.btn{
+    -webkit-transition-property: none !important;
+    -moz-transition-property: none !important;
+    -o-transition-property: none !important;
+    transition-property: none !important;
+}
+.btn:focus,.btn:active {
+    outline: none !important;
+    box-shadow: none;
+ }

@@ -1,0 +1,22 @@
+.autocomplete-container {
+    z-index: 1;
+    position: absolute; 
+    width: inherit;
+  }
+  
+  .suggestion-item {
+    padding: 8px;
+    text-align: left;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  .suggestion-item--active {
+    background-color: #fafafa;
+  }
+  
+  .dropdown-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 4px;
+  }

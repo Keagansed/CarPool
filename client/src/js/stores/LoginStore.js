@@ -3,6 +3,7 @@
 import { action, observable } from 'mobx';
 
 import { getFromStorage, setInStorage } from '../utils/localStorage.js'
+import ServerURL from '../utils/server';
 
 /*
  Provides a store for variables and methods for the login page
@@ -95,14 +96,13 @@ class loginStore {
 
     /*
         Method that makes an API call to register the user
-        First checks if the passwords match, if they do then the API call is made
      */
     @action signUp = () => {
         if(this.sPassword1 !== this.sPassword2) {
             alert("Passwords do not match");
         }
         else{
-            fetch('/api/account/signup',{
+            fetch(ServerURL + '/api/account/signup',{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -119,7 +119,6 @@ class loginStore {
             .catch(error => console.error('Error:', error))
             .then(json=>{
                 if(json.success) {
-                    alert("Successfully signed up!!");
                     this.setRegistered(true);
                 }else{
                     alert(json.message);
@@ -135,7 +134,7 @@ class loginStore {
      */
     @action authenticate = () => {
         this.setRegistered(false);
-        fetch('/api/account/signin',{
+        fetch(ServerURL + '/api/account/signin',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -145,13 +144,14 @@ class loginStore {
                 password: this.lPassword
             })
         })
-        .then(res=>res.json())
+        .then(res=> res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
             if(json.success) {
                 setInStorage('sessionKey',{ token:json.token });
                 this.setToken(json.token);
                 this.setLoggedIn(json.success);
+                console.log(json);
                 return;
             }else{
                 this.setToggleError(true);
@@ -165,8 +165,9 @@ class loginStore {
         Makes an API call to emailPassword to verify this
      */
     @action sendPassword = () => {
+        this.noEmailError = 'An email is being sent to you...';
         this.setRegistered(false);
-        fetch('/api/account/emailPassword',{
+        fetch(ServerURL + '/api/account/emailPassword',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -191,7 +192,7 @@ class loginStore {
         and log the user in.
      */
     @action resetPassword = () => {
-        fetch('/api/account/resetPassword',{
+        fetch(ServerURL + '/api/account/resetPassword',{
             method:"POST",
             headers:{
                 'Content-Type':'application/json'
@@ -228,14 +229,17 @@ class loginStore {
         if(obj && obj.token) {
 
           //Stores token to be verified as string
-          const { token } = obj;
+            const { token } = obj;
 
-          fetch('/api/account/logout?token='+token)
-           .then(res => res.json())
-           .then(json => {
-                this.setLoggedIn(false);
-                this.setToken('');
-           });
+            fetch(ServerURL + '/api/account/logout?token='+token)
+            .then(res => res.json())
+            .then(json => {
+            this.setRegistered(false);
+            this.setLoggedIn(false);
+            this.setToken('');
+
+            setInStorage('sessionKey', {});
+            });
         }
     };
 

@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom';
 
 import Modal from '../components/login/PasswordModal';
 import { getFromStorage } from '../utils/localStorage.js';
+import ServerURL from '../utils/server';
 
 import logo  from "../../css/images/logo.png";
 
@@ -55,7 +56,7 @@ function validate(email, password) {
         if(obj && obj.token) {
             const { token } = obj;
 
-            fetch('/api/account/verify?token='+token)
+            fetch(ServerURL + '/api/account/verify?token='+token)
             .then(res => res.json())
             .then(json => {
                 if(json.success) {
@@ -163,7 +164,7 @@ function validate(email, password) {
                             <img 
                                 className="img-fluid d-block mx-auto mbottom-2rem" 
                                 src={logo} 
-                                id="imgLogo" 
+                                id="logo-256"
                                 alt="carpool_logo"
                             /> 
                         </div>

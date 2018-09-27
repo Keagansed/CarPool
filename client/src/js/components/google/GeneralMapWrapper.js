@@ -16,23 +16,30 @@ import GoogleMapComponent from './GoogleMap';
      */
     render() {
         let coordsArray = [];
+        let combined = false;
+        typeof this.props.combined !== "undefined" ? combined = this.props.combined : combined =false;
+        
         let GoogleMap = (coordsArray) => ( 
-            <GoogleMapComponent coordsArray={coordsArray} />
+            <GoogleMapComponent coordsArray={coordsArray} combined={combined}/>
         );
         
+        if(combined){
+            coordsArray = JSON.parse(JSON.stringify(this.props.routeArr)); //creates deep copy
+        }else{
+            this.props.routeArr.forEach(routeObj => {
+                // If statement to ensure routes aren't null due to asynchronousity.
+                if(typeof(routeObj.origin) !== "undefined" && typeof(routeObj.destination) !== "undefined"){
+                    let coords = {
+                        olat:routeObj.origin.lat,
+                        olng:routeObj.origin.lng,
+                        dlat:routeObj.destination.lat,
+                        dlng:routeObj.destination.lng
+                    };
+                    coordsArray.push(coords);
+                }       
+            });
+        }
         
-        this.props.routeArr.forEach(routeObj => {
-            // If statement to ensure routes aren't null due to asynchronousity.
-            if(typeof(routeObj.origin) !== "undefined" && typeof(routeObj.destination) !== "undefined"){
-                let coords = {
-                    olat:routeObj.origin.lat,
-                    olng:routeObj.origin.lng,
-                    dlat:routeObj.destination.lat,
-                    dlng:routeObj.destination.lng
-                };
-                coordsArray.push(coords);
-            }       
-        });
 
         
         if(coordsArray.length) {

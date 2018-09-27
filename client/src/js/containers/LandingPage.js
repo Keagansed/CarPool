@@ -20,7 +20,7 @@ class LandingPage extends Component {
             <div className="vertical-center bg-purple">
                 <div className="container-fluid">
                     <div className="row">
-                        <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} alt="carpool_logo"/> 
+                        <img className="img-fluid d-block mx-auto mbottom-2rem" src={logo} alt="carpool_logo" id="logo-256"/> 
                     </div>
                     <div className="row">
                         <Link to={`/Login`} className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" id="btnLogin">

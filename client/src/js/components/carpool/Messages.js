@@ -36,6 +36,7 @@ import "../../../css/components/Spinner.css"
             userList:[]
         };
 
+        MessageStore.getAllUsers(getFromStorage('sessionKey').token);
         this.addMessage = this.addMessage.bind(this);
         this.suggestTrip = this.suggestTrip.bind(this);
         this.updateLastRefresh = this.updateLastRefresh.bind(this);
@@ -190,7 +191,6 @@ import "../../../css/components/Spinner.css"
         }
 
         if(verify) { 
-            
             return(
                 <div className="size-100 bg-purple">
                     <div className="fixed-top container-fluid height-50px bg-aqua">
@@ -205,6 +205,7 @@ import "../../../css/components/Spinner.css"
                                 users={this.state.users} 
                                 carpoolName={this.props.match.params.carpoolName} 
                                 carpoolID={this.props.match.params.carpoolID}
+                                mongoCarpoolID={this.state.carpoolID}
                             />
                             <NewTripModal 
                                 token={this.state.token}
@@ -250,18 +251,35 @@ import "../../../css/components/Spinner.css"
 
                                     }else{
 
-                                        return(
-                                            <Message 
-                                                token={this.state.token}
-                                                messageContent={message.messageContent} 
-                                                messageID={message.id} 
-                                                userID={message.userID} 
-                                                userName={userName}
-                                                userColour={userColour} 
-                                                dateTime={message.dateTime} 
-                                                key={message.id}
-                                            />
-                                        );
+                                        if (message.userID === "Server"){
+                                            return(
+                                                <Message
+                                                    token={this.state.token}
+                                                    messageContent={message.messageContent}
+                                                    messageID={message.id}
+                                                    userID={message.userID}
+                                                    userName={"Server"}
+                                                    userColour={userColour}
+                                                    dateTime={message.dateTime}
+                                                    key={message.id}
+                                                />
+                                            );
+                                        } else {
+                                            return(
+                                                <Message
+                                                    token={this.state.token}
+                                                    messageContent={message.messageContent}
+                                                    messageID={message.id}
+                                                    userID={message.userID}
+                                                    userName={userName}
+                                                    userColour={userColour}
+                                                    dateTime={message.dateTime}
+                                                    key={message.id}
+                                                />
+                                            );
+                                        }
+
+
 
                                     }
 

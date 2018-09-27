@@ -12,30 +12,58 @@ class TrustItem  extends Component {
     * It returns react elements and HTML using JSX.
     */
     render(){
-        return(
-            <div className="container-fluid bg-white bordbot-2px-purple">
-                <div className="row txt-purple padver-10px">
-                    <div className="col-9">
-                        <div className="col-12">
-                            <h5>Identity Document</h5>
+        if (this.props.hasItem){
+            return(
+                <div className="container-fluid bg-white bordbot-2px-purple">
+                    <div className="row txt-purple padver-10px">
+                        <div className="col-9">
+                            <div className="col-12">
+                                <h5>{this.props.itemName}</h5>
+                            </div>
+                        </div>
+                        <div className="col-3 vertical-right">
+                            <div className="col-12">
+                                <h5>
+                                    
+                                    <i className="fa fa-check-circle txt-green"/>
+                                </h5>
+                            </div>
                         </div>
                         <div className="col-12">
-                            User ID has been verified.
-                        </div>
-                    </div>
-                    <div className="col-3 vertical-right">
-                        <div className="col-12">
-                            <h5>
-                                <i className="fa fa-check-circle txt-green"/>
-                            </h5>
-                        </div>
-                        <div className="col-12">
-                            {/* Empty for now */}
+                            <div className="col-12">
+                                {this.props.itemName} has been verified.
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }else{
+            return(
+                <div className="container-fluid bg-white bordbot-2px-purple">
+                    <div className="row txt-purple padver-10px">
+                        <div className="col-9">
+                            <div className="col-12">
+                                <h5>{this.props.itemName}</h5>
+                            </div>
+                        </div>
+                        <div className="col-3 vertical-right">
+                            <div className="col-12">
+                                <h5>
+                                    
+                                    <i className="fa fa-times-circle txt-red"/>
+                                </h5>
+                            </div>
+                        </div>
+                        <div className="col-12">
+                            <div className="col-12">
+                                {this.props.itemName} has not been verified.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
     }
 }
 

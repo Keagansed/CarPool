@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 import { getFromStorage } from '../../utils/localStorage' ;
+import ServerURL from '../../utils/server';
 
 // Used as a css prop
 const display = {
@@ -55,7 +56,7 @@ class UploadCarRegistrationSetting extends Component {
 
         const xhr = new XMLHttpRequest();
 
-        xhr.open('POST', '/api/account/uploadFile/CarRegistration', true);
+        xhr.open('POST', ServerURL + '/api/account/uploadFile/CarRegistration?token=' + this.props.token, true);
         xhr.onreadystatechange = res => {            
             if(xhr.readyState === XMLHttpRequest.DONE) {
                 alert("Successfully uploaded");

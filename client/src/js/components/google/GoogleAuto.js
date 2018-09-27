@@ -6,6 +6,7 @@ import React from 'react'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import RoutesStore from '../../stores/RoutesStore';
 
+import './../../../css/components/Autocomplete.css';
 /*
  * Purpose: provides the google start and end location input boxes that autocomplete.
  */
@@ -77,7 +78,7 @@ import RoutesStore from '../../stores/RoutesStore';
                                     id: "inputStartLocation"
                                 })}
                             />
-                            <div className="autocomplete-dropdown-container"> {/* Class for the dropdown box that contains all the suggestions*/}
+                            <div className="autocomplete-container"> {/* Class for the dropdown box that contains all the suggestions*/}
                                 {suggestions.map(suggestion => {
                                     const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
                                     // Inline style for demonstration purpose

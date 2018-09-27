@@ -6,10 +6,17 @@ import React, { Component } from 'react';
 import app from '../../stores/FirebaseStore.js'
 import CarpoolOffers from './CarpoolOffers';
 import { getFromStorage } from '../../utils/localStorage'
-import MessageStore  from '../../stores/MessagingStore.js';
+import MessageStore from '../../stores/MessagingStore.js';
 
 import 'firebase/database';
 import "../../../css/components/Spinner.css"
+
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
 
 /*
  * Purpose: a chat interface for the users in the same carpool whereby users can arrange a trip
@@ -25,42 +32,36 @@ class Carpools extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            groupChats:[],
+            groupChats: [],
             loading: true,
-            offers:[],
+            offers: [],
         };
 
         this.groupChats = app.database().ref().child('groupChats');
         this.groupChatID = "";
     }
-    
+
     /*
-     * Purpose: sets the state of the 'offers' field.
+     * Purpose: sets the state of the 'offers' field and fetches other necessary data
      */
     componentDidMount() {
-        this.setState({offers:<CarpoolOffers store={this.props.store} token={this.props.token}/>});
+        this.setState({ offers: <CarpoolOffers store={this.props.store} token={this.props.token} /> });
 
-        if(MessageStore.allUsers.length === 0){
+        if (MessageStore.allUsers.length === 0) {
             MessageStore.getAllUsers(this.props.token);
         }
-        
-    }
 
-    /*
-     * Purpose: acquires the data for the chat and changes loading state once acquired.
-     */
-    componentWillMount() {
         const previousChats = this.state.groupChats;
         let previousChatsData = [];
 
-        this.groupChats.on('child_added', snap =>{
+        this.groupChats.on('child_added', snap => {
             previousChats.push({
                 id: snap.key,
             });
 
-            let groupChatsData = app.database().ref().child('groupChats/'+snap.key);
+            let groupChatsData = app.database().ref().child('groupChats/' + snap.key);
 
-            groupChatsData.on('child_added', snapData =>{
+            groupChatsData.on('child_added', snapData => {
                 previousChatsData[snapData.key] = snapData.val();
             });
 
@@ -79,8 +80,21 @@ class Carpools extends Component {
     }
 
     //Switch off event listeners for firebase
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.groupChats.off();
+    }
+
+        /*
+    * Purpose: displays a spinner while the carpools are loading.
+    */
+    renderLoading = () => {
+
+        return(
+            <div className="spinner">
+                <div className="double-bounce1"></div>
+                <div className="double-bounce2"></div>
+            </div>
+        )
     }
 
     /*
@@ -89,30 +103,20 @@ class Carpools extends Component {
      */
     render() {
 
-        if(this.state.loading) {
+        if (this.state.loading) {
 
             return(
-                <div>
-                    <div className="pad-10px bg-whitelight txt-white">
-                        <h4 className="mbottom-0">Carpool Offers</h4>
-                    </div>
-                    <h5 className="txt-center mtop-10px txt-white">
-                        No Offers
-                    </h5>
-                    <div className="pad-10px bg-whitelight txt-white">
-                        <h4 className="mbottom-0">Your Carpools</h4>
-                    </div>
-                    <h5 className="txt-center mtop-10px txt-white">
-                        No Carpools
-                    </h5>
+                <div className="scroll-vert">
+                    {this.renderLoading()}
                 </div>
-            )
+            );
 
         }
 
         let verifyUser = false;
+        let showNoCarpools = true;
 
-        return(
+        return (
             <div>
                 <div className="scroll-vert">
                     <div className="pad-10px bg-whitelight txt-white">
@@ -124,18 +128,17 @@ class Carpools extends Component {
                     </div>
                     {
                         this.state.groupChats.map((groupChat) => {
-                            
-                            try{
+                            try {
 
-                                for(let user in this.state.groupChats[groupChat.id].users) {
+                                for (let user in this.state.groupChats[groupChat.id].users) {
 
-                                    if(user === getFromStorage('sessionKey').token) {
+                                    if (user === getFromStorage('sessionKey').token) {
                                         verifyUser = true;
                                     }
 
                                 }
 
-                                if(verifyUser) {
+                                if (verifyUser) {
                                     let usersArray = [];
                                     let users = app.database().ref().child('groupChats/' + groupChat.id + "/users");
                                     users.on('child_added', snap => {
@@ -150,11 +153,11 @@ class Carpools extends Component {
 
                                     let newMessageCount = 0;
 
-                                    for(let message in messagesArray) {
+                                    for (let message in messagesArray) {
                                         let lastRefresh = JSON.parse(usersArray[getFromStorage('sessionKey').token].lastRefresh);
                                         let messageDate = JSON.parse(messagesArray[message].dateTime);
-                                        
-                                        if(messageDate > lastRefresh) {
+
+                                        if (messageDate > lastRefresh) {
                                             newMessageCount++;
                                         }
 
@@ -162,13 +165,13 @@ class Carpools extends Component {
 
                                     let messageString = "Messages";
 
-                                    if(newMessageCount === 1) {
+                                    if (newMessageCount === 1) {
                                         messageString = "Message";
                                     }
 
                                     verifyUser = false;
-
-                                    return(
+                                    showNoCarpools = false;
+                                    return (
                                         <div key={Math.random()}>
                                             <Link
                                                 to={`/HomePage/Chat/` + groupChat.id + '/' + this.state.groupChats[groupChat.id].name}>
@@ -195,22 +198,21 @@ class Carpools extends Component {
                                             </Link>
                                         </div>
                                     )
-                                }else{
+                                } else {
                                     verifyUser = false;
-
-                                    return(<div key={Math.random()}></div>);
-
+                                    return (<div key={Math.random()}></div>);
                                 }
-                            }catch(e) {
+                            } catch (e) {
                                 verifyUser = false;
-
-                                return(<div key={Math.random()}></div>)
-                                
+                                return (<div key={Math.random()}></div>)
                             }
-
                         })
                     }
-
+                    {
+                        <h5 className="txt-center mtop-10px txt-white" style={showNoCarpools ? display : hide}>
+                            No Carpools
+                        </h5>
+                    }
                 </div>
             </div>
 

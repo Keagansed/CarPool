@@ -167,6 +167,41 @@ router.post('/IdDocument', upload.single('file'), (req, res, next) => {
 //      Response containing: 
 //          success: boolean;  True if the action was completed.
 //          message: String;  Contains the error message or completion message.
+router.post('/ClearanceCertificate', upload.single('file'), (req, res, next) => {
+	const query = {'_id': req.body.token};
+
+	User.findOne(query, (err, user) => {
+		if (err) {
+			return res.send({
+				success: false,
+				message: "Database error: " + err,
+			});
+		} else {
+			gfs.files.findOne({ "filename": user.ClearanceCertificate }, (err, file) => {
+				if (file) {
+					gfs.remove({ _id: file._id, root: 'uploads' }, (err, gridStore) => {
+						if (err)
+							return res.status(404).json({ err: err });
+					});
+				}
+			});
+			User.findOneAndUpdate(query, { $set: { ClearanceCertificate: req.file.filename } }, { upsert: true }, function (err, doc) {
+				if (err)
+					return res.send(500, { error: err });
+			});
+			res.redirect('/');
+		}
+	});
+});
+
+// This method creates a document in the GFS collections and updates the User collection.
+// Parameters: 
+//      token: String;  This is an object id of a User collection.
+//			file: file;  This is a bit stream of the uploaded file.
+// Return Value:
+//      Response containing: 
+//          success: boolean;  True if the action was completed.
+//          message: String;  Contains the error message or completion message.
 router.post('/CarPic', upload.single('file'), (req, res, next) => {
 	const query = {'_id': req.body.token};
 

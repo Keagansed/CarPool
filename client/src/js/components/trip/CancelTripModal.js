@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getFromStorage } from '../../utils/localStorage.js';
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -52,7 +53,7 @@ class CancelTripModal extends Component{
     }
 
     cancelTrip = ()=> {
-        fetch('/api/system/trip/cancelTrip?token=' + this.state.token, {
+        fetch(ServerURL + '/api/system/trip/cancelTrip?token=' + this.state.token, {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -78,7 +79,7 @@ class CancelTripModal extends Component{
     }
 
     deleteTrip = ()=> {
-        fetch('/api/system/trip/deleteTrip?tripId=' + this.props.trip._id + '&token=' + this.state.token)
+        fetch(ServerURL + '/api/system/trip/deleteTrip?tripId=' + this.props.trip._id + '&token=' + this.state.token)
             .then(res => res.json())
             .then(json => {
             });

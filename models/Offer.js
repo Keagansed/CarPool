@@ -25,6 +25,10 @@ var OffersSchema = new mongoose.Schema({
     JoinRequest:{
         type:Boolean,
         required:true
+    },
+    CarpoolID:{
+        type:String,
+        required:false
     }
 });
 

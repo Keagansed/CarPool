@@ -11,6 +11,7 @@ import UploadIDSetting from './UploadIDModal';
 import UploadDriversSetting from './UploadDriversModal';
 import UploadCarPicatureSetting from './UploadCarPicture';
 import UploadCarRegistrationSetting from './UploadCarRegistration';
+import UploadClearanceCertificateSetting from './UploadClearanceCertificate';
 
 import { getFromStorage } from '../../utils/localStorage';
 
@@ -35,6 +36,7 @@ class ProfileSettings  extends Component {
             <div className="scroll-vert">
                 <UploadIDSetting token={this.state.token}/>
                 <UploadDriversSetting token={this.state.token}/>
+                <UploadClearanceCertificateSetting token={this.state.token}/>
                 <UploadCarPicatureSetting token={this.state.token}/>
                 <UploadCarRegistrationSetting token={this.state.token}/>
                 <EditProfilePictureSetting token={this.state.token}/>

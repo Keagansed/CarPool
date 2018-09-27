@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
 import CarpoolStore from '../../stores/CarpoolStore'
+import ServerURL from '../../utils/server'
 
 const display = {
     display: 'block'
@@ -30,7 +31,6 @@ class CarpoolOffer extends Component {
         this.state = {
             token: '',
             toggle: false,
-            sender: [],
             deleted: false
         }
     }
@@ -51,19 +51,7 @@ class CarpoolOffer extends Component {
      * the user to the sender field in the state.
      */
     componentDidMount(){
-        fetch('/api/account/profile?token=' + this.props.token + '&userId=' + this.props.store.senderId,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
-            },
-        })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {            
-            if (json.success){
-                this.setState({sender : json.data[0]});
-            }
-        })
+        this.props.store.getUserProfile(this.props.token);
     }
 
     /*
@@ -75,14 +63,14 @@ class CarpoolOffer extends Component {
 
         if(this.props.store.join) {
             temp.push(
-                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">Asking to join your existing carpool</div>
+                <div className="row" key={Math.random()}>
+                    <p className="mx-auto mbottom-0">Asking to join your existing carpool</p>
                 </div>
             );
         }else{
             temp.push(
-                <div className="row bordbot-1px-dash-grey" key={Math.random()}>
-                    <div className="col-6">This is an invite to create a new carpool</div>
+                <div className="row" key={Math.random()}>
+                    <p className="mx-auto mbottom-0">This is an invite to create a new carpool</p>
                 </div>
             );
         }
@@ -93,12 +81,12 @@ class CarpoolOffer extends Component {
     /*
      * Purpose: returns the size of the carpool based on the value of 'join' in the carpool store
      */
-    getCarpoolSize() {
+    getJoinOrCreate() {
 
         if(this.props.store.join) {
-            return 5;
+            return "Join an existing carpool";
         }else{
-            return 1;
+            return "Create a new carpool";
         }
 
     }
@@ -108,6 +96,10 @@ class CarpoolOffer extends Component {
      * the deleted state to true and closes the modal.
      */
     handleAcceptInvite() {
+        if(this.props.store.join){
+
+        }
+
         CarpoolStore.addCarpool(this.props.offerId, this.props.token);
         this.setState({deleted: true});
         this.toggle();
@@ -118,7 +110,7 @@ class CarpoolOffer extends Component {
      * and closes the modal.
      */
     handleDeclineInvite() {
-        fetch('/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
+        fetch(ServerURL + '/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
             method:'GET',
             headers:{
                 'Content-Type':'application/json'
@@ -157,8 +149,8 @@ class CarpoolOffer extends Component {
                                 <h6 className="fw-bold mx-auto">Offer Sent By</h6>
                             </div>
                             <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                <div className="col-6">{this.state.sender.firstName +" "+ this.state.sender.lastName}</div>
-                                <div className="col-6 vertical-right">
+                                <div className="col-7 padright-0">{this.props.store.userProfile.firstName +" "+ this.props.store.userProfile.lastName}</div>
+                                <div className="col-5 vertical-right">
                                     <Link to={"/ProfilePage/" + this.props.store.senderId}>View Profile</Link>
                                 </div>
                             </div>                           
@@ -192,7 +184,7 @@ class CarpoolOffer extends Component {
                                     <h5>{this.props.store.CarpoolName}</h5>
                                 </div>
                                 <div className="col-12">
-                                    {this.getCarpoolSize()} Members
+                                    {this.getJoinOrCreate()}
                                 </div>
                             </div>
                             <div className="col-3 vertical-right">

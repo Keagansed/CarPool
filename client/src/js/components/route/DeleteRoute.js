@@ -3,6 +3,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import app from '../../stores/FirebaseStore.js'
+import ServerURL from '../../utils/server';
+
 const display = {
     display: 'block'
 };
@@ -31,7 +34,7 @@ class DeleteRoute extends Component{
     }
 
     delete = () => {
-        fetch('/api/system/route/deleteRoute?token=' + this.props.token + '&routeId=' + this.props.routeId, {
+        fetch(ServerURL + '/api/system/route/deleteRoute?token=' + this.props.token + '&routeId=' + this.props.routeId, {
             method:'GET',
         })
             .then(res=>res.json())
@@ -39,14 +42,36 @@ class DeleteRoute extends Component{
             .then(json=> {
 
                 if(json.success) {
-                    alert('Route deleted');
+                    json.groupChatIds.forEach(groupChat => {
+                        app.database().ref()
+                            .child('groupChats/'+ groupChat)
+                            .once('value')
+                            .then(snapShot => {
+                                let newUsers = {};
+
+                                for(let user in snapShot.val().users) {
+                                    if (user !== this.props.token)
+                                        newUsers[user] = snapShot.val().users[user];
+                                }
+                                app.database().ref()
+                                    .child('groupChats/' + groupChat)
+                                    .update({users: newUsers})
+                                    .catch(error => {
+                                        return {
+                                            errorCode: error.code,
+                                            errorMessage: error.message
+                                        }
+                                    });
+                            });
+                    });
+                    this.toggle();
+                    this.setRedirect();
                 }else{
+                    this.toggle();
                     alert(json.message);
                 }
-
+                
             });
-        this.setRedirect();
-        this.toggle();
     }
 
     setRedirect = () => {
@@ -94,7 +119,7 @@ class DeleteRoute extends Component{
                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px"  onClick={this.toggle}>
                     <i className="fa fa-trash"></i>
                 </button>
-                { modal }
+                {modal}
                 {this.renderRedirect()}
             </div>
         );

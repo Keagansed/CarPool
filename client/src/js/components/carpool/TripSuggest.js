@@ -3,9 +3,11 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 
+import MapComponent from '../google/GeneralMapWrapper';
 import MessageStore  from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js';
+import ServerURL from '../../utils/server';
 
 const display = {
     display: 'block'
@@ -30,7 +32,8 @@ const hide = {
 
         this.state = {
             buttons: [],
-            toggle: false
+            toggle: false,
+            routeArr: []
         };
         this.messageContent = props.messageContent;
         this.messageID = props.messageID;
@@ -43,20 +46,58 @@ const hide = {
      * Purpose: sets the 'buttons' fields to the appropriate html button elements.
      */
     componentWillMount() {
-        this.setState({buttons : (
-            <div className="row txt-white padleft-10px padright-10px padtop-0" key={Math.random()}>
-                <div className="col-6">
-                    <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold">
-                        Accept
-                    </button>
+        if (this.props.userID === this.props.token) {
+            this.setState({buttons : (
+                <div className="row txt-white padtop-0" key={Math.random()}>
+                    <div className="col-12">
+                        <p className="txt-grey mbottom-0">You suggested this trip</p>
+                    </div>
                 </div>
-                <div className="col-6">
-                    <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem mbottom-1rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
-                        Reject
-                    </button>
-                </div>
-            </div>)
-        });
+            )});
+        }else if (typeof this.props.usersResponded[this.props.token] !== 'undefined'){
+            if (this.props.usersResponded[this.props.token]){
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-12">
+                            <p className="txt-aqua mbottom-0">Accepted</p>
+                        </div>
+                    </div>
+                )});
+            }else {
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-12">
+                            <p className="txt-red mbottom-0">Rejected</p>
+                        </div>
+                    </div>
+                )});
+            }
+        }else{
+            if (typeof this.props.users[this.props.token] !== 'undefined'){
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-6 padright-5px">
+                            <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold">
+                                Accept
+                            </button>
+                        </div>
+                        <div className="col-6 padleft-5px">
+                            <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
+                                Reject
+                            </button>
+                        </div>
+                    </div>)
+                });
+            }else {
+                this.setState({buttons : (
+                    <div className="row txt-white padtop-0" key={Math.random()}>
+                        <div className="col-12">
+                            <p className="txt-grey mbottom-0">You are not part of this trip</p>
+                        </div>
+                    </div>
+                )});
+            }
+        }
     }
 
     /*
@@ -66,6 +107,8 @@ const hide = {
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
+
+        this.renderMap(this.props.tripID);
     }
 
     /*
@@ -156,7 +199,7 @@ const hide = {
         });
 
         this.buttons = this.state.buttons;
-        fetch('/api/system/trip/respondToTrip?token=' + this.props.token,{
+        fetch(ServerURL + '/api/system/trip/respondToTrip?token=' + this.props.token,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -206,6 +249,32 @@ const hide = {
         this.buttons = this.state.buttons;
     }
 
+    renderMap = async (tripId) => {
+        let routeArr = [];
+
+        await fetch(ServerURL + '/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
+        .then(res => res.json())
+        .then(json => {
+            if(json) {
+                if(json.success) {
+                    routeArr = json.data[0];
+                    if(typeof routeArr !== "undefined"){                
+                        this.setState({
+                            routeArr: routeArr.optimalTrip
+                        })                  
+                    }
+                    
+                }else {
+                    console.error(json.message);
+                }
+
+            }else {
+                console.error("Server Error")
+            }
+        });
+
+    }
+
     /*
      * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
@@ -232,7 +301,10 @@ const hide = {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row padtop-0">
+                            <div>
+                                <MapComponent routeArr={this.state.routeArr} combined={true}/>
+                            </div>
+                            <div className="row padtop-10px">
                                 <div className="col-12">
                                     <div className="col-12">
                                         {this.state.buttons}
@@ -257,7 +329,7 @@ const hide = {
             this.buttons = (
                 <div className="row txt-white padtop-0" key={Math.random()}>
                     <div className="col-12">
-                        <p className="txt-grey">You suggested this trip</p>
+                        <p className="txt-grey mbottom-0">You suggested this trip</p>
                     </div>
                 </div>
             );
@@ -271,7 +343,7 @@ const hide = {
                     this.buttons = (
                         <div className="row txt-white padtop-0" key={Math.random()}>
                             <div className="col-12">
-                                <p className="txt-aqua">Accepted</p>
+                                <p className="txt-aqua mbottom-0">Accepted</p>
                             </div>
                         </div>
                     );
@@ -281,7 +353,7 @@ const hide = {
                     this.buttons = (
                         <div className="row txt-white padtop-0" key={Math.random()}>
                             <div className="col-12">
-                                <p className="txt-red">Rejected</p>
+                                <p className="txt-red mbottom-0">Rejected</p>
                             </div>
                         </div>
                     );
@@ -323,7 +395,7 @@ const hide = {
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     {/* Maybe use different colours for different users? */}
                     <div className="row padver-10px padbot-10px" onClick={this.toggle}>
-                        <div className="col-6">
+                        <div className="col-9">
                             <div className={"col-12 "+this.props.userColour}>
                                 <h5>You</h5>
                             </div>
@@ -331,7 +403,7 @@ const hide = {
                                 Suggested a trip.
                             </div>
                         </div>
-                        <div className="col-6 vertical-right txt-grey">
+                        <div className="col-3 vertical-right txt-grey">
                             <div className="col-12">
                                 <h6>{dat}</h6>
                             </div>
@@ -350,7 +422,7 @@ const hide = {
                 <div className="container-fluid bg-purple bordbot-2px-white">
                     <div  onClick={this.toggle}>
                         <div className="row padver-10px padbot-0">
-                            <div className="col-6">
+                            <div className="col-9">
                                 <div className={"col-12 "+this.props.userColour}>
                                     <h5>{MessageStore.getUsername(this.props.userID)}</h5>
                                 </div>
@@ -358,7 +430,7 @@ const hide = {
                                     {/* Empty for now */}
                                 </div>
                             </div>
-                            <div className="col-6 vertical-right txt-grey">
+                            <div className="col-3 vertical-right txt-grey">
                                 <div className="col-12">
                                     <h6>{dat}</h6>
                                 </div>

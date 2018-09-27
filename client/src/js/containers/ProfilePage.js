@@ -10,6 +10,7 @@ import Vouches from '../components/vouching/Vouches';
 import VouchAverage from "../components/vouching/VouchAverage";
 
 import { getFromStorage } from '../utils/localStorage.js';
+import ServerURL from '../utils/server';
 
 /*
 * Purpose: Container compenent for the user ProfilePage, only takes care of tab switching all data
@@ -64,14 +65,14 @@ import { getFromStorage } from '../utils/localStorage.js';
 			return this.state.vouchesComponents;
 		}
 		else if(store.trustTab === true) {
-			return <Trusts/>;
+			return <Trusts store={this.props.store}/>;
 		}
 	}
 	
 	renderProfile = () => {
 		if (this.props.store.profileFound) {			
 			const { firstName, lastName, profilePic, secLvl } = this.props.store;
-			const profilePicture = "./../api/account/getImage?filename=" + profilePic;
+			const profilePicture = ServerURL + "/api/account/getImage?filename=" + profilePic;
 			const token = this.state.token;
 
 			return (

@@ -27,12 +27,12 @@ router.get('/',(req,res,next) => {
 		_id : userId,
 	},(err,data) => {
 		if(err) {
-			res.send({
+			res.status(500).send({
 				success: false,
 				message: "Database error: " + err,
 			});
 		}else{
-			return res.send({
+			return res.status(200).send({
 				success: true,
 				data: data,
 			});
@@ -52,12 +52,12 @@ router.get('/getAllUsers',(req,res,next)=>
 	User.find({
 	},(err,data) => {
 		if (err) {
-			return res.send({
+			return res.status(500).send({
 				success: false,
 				message: 'Database error: ' + err,
 			});
 		} else {
-			return res.send({
+			return res.status(200).send({
 				success: true,
 				data: data,
 			});
@@ -83,19 +83,19 @@ router.get('/getSelectUsers', (req,res) => {
 	}, (err, data) => {
 
 		if(err) {
-			return res.send({
+			return res.status(500).send({
 				success: false,
 				message: "Database error: " + err,
 			});
 		}
 
 		if(data.length == 0) {
-			return res.send({
+			return res.status(404).send({
 				success: false,
 				message: "Return error: cannot find users"
 			});
 		}else{
-			res.send({
+			res.status(200).send({
 				success: true,
 				message: "Users retrieved successfully",
 				data: data
@@ -117,7 +117,7 @@ router.post('/getUserByName', (req,res,next) => {
 	const { name } = body;
 
 	if(!name){
-		return res.send({ 
+		return res.status(406).send({ 
 			success:false,
 			message:"Error: Search cannot be blank!"
 		});
@@ -141,19 +141,19 @@ router.post('/getUserByName', (req,res,next) => {
 	]},(err, users) => {
 
 		if(err){
-			return res.send({ 
+			return res.status(500).send({ 
 				success:false,
 				message:"Database error: " + err,
 			});
 		}
 		if(users.length == 0){
-			return res.send({ 
+			return res.status(404).send({ 
 				success:false,
 				message:"Return error: No Such User ",
 			});
 			
 		}else
-			return res.send({
+			return res.status(200).send({
 				success: true,
 				users: users,
 			});
@@ -171,7 +171,7 @@ router.post('/getUserByName', (req,res,next) => {
 //          message: String;  Contains the error message or completion message.
 router.post('/updateEmail', (req,res,next) => {
 	const { body } = req;
-	const { token, email } = body;
+	let { token, email } = body;
 
 	email = email.toLowerCase();
 
@@ -179,12 +179,12 @@ router.post('/updateEmail', (req,res,next) => {
 		email: email
 	},(err, users) => {
 		if(err) {
-			return res.send({
+			return res.status(500).send({
 				success:false,
 				message:"Database error: " + err
 			});
 		}else if((users.length>0) && (users[0]._id != token)) {
-			return res.send({
+			return res.status(406).send({
 				success:false,
 				message:"Input error: Email already exists",
 			});
@@ -199,12 +199,12 @@ router.post('/updateEmail', (req,res,next) => {
 				{upsert: true},
 				(err) => {
 					if(err) {
-						return res.send({
+						return res.status(500).send({
 							success:false,
 							message:"Database error: " + err,
 						});
 					}else{
-						return res.send({success:true});
+						return res.status(200).send({success:true});
 					}
 				}
 			);
@@ -236,12 +236,12 @@ router.post('/updateName', (req,res,next) => {
 		{upsert: true},
 		(err) => {
 			if(err) {
-				return res.send({
+				return res.status(500).send({
 					success:false,
 					message:"Database error: " + err,
 				});
 			}else{
-				return res.send({success:true});
+				return res.status(200).send({success:true});
 			}
 		}
 	);
@@ -263,12 +263,12 @@ router.post('/updatePassword', (req,res,next) => {
 		_id: token
 	},(err, users) => {
 		if(err) {
-			return res.send({
+			return res.status(500).send({
 				success:false,
 				message:"Database error: " + err,
 			});
 		}else if(!users[0].validPassword(password)) {
-			return res.send({
+			return res.status(406).send({
 				success:false,
 				message:"Input error: Incorrect password"
 			});
@@ -284,12 +284,12 @@ router.post('/updatePassword', (req,res,next) => {
 				{upsert: true},
 				(err)=>{
 					if (err) {
-						return res.send({
+						return res.status(500).send({
 							success:false,
 							message:"Database error: " + err,
 						});
 					}else{
-						return res.send({success:true});
+						return res.status(200).send({success:true});
 					}
 				}
 			);
