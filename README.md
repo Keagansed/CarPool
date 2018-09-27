@@ -43,7 +43,7 @@ Please follow the [installation](#installation) instructions before proceeding.
 Once all the dependencies are installed,  ensure that your are in the `\CarPool\client\` directory then run the [`npm run local`] command:
 
 ```bash
-$ npm start
+$ npm run local
 ```
 
 This will start the server, and automatically open the CarPool web application in your browser.
