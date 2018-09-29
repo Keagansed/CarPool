@@ -5,8 +5,6 @@ import { action, observable  } from 'mobx';
 import { waypointGenerator } from './../utils/waypointGenerator';
 import ServerURL from '../utils/server';
 
-import HomePageStore from './HomePageStore';
-
 class routesStore {
     
     @observable userList = [];
@@ -60,8 +58,11 @@ class routesStore {
 
 
     @action doneAddingRoute = () => {
+        this.setdestination({});
+        this.setOrigin({});
+        this.setGoogleDestinationResult({});
+        this.setGoogleOriginResult({});
         this.addingRoute = false;
-        HomePageStore.toggleToRoute();
     }
     
     @action getRoutes = (token) => {

@@ -29,7 +29,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 //Container
 function TabContainer({ children, dir }) {
     return (
-        <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+        <Typography component="div" dir={dir} style={{ paddingTop: 48, paddingBottom: 56 }}>
             {children}
         </Typography>
     );
@@ -47,6 +47,9 @@ const styles = theme => ({
     topNav: {
         position: 'fixed',
         top: 0,
+    },
+    tabContent: {
+        paddingTop: 48,
     },
     bottomNav: {
         width: '100%',
@@ -152,9 +155,9 @@ const styles = theme => ({
                         showLabels
                         className={classes.bottomNav}
                     >
-                        <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
-                        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
                         <BottomNavigationAction label="Profile" icon={<UserIcon />} />
+                        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+                        <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
                     </BottomNavigation>
                 </div>
         );
