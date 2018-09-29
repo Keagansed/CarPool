@@ -36,18 +36,12 @@ class EditPasswordSetting extends Component {
             changePasswordDialog: false,
             password: "",
             newPassword: "",
-            token: "",
 
             touched: {
                 password: false,
                 newPassword: false,
             },
         }
-    }
-
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        this.setState({ token: obj.token });
     }
 
     //Open/Close change passsword dialog
@@ -87,8 +81,7 @@ class EditPasswordSetting extends Component {
     * the update was successful
     */
     changePassword() {
-        const { token } = this.state;
-        fetch(ServerURL + '/api/account/profile/updatePassword?token=' + token, {
+        fetch(ServerURL + '/api/account/profile/updatePassword?token=' + this.props.token, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

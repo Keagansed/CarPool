@@ -36,17 +36,11 @@ class EditEmailModal extends Component {
         this.state = {
             changeEmailDialog: false,
             email: this.props.token,
-            token: "",
 
             touched: {
                 email: false,
             },
         };
-    }
-
-    componentWillMount() {
-        const obj = getFromStorage('sessionKey');
-        this.setState({ token: obj.token });
     }
 
     //Open/Close change email dialog
