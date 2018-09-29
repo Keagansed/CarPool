@@ -14,6 +14,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HomeIcon from '@material-ui/icons/Home';
 import UserIcon from '@material-ui/icons/Person';
+import { Link } from 'react-router-dom';
 
 import Carpools from '../components/carpool/Carpools';
 import { HomeNavTabs } from '../components/navigation/NavTabs';
@@ -126,12 +127,27 @@ const styles = theme => ({
                     {activeTab === 3 && <TabContainer><NewRoute store={RoutesStore} token={this.props.store.token} /></TabContainer>}
                     <BottomNavigation
                         value={1}
-                        showLabels
                         className={classes.bottomNav}
                     >
-                        <BottomNavigationAction label="Profile" icon={<UserIcon />} />
-                        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-                        <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
+                        <BottomNavigationAction 
+                            component={Link}
+                            to={{pathname: "/ProfilePage/" + token}}
+                            label="Profile" 
+                            icon={<UserIcon />} 
+                            showLabel 
+                        />
+                        <BottomNavigationAction 
+                            label="Home" 
+                            icon={<HomeIcon />} 
+                            showLabel 
+                        />
+                        <BottomNavigationAction 
+                            component={Link}
+                            to={`/Settings`}
+                            label="Settings" 
+                            icon={<SettingsIcon />} 
+                            showLabel
+                        />
                     </BottomNavigation>
                 </div>
         );

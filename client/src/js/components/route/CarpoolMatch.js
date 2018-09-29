@@ -9,12 +9,12 @@ import GroupIcon from '@material-ui/icons/Group';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { observer } from "mobx-react";
 
 import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
@@ -23,8 +23,7 @@ import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
 import ServerURL from '../../utils/server';
 
 //Just using temporarily for demonstration purposes - remove when not needed anymore
-import tempGroupPic from '../../../css/images/group.png';
-import { observer } from "mobx-react";
+
 
 //'display' is used to show the modal
 const display = {
