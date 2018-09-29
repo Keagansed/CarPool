@@ -12,7 +12,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { getFromStorage } from '../../utils/localStorage' ;
 import ServerURL from '../../utils/server';
 
 const util = require('../../utils/idCheck');
@@ -131,7 +130,7 @@ class EditEmailModal extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.changeEmail} color="primary" disabled={isDisabled} autoFocus>
+                        <Button onClick={this.changeEmail.bind(this)} color="primary" disabled={isDisabled} autoFocus>
                             Confirm
                         </Button>
                     </DialogActions>

@@ -12,7 +12,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { getFromStorage } from '../../utils/localStorage' ;
 import ServerURL from '../../utils/server';
 
 /*
@@ -154,9 +153,9 @@ class EditPasswordSetting extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                     </Button>
-                        <Button onClick={this.changePassword} color="primary" disabled={isDisabled} autoFocus>
+                        <Button onClick={this.changePassword.bind(this)} color="primary" disabled={isDisabled} autoFocus>
                             Confirm
-                    </Button>
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
