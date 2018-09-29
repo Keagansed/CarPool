@@ -32,7 +32,7 @@ const styles = theme => ({
     },
     paper: {
         marginTop: theme.spacing.unit * 8,
-        marginBottom: theme.spacing.unit * 4,
+        marginBottom: theme.spacing.unit * 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -245,6 +245,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     <Input
                                         id="password1"
                                         name="password1"
+                                        type="password"
                                         onChange={this.updateSignUpPasswordValue1}
                                         error={(shouldMarkError('password1') ? true : false)}
                                         onBlur={this.handleBlur('password1')}
@@ -256,6 +257,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     <Input
                                         id="password2"
                                         name="password2"
+                                        type="password"
                                         onChange={this.updateSignUpPasswordValue2}
                                         error={(shouldMarkError('password2') ? true : false)}
                                         onBlur={this.handleBlur('password2')}
@@ -267,6 +269,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                     fullWidth
                                     variant="raised"
                                     color="primary"
+                                    onClick={this.handleSignup} 
                                     className={classes.submit}
                                     disabled={isDisabled}
                                 >
@@ -276,92 +279,6 @@ function validate(fName, lName, idNum, email, password1, password2) {
                         </Paper>
                     </main>
                 </React.Fragment>
-
-                //     <div className="vertical-center bg-purple">
-                //         <div className="container-fluid">
-                //             <div className="row">
-                //                     <img className="img-fluid d-block mx-auto mbottom-1rem mtop-16px" src={logo} id="logo-256" alt="carpool_logo"/> 
-                //             </div>
-                //             <form>
-                //                 <div className="row">
-                //                     <input 
-                //                         onChange={this.updateSignUpfNameValue} 
-                //                         type="text" 
-                //                         id="inputFirstName"
-                //                         className={(shouldMarkError('fName') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                         onBlur={this.handleBlur('fName')}
-                //                         placeholder="First Name"
-                //                         value={this.state.fName}
-                //                     />  
-                //                 </div>
-                //                 <div className="row">
-                //                     <input 
-                //                         onChange={this.updateSignUplNameValue}  
-                //                         type="text" 
-                //                         id="inputLastName"
-                //                         className={(shouldMarkError('lName') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                         onBlur={this.handleBlur('lName')}
-                //                         placeholder="Last Name" 
-                //                         value={this.state.lName}
-                //                     /> 
-                //                 </div>
-                //                 <div className="row">
-                //                     <input 
-                //                         onChange={this.updateSignUpIDValue} 
-                //                         type="text" 
-                //                         id="inputID"
-                //                         className={(shouldMarkError('idNum') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                         onBlur={this.handleBlur('idNum')}
-                //                         placeholder="ID Number"  
-                //                         value={this.state.idNum}
-                //                     /> 
-                //                 </div>
-                //                 <div className="row">
-                //                     <input 
-                //                         onChange={this.updateSignUpEmailValue} 
-                //                         type="email" 
-                //                         id="inputEmail"
-                //                         className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                         onBlur={this.handleBlur('email')}
-                //                         placeholder="Email"
-                //                         value={this.state.email}
-                //                     /> 
-                //                 </div>
-                //                 <div className="row">
-                //                     <input 
-                //                         onChange={this.updateSignUpPasswordValue1} 
-                //                         type="password" 
-                //                         id="inputPassword"
-                //                         className={(shouldMarkError('password1') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                         onBlur={this.handleBlur('password1')}
-                //                         placeholder="Password" 
-                //                         value={this.state.password1}
-                //                     /> 
-                //                 </div>
-                //                 <div className="row">
-                //                     <input 
-                //                         onChange={this.updateSignUpPasswordValue2} 
-                //                         type="password" 
-                //                         id="inputConfirmPassword"
-                //                         className={(shouldMarkError('password2') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                         onBlur={this.handleBlur('password2')}
-                //                         placeholder="Confirm Password"
-                //                         value={this.state.password2}
-                //                     /> 
-                //                 </div>
-                //                 <div className="row">
-                //                     <button 
-                //                         onClick={this.handleSignup} 
-                //                         type="submit" 
-                //                         className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" 
-                //                         disabled={isDisabled}
-                //                     >
-                //                         Register
-                //                     </button>
-                //                 </div>
-                //             </form>
-                //         </div>
-                //     </div>
             );
         } else {
             return (
