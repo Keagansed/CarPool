@@ -142,7 +142,6 @@ function validate(fName, lName, idNum, email, password1, password2) {
     * Purpose: Calls the store.signUp() function if all values have been entered correctly
     */
     handleSignup = event => {
-        event.preventDefault();
         if (!this.canBeSubmitted()) {
             return;
         }
@@ -283,7 +282,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
         } else {
             return (
                 <Redirect to={{
-                    pathname: "/Introduction",
+                    pathname: "/Login",
                 }} />
             );
         }
