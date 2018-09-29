@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
+
+
+html, body{
+    height:100vh; /* important to vertically align the container */
+    margin:0 !important;
+    padding:0 !important;
+}
+
 /* ============================================================================ */
 /*Text colours*/
 .txt-black{

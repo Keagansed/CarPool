@@ -8,6 +8,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HomeIcon from '@material-ui/icons/Home';
+import UserIcon from '@material-ui/icons/Person';
 
 import Carpools from '../components/carpool/Carpools';
 import { HomeNavTabs } from '../components/navigation/NavTabs';
@@ -37,6 +43,16 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
+    },
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    bottomNav: {
+        width: '100%',
+        position: 'fixed',
+        bottom: 0,
+        borderTop: '1px solid lightgrey',
     },
 });
 
@@ -115,27 +131,32 @@ const styles = theme => ({
     render() {
         const { classes } = this.props;
         const { value } = this.state;
+        const { token } = this.state;
 
         return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Tabs value={value} onChange={this.handleChange} fullWidth>
-                        <Tab label="Item One" />
-                        <Tab label="Item Two" />
-                        <Tab label="Item Three" href="#basic-tabs" />
-                    </Tabs>
-                </AppBar>
-                {value === 0 && <TabContainer>Item One</TabContainer>}
-                {value === 1 && <TabContainer>Item Two</TabContainer>}
-                {value === 2 && <TabContainer>Item Three</TabContainer>}
-            </div>
-            // <div className="size-100 bg-purple">
-            //     {this.renderNavTabs()}
-            //     <div className="padtop-50px padbot-50px scroll-vert">
-            //         {this.setTab()}
-            //     </div>
-            //     {this.renderNavBar()}
-            // </div>
+                <div className={classes.root}>
+                    <AppBar className={classes.topNav}>
+                        <Tabs value={value} onChange={this.handleChange} fullWidth>
+                            <Tab label="Routes" />
+                            <Tab label="Carpools" />
+                            <Tab label="Trips" />
+                            <Tab icon={<AddIcon />} href="#basic-tabs" />
+                        </Tabs>
+                    </AppBar>
+                    {value === 0 && <TabContainer><Routes store={RoutesStore} token={token} /></TabContainer>}
+                    {value === 1 && <TabContainer><Carpools store={OffersStore} token={token} /></TabContainer>}
+                    {value === 2 && <TabContainer><Trips /></TabContainer>}
+                    {value === 3 && <TabContainer><NewRoute store={RoutesStore} token={this.props.store.token} /></TabContainer>}
+                    <BottomNavigation
+                        value={1}
+                        showLabels
+                        className={classes.bottomNav}
+                    >
+                        <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
+                        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+                        <BottomNavigationAction label="Profile" icon={<UserIcon />} />
+                    </BottomNavigation>
+                </div>
         );
     }
 }
