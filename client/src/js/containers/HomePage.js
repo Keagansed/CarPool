@@ -69,7 +69,6 @@ const styles = theme => ({
 
         this.state = {
             token: "",
-            value: 0,
         }
     }
 
@@ -86,36 +85,13 @@ const styles = theme => ({
 
         let { store } = this.props;
         store.token = token;
+        store.setTab(0);
     }
 
     //Handle tab changes
     handleChange = (event, value) => {
-        this.setState({ value });
+        this.props.store.setTab(value);
     };
-
-    /*
-    * Purpose: Changes the component rendered based on which tab from NavTabs has been selected
-    */
-    setTab = () => {
-        const { store } = this.props;
-        const { token } = this.state;
-
-        if (store.routeTab === true) {
-            return <Routes store={RoutesStore} token={token} />;
-        }
-        else if (store.carpoolTab === true) {
-            return <Carpools store={OffersStore} token={token} />;
-        }
-        else if (store.tripTab === true) {
-            return <Trips />;
-        }
-        else if (store.addTab === true) {
-            return <NewRoute
-                store={RoutesStore}
-                token={this.props.store.token}
-            />
-        }
-    }
 
     /*
     * Purpose: Returns the JSX for the NavTabs component
@@ -135,11 +111,12 @@ const styles = theme => ({
         const { classes } = this.props;
         const { value } = this.state;
         const { token } = this.state;
+        const { activeTab } = this.props.store;
 
         return (
                 <div className={classes.root}>
                     <AppBar className={classes.topNav}>
-                        <Tabs value={value} onChange={this.handleChange} fullWidth>
+                        <Tabs value={activeTab} onChange={this.handleChange} fullWidth>
                             <Tab label="Routes" />
                             <Tab label="Carpools" />
                             <Tab label="Trips" />

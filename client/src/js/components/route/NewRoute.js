@@ -142,8 +142,17 @@ function validate(routeName, routeTime, startLoc, endLoc) {
 
         this.props.store.newRoute(token, time, routeName);
 
-        //reset inputs
-        this.forceUpdate();
+        this.setState({
+            routeName: "",
+            routeTime: "",
+
+            touched: {
+                routeName: false,
+                startLocation: false,
+                endLocation: false,
+                time: false,
+            }
+        });
     }
 
     /*
