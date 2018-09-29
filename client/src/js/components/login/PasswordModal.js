@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
@@ -61,7 +61,7 @@ function validate(email) {
     handleEmailChange(e) {
         this.setState({ email: e.target.value });
         this.props.store.forgotEmail = e.target.value;
-        this.props.store.noEmailError = '';
+        this.props.store.noEmailError = 'Enter your account email';
     }
 
     /*
@@ -92,9 +92,6 @@ function validate(email) {
         };
         const errors = validate(this.state.email);
         const { noEmailError } = this.props.store;
-        let messageColor = "txt-green ";
-        if (noEmailError === 'You are not a registered user')
-            messageColor = "txt-red "
         const isDisabled = Object.keys(errors).some(x => errors[x]);
 
         return (
@@ -105,11 +102,8 @@ function validate(email) {
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">Forgot Password?</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Did you forget your password?</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Please enter your email to reset your password.
-                        </DialogContentText>
                         <TextField
                             autoFocus
                             value={this.state.email}
@@ -122,17 +116,18 @@ function validate(email) {
                             onBlur={this.handleBlur('email')}
                             fullWidth
                         />
+                        <FormHelperText>{noEmailError}</FormHelperText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button 
-                            onClick={this.sendPassword} 
+                        <Button
+                            onClick={this.sendPassword}
                             color="primary"
                             disabled={isDisabled}
                         >
-                            Send me my password
+                            Submit
                         </Button>
                     </DialogActions>
                 </Dialog>

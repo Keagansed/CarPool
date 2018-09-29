@@ -233,10 +233,12 @@ function validate(email, password) {
                                 >
                                     Log In
                                 </Button>
+                                <FormControl margin="normal" fullWidth>
+                                    {/* Forgot Password text */}
+                                    <PasswordModal store={this.props.store}/>
+                                </FormControl>
                             </form>
                         </Paper>
-                        {/* Forgot Password text */}
-                        <PasswordModal/>
                         {/* Error Dialog if email/password incorrect */}
                         <Dialog open={toggleError} onClose={this.hideErrorDialog} aria-labelledby="simple-dialog-title">
                             <DialogTitle id="simple-dialog-title">Failed to Login</DialogTitle>
