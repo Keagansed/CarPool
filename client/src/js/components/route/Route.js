@@ -29,7 +29,7 @@ class Route extends Component {
                     </Avatar>
                     <ListItemText primary={this.props.store.routeName} secondary={this.props.store.time} />
                     <ListItemSecondaryAction>
-                        <IconButton aria-label="Comments">
+                        <IconButton aria-label="View Route Matches">
                             <ArrowIcon />
                         </IconButton>
                     </ListItemSecondaryAction>
