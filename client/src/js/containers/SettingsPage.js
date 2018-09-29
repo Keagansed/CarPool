@@ -29,13 +29,6 @@ const styles = theme => ({
         position: 'fixed',
         top: 0,
     },
-    toolbar: {
-        paddingLeft: 0,
-        paddingRight: 0,
-    },
-    grow: {
-        flexGrow: 1,
-    },
     bottomNav: {
         width: '100%',
         position: 'fixed',
@@ -85,8 +78,8 @@ const styles = theme => ({
         return (
             <div className={classes.root}>
                 <AppBar className={classes.topNav}>
-                    <Toolbar className={classes.toolbar}>
-                        <Typography variant="title" color="inherit" className={classes.grow} onClick={this.openInfoDialog} align='center'>
+                    <Toolbar variant='dense'>
+                        <Typography variant="title" color="inherit" onClick={this.openInfoDialog}>
                             Settings
                         </Typography>
                     </Toolbar>

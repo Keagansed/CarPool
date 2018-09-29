@@ -22,7 +22,7 @@ const styles = theme => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
-        paddingTop: 56,
+        paddingTop: 48,
         paddingBottom: 0,
     },
 });
