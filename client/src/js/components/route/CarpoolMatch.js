@@ -2,6 +2,19 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import AddIcon from '@material-ui/icons/GroupAdd';
+import GroupIcon from '@material-ui/icons/Group';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
@@ -35,14 +48,14 @@ const hide = {
     */
     constructor(props) {
         super(props);
-  
+
         this.state = {
             //'toggle' represents the state of the modal - false indicates it is not being shown.
-            toggle: false,
+            offerDialog: false,
             //carpoolMembers is used to store the members of any carpool match temporarily when accessed
-            carpoolMembers:[],
+            carpoolMembers: [],
             //routeArr is used to store the routes of any carpool match temporarily when accessed
-            routeArr:[]
+            routeArr: []
         }
 
         this.routeArr = [];
@@ -61,33 +74,39 @@ const hide = {
         this.props.routeArr.forEach(route => {
             this.carpoolMatchStore.getRoute(this.props.token, route.id)
         });
-       
+
     }
+
+    //Open/Close Offer dialog
+    handleClickOpen = () => {
+        this.setState({ offerDialog: true });
+    };
+    handleClose = () => {
+        this.setState({ offerDialog: false });
+    };
 
     generateUserProfileLinks = () => {
         // console.log(toJS(this.carpoolMatchStore.carpoolMembers));
         this.carpoolMembers = [];
-        this.carpoolMembers = [];
 
-        this.carpoolMatchStore.carpoolMembers.forEach(userObj =>{
+        this.carpoolMatchStore.carpoolMembers.forEach(userObj => {
+            let userFullName, userPartName, profilePicture;
+            userFullName = userObj.firstName + " " + userObj.lastName;
+            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
+            profilePicture = ServerURL + "/api/account/getImage?filename=" + userObj.profilePic;
             const memberComponent = (
-                <div 
-                    className="row bordbot-1px-dash-grey"
-                    key={Math.random()}
-                >
-                    <div className="col-7">
-                        {userObj.firstName+' '+userObj.lastName}
-                    </div>
-                    <div className="col-5 vertical-right">
-                        <Link to={"/ProfilePage/"+userObj._id}>View Profile</Link>
-                    </div>
-                </div>
+                <Link to={"/ProfilePage/" + userObj._id} style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                        <Avatar alt="Profile Picture" src={profilePicture} />
+                        <ListItemText primary={userPartName} secondary='View Profile' />
+                    </ListItem>
+                </Link>
             )
             this.carpoolMembers.push(memberComponent);
         });
         this.routeArr = this.carpoolMatchStore.routeArr.slice();
-        
-    } 
+
+    }
     /*
     * The purpose of the toggle method is to switch the modal between being active and inactive.
     */
@@ -103,82 +122,82 @@ const hide = {
     makeOfferToJoin() {
 
         fetch(ServerURL + '/api/system/route/getRoute?routeId=' + this.props.routeArr[0].id + '&token=' + this.props.token, {
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             },
         })
             .then(res => res.json())
             .catch(error => console.error('Error:', error))
             .then(route => {
-                if(route.success) {
+                if (route.success) {
 
                     fetch(ServerURL + '/api/system/carpool/getCarpool?_id=' + this.props.carpoolId, {
-                        method:'GET',
-                        headers:{
-                            'Content-Type':'application/json'
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
                         },
                     })
                         .then(res => res.json())
                         .catch(error => console.error('Error:', error))
                         .then(carpool => {
                             let groupChatID = carpool.data[0].groupChatID;
-                            let users = app.database().ref().child('groupChats/'+groupChatID+"/users");
+                            let users = app.database().ref().child('groupChats/' + groupChatID + "/users");
                             let hasAdded = false;
 
-                            users.on('child_added', snap =>{
-                                if(carpool.success) {
-                                    if(!hasAdded){
+                            users.on('child_added', snap => {
+                                if (carpool.success) {
+                                    if (!hasAdded) {
                                         OffersStore.makeOfferToJoin(
-                                            carpool.data[0].carpoolName, 
-                                            this.props.token, 
-                                            this.props.uRouteId, 
-                                            route.data[0].userId, 
-                                            snap.key, true, 
+                                            carpool.data[0].carpoolName,
+                                            this.props.token,
+                                            this.props.uRouteId,
+                                            route.data[0].userId,
+                                            snap.key, true,
                                             this.props.carpoolId
                                         );
-                                        let groupChatMessages = app.database().ref().child('groupChats/'+groupChatID+'/messages');
+                                        let groupChatMessages = app.database().ref().child('groupChats/' + groupChatID + '/messages');
 
-                                        fetch(ServerURL + '/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token,{
-                                            method:'GET',
-                                            headers:{
-                                                'Content-Type':'application/json'
+                                        fetch(ServerURL + '/api/account/profile?token=' + this.props.token + '&userId=' + this.props.token, {
+                                            method: 'GET',
+                                            headers: {
+                                                'Content-Type': 'application/json'
                                             },
                                         })
                                             .then(res => res.json())
                                             .catch(error => console.error('Error:', error))
                                             .then(sender => {
 
-                                                fetch(ServerURL + '/api/account/profile?token=' + this.props.token + '&userId=' + route.data[0].userId,{
-                                                    method:'GET',
-                                                    headers:{
-                                                        'Content-Type':'application/json'
+                                                fetch(ServerURL + '/api/account/profile?token=' + this.props.token + '&userId=' + route.data[0].userId, {
+                                                    method: 'GET',
+                                                    headers: {
+                                                        'Content-Type': 'application/json'
                                                     },
                                                 })
                                                     .then(res => res.json())
                                                     .catch(error => console.error('Error:', error))
                                                     .then(receiver => {
-                                                        if (receiver.success && sender.success){
+                                                        if (receiver.success && sender.success) {
                                                             groupChatMessages.push().set({
                                                                 userID: "Server",
-                                                                messageContent: (sender.data[0].firstName + " " + sender.data[0].lastName + " has requested to join your carpool. The invite has been sent to " + receiver.data[0].firstName + " " + receiver.data[0].lastName +  "."),
+                                                                messageContent: (sender.data[0].firstName + " " + sender.data[0].lastName + " has requested to join your carpool. The invite has been sent to " + receiver.data[0].firstName + " " + receiver.data[0].lastName + "."),
                                                                 dateTime: JSON.stringify(new Date()),
-                                                                tripSuggest:false
+                                                                tripSuggest: false
                                                             });
                                                         }
                                                     });
                                             });
                                         hasAdded = true;
                                     }
-                                }else{
-                                    console.log("error: "+ carpool.message);
+                                } else {
+                                    console.log("error: " + carpool.message);
                                 }
                             });
                         });
 
-                    this.toggle();
-                }else{
-                    console.log("error: "+ route.message);
+                    this.handleClose();
+                } else {
+                    console.log("error: " + route.message);
                 }
             });
     }
@@ -193,25 +212,25 @@ const hide = {
         // Push the content of the modal to the array
         modal.push(
             // Modal
-            <div 
-                key="0" 
-                className="modal" 
-                tabIndex="-1" 
-                role="dialog" 
-                id="myModal" 
+            <div
+                key="0"
+                className="modal"
+                tabIndex="-1"
+                role="dialog"
+                id="myModal"
                 style={this.state.toggle ? display : hide}
             >
-                <div 
-                    className="modal-dialog" 
+                <div
+                    className="modal-dialog"
                     role="document"
                 >
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
                             <h5 className="modal-title fw-bold">Request to Join Carpool</h5>
-                            <button 
-                                type="button" 
-                                className="close" 
-                                onClick={this.toggle} 
+                            <button
+                                type="button"
+                                className="close"
+                                onClick={this.toggle}
                                 aria-label="Close"
                             >
                                 <span aria-hidden="true">&times;</span>
@@ -221,20 +240,20 @@ const hide = {
                             <div className="row bordbot-1px-dash-grey">
                                 <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
                             </div>
-                                {this.carpoolMembers}
+                            {this.carpoolMembers}
                             <div className="row mtop-10px">
                                 <h6 className="fw-bold mx-auto">Route Comparison</h6>
                             </div>
                             <div className="row mbottom-10px">
                                 <div className="col-12">
-                                    <MapComponent routeArr={this.routeArr}/>
-                                </div>                                
+                                    <MapComponent routeArr={this.routeArr} />
+                                </div>
                             </div>
                             <div className="row">
-                                <button 
+                                <button
                                     onClick={this.makeOfferToJoin.bind(this)}
-                                    type="submit" 
-                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" 
+                                    type="submit"
+                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
                                     id="btnNewRoute"
                                 >
                                     Send Request
@@ -247,45 +266,73 @@ const hide = {
         );
 
         //Return the CarpoolMatch
-        return(
+        return (
             <div>
-                <div 
-                    className="container-fluid bg-purple bordbot-2px-white" 
-                    onClick={this.toggle}
-                >
-                    <div className="row txt-white padver-10px">
-                        <div className="col-2">
-                                <img 
-                                    src={tempGroupPic} 
-                                    className="mx-auto my-auto rounded-circle bord-2px-white bg-lightgrey" 
-                                    height="60" 
-                                    width="60" 
-                                    alt="s" 
-                                />
-                        </div>
-                        <div className="col-7 padright-0">
-                            <div className="col-12 padright-0">
-                                <h5>{this.props.carpoolName}</h5>
-                            </div>
-                            <div className="col-12">
-                                1.5km Further
-                            </div>
-                        </div>
-                        <div className="col-3 vertical-right">
-                            <div className="col-12">
-                                <h5>
-                                    <i className="fa fa-handshake-o"></i>
-                                </h5>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* Modal to display/hide when the match is clicked on */}
-                {modal}
+                <ListItem button onClick={this.handleClickOpen}>
+                    <Avatar>
+                        <GroupIcon />
+                    </Avatar>
+                    <ListItemText primary={this.props.carpoolName} secondary='2 Members' />
+                    <ListItemSecondaryAction>
+                        <IconButton aria-label="Request to Join">
+                            <AddIcon />
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+                <Dialog open={this.state.offerDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="alert-dialog-title">Request to join Carpool</DialogTitle>
+                    <DialogContent>
+                        {this.carpoolMembers}
+                        <MapComponent routeArr={this.routeArr} />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                            </Button>
+                        <Button onClick={this.makeOfferToJoin} color="primary">
+                            Make Request
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
+            // <div>
+            //     <div
+            //         className="container-fluid bg-purple bordbot-2px-white"
+            //         onClick={this.toggle}
+            //     >
+            //         <div className="row txt-white padver-10px">
+            //             <div className="col-2">
+            //                 <img
+            //                     src={tempGroupPic}
+            //                     className="mx-auto my-auto rounded-circle bord-2px-white bg-lightgrey"
+            //                     height="60"
+            //                     width="60"
+            //                     alt="s"
+            //                 />
+            //             </div>
+            //             <div className="col-7 padright-0">
+            //                 <div className="col-12 padright-0">
+            //                     <h5>{this.props.carpoolName}</h5>
+            //                 </div>
+            //                 <div className="col-12">
+            //                     1.5km Further
+            //                 </div>
+            //             </div>
+            //             <div className="col-3 vertical-right">
+            //                 <div className="col-12">
+            //                     <h5>
+            //                         <i className="fa fa-handshake-o"></i>
+            //                     </h5>
+            //                 </div>
+            //                 <div className="col-12">
+            //                     {/* Empty for now */}
+            //                 </div>
+            //             </div>
+            //         </div>
+            //     </div>
+            //     {/* Modal to display/hide when the match is clicked on */}
+            //     {modal}
+            // </div>
         );
     }
 }

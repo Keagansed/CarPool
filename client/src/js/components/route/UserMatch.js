@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AddIcon from '@material-ui/icons/PersonAdd';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -67,7 +68,6 @@ import ServerURL from '../../utils/server';
     handleClickOpen = () => {
         this.setState({ offerDialog: true });
     };
-
     handleClose = () => {
         this.setState({ offerDialog: false });
     };
@@ -87,7 +87,7 @@ import ServerURL from '../../utils/server';
         this.setState({
             hidden: true
         });
-        this.toggle();
+        this.handleClose();
     }
 
     /*
@@ -156,10 +156,12 @@ import ServerURL from '../../utils/server';
                     <Dialog open={this.state.offerDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="alert-dialog-title">Make Offer to Carpool</DialogTitle>
                         <DialogContent>
-                            <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
-                                <Avatar alt="Profile Picture" src={profilePicture} />
-                                <ListItemText primary={userPartName} secondary='View Profile' />
-                            </ListItem>
+                            <Link to={"/ProfilePage/"+this.props.userId} style={{ textDecoration: 'none', color: 'white' }}>
+                                <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
+                                    <Avatar alt="Profile Picture" src={profilePicture} />
+                                    <ListItemText primary={userPartName} secondary='View Profile' />
+                                </ListItem>
+                            </Link>
                             <MapComponent routeArr={this.routeArr} />
                             <TextField
                                 onChange={this.handleCarpoolNameChange}
