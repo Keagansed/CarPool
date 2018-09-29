@@ -1,11 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import App from './js/App';
 
 import registerServiceWorker from './js/registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//Set Default Material UI Theme for entire app
+const theme = createMuiTheme({
+    palette: {
+        type: 'dark',
+    }
+});
+
+ReactDOM.render(
+    <MuiThemeProvider theme={theme}>
+        <App />
+    </MuiThemeProvider>
+    , document.getElementById('root')
+);
 
 
 registerServiceWorker();

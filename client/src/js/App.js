@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.min.css';
-import './../css/AllPages.css'; 
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'font-awesome/css/font-awesome.min.css';
+ import './../css/AllPages.css'; 
 
 import HomePage from "./containers/HomePage";
 import HomePageStore from './stores/HomePageStore';
