@@ -48,9 +48,6 @@ const styles = theme => ({
         position: 'fixed',
         top: 0,
     },
-    tabContent: {
-        paddingTop: 48,
-    },
     bottomNav: {
         width: '100%',
         position: 'fixed',
@@ -90,7 +87,8 @@ const styles = theme => ({
 
     //Handle tab changes
     handleChange = (event, value) => {
-        this.props.store.setTab(value);
+        let { store } = this.props;
+        store.setTab(value);
     };
 
     /*
@@ -109,7 +107,6 @@ const styles = theme => ({
 
     render() {
         const { classes } = this.props;
-        const { value } = this.state;
         const { token } = this.state;
         const { activeTab } = this.props.store;
 
@@ -123,10 +120,10 @@ const styles = theme => ({
                             <Tab icon={<AddIcon />} href="#basic-tabs" />
                         </Tabs>
                     </AppBar>
-                    {value === 0 && <TabContainer><Routes store={RoutesStore} token={token} /></TabContainer>}
-                    {value === 1 && <TabContainer><Carpools store={OffersStore} token={token} /></TabContainer>}
-                    {value === 2 && <TabContainer><Trips /></TabContainer>}
-                    {value === 3 && <TabContainer><NewRoute store={RoutesStore} token={this.props.store.token} /></TabContainer>}
+                    {activeTab === 0 && <TabContainer><Routes store={RoutesStore} token={token} /></TabContainer>}
+                    {activeTab === 1 && <TabContainer><Carpools store={OffersStore} token={token} /></TabContainer>}
+                    {activeTab === 2 && <TabContainer><Trips /></TabContainer>}
+                    {activeTab === 3 && <TabContainer><NewRoute store={RoutesStore} token={this.props.store.token} /></TabContainer>}
                     <BottomNavigation
                         value={1}
                         showLabels

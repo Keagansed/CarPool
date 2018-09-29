@@ -141,18 +141,6 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         } = this.state;
 
         this.props.store.newRoute(token, time, routeName);
-
-        this.setState({
-            routeName: "",
-            routeTime: "",
-
-            touched: {
-                routeName: false,
-                startLocation: false,
-                endLocation: false,
-                time: false,
-            }
-        });
     }
 
     /*
