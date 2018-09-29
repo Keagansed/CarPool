@@ -255,59 +255,6 @@ function validate(email, password) {
                         </Dialog>
                     </main>
                 </React.Fragment>
-                // <div className="vertical-center bg-purple">
-                //     <div className="container-fluid">
-                //         <div className="row">
-                //             <img 
-                //                 className="img-fluid d-block mx-auto mbottom-2rem" 
-                //                 src={logo} 
-                //                 id="logo-256"
-                //                 alt="carpool_logo"
-                //             /> 
-                //         </div>
-                //         <form>
-                //             <div className="row">
-                //                 <input 
-                //                     onChange={this.updateLoginEmailValue} 
-                //                     type="email" 
-                //                     className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                     onBlur={this.handleBlur('email')}
-                //                     placeholder="Email" 
-                //                     id="inputEmail"
-                //                     value={this.state.email}
-                //                 /> 
-                //             </div>
-                //             <div className="row">
-                //                 <input 
-                //                     onChange={this.updateLoginPasswordValue} 
-                //                     type="password" 
-                //                     className={(shouldMarkError('password') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                //                     onBlur={this.handleBlur('password')}
-                //                     placeholder="Password"
-                //                     id="inputPassword"
-                //                     value={this.state.password}
-                //                 /> 
-                //             </div>
-                //             <div className="row">
-                //                 <button 
-                //                     onClick={this.handleLogin} 
-                //                     type="submit" 
-                //                     className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" 
-                //                     id="btnLogin"
-                //                     disabled={isDisabled}
-                //                 >
-                //                     Login
-                //                 </button>
-                //             </div>
-                //         </form>
-                //         <div className="row">
-                //             {/* forgot password modal */}
-                //             <Modal store={this.props.store}/>
-                //         </div>
-                //         {/* login failed modal */}
-                //         {modal}
-                //     </div>
-                // </div>
             );
         } else {
 
