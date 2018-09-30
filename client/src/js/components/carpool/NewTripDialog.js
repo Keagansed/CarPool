@@ -18,6 +18,10 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import MessageStore from '../../stores/MessagingStore.js';
+import TripsStore from '../../stores/TripsStore';
+import { getFromStorage } from '../../utils/localStorage.js'
+
 /*
  * Purpose: modal component that provides an interface for a user to suggest a new trip for the carpool members
  */
@@ -31,6 +35,15 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
         this.state = {
             tripDialog: false,
+            //current date time
+            datetime: `${new Date().getFullYear()}-${`${new Date().getMonth() +
+                1}`.padStart(2, 0)}-${`${new Date().getDay() + 1}`.padStart(
+                2,
+                0
+              )}T${`${new Date().getHours()}`.padStart(
+                2,
+                0
+              )}:${`${new Date().getMinutes()}`.padStart(2, 0)}`,
         };
     }
 
@@ -43,9 +56,166 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
     };
 
     /*
+    * Purpose: acquires the provided time from the corresponding html element and updates the time of the suggested 
+    * trip in the store.
+    */
+    updateDateTime = event => {
+        let dateTime = document.getElementById("inputTripTime").value;
+        let date = dateTime.split('T')[0];
+        let time = dateTime.split('T')[1];
+
+        let hours = time.split(":")[0];
+        let minutes = time.split(":")[1];
+        hours = hours % 12 || 12;
+        hours = hours < 10 ? "0" + hours : hours;
+        TripsStore.dateTime.setHours(hours, minutes, 0, 0);
+        TripsStore.tripName = this.props.carpoolName;
+
+        TripsStore.dateTime.setDate(date.getDate());
+        TripsStore.dateTime.setMonth(date.getMonth());
+        TripsStore.dateTime.setYear(date.getFullYear());
+
+        this.setState({datetime: dateTime})
+    };
+
+    /*
+     * Purpose: acquires the days that the trip will take place on and updates these days in the store.
+     */
+    updateDays = event => {
+        TripsStore.days["mon"] = document.getElementById("weekday-mon").checked;
+        TripsStore.days["tue"] = document.getElementById("weekday-tue").checked;
+        TripsStore.days["wed"] = document.getElementById("weekday-wed").checked;
+        TripsStore.days["thu"] = document.getElementById("weekday-thu").checked;
+        TripsStore.days["fri"] = document.getElementById("weekday-fri").checked;
+        TripsStore.days["sat"] = document.getElementById("weekday-sat").checked;
+        TripsStore.days["sun"] = document.getElementById("weekday-sun").checked;
+        console.log(TripsStore.days);
+    };
+
+    /*
+     * Purpose: acquires the users that are to partake in the suggested trip and updates the store.
+     */
+    updateUsers = event => {
+
+        for (let user in this.props.users) {
+
+            if (user !== TripsStore.idBy && document.getElementById(user).checked) {
+
+                if (user === getFromStorage('sessionKey').token) {
+                    TripsStore.users[user] = true;
+                } else {
+                    TripsStore.users[user] = false;
+                }
+
+            }
+
+        }
+
+    };
+
+    /*
+     * Purpose: aqcuires the information provided in the html form elements and creates a new message and trip
+     * suggestion with the information. Resets the modal form elements once the information has been acquired and
+     * renders the modal invisible.
+     */
+    suggestTrip() {
+        let days = "";
+
+        if (document.getElementById("weekday-mon").checked) {
+            days = days + "Mon ";
+        }
+
+        if (document.getElementById("weekday-tue").checked) {
+            days = days + "Tue ";
+        }
+
+        if (document.getElementById("weekday-wed").checked) {
+            days = days + "Wed ";
+        }
+
+        if (document.getElementById("weekday-thu").checked) {
+            days = days + "Thu ";
+        }
+
+        if (document.getElementById("weekday-fri").checked) {
+            days = days + "Fri ";
+        }
+
+        if (document.getElementById("weekday-sat").checked) {
+            days = days + "Sat ";
+        }
+
+        if (document.getElementById("weekday-sun").checked) {
+            days = days + "Sun ";
+        }
+
+        let userNames = "";
+        let users = [];
+
+        for (let user in this.props.users) {
+            console.log(this.props.users[this.props.users.length - 1]);
+            console.log(user);
+            if (user !== TripsStore.idBy) {
+                if (document.getElementById(user).checked) {
+                    userNames = userNames + MessageStore.getUsername(user).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
+                    users[user] = true;
+                }
+            } else {
+                userNames = userNames + MessageStore.getUsername(TripsStore.idBy).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
+                users[TripsStore.idBy] = true;
+            }
+        }
+        userNames = userNames.substr(0, userNames.lastIndexOf(", "));
+
+        let messageContent =
+            document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
+            "Days: " + days + "\r\n" +
+            "Members: " + userNames;
+
+        document.getElementById("inputTripTime").value = "";
+
+        document.getElementById("weekday-mon").checked = false;
+        document.getElementById("weekday-tue").checked = false;
+        document.getElementById("weekday-wed").checked = false;
+        document.getElementById("weekday-thu").checked = false;
+        document.getElementById("weekday-fri").checked = false;
+        document.getElementById("weekday-sat").checked = false;
+        document.getElementById("weekday-sun").checked = false;
+
+        for (let user in this.props.users) {
+            if (user !== TripsStore.idBy)
+                document.getElementById(user).checked = false;
+        }
+
+        this.closeTripDialog();
+        TripsStore.carpoolID = this.props.carpoolID;
+        TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
+    }
+
+    /*
      * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
     render() {
+        let users = [];
+
+        for (let user in this.props.users) {
+            if (user !== TripsStore.idBy) {
+                users.push(
+                    <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
+                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user)} />
+                    </ExpansionPanelDetails>
+                );
+            } else {
+                TripsStore.users[user] = true;
+                users.push(
+                    <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
+                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user) + ' (Driver)'} />
+                    </ExpansionPanelDetails>
+                );
+            }
+
+        }
+
         return (
             <div>
                 <IconButton color="inherit" aria-label="Back" onClick={this.openTripDialog}>
@@ -55,47 +225,44 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
                     <DialogTitle>Suggest a Trip</DialogTitle>
                     <DialogContent>
                         <TextField
+                            onChange={this.updateDateTime}
+                            id="inputTripTime"
                             label="First Trip Date and Time"
                             type="datetime-local"
-                            defaultValue="2017-05-24T10:30"
+                            defaultValue={this.state.datetime}
                             fullWidth
                         />
                         <ExpansionPanel>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Repeat Days</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Monday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-mon" />} label="Monday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Tuesday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-tue" />} label="Tuesday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Wednesday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-wed" />} label="Wednesday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Thursday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-thu" />} label="Thursday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Friday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-fri" />} label="Friday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Saturday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-sat" />} label="Saturday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Sunday"/>
+                            <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }}>
+                                <FormControlLabel control={<Checkbox color="primary" id="weekday-sun" />} label="Sunday" onChange={this.updateDays} />
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                         <ExpansionPanel>
                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography>Participants</Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Michael"/>
-                            </ExpansionPanelDetails>
-                            <ExpansionPanelDetails>
-                                <FormControlLabel control={<Checkbox color="primary"/>} label="Marcus"/>
-                            </ExpansionPanelDetails>
+                            {users}
                         </ExpansionPanel>
                     </DialogContent>
                     <DialogActions>
