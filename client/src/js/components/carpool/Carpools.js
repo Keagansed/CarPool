@@ -5,10 +5,20 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import GroupIcon from '@material-ui/icons/Group';
+import MessageIcon from '@material-ui/icons/Chat';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Inbox';
 
 import app from '../../stores/FirebaseStore.js';
 import CarpoolOffers from './CarpoolOffers';
 import MessageStore from '../../stores/MessagingStore.js';
+import { getFromStorage } from '../../utils/localStorage.js'
 
 import 'firebase/database';
 import "../../../css/components/Spinner.css";
@@ -127,106 +137,80 @@ class Carpools extends Component {
                 <ListSubheader>{`Carpool Offers`}</ListSubheader>
                 {this.state.offers}
                 <ListSubheader>{`Joined Carpools`}</ListSubheader>
+                {   //joined Carpools if there are any
+                    this.state.groupChats.map((groupChat) => {
+                        try {
+                            for (let user in this.state.groupChats[groupChat.id].users) {
+                                if (user === getFromStorage('sessionKey').token) {
+                                    verifyUser = true;
+                                }
+                            }
+
+                            if (verifyUser) {
+                                let usersArray = [];
+                                let users = app.database().ref().child('groupChats/' + groupChat.id + "/users");
+                                users.on('child_added', snap => {
+                                    usersArray[snap.key] = snap.val();
+                                });
+                                let messagesArray = [];
+                                let messages = app.database().ref().child('groupChats/' + groupChat.id + "/messages");
+                                messages.on('child_added', snap => {
+                                    messagesArray[snap.key] = snap.val();
+                                });
+                                let newMessageCount = 0;
+                                for (let message in messagesArray) {
+                                    let lastRefresh = JSON.parse(usersArray[getFromStorage('sessionKey').token].lastRefresh);
+                                    let messageDate = JSON.parse(messagesArray[message].dateTime);
+                                    if (messageDate > lastRefresh) {
+                                        newMessageCount++;
+                                    }
+                                }
+                                //Number of new messages text
+                                let messageString = "Messages";
+                                if (newMessageCount === 1) {
+                                    messageString = "Message";
+                                }
+
+                                verifyUser = false;
+                                showNoCarpools = false;
+                                return (
+                                    <Link
+                                        key={Math.random()}
+                                        to={`/HomePage/Chat/` + groupChat.id + '/' + this.state.groupChats[groupChat.id].name}
+                                        style={{ textDecoration: 'none', color: 'white' }}
+                                    >
+                                        <ListItem button>
+                                            <Avatar>
+                                                <GroupIcon />
+                                            </Avatar>
+                                            <ListItemText primary={this.state.groupChats[groupChat.id].name} secondary={newMessageCount + ' New ' + messageString} />
+                                            <ListItemSecondaryAction>
+                                                <IconButton aria-label="Open Chat">
+                                                    <MessageIcon />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    </Link>
+                                );
+                            } else {
+                                verifyUser = false;
+                                return (<div key={Math.random()}></div>);
+                            }
+                        } catch (e) {
+                            verifyUser = false;
+                            return (<div key={Math.random()}></div>)
+                        }
+                    })
+                }
+                {
+                    <ListItem hidden={!showNoCarpools}>
+                        <Avatar>
+                            <AddIcon />
+                        </Avatar>
+                        <ListItemText primary="No carpools to display" secondary="View your routes to join a carpool" />
+                    </ListItem>
+                }
             </List>
-            // <div>
-            //     <div className="scroll-vert">
-            //         <div className="pad-10px bg-whitelight txt-white">
-            //             <h4 className="mbottom-0">Carpool Offers</h4>
-            //         </div>
-            //         {this.state.offers}
-            //         <div className="pad-10px bg-whitelight txt-white">
-            //             <h4 className="mbottom-0">Your Carpools</h4>
-            //         </div>
-            //         {
-            //             this.state.groupChats.map((groupChat) => {
-            //                 try {
-
-            //                     for (let user in this.state.groupChats[groupChat.id].users) {
-
-            //                         if (user === getFromStorage('sessionKey').token) {
-            //                             verifyUser = true;
-            //                         }
-
-            //                     }
-
-            //                     if (verifyUser) {
-            //                         let usersArray = [];
-            //                         let users = app.database().ref().child('groupChats/' + groupChat.id + "/users");
-            //                         users.on('child_added', snap => {
-            //                             usersArray[snap.key] = snap.val();
-            //                         });
-
-            //                         let messagesArray = [];
-            //                         let messages = app.database().ref().child('groupChats/' + groupChat.id + "/messages");
-            //                         messages.on('child_added', snap => {
-            //                             messagesArray[snap.key] = snap.val();
-            //                         });
-
-            //                         let newMessageCount = 0;
-
-            //                         for (let message in messagesArray) {
-            //                             let lastRefresh = JSON.parse(usersArray[getFromStorage('sessionKey').token].lastRefresh);
-            //                             let messageDate = JSON.parse(messagesArray[message].dateTime);
-
-            //                             if (messageDate > lastRefresh) {
-            //                                 newMessageCount++;
-            //                             }
-
-            //                         }
-
-            //                         let messageString = "Messages";
-
-            //                         if (newMessageCount === 1) {
-            //                             messageString = "Message";
-            //                         }
-
-            //                         verifyUser = false;
-            //                         showNoCarpools = false;
-            //                         return (
-            //                             <div key={Math.random()}>
-            //                                 <Link
-            //                                     to={`/HomePage/Chat/` + groupChat.id + '/' + this.state.groupChats[groupChat.id].name}>
-            //                                     <div className="container-fluid bg-purple bordbot-2px-white">
-            //                                         <div className="row txt-white padver-10px">
-            //                                             <div className="col-9">
-            //                                                 <div className="col-12">
-            //                                                     <h5>{this.state.groupChats[groupChat.id].name}</h5>
-            //                                                 </div>
-            //                                                 <div className="col-12">
-            //                                                     {newMessageCount} New {messageString}
-            //                                                 </div>
-            //                                             </div>
-            //                                             <div className="col-3 vertical-right">
-            //                                                 <div className="col-12">
-            //                                                     <h5><i className="fa fa-chevron-circle-right"></i></h5>
-            //                                                 </div>
-            //                                                 <div className="col-12">
-            //                                                     {/* Empty for now */}
-            //                                                 </div>
-            //                                             </div>
-            //                                         </div>
-            //                                     </div>
-            //                                 </Link>
-            //                             </div>
-            //                         )
-            //                     } else {
-            //                         verifyUser = false;
-            //                         return (<div key={Math.random()}></div>);
-            //                     }
-            //                 } catch (e) {
-            //                     verifyUser = false;
-            //                     return (<div key={Math.random()}></div>)
-            //                 }
-            //             })
-            //         }
-            //         {
-            //             <h5 className="txt-center mtop-10px txt-white" style={showNoCarpools ? display : hide}>
-            //                 No Carpools
-            //             </h5>
-            //         }
-            //     </div>
-            // </div>
-
         );
     }
 }
