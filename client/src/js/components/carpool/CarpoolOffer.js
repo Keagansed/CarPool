@@ -61,7 +61,7 @@ class CarpoolOffer extends Component {
      * Purpose: selects the appropriate the output text for the modal based on whether the
      * carpool already exists or not
      */
-    renderOtherMembers() {
+    renderOtherMembers = () => {
         if (this.props.store.join) {
             return "Asking to join your existing carpool";
         } else {
@@ -72,7 +72,7 @@ class CarpoolOffer extends Component {
     /*
      * Purpose: returns the size of the carpool based on the value of 'join' in the carpool store
      */
-    getJoinOrCreate() {
+    getJoinOrCreate = () => {
 
         if (this.props.store.join) {
             return "Request to join an existing carpool";
@@ -86,7 +86,7 @@ class CarpoolOffer extends Component {
      * Purpose: calls the 'addCarpool' function in the store using the carpool offer ID. Changes
      * the deleted state to true and closes the modal.
      */
-    handleAcceptInvite() {
+    handleAcceptInvite = ()  =>  {
         if (this.props.store.join) {
 
         }
@@ -100,7 +100,7 @@ class CarpoolOffer extends Component {
      * Purpose: does an api call to decline the carpool offer. Sets the deleted state to true
      * and closes the modal.
      */
-    handleDeclineInvite() {
+    handleDeclineInvite = () => {
         fetch(ServerURL + '/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
             method: 'GET',
             headers: {
@@ -160,10 +160,10 @@ class CarpoolOffer extends Component {
                             <Typography>{this.renderOtherMembers()}</Typography>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleAcceptInvite()} color="primary">
+                            <Button onClick={this.handleAcceptInvite} color="primary">
                                 Accept
                             </Button>
-                            <Button onClick={this.handleDeclineInvite()} color="primary">
+                            <Button onClick={this.handleDeclineInvite} color="primary">
                                 Decline
                             </Button>
                         </DialogActions>
