@@ -33,6 +33,13 @@ const styles = theme => ({
     },
 });
 
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
+
 /*
  * Purpose: a chat interface for the users in the same carpool whereby users can arrange a trip
  * and then suggest that trip. 
@@ -200,7 +207,7 @@ class Carpools extends Component {
                     })
                 }
                 {
-                    <ListItem hidden={!showNoCarpools}>
+                    <ListItem style={showNoCarpools ? display : hide}>
                         <Avatar>
                             <AddIcon />
                         </Avatar>
