@@ -17,8 +17,8 @@ import AddIcon from '@material-ui/icons/Inbox';
 
 import app from '../../stores/FirebaseStore.js';
 import CarpoolOffers from './CarpoolOffers';
+import { getFromStorage } from '../../utils/localStorage.js';
 import MessageStore from '../../stores/MessagingStore.js';
-import { getFromStorage } from '../../utils/localStorage.js'
 
 import 'firebase/database';
 import "../../../css/components/Spinner.css";
@@ -117,20 +117,17 @@ class Carpools extends Component {
      * the user is apart of. Also shows if there are any new messages in any carpools that the user is in.
      */
     render() {
-        const { classes } = this.props;
-
         if (this.state.loading) {
-
             return (
                 <div className="scroll-vert">
                     {this.renderLoading()}
                 </div>
             );
-
         }
 
         let verifyUser = false;
         let showNoCarpools = true;
+        const { classes } = this.props;
 
         return (
             <List component="nav" className={classes.root}>
@@ -191,7 +188,7 @@ class Carpools extends Component {
                                             </ListItemSecondaryAction>
                                         </ListItem>
                                     </Link>
-                                );
+                                )
                             } else {
                                 verifyUser = false;
                                 return (<div key={Math.random()}></div>);
