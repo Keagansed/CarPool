@@ -44,10 +44,6 @@ const styles = theme => ({
     grow: {
         flexGrow: 1,
     },
-    backButton: {
-        marginLeft: -12,
-        marginRight: 20,
-    },
 });
 
 @observer class MatchesPage extends Component {
