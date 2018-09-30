@@ -99,9 +99,7 @@ const styles = theme => ({
                     route.routeName, 
                     route.startLocation, 
                     route.endLocation, 
-                    route.days, 
                     route.time, 
-                    route.repeat, 
                     route._id
                 )}
                 userObj = {route.userObj}

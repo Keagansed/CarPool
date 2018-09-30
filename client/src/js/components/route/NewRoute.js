@@ -59,8 +59,6 @@ function validate(routeName, routeTime, startLoc, endLoc) {
             startLocation: 'temporary - remove when location check figured out',
             endLocation: 'temporary - remove when location check figured out',
             time: '',
-            //whether or not the route repeats
-            repeat: false,
 
             touched: {
                 routeName: false,
@@ -231,64 +229,6 @@ function validate(routeName, routeTime, startLoc, endLoc) {
                 </form>
             );
         }
-            // <div className="container-fluid">
-            //     <div className="row">
-            //         <h6 className="fw-bold mx-auto padver-10px m-0 txt-white">Route Name</h6>
-            //     </div>
-            //     <div className="row padbot-10px">
-            //         <input
-            //             id="inputRouteName"
-            //             type="text"
-            //             onChange={this.updateNameValue}
-            //             onBlur={this.handleBlur('routeName')}
-            //             className={(shouldMarkError('routeName') ? "error" : "") + " col-10 form-control mx-auto brad-2rem"}
-            //             placeholder="e.g. Home to Work"
-            //             value={this.state.routeName}
-            //         />
-            //     </div>
-            //     <div className="row  padbot-10px">
-            //         <h6 className="fw-bold mx-auto m-0 txt-white">Time</h6>
-            //     </div>
-            //     <div className="row padbot-10px">
-            //         <input
-            //             id="inputRouteTime"
-            //             type="time"
-            //             onChange={this.updateTimeValue}
-            //             onBlur={this.handleBlur('routeTime')}
-            //             className={(shouldMarkError('routeTime') ? "error" : "") + " col-10 form-control mx-auto brad-2rem"}
-            //             value={this.state.time}
-            //         />
-            //     </div>
-            //     <div className="row  padbot-10px">
-            //         <h6 className="fw-bold mx-auto m-0 txt-white">Repeat Weekly</h6>
-            //     </div>
-            //     <div className="row padbot-10px">
-            //         <div className="mx-auto">
-            //             <WeekdaySelector />
-            //         </div>
-            //     </div>
-            //     <div className="row  padbot-10px">
-            //         <h6 className="fw-bold mx-auto m-0 txt-white">Start and End Locations</h6>
-            //     </div>
-            //     <div className="row padbot-10px">
-            //         <LocationSearchInput
-            //             placeholder="Start Location"
-            //         />
-            //     </div>
-            //     <div className="row padbot-10px">
-            //         <LocationSearchInput placeholder="End Location" />
-            //     </div>
-            //     <MapWrapper />
-            //     <div className="row padtop-10px">
-            //         {/* <button
-            //             onClick={this.handleAddRoute}
-            //             className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-            //         >
-            //             <b>Add Route</b>
-            //         </button> */}
-            //         {addingRoute}
-            //     </div>
-            // </div>
     }
 }
 

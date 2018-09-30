@@ -181,10 +181,8 @@ router.post('/newRoute',(req,res,next) => {
     newRoute.startLocation = startLocation;
     newRoute.endLocation = endLocation;
     newRoute.waypoints = waypoints;
-    //newRoute.days = days;
     newRoute.time = time;
     newRoute.routeName = routeName;
-    //newRoute.repeat = repeat;
  
     newRoute.save((err) => {
         if(err) {  

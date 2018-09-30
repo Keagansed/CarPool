@@ -14,9 +14,7 @@ class MockStore {
             routeName: "TestRoute",
             startLocation: {},
             endLocation: {},
-            days: "",
             time: "00:00",
-            repeat: false,
         }
         this.routes.push(route);
     }

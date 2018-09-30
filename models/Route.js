@@ -18,11 +18,6 @@ var RouteSchema = new mongoose.Schema({
 		default: [],
 		require:true
 	},
-	days: { 
-		type:Object,
-		default: {}, 
-        required: true
-	},
 	time:{
 		type:String,
 		default:'00:00',
@@ -33,11 +28,6 @@ var RouteSchema = new mongoose.Schema({
 		default:'',
 		required:true
     },
-    repeat:{
-        type: Boolean,
-        default: false,
-        required:true
-	},
 	recommended:{
 		type:Array,
 		default:[],
