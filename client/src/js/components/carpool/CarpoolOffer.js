@@ -2,10 +2,6 @@
 
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import { observer } from 'mobx-react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -18,10 +14,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 
 import CarpoolStore from '../../stores/CarpoolStore'
-import ServerURL from '../../utils/server'
-import { Typography } from '@material-ui/core';
+import ServerURL from '../../utils/server';
+
 
 /*
  * Purpose: a modal interface that displays an offer to a carpool. It shows the user who sent the
@@ -163,10 +160,10 @@ class CarpoolOffer extends Component {
                             <Typography>{this.renderOtherMembers()}</Typography>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleAcceptInvite.bind(this)} color="primary">
+                            <Button onClick={this.handleAcceptInvite()} color="primary">
                                 Accept
                             </Button>
-                            <Button onClick={this.handleDeclineInvite.bind(this)} color="primary">
+                            <Button onClick={this.handleDeclineInvite()} color="primary">
                                 Decline
                             </Button>
                         </DialogActions>
