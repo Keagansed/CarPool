@@ -22,18 +22,6 @@ import OffersStore from '../../stores/OffersStore';
 import CarpoolMatchStore from './../../stores/CarpoolMatchStore';
 import ServerURL from '../../utils/server';
 
-//Just using temporarily for demonstration purposes - remove when not needed anymore
-
-
-//'display' is used to show the modal
-const display = {
-    display: 'block'
-};
-//'hide' is used to hide the modal
-const hide = {
-    display: 'none'
-};
-
 /*
 * The purpose of this CarpoolMatch class is to provide a component representitive of a
 * carpool match on a route's page. When clicked on, a modal should be displayed which
@@ -207,62 +195,6 @@ const hide = {
     */
     render() {
         this.generateUserProfileLinks();
-        var modal = [];
-        // Push the content of the modal to the array
-        modal.push(
-            // Modal
-            <div
-                key="0"
-                className="modal"
-                tabIndex="-1"
-                role="dialog"
-                id="myModal"
-                style={this.state.toggle ? display : hide}
-            >
-                <div
-                    className="modal-dialog"
-                    role="document"
-                >
-                    <div className="modal-content">
-                        <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Request to Join Carpool</h5>
-                            <button
-                                type="button"
-                                className="close"
-                                onClick={this.toggle}
-                                aria-label="Close"
-                            >
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto">Other Carpool Members</h6>
-                            </div>
-                            {this.carpoolMembers}
-                            <div className="row mtop-10px">
-                                <h6 className="fw-bold mx-auto">Route Comparison</h6>
-                            </div>
-                            <div className="row mbottom-10px">
-                                <div className="col-12">
-                                    <MapComponent routeArr={this.routeArr} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <button
-                                    onClick={this.makeOfferToJoin.bind(this)}
-                                    type="submit"
-                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold"
-                                    id="btnNewRoute"
-                                >
-                                    Send Request
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
 
         //Return the CarpoolMatch
         return (
@@ -271,7 +203,7 @@ const hide = {
                     <Avatar>
                         <GroupIcon />
                     </Avatar>
-                    <ListItemText primary={this.props.carpoolName} secondary='2 Members' />
+                    <ListItemText primary={this.props.carpoolName} secondary='Click to make Request' />
                     <ListItemSecondaryAction>
                         <IconButton aria-label="Request to Join">
                             <AddIcon />
@@ -294,44 +226,6 @@ const hide = {
                     </DialogActions>
                 </Dialog>
             </div>
-            // <div>
-            //     <div
-            //         className="container-fluid bg-purple bordbot-2px-white"
-            //         onClick={this.toggle}
-            //     >
-            //         <div className="row txt-white padver-10px">
-            //             <div className="col-2">
-            //                 <img
-            //                     src={tempGroupPic}
-            //                     className="mx-auto my-auto rounded-circle bord-2px-white bg-lightgrey"
-            //                     height="60"
-            //                     width="60"
-            //                     alt="s"
-            //                 />
-            //             </div>
-            //             <div className="col-7 padright-0">
-            //                 <div className="col-12 padright-0">
-            //                     <h5>{this.props.carpoolName}</h5>
-            //                 </div>
-            //                 <div className="col-12">
-            //                     1.5km Further
-            //                 </div>
-            //             </div>
-            //             <div className="col-3 vertical-right">
-            //                 <div className="col-12">
-            //                     <h5>
-            //                         <i className="fa fa-handshake-o"></i>
-            //                     </h5>
-            //                 </div>
-            //                 <div className="col-12">
-            //                     {/* Empty for now */}
-            //                 </div>
-            //             </div>
-            //         </div>
-            //     </div>
-            //     {/* Modal to display/hide when the match is clicked on */}
-            //     {modal}
-            // </div>
         );
     }
 }

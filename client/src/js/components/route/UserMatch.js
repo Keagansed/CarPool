@@ -146,7 +146,7 @@ import ServerURL from '../../utils/server';
                 <div>
                     <ListItem button onClick={this.handleClickOpen}>
                         <Avatar alt="Profile Picture" src={profilePicture} />
-                        <ListItemText primary={userPartName} secondary={this.props.store.time} />
+                        <ListItemText primary={userPartName} secondary='Click to Make Offer' />
                         <ListItemSecondaryAction>
                             <IconButton aria-label="Offer to Carpool">
                                 <AddIcon />

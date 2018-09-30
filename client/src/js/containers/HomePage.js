@@ -17,8 +17,6 @@ import UserIcon from '@material-ui/icons/Person';
 import { Link } from 'react-router-dom';
 
 import Carpools from '../components/carpool/Carpools';
-import { HomeNavTabs } from '../components/navigation/NavTabs';
-import Navbar from '../components/navigation/Navbar';
 import NewRoute from '../components/route/NewRoute';
 import OffersStore from '../stores/OffersStore';
 import Routes from '../components/route/Routes';
