@@ -207,12 +207,15 @@ class Carpools extends Component {
                     })
                 }
                 {
-                    <ListItem style={showNoCarpools ? display : hide}>
-                        <Avatar>
-                            <AddIcon />
-                        </Avatar>
-                        <ListItemText primary="No carpools to display" secondary="View your routes to join a carpool" />
-                    </ListItem>
+                    <div style={showNoCarpools ? display : hide}>
+                        <ListItem >
+                            <Avatar>
+                                <AddIcon />
+                            </Avatar>
+                            <ListItemText primary="No carpools to display" secondary="View your routes to join a carpool" />
+                        </ListItem>
+                    </div>
+
                 }
             </List>
         );
