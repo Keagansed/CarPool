@@ -92,20 +92,6 @@ const styles = theme => ({
         store.setTab(value);
     };
 
-    /*
-    * Purpose: Returns the JSX for the NavTabs component
-    */
-    renderNavTabs = () => {
-        return <HomeNavTabs store={this.props.store} />;
-    }
-
-    /*
-    * Purpose: Returns the JSX for the Navbar component
-    */
-    renderNavBar = () => {
-        return <Navbar token={this.state.token} />;
-    }
-
     render() {
         const { classes } = this.props;
         const { token } = this.state;
