@@ -9,11 +9,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 
 import app from '../../stores/FirebaseStore.js';
 import MessageStore from '../../stores/MessagingStore.js';
-
+import TripSuggest from './TripSuggest';
+import Message from './Message';
+import MessageForm from './MessageForm';
 import { getFromStorage } from '../../utils/localStorage.js';
 import NewTripDialog from './NewTripDialog';
 import CarpoolInfoDialog from './CarpoolInfoDialog';
@@ -233,20 +235,81 @@ const styles = theme => ({
                             </Link>
                             <CarpoolInfoDialog
                                 token={this.state.token}
-                                users={this.state.users} 
-                                carpoolName={this.props.match.params.carpoolName} 
+                                users={this.state.users}
+                                carpoolName={this.props.match.params.carpoolName}
                                 carpoolID={this.props.match.params.carpoolID}
                                 mongoCarpoolID={this.state.carpoolID}
                             />
                             <NewTripDialog
-                                    token={this.state.token}
-                                    users={this.state.users}
-                                    carpoolName={this.props.match.params.carpoolName}
-                                    carpoolID={this.props.match.params.carpoolID}
-                                    mongoCarpoolID={this.state.carpoolID}
+                                token={this.state.token}
+                                users={this.state.users}
+                                carpoolName={this.props.match.params.carpoolName}
+                                carpoolID={this.props.match.params.carpoolID}
+                                mongoCarpoolID={this.state.carpoolID}
                             />
                         </Toolbar>
                     </AppBar>
+                    <List style={{paddingTop: 48, paddingBottom: 33}}>
+                        {//Messages
+                            this.state.messages.map((message) => {
+                                let userColour;
+                                let userName = MessageStore.getUsername(message.userID);
+                                try {
+                                    userColour = this.state.users[message.userID].colour;
+                                } catch (e) {
+                                    userColour = "black";
+                                }
+
+                                if (message.tripSuggest) {
+                                    return (
+                                        <TripSuggest
+                                            token={this.state.token}
+                                            messageContent={message.messageContent}
+                                            messageID={message.id}
+                                            users={message.users}
+                                            carpoolID={this.props.match.params.carpoolID}
+                                            tripID={message.tripID}
+                                            usersResponded={message.usersResponded}
+                                            userID={message.userID}
+                                            userColour={userColour}
+                                            dateTime={message.dateTime}
+                                            key={message.id}
+                                        />
+                                    );
+                                } else {
+                                    if (message.userID === "Server") {
+                                        return (
+                                            <Message
+                                                token={this.state.token}
+                                                messageContent={message.messageContent}
+                                                messageID={message.id}
+                                                userID={message.userID}
+                                                userName={"Server"}
+                                                userColour={userColour}
+                                                dateTime={message.dateTime}
+                                                key={message.id}
+                                            />
+                                        );
+                                    } else {
+                                        return (
+                                            <Message
+                                                token={this.state.token}
+                                                messageContent={message.messageContent}
+                                                messageID={message.id}
+                                                userID={message.userID}
+                                                userName={userName}
+                                                userColour={userColour}
+                                                dateTime={message.dateTime}
+                                                key={message.id}
+                                            />
+                                        );
+                                    }
+                                }
+                            })
+                        }
+                    </List>
+                    {/* Input message */}
+                    <MessageForm addMessage={this.addMessage} />
                 </div>
 
                 // <div className="size-100 bg-purple">
@@ -285,7 +348,7 @@ const styles = theme => ({
                 //                     try{
                 //                         userColour = this.state.users[message.userID].colour;
                 //                     }catch(e) {
-                //                         userColour = "txt-white";
+                //                         userColour = "black";
                 //                     }
 
                 //                     if(message.tripSuggest) {

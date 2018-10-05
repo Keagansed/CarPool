@@ -89,13 +89,13 @@ class carpoolStore {
     getRandomColour() {
         // Stores array of string classes for the colours
         let colours = {
-            0:"txt-yellow",
-            1:"txt-red",
-            2:"txt-orange",
-            3:"txt-lightBlue",
-            4:"txt-pink",
-            5:"txt-mediumPurple",
-            6:"txt-lime"
+            0:"yellow",
+            1:"red",
+            2:"orange",
+            3:"blue",
+            4:"pink",
+            5:"purple",
+            6:"lime"
         };
 
         // Stores random int to select a colour from the array

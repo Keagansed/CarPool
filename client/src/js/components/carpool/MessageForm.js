@@ -4,12 +4,19 @@ import React, { Component } from 'react';
 
 import { getFromStorage } from '../../utils/localStorage.js'
 
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import SendIcon from '@material-ui/icons/Send';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 /*
  * Purpose: provides the message form which allows the user to enter a message that they would like to send in the
  * carpool chat
  */
 class MessageForm extends Component {
-    
+
     /*
      * Purpose: calls the constructor of the parent class and initializes the fields. 'newMessageContent' will contain
      * the actual message that the user wants to send to carpool chat. 
@@ -17,7 +24,7 @@ class MessageForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            newMessageContent : ''
+            newMessageContent: ''
         };
         this.handleUserInput = this.handleUserInput.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
@@ -28,7 +35,7 @@ class MessageForm extends Component {
             this.sendMessage();
         }
     }
-    
+
     /*
      * Purpose:  sets the 'newMessageContent' field to the text from the corresponding input element in the form
      */
@@ -53,25 +60,25 @@ class MessageForm extends Component {
      */
     render() {
 
-        return(
-            <div>
-                {/*<input className="messageInput" placeholder="Write a message..." value={this.state.newMessageContent}*/}
-                {/*onChange={this.handleUserInput}/>*/}
-                {/*<button className="messageButton" onClick={this.sendMessage}>Send Message</button>*/}
-
-                <div className="fixed-bottom container-fluid height-50px">
-                    <div className="row height-100p txt-purple font-20px fw-bold">
-                        <input type="text" placeholder="Write a message..." className="col-10 bord-0 focusbord-1px-purple"
-                               value={this.state.newMessageContent}
-                               onChange={this.handleUserInput}
-                               onKeyPress={this._handleKeyPress}
-                               />
-                        <button className="col-2 btn height-100p bg-white txt-purple fw-bold brad-0 font-20px txt-center" onClick={this.sendMessage}>
-                            <i className="fa fa-arrow-circle-right" ></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        return (
+            <Input
+                fullWidth
+                multiline
+                rowsMax="4"
+                value={this.state.newMessageContent}
+                onChange={this.handleUserInput}
+                onKeyPress={this._handleKeyPress}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <SendIcon onClick={this.sendMessage} style={{paddingRight: 10}}/>
+                    </InputAdornment>
+                }
+                style={{position: 'fixed',
+                        bottom: 0,
+                        borderTop: '1px solid lightgrey',
+                        paddingLeft: 5,
+                }}
+            />
         );
     }
 }
