@@ -16,6 +16,7 @@ import MessageStore from '../../stores/MessagingStore.js';
 
 import { getFromStorage } from '../../utils/localStorage.js';
 import NewTripDialog from './NewTripDialog';
+import CarpoolInfoDialog from './CarpoolInfoDialog';
 
 import "../../../css/components/Spinner.css"
 
@@ -32,9 +33,6 @@ const styles = theme => ({
     toolbar: {
         paddingLeft: 0,
         paddingRight: 0,
-    },
-    grow: {
-        flexGrow: 1,
     },
 });
 
@@ -233,9 +231,13 @@ const styles = theme => ({
                                     <BackIcon />
                                 </IconButton>
                             </Link>
-                            <Typography variant="title" color="inherit" className={classes.grow} onClick={this.openInfoDialog}>
-                                {this.props.match.params.carpoolName}
-                            </Typography>
+                            <CarpoolInfoDialog
+                                token={this.state.token}
+                                users={this.state.users} 
+                                carpoolName={this.props.match.params.carpoolName} 
+                                carpoolID={this.props.match.params.carpoolID}
+                                mongoCarpoolID={this.state.carpoolID}
+                            />
                             <NewTripDialog
                                     token={this.state.token}
                                     users={this.state.users}
