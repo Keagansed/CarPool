@@ -2,19 +2,21 @@
 
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import MapComponent from '../google/GeneralMapWrapper';
-import MessageStore  from '../../stores/MessagingStore.js';
+import MessageStore from '../../stores/MessagingStore.js';
 import app from '../../stores/FirebaseStore.js'
 import { getFromStorage } from '../../utils/localStorage.js';
 import ServerURL from '../../utils/server';
-
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
 
 /*
  * Purpose: a message interface for a trip suggestion and an interface for viewing and accepting/declining the trip  
@@ -32,70 +34,84 @@ const hide = {
 
         this.state = {
             buttons: [],
-            toggle: false,
+            tripDialog: false,
             routeArr: []
         };
         this.messageContent = props.messageContent;
         this.messageID = props.messageID;
-        this.message = app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID);
+        this.message = app.database().ref().child('groupChats/' + this.props.carpoolID + "/messages/" + this.messageID);
         this.accept = this.accept.bind(this);
         this.reject = this.reject.bind(this);
     }
+
+    //Open/close trip dialog
+    openTripDialog = () => {
+        this.setState({ tripDialog: true });
+    };
+    closeTripDialog = () => {
+        this.setState({ tripDialog: false });
+    };
 
     /*
      * Purpose: sets the 'buttons' fields to the appropriate html button elements.
      */
     componentWillMount() {
         if (this.props.userID === this.props.token) {
-            this.setState({buttons : (
-                <div className="row txt-white padtop-0" key={Math.random()}>
-                    <div className="col-12">
-                        <p className="txt-grey mbottom-0">You suggested this trip</p>
+            this.setState({
+                buttons: (
+                    <div key={Math.random()}>
+                        <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            Close
+                        </Button>
                     </div>
-                </div>
-            )});
-        }else if (typeof this.props.usersResponded[this.props.token] !== 'undefined'){
-            if (this.props.usersResponded[this.props.token]){
-                this.setState({buttons : (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-12">
-                            <p className="txt-aqua mbottom-0">Accepted</p>
+                )
+            });
+        } else if (typeof this.props.usersResponded[this.props.token] !== 'undefined') {
+            if (this.props.usersResponded[this.props.token]) {
+                this.setState({
+                    buttons: (
+                        <div key={Math.random()}>
+                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                Close
+                            </Button>
                         </div>
-                    </div>
-                )});
-            }else {
-                this.setState({buttons : (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-12">
-                            <p className="txt-red mbottom-0">Rejected</p>
-                        </div>
-                    </div>
-                )});
-            }
-        }else{
-            if (typeof this.props.users[this.props.token] !== 'undefined'){
-                this.setState({buttons : (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-6 padright-5px">
-                            <button onClick={this.accept} className="btn btn-primary mx-auto width-100p brad-2rem bg-aqua txt-purple fw-bold">
-                                Accept
-                            </button>
-                        </div>
-                        <div className="col-6 padleft-5px">
-                            <button onClick={this.reject} className="btn btn-primary mx-auto width-100p brad-2rem bg-red txt-purple fw-bold" id="btnSuggestTrip">
-                                Reject
-                            </button>
-                        </div>
-                    </div>)
+                    )
                 });
-            }else {
-                this.setState({buttons : (
-                    <div className="row txt-white padtop-0" key={Math.random()}>
-                        <div className="col-12">
-                            <p className="txt-grey mbottom-0">You are not part of this trip</p>
+            } else {
+                this.setState({
+                    buttons: (
+                        <div key={Math.random()}>
+                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                Close
+                            </Button>
                         </div>
-                    </div>
-                )});
+                    )
+                });
+            }
+        } else {
+            if (typeof this.props.users[this.props.token] !== 'undefined') {
+                this.setState({
+                    buttons: (
+                        <div key={Math.random()}>
+                            <Button onClick={this.accept} color="primary" autoFocus>
+                                Accept
+                            </Button>
+                            <Button onClick={this.reject} color="primary" autoFocus>
+                                Reject
+                            </Button>
+                        </div>
+                    )
+                });
+            } else {
+                this.setState({
+                    buttons: (
+                        <div key={Math.random()}>
+                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                Close
+                            </Button>
+                        </div>
+                    )
+                });
             }
         }
     }
@@ -103,21 +119,12 @@ const hide = {
     /*
      * Purpose: acquires all the users and stores them in the 'user' field.
      */
-    componentDidMount(){
+    componentDidMount() {
 
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
 
         this.renderMap(this.props.tripID);
-    }
-
-    /*
-     * Purpose: toggles the visibility of the modal interface.
-     */
-    toggle(event) {
-        this.setState(prevState => ({
-            toggle: !prevState.toggle
-        }));
     }
 
     /*
@@ -128,12 +135,12 @@ const hide = {
         var createdOn = new Date(JSON.parse(dat));
         var msInDay = 24 * 60 * 60 * 1000;
 
-        createdOn.setHours(0,0,0,0);
-        today.setHours(0,0,0,0)
+        createdOn.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0)
 
-        var diff = (+today - +createdOn)/msInDay
+        var diff = (+today - +createdOn) / msInDay
 
-        if(diff === 1) {
+        if (diff === 1) {
             return diff + " day ago";
         }
 
@@ -148,13 +155,13 @@ const hide = {
         let hours = createdOn.getHours();
         let mins = createdOn.getMinutes();
 
-        if(mins === 0) {
+        if (mins === 0) {
             mins = "00";
-        }else if(mins<10) {
-            mins = "0"+mins;
+        } else if (mins < 10) {
+            mins = "0" + mins;
         }
 
-        return hours+":"+mins;
+        return hours + ":" + mins;
     }
 
     /*
@@ -165,7 +172,7 @@ const hide = {
         let todaysDate = new Date();
         // return true;
 
-        if(dateObj.toDateString() === todaysDate.toDateString()) {
+        if (dateObj.toDateString() === todaysDate.toDateString()) {
             return true;
         }
 
@@ -177,49 +184,50 @@ const hide = {
      * response. Performs an API POST request to reflect the response of the user to the trip suggestion.
      */
     accept() {
-        app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID+"/usersResponded")
-            .update({[getFromStorage('sessionKey').token]:true}).then(() => {
-                return{};
+        app.database().ref().child('groupChats/' + this.props.carpoolID + "/messages/" + this.messageID + "/usersResponded")
+            .update({ [getFromStorage('sessionKey').token]: true }).then(() => {
+                return {};
             }).catch(error => {
 
-                return{
+                return {
                     errorCode: error.code,
                     errorMessage: error.message
                 }
-                
+
             });
 
-        this.setState({buttons : (
-                <div className="row txt-white padtop-0" key={Math.random()}>
-                    <div className="col-12">
-                        <p className="txt-aqua">Accepted</p>
-                    </div>
+        this.setState({
+            buttons: (
+                <div key={Math.random()}>
+                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        Close
+                    </Button>
                 </div>
-            )
+    )
         });
 
         this.buttons = this.state.buttons;
-        fetch(ServerURL + '/api/system/trip/respondToTrip?token=' + this.props.token,{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
+        fetch(ServerURL + '/api/system/trip/respondToTrip?token=' + this.props.token, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body:JSON.stringify({
+            body: JSON.stringify({
                 _id: this.props.tripID,
                 token: this.props.token
             })
         })
-        .then(res=>res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json=>{
-            if(json.success) {
-                // this.tripID = json._id;
-                // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
-            }else{
-                alert(json.message);
-            }
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json => {
+                if (json.success) {
+                    // this.tripID = json._id;
+                    // suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
+                } else {
+                    alert(json.message);
+                }
 
-        })
+            })
     }
 
     /*
@@ -227,23 +235,24 @@ const hide = {
      * the response of the user.
      */
     reject() {
-        app.database().ref().child('groupChats/'+this.props.carpoolID+"/messages/"+this.messageID+"/usersResponded")
-            .update({[getFromStorage('sessionKey').token]:false}).then(() => {
-                return{};
+        app.database().ref().child('groupChats/' + this.props.carpoolID + "/messages/" + this.messageID + "/usersResponded")
+            .update({ [getFromStorage('sessionKey').token]: false }).then(() => {
+                return {};
             }).catch(error => {
-                return{
+                return {
                     errorCode: error.code,
                     errorMessage: error.message
                 }
             });
 
-        this.setState({buttons : (
-            <div className="row txt-white padtop-0" key={Math.random()}>
-                <div className="col-12">
-                    <p className="txt-red">Rejected</p>
+        this.setState({
+            buttons: (
+                <div key={Math.random()}>
+                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        Close
+                    </Button>
                 </div>
-            </div>
-        )
+            )
         });
 
         this.buttons = this.state.buttons;
@@ -253,25 +262,25 @@ const hide = {
         let routeArr = [];
 
         await fetch(ServerURL + '/api/system/trip/getTrip?_id=' + tripId + '&token=' + getFromStorage('sessionKey').token)
-        .then(res => res.json())
-        .then(json => {
-            if(json) {
-                if(json.success) {
-                    routeArr = json.data[0];
-                    if(typeof routeArr !== "undefined"){                
-                        this.setState({
-                            routeArr: routeArr.optimalTrip
-                        })                  
-                    }
-                    
-                }else {
-                    console.error(json.message);
-                }
+            .then(res => res.json())
+            .then(json => {
+                if (json) {
+                    if (json.success) {
+                        routeArr = json.data[0];
+                        if (typeof routeArr !== "undefined") {
+                            this.setState({
+                                routeArr: routeArr.optimalTrip
+                            })
+                        }
 
-            }else {
-                console.error("Server Error")
-            }
-        });
+                    } else {
+                        console.error(json.message);
+                    }
+
+                } else {
+                    console.error("Server Error")
+                }
+            });
 
     }
 
@@ -279,175 +288,119 @@ const hide = {
      * Purpose: renders the component in the DOM. The visibility of the modal is dependant on the 'toggle' field.
      */
     render(props) {
-        var modal = [];
-        modal.push(
-            // Modal
-            <div key={Math.random()} className="modal" tabIndex="-1" role="dialog" id="carpoolInfoModal" style={this.state.toggle ? display : hide}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Trip Suggestion</h5>
-                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row txt-white padver-10px padtop-0">
-                                <div className="col-12">
-                                    <div className="col-12 tripSuggest">
-                                        <div className="txt-purple">
-                                            { this.messageContent }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <MapComponent routeArr={this.state.routeArr} combined={true}/>
-                            </div>
-                            <div className="row padtop-10px">
-                                <div className="col-12">
-                                    <div className="col-12">
-                                        {this.state.buttons}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-
         let dat = "";
-
-        if(this.checkIfToday(this.props.dateTime)) {
+        if (this.checkIfToday(this.props.dateTime)) {
             dat = this.getTime(this.props.dateTime);
-        }else{
+        } else {
             dat = this.getDaysAgo(this.props.dateTime);
         }
 
-        if(this.props.userID === getFromStorage('sessionKey').token) {
+        //Determine buttons to display on dialog
+        if (this.props.userID === getFromStorage('sessionKey').token) {
             this.buttons = (
-                <div className="row txt-white padtop-0" key={Math.random()}>
-                    <div className="col-12">
-                        <p className="txt-grey mbottom-0">You suggested this trip</p>
-                    </div>
+                <div key={Math.random()}>
+                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        Close
+                    </Button>
                 </div>
             );
-        }else{
-            
-            try{
-
-                if(this.props.usersResponded[getFromStorage('sessionKey').token] === undefined) {
+        } else {
+            try {
+                if (this.props.usersResponded[getFromStorage('sessionKey').token] === undefined) {
                     throw new Error();
-                }else if(this.props.usersResponded[getFromStorage('sessionKey').token]) {
+                } else if (this.props.usersResponded[getFromStorage('sessionKey').token]) {
                     this.buttons = (
-                        <div className="row txt-white padtop-0" key={Math.random()}>
-                            <div className="col-12">
-                                <p className="txt-aqua mbottom-0">Accepted</p>
-                            </div>
+                        <div key={Math.random()}>
+                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                Close
+                            </Button>
                         </div>
                     );
                 }
-
-                if(!this.props.usersResponded[getFromStorage('sessionKey').token]) {
+                if (!this.props.usersResponded[getFromStorage('sessionKey').token]) {
                     this.buttons = (
-                        <div className="row txt-white padtop-0" key={Math.random()}>
-                            <div className="col-12">
-                                <p className="txt-red mbottom-0">Rejected</p>
-                            </div>
+                        <div key={Math.random()}>
+                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                Close
+                            </Button>
                         </div>
                     );
                 }
-
-            }catch(e) {
-
+            } catch (e) {
                 try {
-
-                    if(this.props.users[getFromStorage('sessionKey').token] === true) {
+                    if (this.props.users[getFromStorage('sessionKey').token] === true) {
                         this.buttons = this.state.buttons;
-                    }else{
+                    } else {
                         this.buttons = (
-                            <div className="row txt-white padtop-0" key={Math.random()}>
-                                <div className="col-12">
-                                    <p className="txt-grey">You are not part of this suggestion</p>
-                                </div>
+                            <div key={Math.random()}>
+                                <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                    Close
+                                </Button>
                             </div>
                         );
                     }
-
-                }catch(e) {
+                } catch (e) {
                     this.buttons = (
-                        <div className="row txt-white padtop-0" key={Math.random()}>
-                            <div className="col-12">
-                                <p className="txt-grey">You are not part of this suggestion</p>
-                            </div>
+                        <div key={Math.random()}>
+                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                Close
+                            </Button>
                         </div>
                     );
                 }
-
             }
-
         }
 
-        if(this.props.userID === getFromStorage('sessionKey').token) {
-
-            return(
-                <div className="container-fluid bg-purple bordbot-2px-white">
-                    {/* Maybe use different colours for different users? */}
-                    <div className="row padver-10px padbot-10px" onClick={this.toggle}>
-                        <div className="col-9">
-                            <div className={"col-12 "+this.props.userColour}>
-                                <h5>You</h5>
-                            </div>
-                            <div className={this.props.userColour + " col-12"}>
-                                Suggested a trip.
-                            </div>
-                        </div>
-                        <div className="col-3 vertical-right txt-grey">
-                            <div className="col-12">
-                                <h6>{dat}</h6>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                    </div>
-                    {modal}
+        if (this.props.userID === getFromStorage('sessionKey').token) {
+            return (
+                <div>
+                    <ListItem onClick={this.openTripDialog}>
+                        <ListItemText
+                            primary={<font style={{ color: this.props.userColour }}>You</font>}
+                            secondary='Suggested a trip.'
+                        />
+                        <ListItemSecondaryAction>
+                            <ListItemText primary={dat} />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
+                        <DialogTitle>You suggested a trip</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                {this.messageContent}
+                            </DialogContentText>
+                            <MapComponent routeArr={this.state.routeArr} combined={true} />
+                        </DialogContent>
+                        <DialogActions>
+                            {this.state.buttons}
+                        </DialogActions>
+                    </Dialog>
                 </div>
             );
-
-        }else{
-
-            return(
-                <div className="container-fluid bg-purple bordbot-2px-white">
-                    <div  onClick={this.toggle}>
-                        <div className="row padver-10px padbot-0">
-                            <div className="col-9">
-                                <div className={"col-12 "+this.props.userColour}>
-                                    <h5>{MessageStore.getUsername(this.props.userID)}</h5>
-                                </div>
-                                <div className="col-12">
-                                    {/* Empty for now */}
-                                </div>
-                            </div>
-                            <div className="col-3 vertical-right txt-grey">
-                                <div className="col-12">
-                                    <h6>{dat}</h6>
-                                </div>
-                                <div className="col-12">
-                                    {/* Empty for now */}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row padver-10px padtop-0">
-                            <div className="col-12">
-                                <div className={"col-12 "+this.props.userColour}>
-                                    Suggested a trip. Click for more info.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {modal}
+        } else {
+            return (
+                <div>
+                    <ListItem onClick={this.openTripDialog}>
+                        <ListItemText
+                            primary={<font style={{ color: this.props.userColour }}>{MessageStore.getUsername(this.props.userID)}</font>}
+                            secondary='Suggested a trip. Click for more info.'
+                        />
+                        <ListItemSecondaryAction>
+                            <ListItemText primary={dat} />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
+                        <DialogTitle>{MessageStore.getUsername(this.props.userID)} suggested a trip</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                {this.messageContent}
+                            </DialogContentText>
+                            <MapComponent routeArr={this.state.routeArr} combined={true} />
+                        </DialogContent>
+                        <DialogActions>
+                            {this.state.buttons}
+                        </DialogActions>
+                    </Dialog>
                 </div>
             );
 

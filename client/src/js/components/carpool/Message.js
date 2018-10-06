@@ -107,7 +107,7 @@ class Message extends Component {
                     <ListItemText 
                         primary={<font style={{color: this.props.userColour}}>{this.props.userName}</font>} 
                         secondary={this.messageContent}
-                        />
+                    />
                     <ListItemSecondaryAction>
                         <ListItemText primary={dat} />
                     </ListItemSecondaryAction>

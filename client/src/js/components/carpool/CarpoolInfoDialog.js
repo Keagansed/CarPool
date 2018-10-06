@@ -16,7 +16,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 import app from '../../stores/FirebaseStore.js';
 import MessageStore from '../../stores/MessagingStore.js';
-import TripsStore from '../../stores/TripsStore';
 import { getFromStorage } from '../../utils/localStorage.js';
 import ServerURL from '../../utils/server';
 
@@ -149,7 +148,7 @@ import ServerURL from '../../utils/server';
                         {users}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.leaveCarpool} color="primary" autoFocus>
+                        <Button onClick={this.leaveCarpool} color="primary">
                             Leave Carpool
                         </Button>
                         <Button onClick={this.closeTripDialog} color="primary" autoFocus>

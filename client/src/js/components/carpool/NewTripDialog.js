@@ -167,8 +167,11 @@ import { getFromStorage } from '../../utils/localStorage.js'
         }
         userNames = userNames.substr(0, userNames.lastIndexOf(", "));
 
+        let dateTime = document.getElementById("inputTripTime").value;
+        let date = dateTime.split('T')[0];
+        let time = dateTime.split('T')[1];
         let messageContent =
-            document.getElementById("inputTripDate").value + " @ " + document.getElementById("inputTripTime").value + "\r\n" +
+            date + " @ " + time + "\r\n" +
             "Days: " + days + "\r\n" +
             "Members: " + userNames;
 

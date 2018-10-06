@@ -250,7 +250,7 @@ const styles = theme => ({
                         </Toolbar>
                     </AppBar>
                     <List style={{paddingTop: 48, paddingBottom: 33}}>
-                        {//Messages
+                        {//Messages and trip suggestions
                             this.state.messages.map((message) => {
                                 let userColour;
                                 let userName = MessageStore.getUsername(message.userID);
