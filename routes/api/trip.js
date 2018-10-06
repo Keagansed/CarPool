@@ -415,7 +415,6 @@ router.post('/optimalTrip', async (req, res) => {
                  
                 routes.forEach(route => {
                     if(users.includes(route.userId)) {
-
                         routePromiseArr.push(Route.findOne({ 
                             _id: route.id 
                         }));

@@ -61,7 +61,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
     */
     updateDateTime = event => {
         let dateTime = document.getElementById("inputTripTime").value;
-        let date = dateTime.split('T')[0];
+        let date = new Date(dateTime.split('T')[0]);
         let time = dateTime.split('T')[1];
 
         let hours = time.split(":")[0];
@@ -118,7 +118,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
      * suggestion with the information. Resets the modal form elements once the information has been acquired and
      * renders the modal invisible.
      */
-    suggestTrip() {
+    suggestTrip = () => {
         let days = "";
 
         if (document.getElementById("weekday-mon").checked) {
@@ -205,14 +205,14 @@ import { getFromStorage } from '../../utils/localStorage.js'
             if (user !== TripsStore.idBy) {
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user)} />
+                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user).split(' ')[0]} />
                     </ExpansionPanelDetails>
                 );
             } else {
                 TripsStore.users[user] = true;
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user) + ' (Driver)'} />
+                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user).split(' ')[0] + ' (Driver)'} />
                     </ExpansionPanelDetails>
                 );
             }
@@ -272,7 +272,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
                         <Button onClick={this.closeTripDialog} color="primary" autoFocus>
                             Cancel
                         </Button>
-                        <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        <Button onClick={this.suggestTrip} color="primary" autoFocus>
                             Suggest
                         </Button>
                     </DialogActions>
