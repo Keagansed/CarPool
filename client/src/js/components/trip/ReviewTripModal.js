@@ -2,18 +2,18 @@
 
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
+import StarIcon from '@material-ui/icons/Star';
+import IconButton from '@material-ui/core/IconButton';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
 
 import ReviewStore from '../../stores/ReviewStore';
 import VouchStore from '../../stores/VouchStore';
 import UserReview from './UserReview';
 import { getFromStorage } from '../../utils/localStorage'
-
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
 
 /**
  * Purpose: An interface to allow the user to review other members of the Carpool after the Trip has concluded
@@ -24,7 +24,7 @@ const hide = {
         super(props);
     
         this.state = {
-            toggle: false,
+            reviewDialog: false,
             rating: 1,
             vouches: []
         }
@@ -33,6 +33,14 @@ const hide = {
         this.userVouches = [];
         this.userReviews = [];
     }
+
+    //Open/close review dialog
+    openReviewDialog = () => {
+        this.setState({ reviewDialog: true });
+    };
+    closeReviewDialog = () => {
+        this.setState({ reviewDialog: false });
+    };
 
     componentDidMount(){
         this.updateUserReviews();
@@ -56,7 +64,7 @@ const hide = {
                 getFromStorage('sessionKey').token
             );
         }
-        this.toggle();
+        this.closeReviewDialog;
     }
 
     updateUserReviews = () => {
@@ -107,21 +115,12 @@ const hide = {
         }
 
     }
-  
-    toggle = (event) => {
-        this.setState(prevState => ({
-            toggle: !prevState.toggle
-        }));
-
-        this.updateUserReviewsDisplay();
-        this.updateUserReviews();
-    }
 
     render(){
         let modal = [];
         modal.push(
             // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
+            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header bg-aqua">
@@ -148,11 +147,25 @@ const hide = {
             </div>
         );
         return(
-            <div className="col-2 txt-center">
-                <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px"  onClick={this.toggle}>
-                    <i className="fa fa-star"></i>
-                </button>
-                { modal }
+
+            <div>
+                <IconButton color="inherit" aria-label="Back" onClick={this.openReviewDialog}>
+                    <StarIcon />
+                </IconButton>
+                <Dialog open={this.state.reviewDialog} onClose={this.closeReviewDialog} scroll='paper'>
+                    <DialogTitle>Review Trip</DialogTitle>
+                    <DialogContent>
+                        {this.state.userReviews}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.closeReviewDialog} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.closeReviewDialog} color="primary" autoFocus>
+                            Submit Review
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

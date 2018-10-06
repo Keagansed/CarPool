@@ -3,14 +3,50 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import Typography from '@material-ui/core/Typography';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import TripsStore from './../../stores/TripsStore';
-
 import CancelTripModal from './CancelTripModal';
 import MapComponent from '../google/GeneralMapWrapper';
 import ReviewTripModal from './ReviewTripModal';
 import { getFromStorage } from '../../utils/localStorage.js';
 import { generateURL } from '../../utils/generateGoogleMapURL';
+
+//Styling specific to this page
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    toolbar: {
+        paddingLeft: 0,
+        paddingRight: 0,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+});
 
 /**
  * Purpose: An interface to allow the user to set up a Trip with members inside a Carpool
@@ -69,15 +105,12 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
     }
 
     render() {
+        const { classes } = this.props;
         let tripName;
-        let carpoolers = <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-            <div className="col-9 txt-left">
-                No other carpoolers
-                            </div>
-            <div className="col-3 vertical-right">
-
-            </div>
-        </div>;
+        let carpoolers =
+            <ListItem key={Math.random()}>
+                <ListItemText inset primary="No other Carpoolers" />
+            </ListItem>;
         let driver = [];
 
         let origin, destination;
@@ -87,7 +120,6 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
             googleURL = (generateURL(this.routeArr));
             console.log(googleURL)
             console.log('TCL: TripPage -> render -> googleURL', googleURL);
-
         }
         if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
             typeof (TripsStore.routeObj.endLocation) !== "undefined") {
@@ -104,25 +136,21 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
                     if (TripsStore.tripObj.users[user] === true)
                         carpoolers = [];
                     carpoolers.push(
-                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                            <div className="col-6 txt-left">
-                                {TripsStore.getUsernameSurname(user)}
-                            </div>
-                            <div className="col-6 vertical-right">
-                                <a href={"/ProfilePage/" + user}>View Profile</a>
-                            </div>
-                        </div>
+                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                            <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                                <Avatar alt="Profile Picture" src={TripsStore.getUserProfilePic(user)} />
+                                <ListItemText primary={TripsStore.getUsernameSurname(user)} secondary='View Profile' />
+                            </ListItem>
+                        </Link>
                     );
                 } else {
                     driver.push(
-                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                            <div className="col-6 txt-left">
-                                {TripsStore.getUsernameSurname(user)}
-                            </div>
-                            <div className="col-6 vertical-right">
-                                <a href={"/ProfilePage/" + user}>View Profile</a>
-                            </div>
-                        </div>
+                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                            <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                                <Avatar alt="Profile Picture" src={TripsStore.getUserProfilePic(user)} />
+                                <ListItemText primary={TripsStore.getUsernameSurname(user)} secondary='View Profile' />
+                            </ListItem>
+                        </Link>
                     );
                 }
             }
@@ -137,72 +165,92 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
         catch (E) { }
 
         return (
-            <div className="size-100 bg-purple">
-                <div className="fixed-top container-fluid height-50px bg-aqua">
-                    <div className="row height-100p">
-                        <Link to={`/HomePage`} className="col-2 txt-center">
-                            <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                <i className="fa fa-chevron-circle-left txt-center"></i>
-                            </button>
+            <div className={classes.root}>
+                {/* App Bar */}
+                <AppBar className={classes.topNav}>
+                    <Toolbar className={classes.toolbar} variant='dense'>
+                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'white' }}>
+                            <IconButton color="inherit" aria-label="Back">
+                                <BackIcon />
+                            </IconButton>
                         </Link>
-                        <div className="col-8 txt-center">
-                            <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                {tripName}
-                            </button>
-                        </div>
-                        {this.reviewModal}
-                    </div>
-                </div>
-                {/* Padding is there for top and bottom navs*/}
-                <div className="padtop-50px container-fluid">
-                    <div className="row mtop-10px">
-                        <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
-                    </div>
-                    <div className="row">
-                        <div className="mx-auto txt-white">{this.getDateTime()}</div>
-                    </div>
-                    <div className="row mtop-10px">
-                        <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="txt-center mbottom-0 txt-white">
-                                <p>
-                                    {origin}<br></br>
-                                    to<br></br>
-                                    {destination}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <MapComponent routeArr={this.routeArr} combined={true} />
-
-                    <div className="row mtop-10px bordbot-1px-dash-grey">
-                        <h6 className="fw-bold mx-auto txt-white">Driver</h6>
-                    </div>
-
-                    {driver}
-
-                    <div className="row mtop-10px bordbot-1px-dash-grey">
-                        <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
-                    </div>
-
-                    {carpoolers}
-
-                    <div className="row padtop-10px">
-                        <a
-                            href={googleURL}
-                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-                        >
-                            <b>Begin Route</b>
-                        </a>
-                    </div>
-                </div>
+                        <Typography variant="title" color="inherit" className={classes.grow}>
+                            {tripName}
+                        </Typography>
+                        <ReviewTripModal trip={TripsStore.tripObj} userList={TripsStore.allUsers} />
+                    </Toolbar>
+                </AppBar>
             </div>
+            // <div className="size-100 bg-purple">
+            //     <div className="fixed-top container-fluid height-50px bg-aqua">
+            //         <div className="row height-100p">
+            //             <Link to={`/HomePage`} className="col-2 txt-center">
+            //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+            //                     <i className="fa fa-chevron-circle-left txt-center"></i>
+            //                 </button>
+            //             </Link>
+            //             <div className="col-8 txt-center">
+            //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+            //                     {tripName}
+            //                 </button>
+            //             </div>
+            //             {this.reviewModal}
+            //         </div>
+            //     </div>
+            //     {/* Padding is there for top and bottom navs*/}
+            //     <div className="padtop-50px container-fluid">
+            //         <div className="row mtop-10px">
+            //             <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
+            //         </div>
+            //         <div className="row">
+            //             <div className="mx-auto txt-white">{this.getDateTime()}</div>
+            //         </div>
+            //         <div className="row mtop-10px">
+            //             <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
+            //         </div>
+            //         <div className="row">
+            //             <div className="col-12">
+            //                 <div className="txt-center mbottom-0 txt-white">
+            //                     <p>
+            //                         {origin}<br></br>
+            //                         to<br></br>
+            //                         {destination}
+            //                     </p>
+            //                 </div>
+            //             </div>
+            //         </div>
+
+            //         <MapComponent routeArr={this.routeArr} combined={true} />
+
+            //         <div className="row mtop-10px bordbot-1px-dash-grey">
+            //             <h6 className="fw-bold mx-auto txt-white">Driver</h6>
+            //         </div>
+
+            //         {driver}
+
+            //         <div className="row mtop-10px bordbot-1px-dash-grey">
+            //             <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
+            //         </div>
+
+            //         {carpoolers}
+
+            //         <div className="row padtop-10px">
+            //             <a
+            //                 href={googleURL}
+            //                 className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+            //             >
+            //                 <b>Begin Route</b>
+            //             </a>
+            //         </div>
+            //     </div>
+            // </div>
         );
     }
 
 }
 
-export default TripPage;
+TripPage.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(TripPage);
