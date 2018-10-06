@@ -39,6 +39,7 @@ import TripsStore from './../../stores/TripsStore';
                 <Typography variant='subheading' align='center'>
                     {TripsStore.getUsernameSurname(this.props.id)}
                 </Typography>
+                {/* center these 2 */}
                 <TextField
                     id={this.props.id}
                     label={"Thoughts on " + TripsStore.getUsername(this.props.id)} 
@@ -47,12 +48,14 @@ import TripsStore from './../../stores/TripsStore';
                     rows="4"
                     margin="normal"
                     variant="outlined"
+                    style={{marginLeft: 'auto', marginRight: 'auto'}}
                 />
                 <StarRatingComponent 
                     name="rate1" 
                     starCount={5}
                     value={rating}
                     onStarClick={this.onStarClick}
+                    style={{marginLeft: 'auto', marginRight: 'auto'}}
                 />
             </div>
             // <form>
