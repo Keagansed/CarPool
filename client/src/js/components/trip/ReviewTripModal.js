@@ -36,6 +36,8 @@ import { getFromStorage } from '../../utils/localStorage'
 
     //Open/close review dialog
     openReviewDialog = () => {
+        this.updateUserReviewsDisplay();
+        this.updateUserReviews();
         this.setState({ reviewDialog: true });
     };
     closeReviewDialog = () => {
