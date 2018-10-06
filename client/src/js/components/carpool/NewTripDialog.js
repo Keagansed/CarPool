@@ -120,38 +120,30 @@ import { getFromStorage } from '../../utils/localStorage.js'
      */
     suggestTrip = () => {
         let days = "";
-
         if (document.getElementById("weekday-mon").checked) {
             days = days + "Mon ";
         }
-
         if (document.getElementById("weekday-tue").checked) {
             days = days + "Tue ";
         }
-
         if (document.getElementById("weekday-wed").checked) {
             days = days + "Wed ";
         }
-
         if (document.getElementById("weekday-thu").checked) {
             days = days + "Thu ";
         }
-
         if (document.getElementById("weekday-fri").checked) {
             days = days + "Fri ";
         }
-
         if (document.getElementById("weekday-sat").checked) {
             days = days + "Sat ";
         }
-
         if (document.getElementById("weekday-sun").checked) {
             days = days + "Sun ";
         }
 
         let userNames = "";
         let users = [];
-
         for (let user in this.props.users) {
             console.log(this.props.users[this.props.users.length - 1]);
             console.log(user);
@@ -165,18 +157,14 @@ import { getFromStorage } from '../../utils/localStorage.js'
                 users[TripsStore.idBy] = true;
             }
         }
-        userNames = userNames.substr(0, userNames.lastIndexOf(", "));
 
+        userNames = userNames.substr(0, userNames.lastIndexOf(", "));
         let dateTime = document.getElementById("inputTripTime").value;
         let date = dateTime.split('T')[0];
         let time = dateTime.split('T')[1];
-        let messageContent =
-            date + " @ " + time + "\r\n" +
-            "Days: " + days + "\r\n" +
-            "Members: " + userNames;
+        let messageContent = date + " @ " + time + "\r\nDays: " + days + "\r\nMembers: " + userNames;
 
         document.getElementById("inputTripTime").value = "";
-
         document.getElementById("weekday-mon").checked = false;
         document.getElementById("weekday-tue").checked = false;
         document.getElementById("weekday-wed").checked = false;

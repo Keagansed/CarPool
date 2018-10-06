@@ -1,15 +1,11 @@
 // File Type: Component
 
 import React, { Component } from 'react';
-
-import { getFromStorage } from '../../utils/localStorage.js'
-
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import SendIcon from '@material-ui/icons/Send';
 import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
+
+import { getFromStorage } from '../../utils/localStorage.js'
 
 /*
  * Purpose: provides the message form which allows the user to enter a message that they would like to send in the

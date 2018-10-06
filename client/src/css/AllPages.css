@@ -10,64 +10,6 @@ html, body{
     width: 100%;
 }
 
-/* ============================================================================ */
-/*Text colours*/
-.txt-black{
-    color: black;
-}
-
-.txt-purple{
-    color: #140D4F !important;
-}
-.txt-white{
-    color: white !important;
-}
-.txt-white-faded{
-    color: rgba(255,255,255,0.5) !important;
-}
-.txt-gold{
-    color: gold !important;
-}
-.txt-yellow{
-    color: yellow !important;
-}
-.txt-silver{
-    color: silver !important;
-}
-.txt-green{
-    color: green !important;
-}
-.txt-red{
-    color: red !important;
-}
-.txt-orange{
-    color: orange !important;
-}
-
-.txt-lightBlue{
-    color: #00B7FF;
-}
-
-.txt-pink{
-    color: #e83e8c;
-}
-
-.txt-mediumPurple{
-    color: mediumpurple;
-}
-
-.txt-lime{
-    color:lime;
-}
-
-.txt-grey{
-    color: darkgray;
-}
-
-.txt-aqua{
-    color: #6FEDB7;
-}
-
 /* Remove chrome autofill ugly yellow background on inputs */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

@@ -242,14 +242,14 @@ const styles = theme => ({
                             />
                             <NewTripDialog
                                 token={this.state.token}
-                                users={this.state.users}
+                                users={this.state.users} 
+                                suggestTrip={this.suggestTrip} 
+                                carpoolID={this.state.carpoolID}
                                 carpoolName={this.props.match.params.carpoolName}
-                                carpoolID={this.props.match.params.carpoolID}
-                                mongoCarpoolID={this.state.carpoolID}
                             />
                         </Toolbar>
                     </AppBar>
-                    <List style={{paddingTop: 48, paddingBottom: 33}}>
+                    <List style={{paddingTop: 48, paddingBottom: 33}} id="messageBody">
                         {//Messages and trip suggestions
                             this.state.messages.map((message) => {
                                 let userColour;

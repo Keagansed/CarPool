@@ -30,7 +30,6 @@ import ServerURL from '../../utils/server';
      */
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
 
         this.state = {
             buttons: [],
@@ -120,7 +119,6 @@ import ServerURL from '../../utils/server';
      * Purpose: acquires all the users and stores them in the 'user' field.
      */
     componentDidMount() {
-
         let objDiv = document.getElementById("messageBody");
         objDiv.scrollTop = objDiv.scrollHeight;
 
@@ -364,7 +362,7 @@ import ServerURL from '../../utils/server';
                         </ListItemSecondaryAction>
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
-                        <DialogTitle>You suggested a trip</DialogTitle>
+                        <DialogTitle>Trip Suggestion</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
                                 {this.messageContent}
@@ -390,7 +388,7 @@ import ServerURL from '../../utils/server';
                         </ListItemSecondaryAction>
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
-                        <DialogTitle>{MessageStore.getUsername(this.props.userID)} suggested a trip</DialogTitle>
+                        <DialogTitle>Trip Suggestion</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
                                 {this.messageContent}
