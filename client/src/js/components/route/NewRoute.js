@@ -69,6 +69,9 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         }
     }
 
+    componentDidMount(){
+        this.props.store.reset();
+    }
     /*
     * The purpose of the updateNameValue method is to change the value of the routeName field.
     */
@@ -138,7 +141,11 @@ function validate(routeName, routeTime, startLoc, endLoc) {
             time
         } = this.state;
 
-        this.props.store.newRoute(token, time, routeName);
+        if(!this.props.store.invalidRoutes1 && !this.props.store.invalidRoutes2){
+            this.props.store.newRoute(token, time, routeName);
+        }else{
+            alert("Invalid Routes")
+        }
     }
 
     /*

@@ -37,7 +37,7 @@ import './../../../css/components/Autocomplete.css';
         this.setState({ address });
         geocodeByAddress(address)
             .then(results => {
-
+                
                 if (this.props.placeholder === 'Start Location') {
                     RoutesStore.setGoogleOriginResult(results[0]);
                 } else {
@@ -46,16 +46,21 @@ import './../../../css/components/Autocomplete.css';
 
                 getLatLng(results[0])
                     .then(latLng => {
-
                         if (this.props.placeholder === 'Start Location') {
+                            RoutesStore.invalidRoutes1 = false;
                             RoutesStore.setOrigin(latLng);
                         } else {
+                            RoutesStore.invalidRoutes2 = false;
                             RoutesStore.setdestination(latLng);
                         }
 
                     })
             })
-            .catch(error => console.error('Error', error))
+            .catch(error => {
+                RoutesStore.invalidRoutes2 = false;
+                RoutesStore.invalidRoutes1 = false;
+                console.error('Error', error)
+            })
     }
 
     /*
