@@ -30,7 +30,7 @@ import { getFromStorage } from '../utils/localStorage.js';
 //Container
 function TabContainer({ children, dir }) {
     return (
-        <Typography component="div" dir={dir} style={{ marginTop: 48, marginBottom: 56 }}>
+        <Typography component="div" dir={dir} style={{ paddingTop: 48, paddingBottom: 56 }}>
             {children}
         </Typography>
     );

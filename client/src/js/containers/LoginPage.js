@@ -41,7 +41,7 @@ const styles = theme => ({
         },
     },
     paper: {
-        marginTop: theme.spacing.unit * 8,
+        paddingTop: theme.spacing.unit * 8,
         marginBottom: theme.spacing.unit * 8,
         display: 'flex',
         backgroundColor: 'transparent',
@@ -60,6 +60,11 @@ const styles = theme => ({
     avatar: {
         margin: theme.spacing.unit,
         backgroundColor: theme.palette.secondary.main,
+        height: 128,
+        width: 128,
+    },
+    avatarIcon: {
+        fontSize: '100px', 
     },
     form: {
         width: '100%', // Fix IE11 issue.
@@ -196,7 +201,7 @@ function validate(email, password) {
                     <main className={classes.layout}>
                         <Paper className={classes.paper}>
                             <Avatar className={classes.avatar}>
-                                <LockIcon />
+                                <LockIcon className={classes.avatarIcon}/>
                             </Avatar>
                             <Typography variant="headline">Log In</Typography>
                             <form className={classes.form}>

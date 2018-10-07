@@ -22,8 +22,8 @@ const styles = theme => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
-        marginTop: 48,
-        marginBottom: 56,
+        paddingTop: 48,
+        paddingBottom: 56,
     },
 });
 

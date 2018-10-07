@@ -31,7 +31,7 @@ import ServerURL from '../utils/server';
 //Container
 function TabContainer({ children, dir }) {
 	return (
-		<Typography component="div" dir={dir} style={{ marginTop: 292, marginBottom: 56 }}>
+		<Typography component="div" dir={dir} style={{ paddingTop: 292, paddingBottom: 56 }}>
 			{children}
 		</Typography>
 	);

@@ -40,7 +40,7 @@ const styles = theme => ({
         flexGrow: 1,
     },
     listRoot: {
-        marginTop: 48,
+        paddingTop: 48,
         width: 'auto', // Fix IE11 issue.
         marginLeft: theme.spacing.unit * 3,
         marginRight: theme.spacing.unit * 3,

@@ -256,7 +256,7 @@ const styles = theme => ({
                             />
                         </Toolbar>
                     </AppBar>
-                    <List style={{ marginTop: 48, marginBottom: 33 }} id="messageBody" ref={this.listContainer}>
+                    <List style={{ paddingTop: 48, paddingBottom: 33 }} id="messageBody" ref={this.listContainer}>
                         {//Messages and trip suggestions
                             this.state.messages.map((message) => {
                                 let userColour;
