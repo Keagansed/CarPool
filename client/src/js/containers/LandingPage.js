@@ -9,6 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import IntroPage from './IntroPage';
 
 import LoginStore from '../stores/LoginStore'
 import logo from './../../css/images/logo.png'
@@ -49,15 +50,30 @@ const styles = theme => ({
 * Purpose: Landing page compenent is the first page the user sees when opening the app
 */
 class LandingPage extends Component {
+    constructor(){
+        super()
+
+        this.state = {
+            open: true,
+        }
+    }
+
     componentWillMount() {
         LoginStore.setRegistered(false);
+    }
+
+    handleClose = () => {
+        this.setState({ 
+            open: false 
+        });
     }
 
     render() {
         const { classes } = this.props;
 
         return (
-            <React.Fragment>
+            <React.Fragment>   
+                <IntroPage/>             
                 <CssBaseline />
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
