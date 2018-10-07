@@ -22,6 +22,8 @@ import OffersStore from '../stores/OffersStore';
 import Routes from '../components/route/Routes';
 import RoutesStore from '../stores/RoutesStore';
 import Trips from '../components/trip/Trips';
+import VerifyWrapper from './VerifyWrapper';
+
 
 import { getFromStorage } from '../utils/localStorage.js';
 
@@ -81,7 +83,6 @@ const styles = theme => ({
 
         let { store } = this.props;
         store.token = token;
-        store.setTab(0);
     }
 
     //Handle tab changes
@@ -142,4 +143,4 @@ HomePage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(HomePage);
+export default withStyles(styles)(VerifyWrapper(HomePage));
