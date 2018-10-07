@@ -182,7 +182,7 @@ class Carpools extends Component {
                                     <Link
                                         key={Math.random()}
                                         to={`/HomePage/Chat/` + groupChat.id + '/' + this.state.groupChats[groupChat.id].name}
-                                        style={{ textDecoration: 'none', color: 'white' }}
+                                        style={{ textDecoration: 'none', color: 'inherit' }}
                                     >
                                         <ListItem button divider>
                                             <Avatar>

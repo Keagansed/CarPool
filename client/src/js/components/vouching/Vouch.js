@@ -68,7 +68,7 @@ import ServerURL from '../../utils/server';
         return (
             <ExpansionPanel>
                 <ExpansionPanelSummary>
-                    <ListItem button>
+                    <ListItem button divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={this.printStars(this.props.vouch.rating)} secondary={userNameSurname} />
                         <ListItemSecondaryAction>

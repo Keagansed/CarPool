@@ -74,7 +74,7 @@ class UploadCarRegistrationSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="car-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <CarIcon />
                         </ListItemIcon>

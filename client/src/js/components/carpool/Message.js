@@ -91,7 +91,7 @@ class Message extends Component {
 
         if(this.props.userID === getFromStorage('sessionKey').token) {
             return(
-                <ListItem>
+                <ListItem divider>
                     <ListItemText 
                         primary={<font style={{color: this.props.userColour}}>You</font>} 
                         secondary={this.messageContent} 
@@ -103,7 +103,7 @@ class Message extends Component {
             );
         }else{
             return(
-                <ListItem>
+                <ListItem divider>
                     <ListItemText 
                         primary={<font style={{color: this.props.userColour}}>{this.props.userName}</font>} 
                         secondary={this.messageContent}
