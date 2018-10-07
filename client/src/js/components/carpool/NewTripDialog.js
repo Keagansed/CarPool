@@ -64,6 +64,11 @@ import { getFromStorage } from '../../utils/localStorage.js'
         let date = new Date(dateTime.split('T')[0]);
         let time = dateTime.split('T')[1];
 
+        if (date === 'Invalid Date' || time === undefined){
+            this.setState({datetime: dateTime})
+            return;
+        }
+
         let hours = time.split(":")[0];
         let minutes = time.split(":")[1];
         hours = hours % 12 || 12;
