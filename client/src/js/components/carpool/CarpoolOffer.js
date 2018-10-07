@@ -137,7 +137,7 @@ class CarpoolOffer extends Component {
             }
             return (
                 <div>
-                    <ListItem button onClick={this.handleClickOpen}>
+                    <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar>
                             <OfferIcon />
                         </Avatar>
@@ -151,8 +151,8 @@ class CarpoolOffer extends Component {
                     <Dialog open={this.state.offerDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="alert-dialog-title">{this.props.store.CarpoolName}</DialogTitle>
                         <DialogContent>
-                            <Link to={"/ProfilePage/" + this.props.store.senderId} style={{ textDecoration: 'none', color: 'white' }}>
-                                <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                            <Link to={"/ProfilePage/" + this.props.store.senderId} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                                     <Avatar alt="Profile Picture" src={profilePicture} />
                                     <ListItemText primary={userPartName} secondary='View Profile' />
                                 </ListItem>

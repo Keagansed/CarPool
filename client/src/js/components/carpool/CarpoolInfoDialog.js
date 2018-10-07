@@ -123,8 +123,8 @@ import ServerURL from '../../utils/server';
 
         for(let user in this.props.users) {
             users.push(
-                <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
+                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                         <ListItemText primary={MessageStore.getUsername(user)} secondary='Click to View Profile' />
                     </ListItem>
                 </Link>

@@ -82,8 +82,8 @@ import ServerURL from '../../utils/server';
             userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
             profilePicture = ServerURL + "/api/account/getImage?filename=" + userObj.profilePic;
             const memberComponent = (
-                <Link to={"/ProfilePage/" + userObj._id} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <Link to={"/ProfilePage/" + userObj._id} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
+                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={userPartName} secondary='View Profile' />
                     </ListItem>
@@ -199,7 +199,7 @@ import ServerURL from '../../utils/server';
         //Return the CarpoolMatch
         return (
             <div>
-                <ListItem button onClick={this.handleClickOpen}>
+                <ListItem button onClick={this.handleClickOpen} divider>
                     <Avatar>
                         <GroupIcon />
                     </Avatar>

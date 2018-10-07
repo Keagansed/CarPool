@@ -74,7 +74,7 @@ class UploadDriversSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="drivers-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <DriversIcon />
                         </ListItemIcon>

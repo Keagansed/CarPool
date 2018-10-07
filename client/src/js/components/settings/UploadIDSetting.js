@@ -74,7 +74,7 @@ class UploadIDSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="id-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <IdIcon />
                         </ListItemIcon>

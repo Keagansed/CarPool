@@ -118,7 +118,7 @@ class EditPasswordSetting extends Component {
 
         return (
             <div>
-                <ListItem button onClick={this.handleClickOpen}>
+                <ListItem button onClick={this.handleClickOpen} divider>
                     <ListItemIcon>
                         <LockIcon />
                     </ListItemIcon>
