@@ -66,11 +66,12 @@ import { getFromStorage } from '../../utils/localStorage'
                 getFromStorage('sessionKey').token
             );
         }
-        this.closeReviewDialog;
+        this.closeReviewDialog();
     }
 
     updateUserReviews = () => {
         if(typeof(this.props.trip) !== "undefined"){
+            console.log(this.props.trip.users);
             for(let user in this.props.trip.users){
                 if(this.props.trip.users[user] === true){
                     this.reviewStores[user] = new ReviewStore();
@@ -80,7 +81,7 @@ import { getFromStorage } from '../../utils/localStorage'
         }
     }
 
-    updateUserReviewsDisplay = ()=> {
+    updateUserReviewsDisplay = () => {
         let token = getFromStorage('sessionKey').token;
         let userReviews = [];        
         
@@ -119,37 +120,7 @@ import { getFromStorage } from '../../utils/localStorage'
     }
 
     render(){
-        let modal = [];
-        modal.push(
-            // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">Review Trip</h5>
-                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            {this.state.userReviews}
-                            <div className="row">
-                                <button 
-                                    type="submit" 
-                                    onClick={this.submitReviews} 
-                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-aqua txt-purple fw-bold" 
-                                    id="btnSubmitReview"
-                                >
-                                    Submit Review
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
         return(
-
             <div>
                 <IconButton color="inherit" aria-label="Back" onClick={this.openReviewDialog}>
                     <StarIcon />
@@ -163,7 +134,7 @@ import { getFromStorage } from '../../utils/localStorage'
                         <Button onClick={this.closeReviewDialog} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.closeReviewDialog} color="primary" autoFocus>
+                        <Button onClick={this.submitReviews} color="primary" autoFocus>
                             Submit Review
                         </Button>
                     </DialogActions>

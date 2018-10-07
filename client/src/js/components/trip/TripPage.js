@@ -8,26 +8,17 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from '@material-ui/icons/ArrowBack';
-import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import TripsStore from './../../stores/TripsStore';
 import CancelTripModal from './CancelTripModal';
-import MapComponent from '../google/GeneralMapWrapper';
 import ReviewTripModal from './ReviewTripModal';
 import { getFromStorage } from '../../utils/localStorage.js';
-import { generateURL } from '../../utils/generateGoogleMapURL';
+//import { generateURL } from '../../utils/generateGoogleMapURL';
 
 //Styling specific to this page
 const styles = theme => ({
@@ -113,21 +104,21 @@ const styles = theme => ({
             </ListItem>;
         let driver = [];
 
-        let origin, destination;
-        let googleURL;
-        if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
-            this.routeArr = TripsStore.tripObj.optimalTrip;
-            googleURL = (generateURL(this.routeArr));
-            console.log(googleURL)
-            console.log('TCL: TripPage -> render -> googleURL', googleURL);
-        }
-        if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
-            typeof (TripsStore.routeObj.endLocation) !== "undefined") {
-            origin = TripsStore.routeObj.startLocation.name;
-            origin = origin.slice(0, origin.indexOf(",", origin.indexOf(",") + 1));
-            destination = TripsStore.routeObj.endLocation.name;
-            destination = destination.slice(0, destination.indexOf(",", destination.indexOf(",") + 1));
-        }
+        // let origin, destination;
+        // let googleURL;
+        // if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
+        //     this.routeArr = TripsStore.tripObj.optimalTrip;
+        //     googleURL = (generateURL(this.routeArr));
+        //     console.log(googleURL)
+        //     console.log('TCL: TripPage -> render -> googleURL', googleURL);
+        // }
+        // if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
+        //     typeof (TripsStore.routeObj.endLocation) !== "undefined") {
+        //     origin = TripsStore.routeObj.startLocation.name;
+        //     origin = origin.slice(0, origin.indexOf(",", origin.indexOf(",") + 1));
+        //     destination = TripsStore.routeObj.endLocation.name;
+        //     destination = destination.slice(0, destination.indexOf(",", destination.indexOf(",") + 1));
+        // }
 
         try {
             tripName = TripsStore.tripObj.tripName;
