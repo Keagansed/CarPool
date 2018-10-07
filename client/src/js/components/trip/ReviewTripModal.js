@@ -42,6 +42,8 @@ import { getFromStorage } from '../../utils/localStorage'
     };
     closeReviewDialog = () => {
         this.setState({ reviewDialog: false });
+        this.updateUserReviewsDisplay();
+        this.updateUserReviews();
     };
 
     componentDidMount(){
@@ -71,7 +73,6 @@ import { getFromStorage } from '../../utils/localStorage'
 
     updateUserReviews = () => {
         if(typeof(this.props.trip) !== "undefined"){
-            console.log(this.props.trip.users);
             for(let user in this.props.trip.users){
                 if(this.props.trip.users[user] === true){
                     this.reviewStores[user] = new ReviewStore();

@@ -168,7 +168,7 @@ const styles = theme => ({
                         <Typography variant="title" color="inherit" className={classes.grow}>
                             {tripName}
                         </Typography>
-                        <ReviewTripModal trip={TripsStore.tripObj} userList={TripsStore.allUsers} />
+                        {this.reviewModal}
                     </Toolbar>
                 </AppBar>
             </div>
