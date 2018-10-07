@@ -13,12 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
 
 import TripsStore from './../../stores/TripsStore';
 import CancelTripModal from './CancelTripModal';
 import ReviewTripModal from './ReviewTripModal';
 import { getFromStorage } from '../../utils/localStorage.js';
-//import { generateURL } from '../../utils/generateGoogleMapURL';
+import { generateURL } from '../../utils/generateGoogleMapURL';
 
 //Styling specific to this page
 const styles = theme => ({
@@ -104,21 +105,21 @@ const styles = theme => ({
             </ListItem>;
         let driver = [];
 
-        // let origin, destination;
-        // let googleURL;
-        // if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
-        //     this.routeArr = TripsStore.tripObj.optimalTrip;
-        //     googleURL = (generateURL(this.routeArr));
-        //     console.log(googleURL)
-        //     console.log('TCL: TripPage -> render -> googleURL', googleURL);
-        // }
-        // if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
-        //     typeof (TripsStore.routeObj.endLocation) !== "undefined") {
-        //     origin = TripsStore.routeObj.startLocation.name;
-        //     origin = origin.slice(0, origin.indexOf(",", origin.indexOf(",") + 1));
-        //     destination = TripsStore.routeObj.endLocation.name;
-        //     destination = destination.slice(0, destination.indexOf(",", destination.indexOf(",") + 1));
-        // }
+        let origin, destination;
+        let googleURL;
+        if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
+            this.routeArr = TripsStore.tripObj.optimalTrip;
+            googleURL = (generateURL(this.routeArr));
+            console.log(googleURL)
+            console.log('TCL: TripPage -> render -> googleURL', googleURL);
+        }
+        if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
+            typeof (TripsStore.routeObj.endLocation) !== "undefined") {
+            origin = TripsStore.routeObj.startLocation.name;
+            origin = origin.slice(0, origin.indexOf(",", origin.indexOf(",") + 1));
+            destination = TripsStore.routeObj.endLocation.name;
+            destination = destination.slice(0, destination.indexOf(",", destination.indexOf(",") + 1));
+        }
 
         try {
             tripName = TripsStore.tripObj.tripName;
@@ -171,6 +172,15 @@ const styles = theme => ({
                         {this.reviewModal}
                     </Toolbar>
                 </AppBar>
+                <List  style={{paddingTop: 48}}>
+                    <ListItem>
+                        <ListItemText primary='Date and Time' secondary={this.getDateTime()} style={{textAlign: 'center'}} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemText primary='Route' secondary={origin + " to " + destination} style={{textAlign: 'center'}} />
+                        <MapComponent routeArr={this.routeArr} combined={true} />
+                    </ListItem>
+                </List>
             </div>
             // <div className="size-100 bg-purple">
             //     <div className="fixed-top container-fluid height-50px bg-aqua">
