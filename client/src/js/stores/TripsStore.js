@@ -50,6 +50,21 @@ class tripsStore {
         }
     }
 
+    @action getUserProfilePic = (userId) => {
+
+        let found = false;
+        
+        for( let x = 0; x < this.allUsers.length && !found; x++){
+            if(this.allUsers[x]._id === userId){
+                found = true;
+
+                this.userProfilePicName = this.allUsers[x].profilePic;
+                return this.allUsers[x].profilePic;
+            }
+        }
+
+    }
+
     @action getUsernameSurname = (userId) => {
         let found = false;
         

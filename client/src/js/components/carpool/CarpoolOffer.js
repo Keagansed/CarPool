@@ -2,16 +2,23 @@
 
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import OfferIcon from '@material-ui/icons/GroupAdd';
+import InfoIcon from '@material-ui/icons/Info';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 
 import CarpoolStore from '../../stores/CarpoolStore'
-import ServerURL from '../../utils/server'
+import ServerURL from '../../utils/server';
 
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
 
 /*
  * Purpose: a modal interface that displays an offer to a carpool. It shows the user who sent the
@@ -26,67 +33,51 @@ class CarpoolOffer extends Component {
      */
     constructor(props) {
         super(props);
-        // this.toggle = this.toggle.bind(this);
-  
+
         this.state = {
             token: '',
-            toggle: false,
-            deleted: false
+            deleted: false,
+            offerDialog: false,
         }
     }
 
-    /*
-     * Purpose: toggles whether the modal is visible or not by setting the 'toggle' field the 
-     * opposite of the previous value. It called when the carpool offer, the modal close button,
-     * or the accept/decline buttons are clicked.
-     */
-    toggle = (event) => {
-        this.setState(prevState => ({
-            toggle: !prevState.toggle
-        }));
-    }
+    //Open/Close Offer dialog
+    handleClickOpen = () => {
+        this.setState({ offerDialog: true });
+    };
+    handleClose = () => {
+        this.setState({ offerDialog: false });
+    };
 
     /*
      * Purpose: acquires the user that sent the carpool offer through an api call and sets
      * the user to the sender field in the state.
      */
-    componentDidMount(){
+    componentDidMount() {
         this.props.store.getUserProfile(this.props.token);
     }
 
     /*
      * Purpose: selects the appropriate the output text for the modal based on whether the
      * carpool already exists or not
-     */    
-    renderOtherMembers() {
-        let temp = [];
-
-        if(this.props.store.join) {
-            temp.push(
-                <div className="row" key={Math.random()}>
-                    <p className="mx-auto mbottom-0">Asking to join your existing carpool</p>
-                </div>
-            );
-        }else{
-            temp.push(
-                <div className="row" key={Math.random()}>
-                    <p className="mx-auto mbottom-0">This is an invite to create a new carpool</p>
-                </div>
-            );
+     */
+    renderOtherMembers = () => {
+        if (this.props.store.join) {
+            return "Asking to join your existing carpool";
+        } else {
+            return "This is an invite to create a new carpool";
         }
-
-        return(temp);
     }
 
     /*
      * Purpose: returns the size of the carpool based on the value of 'join' in the carpool store
      */
-    getJoinOrCreate() {
+    getJoinOrCreate = () => {
 
-        if(this.props.store.join) {
-            return "Join an existing carpool";
-        }else{
-            return "Create a new carpool";
+        if (this.props.store.join) {
+            return "Request to join an existing carpool";
+        } else {
+            return "Invite to create a new carpool";
         }
 
     }
@@ -95,35 +86,35 @@ class CarpoolOffer extends Component {
      * Purpose: calls the 'addCarpool' function in the store using the carpool offer ID. Changes
      * the deleted state to true and closes the modal.
      */
-    handleAcceptInvite() {
-        if(this.props.store.join){
+    handleAcceptInvite = ()  =>  {
+        if (this.props.store.join) {
 
         }
 
         CarpoolStore.addCarpool(this.props.offerId, this.props.token);
-        this.setState({deleted: true});
-        this.toggle();
+        this.setState({ deleted: true });
+        this.handleClose();
     }
 
     /*
      * Purpose: does an api call to decline the carpool offer. Sets the deleted state to true
      * and closes the modal.
      */
-    handleDeclineInvite() {
+    handleDeclineInvite = () => {
         fetch(ServerURL + '/api/system/offers/declineInvite?offerId=' + this.props.offerId + '&token=' + this.props.token, {
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             },
         })
-        .then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(json => {
-            console.log(json);
-        });
+            .then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(json => {
+                console.log(json);
+            });
 
-        this.setState({deleted: true});
-        this.toggle();
+        this.setState({ deleted: true });
+        this.handleClose();
     }
 
     /*
@@ -131,73 +122,52 @@ class CarpoolOffer extends Component {
      * is dependant on the 'toggle' field.
      */
     render() {
-        var modal = [];
+        if (this.state.deleted) {
 
-        modal.push(
-            // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">{this.props.store.CarpoolName}</h5>
-                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row bordbot-1px-dash-grey">
-                                <h6 className="fw-bold mx-auto">Offer Sent By</h6>
-                            </div>
-                            <div className="row bordbot-1px-dash-grey mbottom-10px" key={Math.random()}>
-                                <div className="col-7 padright-0">{this.props.store.userProfile.firstName +" "+ this.props.store.userProfile.lastName}</div>
-                                <div className="col-5 vertical-right">
-                                    <Link to={"/ProfilePage/" + this.props.store.senderId}>View Profile</Link>
-                                </div>
-                            </div>                           
-                            {this.renderOtherMembers()}
-                            <div className="row mtop-10px ">
-                                <button onClick={this.handleAcceptInvite.bind(this)} className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-green txt-white fw-bold">
-                                    Accept
-                                </button>
-                                <button onClick={this.handleDeclineInvite.bind(this)} className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-red txt-white fw-bold">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
+            return (<div></div>);
 
-        if(this.state.deleted){
-           
-            return(<div></div>);
-
-        }else{
-            
-            return(
+        } else {
+            let profilePicture, userFullName, userPartName;
+            if (
+                typeof (this.props.store.userProfile) !== "undefined"
+            ) {
+                profilePicture = ServerURL + "/api/account/getImage?filename=" + this.props.store.userProfile.profilePic;
+                userFullName = this.props.store.userProfile.firstName + " " + this.props.store.userProfile.lastName;
+                userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
+            }
+            return (
                 <div>
-                    <div className="container-fluid bg-purple bordbot-2px-white" onClick={this.toggle}>
-                        <div className="row txt-white padver-10px">
-                            <div className="col-9">
-                                <div className="col-12">
-                                    <h5>{this.props.store.CarpoolName}</h5>
-                                </div>
-                                <div className="col-12">
-                                    {this.getJoinOrCreate()}
-                                </div>
-                            </div>
-                            <div className="col-3 vertical-right">
-                                <div className="col-12">
-                                    <h5><i className="fa fa-info-circle"></i></h5>
-                                </div>
-                                <div className="col-12">
-                                    {/* Empty for now */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {modal}
+                    <ListItem button onClick={this.handleClickOpen}>
+                        <Avatar>
+                            <OfferIcon />
+                        </Avatar>
+                        <ListItemText primary={this.props.store.CarpoolName} secondary={this.getJoinOrCreate()} />
+                        <ListItemSecondaryAction>
+                            <IconButton aria-label="View Route Matches">
+                                <InfoIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                    <Dialog open={this.state.offerDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="alert-dialog-title">{this.props.store.CarpoolName}</DialogTitle>
+                        <DialogContent>
+                            <Link to={"/ProfilePage/" + this.props.store.senderId} style={{ textDecoration: 'none', color: 'white' }}>
+                                <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                                    <Avatar alt="Profile Picture" src={profilePicture} />
+                                    <ListItemText primary={userPartName} secondary='View Profile' />
+                                </ListItem>
+                            </Link>
+                            <Typography>{this.renderOtherMembers()}</Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleAcceptInvite} color="primary">
+                                Accept
+                            </Button>
+                            <Button onClick={this.handleDeclineInvite} color="primary">
+                                Decline
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
             );
         }

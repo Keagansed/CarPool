@@ -2,9 +2,26 @@
 
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import AddIcon from '@material-ui/icons/Inbox';
 
 import CarpoolOffer from './CarpoolOffer';
 import OfferStore from '../../stores/OfferStore';
+
+//Specific styles to this page
+const styles = theme => ({
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        paddingTop: 0,
+        paddingBottom: 0,
+    },
+});
 
 /*
 * Purpose: container for the carpool offers that a user has.
@@ -25,54 +42,57 @@ import OfferStore from '../../stores/OfferStore';
     */
     renderOffers() {
         const Offers = this.props.store.offers.map((offer) => {
-                if(!offer.JoinRequest){
-                    return(
-                        <CarpoolOffer
-                            token={this.props.token}
-                            key={offer._id}
-                            offerId={offer._id}
-                            store={new OfferStore(
-                                offer.CarpoolName,
-                                offer.SenderID,
-                                offer.SenderRoute,
-                                offer.RecieverID,
-                                offer.RecieverRoute,
-                                offer.JoinRequest,
-                                ""
-                            )}/>
-                    );
-                } else{
-                    return(
-                        <CarpoolOffer
-                            token={this.props.token}
-                            key={offer._id}
-                            offerId={offer._id}
-                            store={new OfferStore(
-                                offer.CarpoolName,
-                                offer.SenderID,
-                                offer.SenderRoute,
-                                offer.RecieverID,
-                                offer.RecieverRoute,
-                                offer.JoinRequest,
-                                offer.CarpoolID
-                            )}/>
-                    );
-                }
-
+            if (!offer.JoinRequest) {
+                return (
+                    <CarpoolOffer
+                        token={this.props.token}
+                        key={offer._id}
+                        offerId={offer._id}
+                        store={new OfferStore(
+                            offer.CarpoolName,
+                            offer.SenderID,
+                            offer.SenderRoute,
+                            offer.RecieverID,
+                            offer.RecieverRoute,
+                            offer.JoinRequest,
+                            ""
+                        )} />
+                );
+            } else {
+                return (
+                    <CarpoolOffer
+                        token={this.props.token}
+                        key={offer._id}
+                        offerId={offer._id}
+                        store={new OfferStore(
+                            offer.CarpoolName,
+                            offer.SenderID,
+                            offer.SenderRoute,
+                            offer.RecieverID,
+                            offer.RecieverRoute,
+                            offer.JoinRequest,
+                            offer.CarpoolID
+                        )} />
+                );
             }
 
+        }
+
         );
-        
-        if(Offers.length > 0) {
-            
+
+        if (Offers.length > 0) {
+
             return Offers;
 
-        }else{
-           
-            return(
-                <h5 className="txt-center mtop-10px txt-white">
-                    No Offers
-                </h5>
+        } else {
+
+            return (
+                <ListItem>
+                    <Avatar>
+                        <AddIcon />
+                    </Avatar>
+                    <ListItemText primary="No New Offers to Display" secondary="View your routes to make an offer" />
+                </ListItem>
             );
 
         }
@@ -83,12 +103,17 @@ import OfferStore from '../../stores/OfferStore';
     * offers have been loaded then they are rendered.
     */
     render() {
-        return(
-            <div>
+        const { classes } = this.props;
+        return (
+            <List component="nav" className={classes.root}>
                 {this.renderOffers()}
-            </div>
+            </List>
         );
     }
 }
 
-export default CarpoolOffers;
+CarpoolOffers.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CarpoolOffers);

@@ -29,7 +29,7 @@ class loginStore {
 
     // Stores error message to be displayed if email entered into forgotPasswordModal
     // is not recognized
-    @observable noEmailError = '';
+    @observable noEmailError = 'Enter your account email';
 
     // Stores message to be displayed when user tries to reset password
     @observable passwordChangeMessage = '';

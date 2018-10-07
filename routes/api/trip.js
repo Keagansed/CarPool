@@ -76,7 +76,6 @@ router.get('/getAllTripInfo', function(req, res, next) {
 //		carpoolID: String;  Object id of a document in the Carpool collection.
 //      idBy: String;  Object id of the creator of the trip.
 //      dateTime: dateTime;  Date and time of when the trip will take place.
-//      days: Array;  The days the trip will repeat if repeating trip.
 //      users: Array;  List of object ids of the users that are part of the trip.
 //      driver: String;  Object id of the user that will be the driver for the trip.
 // Return Value:
@@ -416,7 +415,6 @@ router.post('/optimalTrip', async (req, res) => {
                  
                 routes.forEach(route => {
                     if(users.includes(route.userId)) {
-
                         routePromiseArr.push(Route.findOne({ 
                             _id: route.id 
                         }));

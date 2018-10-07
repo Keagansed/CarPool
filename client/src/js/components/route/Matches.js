@@ -2,6 +2,13 @@
 
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import SadIcon from '@material-ui/icons/SentimentDissatisfied';
 
 import CarpoolMatch from './CarpoolMatch';
 import RouteStore from '../../stores/RouteStore';
@@ -9,6 +16,16 @@ import UserMatch from './UserMatch';
 import { getFromStorage } from '../../utils/localStorage.js';
 
 import  "../../../css/components/Spinner.css"
+
+//Specific styles to this page
+const styles = theme => ({
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        paddingTop: 48,
+        paddingBottom: 0,
+    },
+});
 
 /*
 * The purpose of this Matches class is to display all matches for a specific route.
@@ -82,9 +99,7 @@ import  "../../../css/components/Spinner.css"
                     route.routeName, 
                     route.startLocation, 
                     route.endLocation, 
-                    route.days, 
                     route.time, 
-                    route.repeat, 
                     route._id
                 )}
                 userObj = {route.userObj}
@@ -94,9 +109,12 @@ import  "../../../css/components/Spinner.css"
             return Routes;
         }else{
             return(
-                <h5 className = "txt-center mtop-10px txt-white">
-                    No matches yet...
-                </h5>
+                <ListItem>
+                    <Avatar>
+                        <SadIcon />
+                    </Avatar>
+                    <ListItemText primary="No Matches Yet" secondary="Please check again later." />
+                </ListItem>
             );
         }
     }
@@ -137,7 +155,7 @@ import  "../../../css/components/Spinner.css"
     * It returns react elements and HTML using JSX.
     */
     render(){
-        
+        const { classes } = this.props;
         if(this.props.store.loadingRoutes) {
             return(
                 <div className="scroll-vert">
@@ -146,18 +164,18 @@ import  "../../../css/components/Spinner.css"
             );
         }
         else{
-            return(
-                <div className="scroll-vert">
-                    <div> 
-                        {this.renderCarpools()}
-                    </div>
-                    <div> 
-                        {this.renderRoutes()}
-                    </div>
-                </div>
+            return (
+                <List component="nav" className={classes.root}>
+                    {this.renderRoutes()}
+                    {this.renderCarpools()}
+                </List>
             );
         }
     }
 }
 
-export default Matches;
+Matches.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Matches);

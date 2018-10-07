@@ -3,14 +3,50 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
 
 import TripsStore from './../../stores/TripsStore';
-
 import CancelTripModal from './CancelTripModal';
-import MapComponent from '../google/GeneralMapWrapper';
 import ReviewTripModal from './ReviewTripModal';
 import { getFromStorage } from '../../utils/localStorage.js';
 import { generateURL } from '../../utils/generateGoogleMapURL';
+import MapComponent from '../google/GeneralMapWrapper';
+
+//Styling specific to this page
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    toolbar: {
+        paddingLeft: 0,
+        paddingRight: 0,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+    listRoot: {
+        paddingTop: 48,
+        width: 'auto', // Fix IE11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        marginBottom: theme.spacing.unit * 2,
+    },
+});
 
 /**
  * Purpose: An interface to allow the user to set up a Trip with members inside a Carpool
@@ -69,25 +105,21 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
     }
 
     render() {
+        const { classes } = this.props;
         let tripName;
-        let carpoolers = <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-            <div className="col-9 txt-left">
-                No other carpoolers
-                            </div>
-            <div className="col-3 vertical-right">
-
-            </div>
-        </div>;
+        let carpoolers =
+            <ListItem key={Math.random()}>
+                <ListItemText inset primary="No other Carpoolers" />
+            </ListItem>;
         let driver = [];
 
         let origin, destination;
-        let googleURL;
+        let googleURL = "/HomePage";
         if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
             this.routeArr = TripsStore.tripObj.optimalTrip;
             googleURL = (generateURL(this.routeArr));
             console.log(googleURL)
             console.log('TCL: TripPage -> render -> googleURL', googleURL);
-
         }
         if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
             typeof (TripsStore.routeObj.endLocation) !== "undefined") {
@@ -104,25 +136,25 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
                     if (TripsStore.tripObj.users[user] === true)
                         carpoolers = [];
                     carpoolers.push(
-                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                            <div className="col-6 txt-left">
-                                {TripsStore.getUsernameSurname(user)}
-                            </div>
-                            <div className="col-6 vertical-right">
-                                <a href={"/ProfilePage/" + user}>View Profile</a>
-                            </div>
-                        </div>
+                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                            <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
+                                <ListItemText 
+                                    secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                    style={{ textAlign: 'center' }}
+                                />
+                            </ListItem>
+                        </Link>
                     );
                 } else {
                     driver.push(
-                        <div className="row bordbot-1px-dash-grey txt-white" key={Math.random()}>
-                            <div className="col-6 txt-left">
-                                {TripsStore.getUsernameSurname(user)}
-                            </div>
-                            <div className="col-6 vertical-right">
-                                <a href={"/ProfilePage/" + user}>View Profile</a>
-                            </div>
-                        </div>
+                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                            <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
+                                <ListItemText 
+                                    secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                    style={{ textAlign: 'center' }}
+                                />
+                            </ListItem>
+                        </Link>
                     );
                 }
             }
@@ -137,72 +169,118 @@ import { generateURL } from '../../utils/generateGoogleMapURL';
         catch (E) { }
 
         return (
-            <div className="size-100 bg-purple">
-                <div className="fixed-top container-fluid height-50px bg-aqua">
-                    <div className="row height-100p">
-                        <Link to={`/HomePage`} className="col-2 txt-center">
-                            <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                <i className="fa fa-chevron-circle-left txt-center"></i>
-                            </button>
+            <div className={classes.root}>
+                {/* App Bar */}
+                <AppBar className={classes.topNav}>
+                    <Toolbar className={classes.toolbar} variant='dense'>
+                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'white' }}>
+                            <IconButton color="inherit" aria-label="Back">
+                                <BackIcon />
+                            </IconButton>
                         </Link>
-                        <div className="col-8 txt-center">
-                            <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-                                {tripName}
-                            </button>
-                        </div>
+                        <Typography variant="title" color="inherit" className={classes.grow}>
+                            {tripName}
+                        </Typography>
                         {this.reviewModal}
-                    </div>
-                </div>
-                {/* Padding is there for top and bottom navs*/}
-                <div className="padtop-50px container-fluid">
-                    <div className="row mtop-10px">
-                        <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
-                    </div>
-                    <div className="row">
-                        <div className="mx-auto txt-white">{this.getDateTime()}</div>
-                    </div>
-                    <div className="row mtop-10px">
-                        <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="txt-center mbottom-0 txt-white">
-                                <p>
-                                    {origin}<br></br>
-                                    to<br></br>
-                                    {destination}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
+                    </Toolbar>
+                </AppBar>
+                <List className={classes.listRoot}>
+                    <ListItem>
+                        <ListItemText primary='Date and Time' secondary={this.getDateTime()} style={{ textAlign: 'center' }} />
+                    </ListItem>
+                    <ListItem style={{ paddingTop: 0 }}>
+                        <ListItemText primary='Route' secondary={origin + " to " + destination} style={{ textAlign: 'center' }} />
+                    </ListItem>
                     <MapComponent routeArr={this.routeArr} combined={true} />
-
-                    <div className="row mtop-10px bordbot-1px-dash-grey">
-                        <h6 className="fw-bold mx-auto txt-white">Driver</h6>
-                    </div>
-
+                    <ListItem style={{ paddingBottom: 0 }}>
+                        <ListItemText primary='Driver' style={{ textAlign: 'center' }} />
+                    </ListItem>
                     {driver}
-
-                    <div className="row mtop-10px bordbot-1px-dash-grey">
-                        <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
-                    </div>
-
+                    <ListItem style={{ paddingBottom: 0, paddingTop: 0 }}>
+                        <ListItemText primary='Other Carpoolers' style={{ textAlign: 'center' }} />
+                    </ListItem>
                     {carpoolers}
-
-                    <div className="row padtop-10px">
-                        <a
-                            href={googleURL}
-                            className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-                        >
-                            <b>Begin Route</b>
-                        </a>
-                    </div>
-                </div>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="raised"
+                        color="primary"
+                        href={googleURL}
+                    >
+                        Start Trip
+                    </Button>
+                </List>
             </div>
+            // <div className="size-100 bg-purple">
+            //     <div className="fixed-top container-fluid height-50px bg-aqua">
+            //         <div className="row height-100p">
+            //             <Link to={`/HomePage`} className="col-2 txt-center">
+            //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+            //                     <i className="fa fa-chevron-circle-left txt-center"></i>
+            //                 </button>
+            //             </Link>
+            //             <div className="col-8 txt-center">
+            //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
+            //                     {tripName}
+            //                 </button>
+            //             </div>
+            //             {this.reviewModal}
+            //         </div>
+            //     </div>
+            //     {/* Padding is there for top and bottom navs*/}
+            //     <div className="padtop-50px container-fluid">
+            //         <div className="row mtop-10px">
+            //             <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
+            //         </div>
+            //         <div className="row">
+            //             <div className="mx-auto txt-white">{this.getDateTime()}</div>
+            //         </div>
+            //         <div className="row mtop-10px">
+            //             <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
+            //         </div>
+            //         <div className="row">
+            //             <div className="col-12">
+            //                 <div className="txt-center mbottom-0 txt-white">
+            //                     <p>
+            //                         {origin}<br></br>
+            //                         to<br></br>
+            //                         {destination}
+            //                     </p>
+            //                 </div>
+            //             </div>
+            //         </div>
+
+            //         <MapComponent routeArr={this.routeArr} combined={true} />
+
+            //         <div className="row mtop-10px bordbot-1px-dash-grey">
+            //             <h6 className="fw-bold mx-auto txt-white">Driver</h6>
+            //         </div>
+
+            //         {driver}
+
+            //         <div className="row mtop-10px bordbot-1px-dash-grey">
+            //             <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
+            //         </div>
+
+            //         {carpoolers}
+
+            //         <div className="row padtop-10px">
+            //             <a
+            //                 href={googleURL}
+            //                 className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
+            //             >
+            //                 <b>Begin Route</b>
+            //             </a>
+            //         </div>
+            //     </div>
+            // </div>
         );
     }
 
 }
 
-export default TripPage;
+TripPage.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(TripPage);

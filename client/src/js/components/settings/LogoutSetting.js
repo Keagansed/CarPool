@@ -2,9 +2,13 @@
 
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExitIcon from '@material-ui/icons/ExitToApp';
 
 import LoginStore from '../../stores/LoginStore';
-  
+
 /*
 * Purpose: Link component that logs out, the currently logged in user
 */
@@ -15,26 +19,14 @@ class LogoutSetting extends Component {
 
     render() {
         return (
-            <div className="mx-auto">
-                <Link to={"/"} onClick={this.handleLogout}>
-                <div className="container-fluid bordbot-2px-white">
-                    <div className="row txt-white padver-10px">
-                        <div className="col-9">
-                            <div className="col-12">
-                                <h5 className="mbottom-0">
-                                    Log Out
-                                </h5>
-                            </div>
-                        </div>
-                        <div className="col-3 vertical-right">
-                            <div className="col-12">
-                                <h5 className="mbottom-0">
-                                    <i className="fa fa-sign-out"/>
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <Link to={"/"} onClick={this.handleLogout} style={{ textDecoration: 'none', color: 'white' }}>
+                    <ListItem button>
+                        <ListItemIcon>
+                            <ExitIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Log out" secondary="Log out of your account" />
+                    </ListItem>
                 </Link>
             </div>
         );
