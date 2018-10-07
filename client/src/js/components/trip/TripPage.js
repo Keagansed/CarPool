@@ -109,7 +109,7 @@ const styles = theme => ({
         const { classes } = this.props;
         let tripName;
         let carpoolers =
-            <ListItem key={Math.random()}>
+            <ListItem key={Math.random()} divider>
                 <ListItemText inset primary="No other Carpoolers" />
             </ListItem>;
         let driver = [];
@@ -149,10 +149,10 @@ const styles = theme => ({
                     }
                 } else {
                     driver.push(
-                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
                             <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                                 <ListItemText 
-                                    secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                    secondary={<Typography color='primary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
                                     style={{ textAlign: 'center' }}
                                 />
                             </ListItem>
@@ -175,7 +175,7 @@ const styles = theme => ({
                 {/* App Bar */}
                 <AppBar className={classes.topNav}>
                     <Toolbar className={classes.toolbar} variant='dense'>
-                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'white' }}>
+                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <IconButton color="inherit" aria-label="Back">
                                 <BackIcon />
                             </IconButton>
