@@ -10,10 +10,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
+import Button from '@material-ui/core/Button';
 
 import TripsStore from './../../stores/TripsStore';
 import CancelTripModal from './CancelTripModal';
@@ -114,7 +114,7 @@ const styles = theme => ({
         let driver = [];
 
         let origin, destination;
-        let googleURL;
+        let googleURL = "/HomePage";
         if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
             this.routeArr = TripsStore.tripObj.optimalTrip;
             googleURL = (generateURL(this.routeArr));
@@ -138,8 +138,10 @@ const styles = theme => ({
                     carpoolers.push(
                         <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
                             <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
-                                <Avatar alt="Profile Picture" src={TripsStore.getUserProfilePic(user)} />
-                                <ListItemText primary={TripsStore.getUsernameSurname(user)} secondary='View Profile' />
+                                <ListItemText 
+                                    secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                    style={{ textAlign: 'center' }}
+                                />
                             </ListItem>
                         </Link>
                     );
@@ -147,8 +149,10 @@ const styles = theme => ({
                     driver.push(
                         <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
                             <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
-                                <Avatar alt="Profile Picture" src={TripsStore.getUserProfilePic(user)} />
-                                <ListItemText primary={TripsStore.getUsernameSurname(user)} secondary='View Profile' />
+                                <ListItemText 
+                                    secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                    style={{ textAlign: 'center' }}
+                                />
                             </ListItem>
                         </Link>
                     );
@@ -180,22 +184,31 @@ const styles = theme => ({
                         {this.reviewModal}
                     </Toolbar>
                 </AppBar>
-                <List  className={classes.listRoot}>
+                <List className={classes.listRoot}>
                     <ListItem>
-                        <ListItemText primary='Date and Time' secondary={this.getDateTime()} style={{textAlign: 'center'}} />
+                        <ListItemText primary='Date and Time' secondary={this.getDateTime()} style={{ textAlign: 'center' }} />
                     </ListItem>
-                    <ListItem>
-                        <ListItemText primary='Route' secondary={origin + " to " + destination} style={{textAlign: 'center'}} />
+                    <ListItem style={{ paddingTop: 0 }}>
+                        <ListItemText primary='Route' secondary={origin + " to " + destination} style={{ textAlign: 'center' }} />
                     </ListItem>
                     <MapComponent routeArr={this.routeArr} combined={true} />
-                    <ListItem style={{paddingBottom: 0}}>
-                        <ListItemText primary='Driver' style={{textAlign: 'center'}}/>
+                    <ListItem style={{ paddingBottom: 0 }}>
+                        <ListItemText primary='Driver' style={{ textAlign: 'center' }} />
                     </ListItem>
                     {driver}
-                    <ListItem style={{paddingBottom: 0}}>
-                        <ListItemText primary='Other Carpoolers' style={{textAlign: 'center'}}/>
+                    <ListItem style={{ paddingBottom: 0, paddingTop: 0 }}>
+                        <ListItemText primary='Other Carpoolers' style={{ textAlign: 'center' }} />
                     </ListItem>
                     {carpoolers}
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="raised"
+                        color="primary"
+                        href={googleURL}
+                    >
+                        Start Trip
+                    </Button>
                 </List>
             </div>
             // <div className="size-100 bg-purple">

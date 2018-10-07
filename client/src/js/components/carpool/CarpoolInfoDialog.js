@@ -1,7 +1,6 @@
 // File Type: Component
 
 import { observer } from "mobx-react";
-import Avatar from '@material-ui/core/Avatar';
 import React, { Component } from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -126,8 +125,7 @@ import ServerURL from '../../utils/server';
             users.push(
                 <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
                     <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
-                        <Avatar alt="Profile Picture" src={MessageStore.getUserProfilePic(user)} />
-                        <ListItemText primary={MessageStore.getUsername(user)} secondary='View Profile' />
+                        <ListItemText primary={MessageStore.getUsername(user)} secondary='Click to View Profile' />
                     </ListItem>
                 </Link>
             );
