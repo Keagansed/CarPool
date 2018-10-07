@@ -59,7 +59,7 @@ class tripsStore {
                 found = true;
 
                 this.userProfilePicName = this.allUsers[x].profilePic;
-                return this.userProfilePicName;
+                return this.allUsers[x].profilePic;
             }
         }
 

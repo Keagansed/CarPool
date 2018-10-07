@@ -20,6 +20,7 @@ import CancelTripModal from './CancelTripModal';
 import ReviewTripModal from './ReviewTripModal';
 import { getFromStorage } from '../../utils/localStorage.js';
 import { generateURL } from '../../utils/generateGoogleMapURL';
+import MapComponent from '../google/GeneralMapWrapper';
 
 //Styling specific to this page
 const styles = theme => ({
@@ -37,6 +38,13 @@ const styles = theme => ({
     },
     grow: {
         flexGrow: 1,
+    },
+    listRoot: {
+        paddingTop: 48,
+        width: 'auto', // Fix IE11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        marginBottom: theme.spacing.unit * 2,
     },
 });
 
@@ -129,7 +137,7 @@ const styles = theme => ({
                         carpoolers = [];
                     carpoolers.push(
                         <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                            <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                            <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                                 <Avatar alt="Profile Picture" src={TripsStore.getUserProfilePic(user)} />
                                 <ListItemText primary={TripsStore.getUsernameSurname(user)} secondary='View Profile' />
                             </ListItem>
@@ -138,7 +146,7 @@ const styles = theme => ({
                 } else {
                     driver.push(
                         <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                            <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                            <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
                                 <Avatar alt="Profile Picture" src={TripsStore.getUserProfilePic(user)} />
                                 <ListItemText primary={TripsStore.getUsernameSurname(user)} secondary='View Profile' />
                             </ListItem>
@@ -172,14 +180,22 @@ const styles = theme => ({
                         {this.reviewModal}
                     </Toolbar>
                 </AppBar>
-                <List  style={{paddingTop: 48}}>
+                <List  className={classes.listRoot}>
                     <ListItem>
                         <ListItemText primary='Date and Time' secondary={this.getDateTime()} style={{textAlign: 'center'}} />
                     </ListItem>
                     <ListItem>
                         <ListItemText primary='Route' secondary={origin + " to " + destination} style={{textAlign: 'center'}} />
-                        <MapComponent routeArr={this.routeArr} combined={true} />
                     </ListItem>
+                    <MapComponent routeArr={this.routeArr} combined={true} />
+                    <ListItem style={{paddingBottom: 0}}>
+                        <ListItemText primary='Driver' style={{textAlign: 'center'}}/>
+                    </ListItem>
+                    {driver}
+                    <ListItem style={{paddingBottom: 0}}>
+                        <ListItemText primary='Other Carpoolers' style={{textAlign: 'center'}}/>
+                    </ListItem>
+                    {carpoolers}
                 </List>
             </div>
             // <div className="size-100 bg-purple">
