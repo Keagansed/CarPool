@@ -22,6 +22,7 @@ import { getFromStorage } from '../../utils/localStorage.js';
 import { generateURL } from '../../utils/generateGoogleMapURL';
 import MapComponent from '../google/GeneralMapWrapper';
 
+import { toJS } from 'mobx';
 //Styling specific to this page
 const styles = theme => ({
     root: {
@@ -105,7 +106,6 @@ const styles = theme => ({
     }
 
     render() {
-        console.log('TCL: TripPage -> render -> TripsStore.tripObj', TripsStore.tripObj);
         
         const { classes } = this.props;
         let tripName;
@@ -130,21 +130,24 @@ const styles = theme => ({
         }
 
         try {
+            if(typeof(TripsStore.tripObj) !== undefined) {
+                carpoolers = [];
+            }
             tripName = TripsStore.tripObj.tripName;
             for (let user in TripsStore.tripObj.users) {
                 if (user !== TripsStore.tripObj.driver) {
-                    if (TripsStore.tripObj.users[user] === true)
-                        carpoolers = [];
-                    carpoolers.push(
-                        <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                            <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
-                                <ListItemText 
-                                    secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
-                                    style={{ textAlign: 'center' }}
-                                />
-                            </ListItem>
-                        </Link>
-                    );
+                    if (TripsStore.tripObj.users[user] === true){    
+                        carpoolers.push(
+                            <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                                <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
+                                    <ListItemText 
+                                        secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                        style={{ textAlign: 'center' }}
+                                    />
+                                </ListItem>
+                            </Link>
+                        );
+                    }
                 } else {
                     driver.push(
                         <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>

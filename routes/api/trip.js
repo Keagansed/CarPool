@@ -187,7 +187,6 @@ router.post('/cancelTrip',(req,res,next)=>{
     let users = [];
     
     
-    console.log('TCL: _id', _id);
     Trip.find({
         _id:_id,
     },(err,data) => {

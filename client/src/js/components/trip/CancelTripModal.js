@@ -45,8 +45,6 @@ class CancelTripModal extends Component {
     }
 
     cancelOrDelete = () => {
-        console.log('TCL: CancelTripModal -> cancelOrDelete -> this.props.trip.driver ', this.props.trip.driver );
-        console.log('TCL: CancelTripModal -> cancelOrDelete -> this.state.token', this.state.token);
         if (this.props.trip.driver === this.state.token) {
             this.deleteTrip();
         } else {
@@ -55,7 +53,6 @@ class CancelTripModal extends Component {
     }
 
     cancelTrip = () => {
-        console.log('TCL: CancelTripModal -> cancelTrip -> this.props.trip._id', this.props.trip._id);
         fetch(ServerURL + '/api/system/trip/cancelTrip?token=' + this.state.token, {
             method: 'POST',
             headers: {

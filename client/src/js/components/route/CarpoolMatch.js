@@ -106,8 +106,8 @@ import ServerURL from '../../utils/server';
     /*
      * The purpose of the makeOfferToJoin method is to send an offer to another user to join in an existing carpool.
      */
-    makeOfferToJoin() {
-
+    makeOfferToJoin = ()=> {
+        
         fetch(ServerURL + '/api/system/route/getRoute?routeId=' + this.props.routeArr[0].id + '&token=' + this.props.token, {
             method: 'GET',
             headers: {

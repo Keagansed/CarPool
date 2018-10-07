@@ -128,7 +128,6 @@ class tripsStore {
             }
             i++;
         }
-        console.log('TCL: tripsStore -> @actionaddTrip -> this.idBy', this.idBy);
         
         fetch(ServerURL + '/api/system/trip/optimalTrip?token=' + token, {
             method: 'POST',
