@@ -249,7 +249,7 @@ const styles = theme => ({
                             />
                         </Toolbar>
                     </AppBar>
-                    <List style={{paddingTop: 48, paddingBottom: 33}} id="messageBody">
+                    <List style={{marginTop: 48, marginBottom: 33}} id="messageBody">
                         {//Messages and trip suggestions
                             this.state.messages.map((message) => {
                                 let userColour;
