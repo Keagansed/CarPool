@@ -105,7 +105,7 @@ class EditEmailModal extends Component {
 
         return (
             <div>
-                <ListItem button onClick={this.handleClickOpen}>
+                <ListItem button onClick={this.handleClickOpen} divider>
                     <ListItemIcon>
                         <EmailIcon />
                     </ListItemIcon>

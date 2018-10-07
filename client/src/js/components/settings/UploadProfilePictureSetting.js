@@ -74,7 +74,7 @@ class UploadProfilePictureSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="profilePic-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <CameraIcon />
                         </ListItemIcon>

@@ -37,7 +37,7 @@ class TrustItem extends Component {
     render() {
         if (this.props.hasItem) {
             return (
-                <ListItem button>
+                <ListItem button divider>
                     <Avatar>
                         {this.printIcon()}
                     </Avatar>
@@ -51,7 +51,7 @@ class TrustItem extends Component {
             );
         } else {
             return (
-                <ListItem button>
+                <ListItem button divider>
                     <Avatar>
                     {this.printIcon()}
                     </Avatar>

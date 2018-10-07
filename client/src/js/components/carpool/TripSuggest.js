@@ -352,7 +352,7 @@ import ServerURL from '../../utils/server';
         if (this.props.userID === getFromStorage('sessionKey').token) {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog}>
+                    <ListItem onClick={this.openTripDialog} divider>
                         <ListItemText
                             primary={<font style={{ color: this.props.userColour }}>You</font>}
                             secondary='Suggested a trip.'
@@ -378,7 +378,7 @@ import ServerURL from '../../utils/server';
         } else {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog}>
+                    <ListItem onClick={this.openTripDialog} divider>
                         <ListItemText
                             primary={<font style={{ color: this.props.userColour }}>{MessageStore.getUsername(this.props.userID)}</font>}
                             secondary='Suggested a trip. Click for more info.'

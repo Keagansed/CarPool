@@ -39,7 +39,7 @@ class Trip  extends Component {
 
         return(
             <Link to={`/HomePage/Trip/`+this.props.trip._id} style={{ textDecoration: 'none' }}>
-                <ListItem button>
+                <ListItem button divider>
                     <Avatar>
                         <TripIcon />
                     </Avatar>

@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 
-import logo from "../../css/images/logo-gif-no-loop.gif";
+import logo from "../../css/images/logo.png";
 import communityImage from "../../css/images/CommunityImage.jpeg";
 import moneyImage from "../../css/images/MoneyImage.jpeg";
 import commuteImage from "../../css/images/CommuteImage.jpeg";

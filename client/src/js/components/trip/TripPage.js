@@ -22,7 +22,6 @@ import { getFromStorage } from '../../utils/localStorage.js';
 import { generateURL } from '../../utils/generateGoogleMapURL';
 import MapComponent from '../google/GeneralMapWrapper';
 
-import { toJS } from 'mobx';
 //Styling specific to this page
 const styles = theme => ({
     root: {
