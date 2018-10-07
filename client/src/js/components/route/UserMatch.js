@@ -148,7 +148,7 @@ import ServerURL from '../../utils/server';
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={userPartName} secondary='Click to Make Offer' />
                         <ListItemSecondaryAction>
-                            <IconButton aria-label="Offer to Carpool">
+                            <IconButton aria-label="Offer to Carpool" onClick={this.handleClickOpen}>
                                 <AddIcon />
                             </IconButton>
                         </ListItemSecondaryAction>

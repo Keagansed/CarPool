@@ -143,7 +143,7 @@ class CarpoolOffer extends Component {
                         </Avatar>
                         <ListItemText primary={this.props.store.CarpoolName} secondary={this.getJoinOrCreate()} />
                         <ListItemSecondaryAction>
-                            <IconButton aria-label="View Route Matches">
+                            <IconButton aria-label="View Route Matches" onClick={this.handleClickOpen}>
                                 <InfoIcon />
                             </IconButton>
                         </ListItemSecondaryAction>
