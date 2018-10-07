@@ -74,6 +74,7 @@ class MessageForm extends Component {
                         borderTop: '1px solid lightgrey',
                         paddingLeft: 5,
                         backgroundColor: 'white',
+                        color: 'black',
                 }}
             />
         );
