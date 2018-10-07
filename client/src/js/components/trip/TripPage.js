@@ -105,6 +105,8 @@ const styles = theme => ({
     }
 
     render() {
+        console.log('TCL: TripPage -> render -> TripsStore.tripObj', TripsStore.tripObj);
+        
         const { classes } = this.props;
         let tripName;
         let carpoolers =
@@ -118,8 +120,6 @@ const styles = theme => ({
         if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
             this.routeArr = TripsStore.tripObj.optimalTrip;
             googleURL = (generateURL(this.routeArr));
-            console.log(googleURL)
-            console.log('TCL: TripPage -> render -> googleURL', googleURL);
         }
         if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
             typeof (TripsStore.routeObj.endLocation) !== "undefined") {

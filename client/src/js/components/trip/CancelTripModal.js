@@ -36,7 +36,7 @@ class CancelTripModal extends Component {
     };
 
     componentWillMount() {
-        const obj = getFromStorage('sessionKey').token;
+        const obj = getFromStorage('sessionKey');
         let { token } = obj;
 
         this.setState({
@@ -45,6 +45,8 @@ class CancelTripModal extends Component {
     }
 
     cancelOrDelete = () => {
+        console.log('TCL: CancelTripModal -> cancelOrDelete -> this.props.trip.driver ', this.props.trip.driver );
+        console.log('TCL: CancelTripModal -> cancelOrDelete -> this.state.token', this.state.token);
         if (this.props.trip.driver === this.state.token) {
             this.deleteTrip();
         } else {
@@ -53,6 +55,7 @@ class CancelTripModal extends Component {
     }
 
     cancelTrip = () => {
+        console.log('TCL: CancelTripModal -> cancelTrip -> this.props.trip._id', this.props.trip._id);
         fetch(ServerURL + '/api/system/trip/cancelTrip?token=' + this.state.token, {
             method: 'POST',
             headers: {
@@ -60,7 +63,7 @@ class CancelTripModal extends Component {
             },
             body: JSON.stringify({
                 _id: this.props.trip._id,
-                token: getFromStorage('sessionKey').token
+                token: this.state.token
             })
         })
             .then(res => res.json())

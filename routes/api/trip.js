@@ -185,7 +185,9 @@ router.post('/cancelTrip',(req,res,next)=>{
     let dateTime;
     let days;
     let users = [];
-
+    
+    
+    console.log('TCL: _id', _id);
     Trip.find({
         _id:_id,
     },(err,data) => {
@@ -200,7 +202,7 @@ router.post('/cancelTrip',(req,res,next)=>{
             dateTime = data[0].dateTime;
             days = data[0].days;
             users = data[0].users;
-            users[userID] = false;
+            users[token] = false;
 
             Trip.findOneAndUpdate(
                 {"_id": _id},
