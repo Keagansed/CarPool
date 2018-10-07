@@ -54,6 +54,7 @@ const styles = theme => ({
         position: 'fixed',
         bottom: 0,
         borderTop: '1px solid lightgrey',
+        backgroundColor: '#3f51b5',
     },
 });
 
@@ -125,6 +126,7 @@ const styles = theme => ({
                             label="Home" 
                             icon={<HomeIcon />} 
                             showLabel 
+                            style={{color: 'white'}}
                         />
                         <BottomNavigationAction 
                             component={Link}

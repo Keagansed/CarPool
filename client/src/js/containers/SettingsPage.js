@@ -35,6 +35,7 @@ const styles = theme => ({
         position: 'fixed',
         bottom: 0,
         borderTop: '1px solid lightgrey',
+        backgroundColor: '#3f51b5',
     },
 });
 
@@ -108,6 +109,7 @@ const styles = theme => ({
                         label="Settings"
                         icon={<SettingsIcon />}
                         showLabel
+                        style={{color: 'white'}}
                     />
                 </BottomNavigation>
             </div>
