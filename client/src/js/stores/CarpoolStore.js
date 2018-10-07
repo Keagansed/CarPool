@@ -92,9 +92,9 @@ class carpoolStore {
             0:"yellow",
             1:"red",
             2:"orange",
-            3:"blue",
-            4:"pink",
-            5:"purple",
+            3:"aqua",
+            4:"fuchsia",
+            5:"teal",
             6:"lime"
         };
 

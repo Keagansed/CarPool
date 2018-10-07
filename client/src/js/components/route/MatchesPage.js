@@ -172,7 +172,7 @@ const styles = theme => ({
                 {/* App Bar */}
                 <AppBar className={classes.topNav}>
                     <Toolbar className={classes.toolbar} variant='dense'>
-                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'white' }}>
+                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <IconButton color="inherit" aria-label="Back">
                                 <BackIcon />
                             </IconButton>

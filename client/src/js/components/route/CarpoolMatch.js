@@ -199,7 +199,7 @@ import ServerURL from '../../utils/server';
         //Return the CarpoolMatch
         return (
             <div>
-                <ListItem button onClick={this.handleClickOpen}>
+                <ListItem button onClick={this.handleClickOpen} divider>
                     <Avatar>
                         <GroupIcon />
                     </Avatar>

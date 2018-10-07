@@ -184,7 +184,7 @@ class Carpools extends Component {
                                         to={`/HomePage/Chat/` + groupChat.id + '/' + this.state.groupChats[groupChat.id].name}
                                         style={{ textDecoration: 'none', color: 'white' }}
                                     >
-                                        <ListItem button>
+                                        <ListItem button divider>
                                             <Avatar>
                                                 <GroupIcon />
                                             </Avatar>
@@ -209,7 +209,7 @@ class Carpools extends Component {
                 }
                 {
                     <div style={showNoCarpools ? display : hide}>
-                        <ListItem >
+                        <ListItem divider>
                             <Avatar>
                                 <AddIcon />
                             </Avatar>

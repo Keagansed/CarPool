@@ -38,6 +38,11 @@ const styles = theme => ({
     avatar: {
         margin: theme.spacing.unit,
         backgroundColor: theme.palette.secondary.main,
+        height: 128,
+        width: 128,
+    },
+    avatarIcon: {
+        fontSize: '100px', 
     },
     form: {
         width: '100%', // Fix IE11 issue.
@@ -64,7 +69,7 @@ class LandingPage extends Component {
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
                         <Avatar className={classes.avatar}>
-                            <CarIcon />
+                            <CarIcon className={classes.avatarIcon} />
                         </Avatar>
                         <Typography align='center' variant="headline">The Iminsys Carpool Platform</Typography>
                         <form className={classes.form}>

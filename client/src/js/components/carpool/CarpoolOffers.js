@@ -87,7 +87,7 @@ const styles = theme => ({
         } else {
 
             return (
-                <ListItem>
+                <ListItem divider>
                     <Avatar>
                         <AddIcon />
                     </Avatar>

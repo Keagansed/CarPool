@@ -144,7 +144,7 @@ import ServerURL from '../../utils/server';
         } else {
             return (
                 <div>
-                    <ListItem button onClick={this.handleClickOpen}>
+                    <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={userPartName} secondary='Click to Make Offer' />
                         <ListItemSecondaryAction>
