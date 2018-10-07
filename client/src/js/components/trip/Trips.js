@@ -14,6 +14,7 @@ import AddIcon from '@material-ui/icons/Navigation';
 import Trip from './Trip';
 import TripsStore from '../../stores/TripsStore'
 import { getFromStorage } from '../../utils/localStorage.js'
+import VerifyWrapper from '../../containers/VerifyWrapper';
 
 //Specific styles to this page
 const styles = theme => ({
@@ -97,4 +98,4 @@ Trips.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Trips);
+export default withStyles(styles)(VerifyWrapper(Trips));

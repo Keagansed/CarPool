@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/AddLocation';
 
 import Route from './Route'
 import RouteStore from '../../stores/RouteStore';
+import VerifyWrapper from '../../containers/VerifyWrapper';
 
 import "../../../css/components/Spinner.css"
 
@@ -112,4 +113,4 @@ Routes.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Routes);
+export default withStyles(styles)(VerifyWrapper(Routes));

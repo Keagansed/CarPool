@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 
 import ProfileSettings from '../components/settings/ProfileSettings';
 import Toolbar from '@material-ui/core/Toolbar';
+import VerifyWrapper from './VerifyWrapper';
 
 import { getFromStorage } from '../utils/localStorage.js';
 import ServerURL from '../utils/server';
@@ -125,4 +126,4 @@ SettingsPage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SettingsPage);
+export default withStyles(styles)(VerifyWrapper(SettingsPage));

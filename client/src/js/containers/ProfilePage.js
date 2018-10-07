@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 import Trusts from '../components/profile/Trusts';
 import Vouches from '../components/vouching/Vouches';
 import VouchAverage from "../components/vouching/VouchAverage";
+import VerifyWrapper from './VerifyWrapper';
 
 import { getFromStorage } from '../utils/localStorage.js';
 import ServerURL from '../utils/server';
@@ -215,4 +216,4 @@ ProfilePage.propTypes = {
 	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProfilePage);
+export default withStyles(styles)(VerifyWrapper(ProfilePage));

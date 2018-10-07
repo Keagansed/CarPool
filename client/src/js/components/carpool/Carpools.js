@@ -19,6 +19,7 @@ import app from '../../stores/FirebaseStore.js';
 import CarpoolOffers from './CarpoolOffers';
 import { getFromStorage } from '../../utils/localStorage.js';
 import MessageStore from '../../stores/MessagingStore.js';
+import VerifyWrapper from '../../containers/VerifyWrapper';
 
 import 'firebase/database';
 import "../../../css/components/Spinner.css";
@@ -226,4 +227,4 @@ Carpools.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Carpools);
+export default withStyles(styles)(VerifyWrapper(Carpools));
