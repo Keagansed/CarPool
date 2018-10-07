@@ -1,98 +1,226 @@
 // File Type: Component
 
-import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import CarIcon from '@material-ui/icons/DirectionsCar';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 
-import logo  from "../../css/images/logo-gif-no-loop.gif";
+import logo from "../../css/images/logo-gif-no-loop.gif";
+import communityImage from "../../css/images/CommunityImage.jpeg";
+import moneyImage from "../../css/images/MoneyImage.jpeg";
+import commuteImage from "../../css/images/CommuteImage.jpeg";
+import roadImage from "../../css/images/RoadImage.jpeg";
+
+const styles = theme => ({
+    appBar: {
+        position: 'relative',
+    },
+    icon: {
+        marginRight: theme.spacing.unit * 2,
+    },
+    heroUnit: {
+        backgroundColor: theme.palette.background.paper,
+    },
+    heroContent: {
+        maxWidth: 600,
+        margin: '0 auto',
+        padding: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 4}px`,
+    },
+    heroButtons: {
+        marginTop: theme.spacing.unit * 4,
+    },
+    layout: {
+        width: 'auto',
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+            width: 1100,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    cardGrid: {
+        padding: `${theme.spacing.unit * 4}px 0`,
+    },
+    card: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    cardMedia: {
+        paddingTop: '56.25%', // 16:9
+    },
+    cardContent: {
+        flexGrow: 1,
+    },
+    footer: {
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing.unit * 6,
+    },
+    carpoolLogo: {
+        width: 252,
+        height: 252,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: theme.spacing.unit * 1,
+    }
+});
 
 /*
 * Purpose: Landing page compenent is the first page the user sees when opening the app
 */
 class InfoPage extends Component {
     render() {
-        return(
-            <div>
-                <div className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 brad-0" id="infoHeader">
-                    <div className="container text-center pad-0">
-                        <div className="mbottom-10px">
-                            <h1 className="mbottom-0 txt-purple">The Iminsys Carpool Platform</h1>
-                        </div>
-                        <div className="mbottom-10px">
-                            <img src={logo} id="logo-256" alt="carpool_logo"/>
-                        </div>
-                        <div className="mbottom-10px">
-                            <Link to={`/`} className="btn btn-primary width-15rem brad-2rem bg-orange txt-purple fw-bold">
-                                Watch Video
-                            </Link>
-                        </div>
-                        <div>
-                            <Link to={`/Landing`} className="btn btn-primary width-15rem brad-2rem bg-aqua txt-purple fw-bold">
-                                Get Started
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                <div className="container-fluid txt-white bg-purple">
-                    <div className="row">
-                        <div className="col-md-3 col-sm-12 mbottom-10px">
-                            <h3>
-                                <i className="fa fa-users mbottom-10px"></i><br/>
-                                Join a community of commuters
-                            </h3>
-                            <p>
-                                The intention of the Iminsys Carpool Platform is to bring commuters together and to
-                                help them help eachother. By giving users the tools to find others who travel along 
-                                similar routes, interact with them, and share driving responsibilities with no costs involved,
-                                the platform exposes the good in people and creates a network out of which everyone benefits.
-                            </p>
-                        </div>
-                        <div className="col-md-3 col-sm-12 mbottom-10px">
-                            <h3>
-                                <i className="fa fa-usd mbottom-10px"></i><br/>
-                                Save on excessive travel expenses
-                            </h3>
-                            <p>
-                                Unfortunately, travelling is expensive. This is something that we are all too familiar with
-                                and it is not a problem that is going away anytime soon. The Iminsys Carpool Platform does
-                                not provide for the exchange of money; however, it does allow people to alternate driving 
-                                responsibilities and as a consequence the costs involved in driving are reduced for every carpooler.
-                            </p>
-                        </div>
-                        <div className="col-md-3 col-sm-12 mbottom-10px">
-                            <h3>
-                                <i className="fa fa-car mbottom-10px"></i><br/>
-                                Make daily commuting enjoyable
-                            </h3>
-                            <p>
-                                Driving the same route on a daily basis is a tedious task but when you're driving with new 
-                                friends and acquintances it will become something you look forward to. The Iminsys Carpool 
-                                Platform makes numerous provisions to ensure you only travel with people you feel comfortable 
-                                around, so the only question that remains is - why drive alone when you can drive together?
-                            </p>
-                        </div>
-                        <div className="col-md-3 col-sm-12 mbottom-10px">
-                            <h3>
-                                <i className="fa fa-road mbottom-10px"></i><br/>
-                                Contribute to cleaning up our roads
-                            </h3>
-                            <p>
-                                If you've ever had to sit in peak hour traffic you'll know what a pain it can be. One of the
-                                predominent reasons for unnecessary traffic is that there are too many cars with one driver and
-                                a host of empty seats. By driving together, we are reducing the number cars on our roads, not only
-                                minimizing traffic, but minimizing the impact our vehicles have on the environment around us.
-                            </p>
+        const { classes } = this.props;
+        return (
+            <React.Fragment>
+                <CssBaseline />
+                <AppBar position="static" className={classes.appBar}>
+                    <Toolbar>
+                        <CarIcon className={classes.icon} />
+                        <Typography variant="title" color="inherit" noWrap>
+                            The Iminsys Carpool Platform
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <main>
+                    {/* Hero unit */}
+                    <div className={classes.heroUnit}>
+                        <div className={classes.heroContent}>
+                            <Avatar src={logo} align='center' className={classes.carpoolLogo} />
+                            <Typography variant="title" align="center" color="textSecondary">
+                                Welcome to the ridesharing platform that helps you help eachother.
+                            </Typography>
+                            <div className={classes.heroButtons}>
+                                <Grid container spacing={16} justify="center">
+                                    <Grid item>
+                                        <Button href={`/Landing`} variant="contained" color="primary">
+                                            Get Started
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button variant="outlined" color="primary" disabled>
+                                            Watch Video
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <footer className="footer text-center txt-white-faded">
-                    <div className="container">
-                        <p>Developed by the Brogrammers Development Team</p> 
+                    <div className={classNames(classes.layout, classes.cardGrid)}>
+                        {/* End hero unit */}
+                        <Grid container spacing={40}>
+                            <Grid item sm={6} md={4} lg={3}>
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={communityImage}
+                                        title="Community"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom variant="headline" component="h2">
+                                            Join a Community
+                                        </Typography>
+                                        <Typography>
+                                            The intention of the Iminsys Carpool Platform is to bring commuters together and to
+                                            help them help eachother. By giving users the tools to find others who travel along
+                                            similar routes, interact with them, and share driving responsibilities with no costs involved,
+                                            the platform exposes the good in people and creates a network out of which everyone benefits.
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item sm={6} md={4} lg={3}>
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={moneyImage}
+                                        title="Money"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom variant="headline" component="h2">
+                                            Save on Travel
+                                        </Typography>
+                                        <Typography>
+                                            Unfortunately, travel is expensive. This is something that we are all familiar with
+                                            and it is not a problem that is going away anytime soon. Our Carpool Platform does
+                                            not provide for the exchange of money; however, it does allow people to alternate driving
+                                            responsibilities so the costs involved in driving are reduced for everyone.
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item sm={6} md={4} lg={3}>
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={commuteImage}
+                                        title="Commute"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom variant="headline" component="h2">
+                                            Enjoy Commuting
+                                        </Typography>
+                                        <Typography>
+                                            Driving the same route on a daily basis is a tedious task but when you're driving with new
+                                            friends it will become something you look forward to. Our Carpool
+                                            Platform makes numerous provisions to ensure you only travel with people you feel comfortable
+                                            around, so the only question that remains is - why drive alone when you can drive together?
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item sm={6} md={4} lg={3}>
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={roadImage}
+                                        title="Image title"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom variant="headline" component="h2">
+                                            Clean our Roads
+                                        </Typography>
+                                        <Typography>
+                                            If you've ever had to sit in peak hour traffic you'll know what a pain it can be. A big reason 
+                                            for unnecessary traffic is that there are too many cars with one driver and
+                                            a host of empty seats. By driving together, we are reducing the number cars on our roads, not only
+                                            minimizing traffic, but minimizing the environmental impact our vehicles have.
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        </Grid>
                     </div>
+                </main>
+                {/* Footer */}
+                <footer className={classes.footer}>
+                    <Typography variant="title" align="center" gutterBottom>
+                        Created By
+                    </Typography>
+                    <Typography variant="subheading" align="center" color="textSecondary" component="p">
+                        The Brogrammers Development Team
+                    </Typography>
                 </footer>
-            </div>
+                {/* End footer */}
+            </React.Fragment>
         );
     }
 }
 
-export default InfoPage;
+InfoPage.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(InfoPage);
