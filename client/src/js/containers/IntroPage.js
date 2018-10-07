@@ -36,8 +36,8 @@ class IntroPage extends React.Component {
         })
     }
 
-    handleChange = (index) => {
-        if(index > 6) {
+    handleChange = (oldIndex, newIndex) => {
+        if(newIndex === 7) {
             this.setState({
                 finished: true,
             })
@@ -51,7 +51,9 @@ class IntroPage extends React.Component {
             infinite: false,
             speed: 500,
             slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToScroll: 1,
+            swipeToSlide: true,
+            adaptiveHeight: true,
         };
 
         return (
@@ -59,14 +61,11 @@ class IntroPage extends React.Component {
                 aria-labelledby="simple-dialog-title"
                 open={this.state.open}
                 onClose={this.handleClose}
-                scroll="paper"
-                maxWidth="lg"
-                fullWidth={true}
-                adaptiveHeight={true}
+                maxWidth="sm"               
             >
                 <DialogTitle>Getting Started</DialogTitle>
                 <DialogContent>
-                    <Slider {...settings} afterChange={this.handleChange}>
+                    <Slider {...settings} beforeChange={this.handleChange}>
                         <img src={slide_1} alt="slide_1"/>
                         <img src={slide_2} alt="slide_2"/>
                         <img src={slide_3} alt="slide_3"/>
