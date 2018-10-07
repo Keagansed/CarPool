@@ -44,6 +44,8 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 8,
         marginBottom: theme.spacing.unit * 8,
         display: 'flex',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
         flexDirection: 'column',
         alignItems: 'center',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,

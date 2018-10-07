@@ -9,7 +9,7 @@ import registerServiceWorker from './js/registerServiceWorker';
 //Set Default Material UI Theme for entire app
 const theme = createMuiTheme({
     palette: {
-        type: 'light',
+        type: 'dark',
     }
 });
 
