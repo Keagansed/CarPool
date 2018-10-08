@@ -120,7 +120,7 @@ import ServerURL from '../../utils/server';
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
         // let profilePicture = "default.jpg";
-        let profilePicture, userFullName, userPartName;
+        let profilePicture, userFullName;
         // console.log(this.props.userObj);
         if (
             typeof (this.props.userObj) !== "undefined" &&
@@ -129,7 +129,6 @@ import ServerURL from '../../utils/server';
         ) {
             profilePicture = ServerURL + "/api/account/getImage?filename=" + this.props.userObj.profilePic;
             userFullName = this.props.userObj.firstName + " " + this.props.userObj.lastName;
-            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
         }
 
         if (typeof (this.routeStore1.routeObj.routeName) !== "undefined") {
@@ -146,7 +145,7 @@ import ServerURL from '../../utils/server';
                 <div>
                     <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
-                        <ListItemText primary={userPartName} secondary='Click to Make Offer' />
+                        <ListItemText primary={userFullName} secondary='Click to Make Offer' />
                         <ListItemSecondaryAction>
                             <IconButton aria-label="Offer to Carpool">
                                 <AddIcon />
@@ -159,7 +158,7 @@ import ServerURL from '../../utils/server';
                             <Link to={"/ProfilePage/"+this.props.userId} style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <ListItem style={{paddingLeft: 0, paddingRight: 0}} divider>
                                     <Avatar alt="Profile Picture" src={profilePicture} />
-                                    <ListItemText primary={userPartName} secondary='View Profile' />
+                                    <ListItemText primary={userFullName} secondary='View Profile' />
                                 </ListItem>
                             </Link>
                             <MapComponent routeArr={this.routeArr} />
