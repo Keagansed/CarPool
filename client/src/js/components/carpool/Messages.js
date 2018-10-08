@@ -157,7 +157,6 @@ const styles = theme => ({
         
         // this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
         if(this.messagesEnd.current !== null){
-            console.log('TCL: scrollToBottom -> this.messagesEnd', this.messagesEnd);
             this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
         }
 
