@@ -14,7 +14,7 @@ const theme = createMuiTheme({
         type: 'dark',
         primary: lime,
         secondary: {
-            main: '#D27A1D',//3 options: C4765C (white-red), A2652E (brown-red), D27A1D (bright-orange)
+            main: '#C4765C',//3 options: C4765C (white-red), A2652E (brown-red), D27A1D (bright-orange)
         },
         error: red,
         contrastThreshold: 3,
