@@ -42,7 +42,7 @@ const styles = theme => ({
  * Purpose: container for the messages that are sent within a carpool chat
  */
 @observer class Messages extends Component {
-
+    messagesEnd = React.createRef();
     /*
      * Purpose: calls the constructor of the parent class and initializes the fields. 'carpoolID' contains the 
      * ID of the carpool chat. 'messages' contains all the messages that were/are sent in the chat. 'users' contains
@@ -86,10 +86,6 @@ const styles = theme => ({
         this.setState({
             token,
         });
-    }
-
-    scrollToBottom = () => {
-        // scroll list to bottom???
     }
 
     componentDidMount() {
@@ -143,8 +139,11 @@ const styles = theme => ({
 
             });
 
-            this.scrollToBottom();
+        this.scrollToBottom();
+    }
 
+    componentDidUpdate(){
+        this.scrollToBottom();
     }
 
     //Switch off event listeners for firebase
@@ -152,6 +151,16 @@ const styles = theme => ({
         this.database.off();
         this.messages.off();
         this.users.off();
+    }
+
+    scrollToBottom = () => {
+        
+        // this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
+        if(this.messagesEnd.current !== null){
+            console.log('TCL: scrollToBottom -> this.messagesEnd', this.messagesEnd);
+            this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
+        }
+
     }
     /*
      * Purpose: adds a new message to the current messages
@@ -231,7 +240,7 @@ const styles = theme => ({
 
         if (verify) {
             return (
-                <div className={classes.root}>
+                <div className={classes.root} >
                     {/* App Bar */}
                     <AppBar className={classes.topNav}>
                         <Toolbar className={classes.toolbar} variant='dense'>
@@ -316,7 +325,8 @@ const styles = theme => ({
                         }
                     </List>
                     {/* Input message */}
-                    <MessageForm addMessage={this.addMessage} />
+                    <MessageForm addMessage={this.addMessage} updateScroll={this.scrollToBottom}/>
+                    <div ref={this.messagesEnd}></div>
                 </div>
             );
 
