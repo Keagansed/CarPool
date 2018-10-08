@@ -20,7 +20,7 @@ class LogoutSetting extends Component {
     render() {
         return (
             <div>
-                <Link to={"/"} onClick={this.handleLogout} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to={"/Landing"} onClick={this.handleLogout} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <ListItem button divider>
                         <ListItemIcon>
                             <ExitIcon />

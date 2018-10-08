@@ -1,13 +1,17 @@
 // File Type: Component
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
+import StarEmptyIcon from '@material-ui/icons/StarBorder';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import { getFromStorage } from './../../utils/localStorage';
 import VouchStore from './../../stores/VouchStore';
 import Vouch from './Vouch';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
 
 //Specific styles to this page
 const styles = theme => ({
@@ -42,15 +46,28 @@ const styles = theme => ({
     render() {
         let vouches = VouchStore.vouchesFor;
         const { classes } = this.props;
-        return (
-            <List component="nav" className={classes.root}>
-                {
-                    vouches.map((vouch) => {
-                        return (<Vouch vouch={vouch} key={Math.random()} />);
-                    })
-                }
-            </List>
-        );
+        if (vouches.length > 0){
+            return (
+                <List component="nav" className={classes.root}>
+                    {
+                        vouches.map((vouch) => {
+                            return (<Vouch vouch={vouch} key={Math.random()} />);
+                        })
+                    }
+                </List>
+            );
+        }else{
+            return (
+                <List component="nav" className={classes.root}>
+                    <ListItem divider>
+                        <Avatar>
+                            <StarEmptyIcon />
+                        </Avatar>
+                        <ListItemText primary="No Vouches to Display" secondary="No one has vouched for this user yet." />
+                    </ListItem>
+                </List>
+            );
+        }
     }
 }
 

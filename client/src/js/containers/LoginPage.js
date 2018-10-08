@@ -10,7 +10,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockIcon from '@material-ui/icons/Lock';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -23,6 +22,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import PasswordModal from '../components/login/PasswordModal';
 import { getFromStorage } from '../utils/localStorage.js';
 import ServerURL from '../utils/server';
+import logo from "../../css/images/logo.png";
 
 const util = require('./../utils/idCheck');
 
@@ -59,12 +59,8 @@ const styles = theme => ({
     },
     avatar: {
         margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
         height: 128,
         width: 128,
-    },
-    avatarIcon: {
-        fontSize: '100px', 
     },
     form: {
         width: '100%', // Fix IE11 issue.
@@ -200,9 +196,7 @@ function validate(email, password) {
                     <CssBaseline />
                     <main className={classes.layout}>
                         <Paper className={classes.paper}>
-                            <Avatar className={classes.avatar}>
-                                <LockIcon className={classes.avatarIcon}/>
-                            </Avatar>
+                            <Avatar src={logo} align='center' className={classes.avatar} />
                             <Typography variant="headline">Log In</Typography>
                             <form className={classes.form}>
                                 <FormControl margin="normal" required fullWidth>

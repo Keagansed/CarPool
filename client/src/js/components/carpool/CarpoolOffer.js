@@ -127,13 +127,12 @@ class CarpoolOffer extends Component {
             return (<div></div>);
 
         } else {
-            let profilePicture, userFullName, userPartName;
+            let profilePicture, userFullName;
             if (
                 typeof (this.props.store.userProfile) !== "undefined"
             ) {
                 profilePicture = ServerURL + "/api/account/getImage?filename=" + this.props.store.userProfile.profilePic;
                 userFullName = this.props.store.userProfile.firstName + " " + this.props.store.userProfile.lastName;
-                userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
             }
             return (
                 <div>
@@ -154,7 +153,7 @@ class CarpoolOffer extends Component {
                             <Link to={"/ProfilePage/" + this.props.store.senderId} style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                                     <Avatar alt="Profile Picture" src={profilePicture} />
-                                    <ListItemText primary={userPartName} secondary='View Profile' />
+                                    <ListItemText primary={userFullName} secondary='View Profile' />
                                 </ListItem>
                             </Link>
                             <Typography>{this.renderOtherMembers()}</Typography>
