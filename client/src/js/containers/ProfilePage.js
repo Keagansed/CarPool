@@ -182,7 +182,7 @@ const styles = theme => ({
 
 	render() {
 		const { classes } = this.props;
-		const { profilePic, secLvl } = this.props.store;
+		const { profilePic } = this.props.store;
 		const profilePicture = ServerURL + "/api/account/getImage?filename=" + profilePic;
 
 		return (
