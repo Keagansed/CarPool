@@ -105,13 +105,10 @@ const styles = theme => ({
     }
 
     render() {
-        
+
         const { classes } = this.props;
         let tripName;
-        let carpoolers =
-            <ListItem key={Math.random()} divider>
-                <ListItemText inset primary="No other Carpoolers" />
-            </ListItem>;
+        let carpoolers = [];
         let driver = [];
 
         let origin, destination;
@@ -129,18 +126,15 @@ const styles = theme => ({
         }
 
         try {
-            if(typeof(TripsStore.tripObj) !== undefined) {
-                carpoolers = [];
-            }
             tripName = TripsStore.tripObj.tripName;
             for (let user in TripsStore.tripObj.users) {
                 if (user !== TripsStore.tripObj.driver) {
-                    if (TripsStore.tripObj.users[user] === true){    
+                    if (TripsStore.tripObj.users[user] === true) {
                         carpoolers.push(
-                            <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
+                            <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
                                 <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
-                                    <ListItemText 
-                                        secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                    <ListItemText
+                                        secondary={<Typography color='secondary'>{TripsStore.getUsernameSurname(user)}</Typography>}
                                         style={{ textAlign: 'center' }}
                                     />
                                 </ListItem>
@@ -151,14 +145,24 @@ const styles = theme => ({
                     driver.push(
                         <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
                             <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
-                                <ListItemText 
-                                    secondary={<Typography color='primary'>{TripsStore.getUsernameSurname(user)}</Typography>} 
+                                <ListItemText
+                                    secondary={<Typography color='primary'>{TripsStore.getUsernameSurname(user)}</Typography>}
                                     style={{ textAlign: 'center' }}
                                 />
                             </ListItem>
                         </Link>
                     );
                 }
+            }
+
+            if (carpoolers.length === 0) {
+                carpoolers =
+                    <ListItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0 }}>
+                        <ListItemText
+                            secondary='No Other Carpoolers'
+                            style={{ textAlign: 'center' }}
+                        />
+                    </ListItem>;;
             }
 
             if (new Date(TripsStore.tripObj.dateTime) < new Date()) {
@@ -213,69 +217,6 @@ const styles = theme => ({
                     </Button>
                 </List>
             </div>
-            // <div className="size-100 bg-purple">
-            //     <div className="fixed-top container-fluid height-50px bg-aqua">
-            //         <div className="row height-100p">
-            //             <Link to={`/HomePage`} className="col-2 txt-center">
-            //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-            //                     <i className="fa fa-chevron-circle-left txt-center"></i>
-            //                 </button>
-            //             </Link>
-            //             <div className="col-8 txt-center">
-            //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px">
-            //                     {tripName}
-            //                 </button>
-            //             </div>
-            //             {this.reviewModal}
-            //         </div>
-            //     </div>
-            //     {/* Padding is there for top and bottom navs*/}
-            //     <div className="padtop-50px container-fluid">
-            //         <div className="row mtop-10px">
-            //             <h6 className="fw-bold mx-auto txt-white">Date and Time</h6>
-            //         </div>
-            //         <div className="row">
-            //             <div className="mx-auto txt-white">{this.getDateTime()}</div>
-            //         </div>
-            //         <div className="row mtop-10px">
-            //             <h6 className="fw-bold mx-auto txt-white">Route Details</h6>
-            //         </div>
-            //         <div className="row">
-            //             <div className="col-12">
-            //                 <div className="txt-center mbottom-0 txt-white">
-            //                     <p>
-            //                         {origin}<br></br>
-            //                         to<br></br>
-            //                         {destination}
-            //                     </p>
-            //                 </div>
-            //             </div>
-            //         </div>
-
-            //         <MapComponent routeArr={this.routeArr} combined={true} />
-
-            //         <div className="row mtop-10px bordbot-1px-dash-grey">
-            //             <h6 className="fw-bold mx-auto txt-white">Driver</h6>
-            //         </div>
-
-            //         {driver}
-
-            //         <div className="row mtop-10px bordbot-1px-dash-grey">
-            //             <h6 className="fw-bold mx-auto txt-white">Other Carpoolers</h6>
-            //         </div>
-
-            //         {carpoolers}
-
-            //         <div className="row padtop-10px">
-            //             <a
-            //                 href={googleURL}
-            //                 className="btn btn-primary mx-auto col-10 brad-2rem mbottom-10px bg-aqua txt-purple fw-bold"
-            //             >
-            //                 <b>Begin Route</b>
-            //             </a>
-            //         </div>
-            //     </div>
-            // </div>
         );
     }
 
