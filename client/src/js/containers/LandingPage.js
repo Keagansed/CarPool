@@ -9,9 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CarIcon from '@material-ui/icons/DirectionsCar';
 
-import LoginStore from '../stores/LoginStore'
+import LoginStore from '../stores/LoginStore';
+import logo from "../../css/images/logo.png";
 
 //Define the spefic styles for this page
 const styles = theme => ({
@@ -37,12 +37,8 @@ const styles = theme => ({
     },
     avatar: {
         margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
         height: 128,
         width: 128,
-    },
-    avatarIcon: {
-        fontSize: '100px', 
     },
     form: {
         width: '100%', // Fix IE11 issue.
@@ -68,9 +64,7 @@ class LandingPage extends Component {
                 <CssBaseline />
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <CarIcon className={classes.avatarIcon} />
-                        </Avatar>
+                        <Avatar src={logo} align='center' className={classes.avatar} />
                         <Typography align='center' variant="headline">The Iminsys Carpool Platform</Typography>
                         <form className={classes.form}>
                             <Link to={`/Register`} style={{ textDecoration: 'none' }}>
