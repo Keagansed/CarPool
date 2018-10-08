@@ -352,14 +352,16 @@ import ServerURL from '../../utils/server';
         if (this.props.userID === getFromStorage('sessionKey').token) {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog} divider>
+                    <ListItem onClick={this.openTripDialog} divider button>
                         <ListItemText
-                            primary={<font style={{ color: this.props.userColour }}>You</font>}
-                            secondary='Suggested a trip.'
+                            primary={
+                                <div>
+                                    <font style={{ color: this.props.userColour }}>You</font>
+                                    <font style={{ float: 'right' }}>{dat}</font>
+                                </div>
+                            }
+                            secondary='Suggested a trip. Click for more info.'
                         />
-                        <ListItemSecondaryAction>
-                            <ListItemText primary={dat} />
-                        </ListItemSecondaryAction>
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
                         <DialogTitle>Trip Suggestion</DialogTitle>
@@ -378,14 +380,16 @@ import ServerURL from '../../utils/server';
         } else {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog} divider>
+                    <ListItem onClick={this.openTripDialog} divider button>
                         <ListItemText
-                            primary={<font style={{ color: this.props.userColour }}>{MessageStore.getUsername(this.props.userID)}</font>}
+                            primary={
+                                <div>
+                                    <font style={{ color: this.props.userColour }}>{MessageStore.getUsername(this.props.userID)}</font>
+                                    <font style={{ float: 'right' }}>{dat}</font>
+                                </div>
+                            }
                             secondary='Suggested a trip. Click for more info.'
                         />
-                        <ListItemSecondaryAction>
-                            <ListItemText primary={dat} />
-                        </ListItemSecondaryAction>
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
                         <DialogTitle>Trip Suggestion</DialogTitle>
