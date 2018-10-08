@@ -77,15 +77,14 @@ import ServerURL from '../../utils/server';
         this.carpoolMembers = [];
 
         this.carpoolMatchStore.carpoolMembers.forEach(userObj => {
-            let userFullName, userPartName, profilePicture;
+            let userFullName, profilePicture;
             userFullName = userObj.firstName + " " + userObj.lastName;
-            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
             profilePicture = ServerURL + "/api/account/getImage?filename=" + userObj.profilePic;
             const memberComponent = (
                 <Link to={"/ProfilePage/" + userObj._id} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
                     <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
-                        <ListItemText primary={userPartName} secondary='View Profile' />
+                        <ListItemText primary={userFullName} secondary='View Profile' />
                     </ListItem>
                 </Link>
             )

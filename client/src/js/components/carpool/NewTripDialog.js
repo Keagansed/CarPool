@@ -198,14 +198,14 @@ import { getFromStorage } from '../../utils/localStorage.js'
             if (user !== TripsStore.idBy) {
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user).split(' ')[0]} />
+                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user)} />
                     </ExpansionPanelDetails>
                 );
             } else {
                 TripsStore.users[user] = true;
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user).split(' ')[0] + ' (Driver)'} />
+                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user) + ' (Driver)'} />
                     </ExpansionPanelDetails>
                 );
             }

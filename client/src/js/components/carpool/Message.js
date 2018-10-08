@@ -3,9 +3,6 @@
 import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import MessageIcon from '@material-ui/icons/Chat';
-import IconButton from '@material-ui/core/IconButton';
 
 import { getFromStorage } from '../../utils/localStorage'
 
