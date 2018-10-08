@@ -127,88 +127,131 @@ const styles = theme => ({
 		});
 	};
 
-	render() {
-		const { classes } = this.props;
-		const { firstName, lastName, profilePic, secLvl } = this.props.store;
-		const profilePicture = ServerURL + "/api/account/getImage?filename=" + profilePic;
+	renderName = () => {
+		if (this.props.store.profileFound) {
+			const { firstName, lastName } = this.props.store;
 
+			return (
+				<React.Fragment>
+					{firstName} {lastName}
+				</React.Fragment>
+			);
+
+		} else {
+			return (
+				<React.Fragment></React.Fragment>
+			);
+		}
+	}
+
+	renderSecLvl = () => {
+		if (this.props.store.profileFound) {
+			return this.props.store.secLvl.toFixed(1)
+		} else {
+			return 0.0;
+		}
+	}
+
+	renderVouchAverage = () => {
+		if (this.props.store.profileFound) {
+			return <VouchAverage />
+		} else {
+			return 0.0;
+		}
+	}
+
+	renderNavContent = () => {
 		if (this.props.store.profileFound) {
 			return (
-				<div className={classes.root}>
-					<div className={classes.fixedTop}>
-						{/* Hero unit - profile pic, name, and ratings */}
-						<div className={classes.heroContent}>
-							<Avatar alt="Profile Picture" src={profilePicture} className={classes.avatar} />
-							<Typography variant="title" align="center" color="textPrimary">
-								{firstName} {lastName}
-							</Typography>
-							<Grid container>
-								<Grid item xs={6} align="center" style={{ paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
-									<Button align="center" style={{ paddingBottom: 4 }}>
-										<StarIcon style={{ color: 'gold' }} /><VouchAverage />/5
-									</Button>
-									<Typography variant="caption" align="center" color="textSecondary">
-										Vouch Average
-									</Typography>
-								</Grid>
-								<Grid item xs={6} align="center" style={{ paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
-									<Button align="center" style={{ paddingBottom: 4 }}>
-										<SecurityIcon style={{ color: 'green' }} />{secLvl.toFixed(1)}/5
-									</Button>
-									<Typography variant="caption" align="center" color="textSecondary">
-										Security Rating
-									</Typography>
-								</Grid>
-							</Grid>
-						</div>
-						{/* Nav bar for vouches and trust */}
-						<AppBar position="static">
-							<Tabs value={this.state.tabNum} onChange={this.handleChange} fullWidth>
-								<Tab label="Vouches" />
-								<Tab label="Trust" href="#basic-tabs" />
-							</Tabs>
-						</AppBar>
-					</div>
-					{/* Navbar content */}
-					<div>
-						{this.state.tabNum === 0 && <TabContainer>{this.state.vouchesComponents}</TabContainer>}
-						{this.state.tabNum === 1 && <TabContainer><Trusts store={this.props.store} /></TabContainer>}
-					</div>
-					{/* Bottom nabar */}
-					<BottomNavigation
-						value={0}
-						className={classes.bottomNav}
-					>
-						<BottomNavigationAction
-							label="Profile"
-							icon={<UserIcon />}
-							showLabel
-						/>
-						<BottomNavigationAction
-							component={Link}
-							to={"/HomePage"}
-							label="Home"
-							icon={<HomeIcon />}
-							showLabel
-						/>
-						<BottomNavigationAction
-							component={Link}
-							to={`/Settings`}
-							label="Settings"
-							icon={<SettingsIcon />}
-							showLabel
-						/>
-					</BottomNavigation>
-				</div>
+				<React.Fragment>
+					{this.state.tabNum === 0 && <TabContainer>{this.state.vouchesComponents}</TabContainer>}
+					{this.state.tabNum === 1 && <TabContainer><Trusts store={this.props.store} /></TabContainer>}
+				</React.Fragment>
 			);
 		} else {
 			return (
-				<div className="spinner">
-					<div className="double-bounce1"></div>
-					<div className="double-bounce2"></div>
-				</div>
+				<React.Fragment>
+					<div className="spinner">
+						<div className="double-bounce1"></div>
+						<div className="double-bounce2"></div>
+					</div>
+				</React.Fragment>
 			);
 		}
+	}
+
+	render() {
+		const { classes } = this.props;
+		const { profilePic, secLvl } = this.props.store;
+		const profilePicture = ServerURL + "/api/account/getImage?filename=" + profilePic;
+
+		return (
+			<div className={classes.root}>
+				<div className={classes.fixedTop}>
+					{/* Hero unit - profile pic, name, and ratings */}
+					<div className={classes.heroContent}>
+						<Avatar alt="" src={profilePicture} className={classes.avatar} />
+						<Typography variant="title" align="center" color="textPrimary">
+							{this.renderName()}
+						</Typography>
+						<Grid container>
+							<Grid item xs={6} align="center" style={{ paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
+								<Button align="center" style={{ paddingBottom: 4 }}>
+									<StarIcon style={{ color: 'gold' }}/>{this.renderVouchAverage()}/5
+								</Button>
+								<Typography variant="caption" align="center" color="textSecondary">
+									Vouch Average
+								</Typography>
+							</Grid>
+							<Grid item xs={6} align="center" style={{ paddingBottom: 0, paddingLeft: 0, paddingRight: 0 }}>
+								<Button align="center" style={{ paddingBottom: 4 }}>
+									<SecurityIcon style={{ color: 'green' }} />{this.renderSecLvl()}/5
+								</Button>
+								<Typography variant="caption" align="center" color="textSecondary">
+									Security Rating
+								</Typography>
+							</Grid>
+						</Grid>
+					</div>
+					{/* Nav bar for vouches and trust */}
+					<AppBar position="static">
+						<Tabs value={this.state.tabNum} onChange={this.handleChange} fullWidth>
+							<Tab label="Vouches" />
+							<Tab label="Trust" href="#basic-tabs" />
+						</Tabs>
+					</AppBar>
+				</div>
+				{/* Navbar content */}
+				<div>
+					{this.renderNavContent()}
+				</div>
+				{/* Bottom nabar */}
+				<BottomNavigation
+					value={0}
+					className={classes.bottomNav}
+				>
+					<BottomNavigationAction
+						label="Profile"
+						icon={<UserIcon />}
+						showLabel
+					/>
+					<BottomNavigationAction
+						component={Link}
+						to={"/HomePage"}
+						label="Home"
+						icon={<HomeIcon />}
+						showLabel
+					/>
+					<BottomNavigationAction
+						component={Link}
+						to={`/Settings`}
+						label="Settings"
+						icon={<SettingsIcon />}
+						showLabel
+					/>
+				</BottomNavigation>
+			</div>
+		);
 	}
 }
 
