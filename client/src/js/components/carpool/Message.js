@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import MessageIcon from '@material-ui/icons/Chat';
+import IconButton from '@material-ui/core/IconButton';
 
 import { getFromStorage } from '../../utils/localStorage'
 
@@ -33,12 +35,12 @@ class Message extends Component {
         const createdOn = new Date(JSON.parse(dat));
         const msInDay = 24 * 60 * 60 * 1000;
 
-        createdOn.setHours(0,0,0,0);
-        today.setHours(0,0,0,0)
+        createdOn.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0)
 
-        let diff = (+today - +createdOn)/msInDay
+        let diff = (+today - +createdOn) / msInDay
 
-        if(diff === 1) {
+        if (diff === 1) {
             return diff + " day ago";
         }
 
@@ -53,13 +55,13 @@ class Message extends Component {
         let hours = createdOn.getHours();
         let mins = createdOn.getMinutes();
 
-        if(mins === 0) {
+        if (mins === 0) {
             mins = "00";
-        }else if(mins<10) {
-            mins = "0"+mins;
+        } else if (mins < 10) {
+            mins = "0" + mins;
         }
 
-        return hours+":"+mins;
+        return hours + ":" + mins;
     }
 
     /*
@@ -69,7 +71,7 @@ class Message extends Component {
         let dateObj = new Date(JSON.parse(dat));
         let todaysDate = new Date();
 
-        if(dateObj.toDateString() === todaysDate.toDateString()) {
+        if (dateObj.toDateString() === todaysDate.toDateString()) {
             return true;
         }
 
@@ -83,38 +85,44 @@ class Message extends Component {
     render() {
         let dat = "";
 
-        if(this.checkIfToday(this.props.dateTime)) {
+        if (this.checkIfToday(this.props.dateTime)) {
             dat = this.getTime(this.props.dateTime);
-        }else{
+        } else {
             dat = this.getDaysAgo(this.props.dateTime);
         }
 
-        if(this.props.userID === getFromStorage('sessionKey').token) {
-            return(
+        if (this.props.userID === getFromStorage('sessionKey').token) {
+            return (
                 <ListItem divider>
-                    <ListItemText 
-                        primary={<font style={{color: this.props.userColour}}>You</font>} 
-                        secondary={this.messageContent} 
+                    <ListItemText
+                        primary={
+                            <div>
+                                <font style={{ color: this.props.userColour }}>You</font>
+                                <font style={{ float: 'right' }}>{dat}</font>
+                            </div>
+                        }
+                        secondary={this.messageContent}
+                        style={{ wordWrap: 'break-word', whiteSpace: 'normal', }}
                     />
-                    <ListItemSecondaryAction>
-                        <ListItemText primary={dat} />
-                    </ListItemSecondaryAction>
                 </ListItem>
             );
-        }else{
-            return(
+        } else {
+            return (
                 <ListItem divider>
-                    <ListItemText 
-                        primary={<font style={{color: this.props.userColour}}>{this.props.userName}</font>} 
+                    <ListItemText
+                        primary={
+                            <div>
+                                <font style={{ color: this.props.userColour }}>{this.props.userName}</font>
+                                <font style={{ float: 'right' }}>{dat}</font>
+                            </div>
+                        }
                         secondary={this.messageContent}
+                        style={{ wordWrap: 'break-word', whiteSpace: 'normal', }}
                     />
-                    <ListItemSecondaryAction>
-                        <ListItemText primary={dat} />
-                    </ListItemSecondaryAction>
                 </ListItem>
             );
         }
-        
+
     }
 }
 
