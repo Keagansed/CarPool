@@ -7,7 +7,6 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 
 import HomePage from "./containers/HomePage";
 import HomePageStore from './stores/HomePageStore';
-import IntroPage from "./containers/IntroPage";
 import InfoPage from "./containers/InfoPage";
 import LandingPage from "./containers/LandingPage";
 import LoginPage from "./containers/LoginPage";
@@ -33,7 +32,6 @@ class App extends Component {
 					<Route path={"/Landing"} exact component={LandingPage}/>
 					<Route path={"/Login"} exact render={(props) => <LoginPage {...props} store={LoginStore}/>}/>
 					<Route path={"/Register"} exact render={(props) => <RegisterPage {...props} store={LoginStore}/>}/>
-					<Route path={"/Introduction"} exact component={IntroPage}/>
 					<Route path={"/HomePage"} exact render={(props) => <HomePage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/RouteMatches/:_id"} exact render={(props) => <MatchesPage {...props} store={HomePageStore}/>}/>
 					<Route path={"/HomePage/Trip/:tripID"} exact render={(props) => <TripPage {...props} store={HomePageStore}/>}/>
