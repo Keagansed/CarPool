@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import LoginStore from '../stores/LoginStore';
 import logo from "../../css/images/logo.png";
+import Carousel from "../components/carousel/Carousel";
 
 //Define the spefic styles for this page
 const styles = theme => ({
@@ -61,6 +62,7 @@ class LandingPage extends Component {
 
         return (
             <React.Fragment>
+                <Carousel/>
                 <CssBaseline />
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
