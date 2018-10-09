@@ -288,7 +288,7 @@ function validate(fName, lName, idNum, email, password1, password2, checked) {
                                         }
                                         label={
                                             <div style={{display:"flex"}}>
-                                                <Typography variant='caption'>I agree with the </Typography>
+                                                <Typography variant='caption'>Agree with{'\u00A0'}</Typography>
                                                 <TermsDialog/>
                                             </div>
                                         }
