@@ -45,11 +45,11 @@ class CancelTripModal extends Component {
     }
 
     cancelOrDelete = () => {
-        if (this.props.trip.driver === this.state.token) {
-            this.deleteTrip();
-        } else {
+        // if (this.props.trip.driver === this.state.token) {
+        //     this.deleteTrip();
+        // } else {
             this.cancelTrip();
-        }
+        // }
     }
 
     cancelTrip = () => {
