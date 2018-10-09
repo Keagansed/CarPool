@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import MapComponent from '../google/GeneralMapWrapper';
 import MessageStore from '../../stores/MessagingStore.js';
