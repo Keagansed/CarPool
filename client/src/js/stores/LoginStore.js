@@ -2,7 +2,7 @@
 
 import { action, observable } from 'mobx';
 
-import { getFromStorage, setInStorage } from '../utils/localStorage.js'
+import { getFromStorage, setInStorage } from '../utils/localStorage.js';
 import ServerURL from '../utils/server';
 
 /*

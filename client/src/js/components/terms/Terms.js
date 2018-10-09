@@ -50,11 +50,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
                             responsible for any user-generated content and accounts.
                         </DialogContentText>
                         <DialogContentText paragraph>
-                            This Service is only available to users who are at least 18 years old. If you are younger than this, 
-                            please do not register for this Service. If you register for this Service, you represent that you are 
-                            this age or older.
-                        </DialogContentText>
-                        <DialogContentText paragraph>
                             All content you submit, upload, or otherwise make available to the Service ("Content") may be 
                             reviewed by staff members. All Content you submit or upload may be sent to third-party 
                             verification services (including, but not limited to, spam prevention services). Do not submit 
