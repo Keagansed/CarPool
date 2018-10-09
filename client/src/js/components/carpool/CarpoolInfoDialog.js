@@ -64,6 +64,9 @@ import ServerURL from '../../utils/server';
      */
     leaveCarpool = () => {
         let tempUsers = {};
+
+        console.log('TCL: NewTripDialog -> leaveCarpool -> this.props.users', );
+
         for (let user in this.state.groupChatUsers) {
             if (user !== getFromStorage('sessionKey').token) {
                 tempUsers[user] = this.state.groupChatUsers[user];
@@ -95,20 +98,40 @@ import ServerURL from '../../utils/server';
                         console.error("Deletion failed: ", error);
                     })
                 } else {
-                    app.database().ref().child('groupChats/' + this.props.carpoolID)
-                    .update({users: this.state.groupChatUsers})
-                    .then(() => {
-                        this.setState({
-                            redirect: true
-                        });
-                        return {};
+
+                    fetch(ServerURL + '/api/account/profile?userId=' + this.props.token + '&token=' + this.props.token,{
+                        method:'GET',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
                     })
-                    .catch(error => {
-                        return {
-                            errorCode: error.code,
-                            errorMessage: error.message
-                        }
-                    });
+                        .then(res => res.json())
+                        .catch(error => console.error('Error:', error))
+                        .then(users => {
+                            let groupChatMessages = app.database().ref().child('groupChats/' + this.props.carpoolID + '/messages');
+
+                            groupChatMessages.push().set({
+                                userID: "Server",
+                                messageContent: (users.data[0].firstName + " " + users.data[0].lastName + " has left the carpool"),
+                                dateTime: JSON.stringify(new Date()),
+                                tripSuggest: false
+                            });
+
+                            app.database().ref().child('groupChats/' + this.props.carpoolID)
+                            .update({users: this.state.groupChatUsers})
+                            .then(() => {
+                                this.setState({
+                                    redirect: true
+                                });
+                                return {};
+                            })
+                            .catch(error => {
+                                return {
+                                    errorCode: error.code,
+                                    errorMessage: error.message
+                                }
+                            });
+                        });
                 }
             })
                 

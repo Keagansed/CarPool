@@ -1,46 +1,103 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Landing Page Component captures snapshot 1`] = `
-<div
-  className="vertical-center bg-purple"
+<main
+  className="LandingPage-layout-1"
 >
   <div
-    className="container-fluid"
+    className="MuiPaper-root-6 MuiPaper-elevation2-10 MuiPaper-rounded-7 LandingPage-paper-2"
   >
     <div
-      className="row"
+      align="center"
+      className="MuiAvatar-root-33 LandingPage-avatar-3"
     >
       <img
-        alt="carpool_logo"
-        className="img-fluid d-block mx-auto mbottom-2rem"
-        id="logo-256"
+        alt={undefined}
+        className="MuiAvatar-img-35"
+        sizes={undefined}
         src="logo.png"
+        srcSet={undefined}
       />
     </div>
-    <div
-      className="row"
+    <h1
+      className="MuiTypography-root-36 MuiTypography-headline-41 MuiTypography-alignCenter-50"
+    >
+      The Iminsys Carpool Platform
+    </h1>
+    <form
+      className="LandingPage-form-4"
     >
       <a
-        className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold"
-        href="/Login"
-        id="btnLogin"
-        onClick={[Function]}
-      >
-        Login
-      </a>
-    </div>
-    <div
-      className="row"
-    >
-      <a
-        className="btn btn-primary mx-auto width-15rem brad-2rem bg-aqua txt-purple fw-bold"
         href="/Register"
-        id="btnRegister"
         onClick={[Function]}
+        style={
+          Object {
+            "textDecoration": "none",
+          }
+        }
       >
-        Register
+        <button
+          className="MuiButtonBase-root-88 MuiButton-root-62 MuiButton-contained-73 MuiButton-containedPrimary-74 MuiButton-raised-76 MuiButton-raisedPrimary-77 MuiButton-fullWidth-87 LandingPage-submit-5"
+          disabled={false}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex="0"
+          type="submit"
+        >
+          <span
+            className="MuiButton-label-63"
+          >
+            Register
+          </span>
+          <span
+            className="MuiTouchRipple-root-91"
+          />
+        </button>
       </a>
-    </div>
+      <a
+        href="/Login"
+        onClick={[Function]}
+        style={
+          Object {
+            "textDecoration": "none",
+          }
+        }
+      >
+        <button
+          className="MuiButtonBase-root-88 MuiButton-root-62 MuiButton-contained-73 MuiButton-containedPrimary-74 MuiButton-raised-76 MuiButton-raisedPrimary-77 MuiButton-fullWidth-87 LandingPage-submit-5"
+          disabled={false}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex="0"
+          type="submit"
+        >
+          <span
+            className="MuiButton-label-63"
+          >
+            Login
+          </span>
+          <span
+            className="MuiTouchRipple-root-91"
+          />
+        </button>
+      </a>
+    </form>
   </div>
-</div>
+</main>
 `;

@@ -6,8 +6,10 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
@@ -58,7 +60,7 @@ const styles = theme => ({
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
 */
-function validate(fName, lName, idNum, email, password1, password2) {
+function validate(fName, lName, idNum, email, password1, password2, checked) {
     return {
         fName: fName.length === 0 || fName.length > 50,
         lName: lName.length === 0 || lName.length > 50,
@@ -66,6 +68,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
         email: !util.ValidateEmail(email),
         password1: password1.length === 0,
         password2: password2.length === 0 || password2 !== password1,
+        checked: !checked,
     };
 }
 
@@ -82,6 +85,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
             email: '',
             password1: '',
             password2: '',
+            checked: false,
 
             touched: {
                 fName: false,
@@ -94,6 +98,9 @@ function validate(fName, lName, idNum, email, password1, password2) {
         };
     }
 
+    updateChecked = event => {
+        this.setState({ checked: event.target.checked})
+    }
     /*
     * Purpose: Sets the 'store.sFName' variable to senders current value
     */
@@ -157,8 +164,11 @@ function validate(fName, lName, idNum, email, password1, password2) {
     * Purpose: Check whether all fields have been entered correctly
     */
     canBeSubmitted() {
-        const errors = validate(this.state.fName, this.state.lName, this.state.idNum, this.state.email, this.state.password1, this.state.password2);
-        const isDisabled = Object.keys(errors).some(x => errors[x]);
+        const errors = validate(this.state.fName, this.state.lName, this.state.idNum, this.state.email, this.state.password1, this.state.password2, this.state.checked);
+        let isDisabled = Object.keys(errors).some(x => errors[x]);
+        if(this.state.checked) {
+
+        }
         return !isDisabled;
     }
 
@@ -183,7 +193,7 @@ function validate(fName, lName, idNum, email, password1, password2) {
         };
 
         const { registered } = this.props.store;
-        const errors = validate(this.state.fName, this.state.lName, this.state.idNum, this.state.email, this.state.password1, this.state.password2);
+        const errors = validate(this.state.fName, this.state.lName, this.state.idNum, this.state.email, this.state.password1, this.state.password2, this.state.checked);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         const { classes } = this.props;
 
@@ -263,6 +273,19 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                         error={(shouldMarkError('password2') ? true : false)}
                                         onBlur={this.handleBlur('password2')}
                                         value={this.state.password2}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                            checked={this.state.checked}
+                                            onChange={this.updateChecked}
+                                            value="checkedB"
+                                            color="primary"
+                                            />
+                                        }
+                                        label="I agree with the terms and conditions"
                                     />
                                 </FormControl>
                                 <Button

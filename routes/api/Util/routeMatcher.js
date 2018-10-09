@@ -50,7 +50,10 @@ module.exports.getRecommendedRoutes = async (token, routeId) => {
     return obj;
 }
 
-
+/*
+    Method to fetch all carpools and routes from the database and calls the methods which
+    correctly filters the carpools and routes.
+*/
 getAllRoutes = async (token, routeId) => {
     recommendedCarpools = [];
     recommendedRoutes = [];
@@ -60,6 +63,13 @@ getAllRoutes = async (token, routeId) => {
             const carpools = data.map(carpool => {
                 return carpool.toObject();
             }); 
+
+            for (let i = 0; i < carpools.length; i++) {
+                if (carpools[i].routes.length > 4) {
+                    carpools.splice(i, 1);
+                    i--;
+                }
+            }
         
             filterCarpools(carpools, token)
         }, err => {
