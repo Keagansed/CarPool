@@ -187,7 +187,6 @@ import ServerURL from '../../utils/server';
                             <MapComponent routeArr={this.routeArr} />
                             <TextField
                                 onChange={this.handleCarpoolNameChange}
-                                autoFocus
                                 margin="dense"
                                 label="Proposed Carpool Name"
                                 fullWidth

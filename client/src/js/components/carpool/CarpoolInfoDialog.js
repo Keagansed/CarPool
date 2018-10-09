@@ -178,7 +178,7 @@ import ServerURL from '../../utils/server';
                         <Button onClick={this.leaveCarpool} color="primary">
                             Leave Carpool
                         </Button>
-                        <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        <Button onClick={this.closeTripDialog} color="primary">
                             Close
                         </Button>
                     </DialogActions>

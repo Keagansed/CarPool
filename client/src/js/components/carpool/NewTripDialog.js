@@ -268,7 +268,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
                         <Button onClick={this.closeTripDialog} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.suggestTrip} color="primary" autoFocus>
+                        <Button onClick={this.suggestTrip} color="primary">
                             Suggest
                         </Button>
                     </DialogActions>

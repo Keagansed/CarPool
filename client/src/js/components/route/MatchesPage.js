@@ -194,7 +194,7 @@ const styles = theme => ({
                             <MapComponent routeArr={this.routeArr} />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.closeInfoDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeInfoDialog} color="primary">
                                 Close
                             </Button>
                         </DialogActions>
@@ -208,10 +208,10 @@ const styles = theme => ({
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.delete} color="primary" autoFocus>
+                            <Button onClick={this.delete} color="primary">
                                 Yes
                             </Button>
-                            <Button onClick={this.closeDeleteDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeDeleteDialog} color="primary">
                                 No
                             </Button>
                         </DialogActions>

@@ -115,7 +115,6 @@ class EditEmailModal extends Component {
                     <DialogTitle>{"Edit Account Email"}</DialogTitle>
                     <DialogContent>
                         <TextField
-                            autoFocus
                             value={this.state.email}
                             onChange={this.handleEmailChange.bind(this)}
                             error={(shouldMarkError('email') ? true : false)}
@@ -130,7 +129,7 @@ class EditEmailModal extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.changeEmail.bind(this)} color="primary" disabled={isDisabled} autoFocus>
+                        <Button onClick={this.changeEmail.bind(this)} color="primary" disabled={isDisabled}>
                             Confirm
                         </Button>
                     </DialogActions>

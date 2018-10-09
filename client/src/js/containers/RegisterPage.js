@@ -205,7 +205,6 @@ function validate(fName, lName, idNum, email, password1, password2) {
                                         error={(shouldMarkError('fname') ? true : false)}
                                         onBlur={this.handleBlur('fname')}
                                         value={this.state.fName}
-                                        autoFocus
                                     />
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
