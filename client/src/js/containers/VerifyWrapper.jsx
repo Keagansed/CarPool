@@ -28,27 +28,7 @@ import ServerURL from '../utils/server';
             if (obj && obj.token) {
                 const { token } = obj;
 
-                // VerifyStore.verify(token);
-                fetch(ServerURL + '/api/account/verify?token=' + token)
-                .then(res => res.json())
-                .then(json => {
-                    if (json) {
-                        if(json.success) {
-                            VerifyStore.loading = false;
-                            // this.setState({ loading: false });
-                        }else{
-                            VerifyStore.loading = false;
-                            VerifyStore.redirect = true;
-
-                            // this.setState({ loading: false, redirect: true });
-                        }
-                    } else {
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    this.setState({ loading: false, redirect: true });
-                });
+                VerifyStore.verify(token);
             }
         }
 
