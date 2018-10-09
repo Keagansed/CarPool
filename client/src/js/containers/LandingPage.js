@@ -12,7 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import LoginStore from '../stores/LoginStore';
 import logo from "../../css/images/logo.png";
-import TermsDialog from './../components/terms/Terms'
+import TermsDialog from './../components/terms/Terms';
 
 //Define the spefic styles for this page
 const styles = theme => ({

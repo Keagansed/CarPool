@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import logo from "../../css/images/logo.png";
+import TermsDialog from './../components/terms/Terms';
 
 const util = require('./../utils/idCheck');
 
@@ -285,7 +286,7 @@ function validate(fName, lName, idNum, email, password1, password2, checked) {
                                             color="primary"
                                             />
                                         }
-                                        label="I agree with the terms and conditions"
+                                        label={<TermsDialog/>}
                                     />
                                 </FormControl>
                                 <Button
