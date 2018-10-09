@@ -63,9 +63,9 @@ getAllRoutes = async (token, routeId) => {
             const carpools = data.map(carpool => {
                 return carpool.toObject();
             }); 
-
+            
             for (let i = 0; i < carpools.length; i++) {
-                if (carpools[i].routes.length > 4) {
+                if (carpools[i].routes.length >= 4) {
                     carpools.splice(i, 1);
                     i--;
                 }
