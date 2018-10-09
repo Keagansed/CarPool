@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CancelIcon from '@material-ui/icons/Cancel';
+import CancelIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
