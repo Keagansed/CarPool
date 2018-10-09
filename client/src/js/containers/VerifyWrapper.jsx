@@ -6,24 +6,12 @@ import { Redirect } from 'react-router-dom';
 import { getFromStorage } from '../utils/localStorage.js';
 import LoginStore from '../stores/LoginStore';
 import VerifyStore from '../stores/VerifyStore';
-import ServerURL from '../utils/server';
 
 @observer export default function VerifyWrapper(ComponentToProtect) {
     return  class extends Component {
 
-        constructor() {
-            super();
-            // this.state = {
-            //     loading: true,
-            //     redirect: false,
-            // };
-        }
-
         componentDidMount() {
             const obj = getFromStorage('sessionKey');
-            // VerifyStore.reset();
-            // VerifyStore.redirect = false;
-
 
             if (obj && obj.token) {
                 const { token } = obj;
@@ -38,6 +26,7 @@ import ServerURL from '../utils/server';
                 if (VerifyStore.redirect) {
                     LoginStore.logOut();
                     view = <Redirect to="/Landing" />
+                    VerifyStore.reset();
                 } else {
                     view = <ComponentToProtect {...this.props} />
                 }
