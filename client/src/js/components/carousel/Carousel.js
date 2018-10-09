@@ -75,7 +75,7 @@ class Carousel extends React.Component {
                 <DialogTitle>Getting Started</DialogTitle>
                 <DialogContent>
                     <Slider {...settings} beforeChange={this.handleChange}>
-                        <Slide caption="Create a route" image={signpost_gif}/>
+                        <Slide caption="Create a route" image={compass_gif}/>
                         <Slide caption="Join a carpool" image={pencil_gif}/>
                         <Slide caption="Go on a trip" image={car_gif}/>
                         <Slide caption="You're all set!" image={check_gif}/>                                                            
