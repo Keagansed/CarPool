@@ -29,6 +29,7 @@ import ServerURL from '../../utils/server';
     constructor(props) {
         super(props);
         this.users = app.database().ref().child('groupChats/'+this.props.carpoolID+"/users");
+        console.log('TCL: NewTripDialog -> constructor -> this.users', this.users);
 
         this.state = {
             tripDialog: false,
@@ -54,6 +55,7 @@ import ServerURL from '../../utils/server';
                 groupChatUsers: previousUsers
             });
         });
+
     }
 
     /*
@@ -70,21 +72,47 @@ import ServerURL from '../../utils/server';
 
         this.setState({
             groupChatUsers: tempUsers
-        }, function () {
-            app.database().ref().child('groupChats/' + this.props.carpoolID)
-                .update({users: this.state.groupChatUsers}).then(() => {
-                this.setState({
-                    redirect: true
-                });
-                return {};
-            }).catch(error => {
+        }, async () => {
 
-                return {
-                    errorCode: error.code,
-                    errorMessage: error.message
+            let numChildren = 0;
+
+            this.users.once("value")
+            .then(snap => {
+                numChildren = snap.numChildren();
+                console.log('TCL: NewTripDialog -> leaveCarpool -> numChildren', numChildren);
+
+                if(numChildren <= 2) {                
+                    app.database().ref().child('groupChats/' + this.props.carpoolID)
+                    .remove()
+                    .then(() => {
+                        console.log("Deleted carpool in firebase");
+                        this.setState({
+                            redirect: true
+                        });
+                        return {};
+                    })
+                    .catch(error => {
+                        console.error("Deletion failed: ", error);
+                    })
+                } else {
+                    app.database().ref().child('groupChats/' + this.props.carpoolID)
+                    .update({users: this.state.groupChatUsers})
+                    .then(() => {
+                        this.setState({
+                            redirect: true
+                        });
+                        return {};
+                    })
+                    .catch(error => {
+                        return {
+                            errorCode: error.code,
+                            errorMessage: error.message
+                        }
+                    });
                 }
-
-            });
+            })
+                
+                        
         });
 
         fetch(ServerURL + '/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
@@ -93,16 +121,16 @@ import ServerURL from '../../utils/server';
                 'Content-Type':'application/json'
             },
         })
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
-                if(json.success) {
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json.success) {
 
-                }else{
-                    alert(json.message);
-                }
+            }else{
+                alert(json.message);
+            }
 
-            })
+        })
     }
 
     /*

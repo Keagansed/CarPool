@@ -48,7 +48,7 @@ class matchesStore {
         })
         .then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then( json => {
+        .then( json => {         
             if(typeof json !== "undefined") {
                 if(json.success) {       
                     const { obj } = json;

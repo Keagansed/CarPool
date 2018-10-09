@@ -62,25 +62,36 @@ router.get('/leaveCarpool', function (req, res, next) {
                     }
                 });
 
-                Carpool.findOneAndUpdate({
-                        _id: _id
-                    },
-                    {$set:{
-                        routes : routes
-                    }
-                    },
-                    {upsert: true},
-                    (err) => {
+                console.log('TCL: routes.length', routes.length);
+
+                if(routes.length < 2){                    
+                    Carpool.deleteOne({ _id: _id }), (err) => {
                         if(err) {
                             return res.send({
-                                success:false,
-                                message:"Database error: " + err,
+                                success: false,
+                                message: "Database error: " + err,
                             });
-                        }else{
-                            return res.send({success:true});
                         }
                     }
-                );
+                } else {
+                    Carpool.findOneAndUpdate({ _id: _id },
+                        {$set:{
+                            routes : routes
+                        }
+                        },
+                        {upsert: true},
+                        (err) => {
+                            if(err) {
+                                return res.send({
+                                    success:false,
+                                    message:"Database error: " + err,
+                                });
+                            }else{
+                                return res.send({success:true});
+                            }
+                        }
+                    );
+                }
             }
         });
 });
@@ -170,8 +181,7 @@ router.post('/addCarpool', (req, res, next) => {
 router.get('/updateGroupChatID', function (req, res, next) {
     const { query } = req;
     const { _id, groupChatID } = query;
-    console.log(_id);
-    console.log(groupChatID);
+
     Carpool.findOneAndUpdate({
             _id: _id
         },

@@ -15,6 +15,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import MapComponent from '../google/GeneralMapWrapper';
@@ -41,6 +42,7 @@ import ServerURL from '../../utils/server';
             token: '',
             offerDialog: false,
             hidden: false, // set to "display: none" to hide div after making an offer
+            redirect: false,
         }
 
         this.routeArr = [];
@@ -72,6 +74,18 @@ import ServerURL from '../../utils/server';
         this.setState({ offerDialog: false });
     };
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return (<Redirect to='/HomePage' />);
+        }
+    }
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true,
+        })
+    }
+
     /*
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
@@ -87,7 +101,8 @@ import ServerURL from '../../utils/server';
         this.setState({
             hidden: true
         });
-        this.handleClose();
+        this.setRedirect();
+        this.handleClose();        
     }
 
     /*
