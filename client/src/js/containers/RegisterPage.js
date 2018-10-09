@@ -276,8 +276,9 @@ function validate(fName, lName, idNum, email, password1, password2, checked) {
                                         value={this.state.password2}
                                     />
                                 </FormControl>
-                                <FormControl margin="normal" required fullWidth>
+                                <FormControl margin="normal" required fullWidth >
                                     <FormControlLabel
+                                        style={{marginRight: 0}}
                                         control={
                                             <Checkbox
                                             checked={this.state.checked}
@@ -288,7 +289,7 @@ function validate(fName, lName, idNum, email, password1, password2, checked) {
                                         }
                                         label={
                                             <div style={{display:"flex"}}>
-                                                <Typography variant='caption'>Agree with{'\u00A0'}</Typography>
+                                                <Typography variant='caption'>I agree with the{'\u00A0'}</Typography>
                                                 <TermsDialog/>
                                             </div>
                                         }
