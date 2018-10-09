@@ -1,128 +1,275 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`InfoPage Component captures snapshot 1`] = `
-<div>
-  <div
-    className="jumbotron mbottom-0 padtop-20px padhor-0 padbot-0 brad-0"
-    id="infoHeader"
+Array [
+  <header
+    className="MuiPaper-root-22 MuiPaper-elevation4-28 MuiAppBar-root-13 MuiAppBar-positionStatic-17 MuiAppBar-colorPrimary-20 InfoPage-appBar-1"
   >
     <div
-      className="container text-center pad-0"
+      className="MuiToolbar-root-49 MuiToolbar-regular-51 MuiToolbar-gutters-50"
     >
-      <div
-        className="mbottom-10px"
+      <svg
+        aria-hidden="true"
+        className="MuiSvgIcon-root-53 InfoPage-icon-2"
+        color={undefined}
+        focusable="false"
+        role="presentation"
+        viewBox="0 0 24 24"
       >
-        <h1
-          className="mbottom-0 txt-purple"
-        >
-          The Iminsys Carpool Platform
-        </h1>
-      </div>
-      <div
-        className="mbottom-10px"
-      >
-        <img
-          alt="carpool_logo"
-          id="logo-256"
-          src="logo-gif-no-loop.gif"
+        <path
+          d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"
         />
-      </div>
-      <div
-        className="mbottom-10px"
+        <path
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
+      </svg>
+      <h2
+        className="MuiTypography-root-62 MuiTypography-title-68 MuiTypography-colorInherit-82 MuiTypography-noWrap-79"
       >
-        <a
-          className="btn btn-primary width-15rem brad-2rem bg-orange txt-purple fw-bold"
-          href="/"
-          onClick={[Function]}
-        >
-          Watch Video
-        </a>
-      </div>
-      <div>
-        <a
-          className="btn btn-primary width-15rem brad-2rem bg-aqua txt-purple fw-bold"
-          href="/Landing"
-          onClick={[Function]}
-        >
-          Get Started
-        </a>
-      </div>
+        The Iminsys Carpool Platform
+      </h2>
     </div>
-  </div>
-  <div
-    className="container-fluid txt-white bg-purple"
-  >
+  </header>,
+  <main>
     <div
-      className="row"
+      className="InfoPage-heroUnit-3"
     >
       <div
-        className="col-md-3 col-sm-12 mbottom-10px"
+        className="InfoPage-heroContent-4"
       >
-        <h3>
-          <i
-            className="fa fa-users mbottom-10px"
+        <div
+          align="center"
+          className="MuiAvatar-root-88 InfoPage-carpoolLogo-12"
+        >
+          <img
+            alt={undefined}
+            className="MuiAvatar-img-90"
+            sizes={undefined}
+            src="logo.png"
+            srcSet={undefined}
           />
-          <br />
-          Join a community of commuters
-        </h3>
-        <p>
-          The intention of the Iminsys Carpool Platform is to bring commuters together and to help them help eachother. By giving users the tools to find others who travel along similar routes, interact with them, and share driving responsibilities with no costs involved, the platform exposes the good in people and creates a network out of which everyone benefits.
-        </p>
-      </div>
-      <div
-        className="col-md-3 col-sm-12 mbottom-10px"
-      >
-        <h3>
-          <i
-            className="fa fa-usd mbottom-10px"
-          />
-          <br />
-          Save on excessive travel expenses
-        </h3>
-        <p>
-          Unfortunately, travelling is expensive. This is something that we are all too familiar with and it is not a problem that is going away anytime soon. The Iminsys Carpool Platform does not provide for the exchange of money; however, it does allow people to alternate driving responsibilities and as a consequence the costs involved in driving are reduced for every carpooler.
-        </p>
-      </div>
-      <div
-        className="col-md-3 col-sm-12 mbottom-10px"
-      >
-        <h3>
-          <i
-            className="fa fa-car mbottom-10px"
-          />
-          <br />
-          Make daily commuting enjoyable
-        </h3>
-        <p>
-          Driving the same route on a daily basis is a tedious task but when you're driving with new friends and acquintances it will become something you look forward to. The Iminsys Carpool Platform makes numerous provisions to ensure you only travel with people you feel comfortable around, so the only question that remains is - why drive alone when you can drive together?
-        </p>
-      </div>
-      <div
-        className="col-md-3 col-sm-12 mbottom-10px"
-      >
-        <h3>
-          <i
-            className="fa fa-road mbottom-10px"
-          />
-          <br />
-          Contribute to cleaning up our roads
-        </h3>
-        <p>
-          If you've ever had to sit in peak hour traffic you'll know what a pain it can be. One of the predominent reasons for unnecessary traffic is that there are too many cars with one driver and a host of empty seats. By driving together, we are reducing the number cars on our roads, not only minimizing traffic, but minimizing the impact our vehicles have on the environment around us.
-        </p>
+        </div>
+        <h2
+          className="MuiTypography-root-62 MuiTypography-title-68 MuiTypography-colorTextSecondary-86 MuiTypography-alignCenter-76"
+        >
+          Welcome to the ridesharing platform that helps you help eachother.
+        </h2>
+        <div
+          className="InfoPage-heroButtons-5"
+        >
+          <div
+            className="MuiGrid-container-91 MuiGrid-spacing-xs-16-114 MuiGrid-justify-xs-center-108"
+          >
+            <div
+              className="MuiGrid-item-92"
+            >
+              <a
+                className="MuiButtonBase-root-214 MuiButton-root-188 MuiButton-contained-199 MuiButton-containedPrimary-200 MuiButton-raised-202 MuiButton-raisedPrimary-203"
+                href="/Landing"
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                role="button"
+                tabIndex="0"
+              >
+                <span
+                  className="MuiButton-label-189"
+                >
+                  Get Started
+                </span>
+                <span
+                  className="MuiTouchRipple-root-217"
+                />
+              </a>
+            </div>
+            <div
+              className="MuiGrid-item-92"
+            >
+              <button
+                className="MuiButtonBase-root-214 MuiButtonBase-disabled-215 MuiButton-root-188 MuiButton-text-190 MuiButton-textPrimary-191 MuiButton-outlined-196 MuiButton-outlinedPrimary-197 MuiButton-disabled-208"
+                disabled={true}
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="-1"
+                type="button"
+              >
+                <span
+                  className="MuiButton-label-189"
+                >
+                  Watch Video
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    <div
+      className="InfoPage-layout-6 InfoPage-cardGrid-7"
+    >
+      <div
+        className="MuiGrid-container-91 MuiGrid-spacing-xs-40-117"
+      >
+        <div
+          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+        >
+          <div
+            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+          >
+            <div
+              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              src={undefined}
+              style={
+                Object {
+                  "backgroundImage": "url(\\"CommunityImage.jpeg\\")",
+                }
+              }
+              title="Community"
+            />
+            <div
+              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+            >
+              <h2
+                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+              >
+                Join a Community
+              </h2>
+              <p
+                className="MuiTypography-root-62 MuiTypography-body1-71"
+              >
+                The intention of the Iminsys Carpool Platform is to bring commuters together and to help them help eachother. By giving users the tools to find others who travel along similar routes, interact with them, and share driving responsibilities with no costs involved, the platform exposes the good in people and creates a network out of which everyone benefits.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+        >
+          <div
+            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+          >
+            <div
+              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              src={undefined}
+              style={
+                Object {
+                  "backgroundImage": "url(\\"MoneyImage.jpeg\\")",
+                }
+              }
+              title="Money"
+            />
+            <div
+              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+            >
+              <h2
+                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+              >
+                Save on Travel
+              </h2>
+              <p
+                className="MuiTypography-root-62 MuiTypography-body1-71"
+              >
+                Unfortunately, travel is expensive. This is something that we are all familiar with and it is not a problem that is going away anytime soon. Our Carpool Platform does not provide for the exchange of money; however, it does allow people to alternate driving responsibilities so the costs involved in driving are reduced for everyone.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+        >
+          <div
+            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+          >
+            <div
+              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              src={undefined}
+              style={
+                Object {
+                  "backgroundImage": "url(\\"CommuteImage.jpeg\\")",
+                }
+              }
+              title="Commute"
+            />
+            <div
+              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+            >
+              <h2
+                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+              >
+                Enjoy Commuting
+              </h2>
+              <p
+                className="MuiTypography-root-62 MuiTypography-body1-71"
+              >
+                Driving the same route on a daily basis is a tedious task but when you're driving with new friends it will become something you look forward to. Our Carpool Platform makes numerous provisions to ensure you only travel with people you feel comfortable around, so the only question that remains is - why drive alone when you can drive together?
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+        >
+          <div
+            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+          >
+            <div
+              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              src={undefined}
+              style={
+                Object {
+                  "backgroundImage": "url(\\"RoadImage.jpeg\\")",
+                }
+              }
+              title="Image title"
+            />
+            <div
+              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+            >
+              <h2
+                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+              >
+                Clean our Roads
+              </h2>
+              <p
+                className="MuiTypography-root-62 MuiTypography-body1-71"
+              >
+                If you've ever had to sit in peak hour traffic you'll know what a pain it can be. A big reason for unnecessary traffic is that there are too many cars with one driver and a host of empty seats. By driving together, we are reducing the number cars on our roads, not only minimizing traffic, but minimizing the environmental impact our vehicles have.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>,
   <footer
-    className="footer text-center txt-white-faded"
+    className="InfoPage-footer-11"
   >
-    <div
-      className="container"
+    <h2
+      className="MuiTypography-root-62 MuiTypography-title-68 MuiTypography-gutterBottom-80 MuiTypography-alignCenter-76"
     >
-      <p>
-        Developed by the Brogrammers Development Team
-      </p>
-    </div>
-  </footer>
-</div>
+      Created By
+    </h2>
+    <p
+      className="MuiTypography-root-62 MuiTypography-subheading-69 MuiTypography-colorTextSecondary-86 MuiTypography-alignCenter-76"
+    >
+      The Brogrammers Development Team
+    </p>
+  </footer>,
+]
 `;
