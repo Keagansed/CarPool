@@ -12,6 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import LoginStore from '../stores/LoginStore';
 import logo from "../../css/images/logo.png";
+import TermsDialog from './../components/terms/Terms'
 
 //Define the spefic styles for this page
 const styles = theme => ({
@@ -85,10 +86,12 @@ class LandingPage extends Component {
                                     variant="raised"
                                     color="primary"
                                     className={classes.submit}
+                                    style={{marginBottom: 15}}
                                 >
                                     Login
                                 </Button>
                             </Link>
+                            <TermsDialog/>
                         </form>
                     </Paper>
                 </main>
