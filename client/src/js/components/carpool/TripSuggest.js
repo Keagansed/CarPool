@@ -58,7 +58,7 @@ import ServerURL from '../../utils/server';
             this.setState({
                 buttons: (
                     <div key={Math.random()}>
-                        <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        <Button onClick={this.closeTripDialog} color="primary">
                             Close
                         </Button>
                     </div>
@@ -69,7 +69,7 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -79,7 +79,7 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -91,10 +91,10 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.accept} color="primary" autoFocus>
+                            <Button onClick={this.accept} color="primary">
                                 Accept
                             </Button>
-                            <Button onClick={this.reject} color="primary" autoFocus>
+                            <Button onClick={this.reject} color="primary">
                                 Reject
                             </Button>
                         </div>
@@ -104,7 +104,7 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -196,7 +196,7 @@ import ServerURL from '../../utils/server';
         this.setState({
             buttons: (
                 <div key={Math.random()}>
-                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                    <Button onClick={this.closeTripDialog} color="primary">
                         Close
                     </Button>
                 </div>
@@ -245,7 +245,7 @@ import ServerURL from '../../utils/server';
         this.setState({
             buttons: (
                 <div key={Math.random()}>
-                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                    <Button onClick={this.closeTripDialog} color="primary">
                         Close
                     </Button>
                 </div>
@@ -296,7 +296,7 @@ import ServerURL from '../../utils/server';
         if (this.props.userID === getFromStorage('sessionKey').token) {
             this.buttons = (
                 <div key={Math.random()}>
-                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                    <Button onClick={this.closeTripDialog} color="primary">
                         Close
                     </Button>
                 </div>
@@ -308,7 +308,7 @@ import ServerURL from '../../utils/server';
                 } else if (this.props.usersResponded[getFromStorage('sessionKey').token]) {
                     this.buttons = (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -317,7 +317,7 @@ import ServerURL from '../../utils/server';
                 if (!this.props.usersResponded[getFromStorage('sessionKey').token]) {
                     this.buttons = (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -330,7 +330,7 @@ import ServerURL from '../../utils/server';
                     } else {
                         this.buttons = (
                             <div key={Math.random()}>
-                                <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                <Button onClick={this.closeTripDialog} color="primary">
                                     Close
                                 </Button>
                             </div>
@@ -339,7 +339,7 @@ import ServerURL from '../../utils/server';
                 } catch (e) {
                     this.buttons = (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>

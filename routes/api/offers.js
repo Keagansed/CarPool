@@ -201,11 +201,12 @@ router.get('/acceptInvite',(req,res,next) =>{
                 carpool.findOneAndUpdate({
                     _id: data[0].CarpoolID
                 },
-                {$push:{
+                {
+                    $push: {
                         routes: { 
-                                    id: data[0].SenderRoute,
-                                    userId: data[0].SenderID
-                                }
+                            id: data[0].SenderRoute,
+                            userId: data[0].SenderID
+                        }
                     }
                 },
                 (err,data) => {

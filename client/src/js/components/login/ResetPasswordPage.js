@@ -246,7 +246,7 @@ function validate(password, password2) {
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={this.handleClose} color="primary" autoFocus>
+                                <Button onClick={this.handleClose} color="primary">
                                     OK
                                 </Button>
                             </DialogActions>

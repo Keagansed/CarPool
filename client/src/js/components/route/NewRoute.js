@@ -166,7 +166,6 @@ function validate(routeName, routeTime) {
                             error={(shouldMarkError('routeName') ? true : false)}
                             onBlur={this.handleBlur('routeName')}
                             value={this.state.routeName}
-                            autoFocus
                         />
                     </FormControl>
                     <FormControl margin="normal" required fullWidth>

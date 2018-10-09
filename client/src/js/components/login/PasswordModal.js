@@ -105,7 +105,6 @@ function validate(email) {
                     <DialogTitle id="form-dialog-title">Did you forget your password?</DialogTitle>
                     <DialogContent>
                         <TextField
-                            autoFocus
                             value={this.state.email}
                             onChange={this.handleEmailChange.bind(this)}
                             margin="dense"

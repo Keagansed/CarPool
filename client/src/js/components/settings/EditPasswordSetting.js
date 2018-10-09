@@ -128,7 +128,6 @@ class EditPasswordSetting extends Component {
                     <DialogTitle>{"Edit Account Password"}</DialogTitle>
                     <DialogContent>
                         <TextField
-                            autoFocus
                             value={this.state.password}
                             onChange={this.handlePasswordChange.bind(this)}
                             error={(shouldMarkError('password') ? true : false)}
@@ -153,7 +152,7 @@ class EditPasswordSetting extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                     </Button>
-                        <Button onClick={this.changePassword.bind(this)} color="primary" disabled={isDisabled} autoFocus>
+                        <Button onClick={this.changePassword.bind(this)} color="primary" disabled={isDisabled}>
                             Confirm
                         </Button>
                     </DialogActions>

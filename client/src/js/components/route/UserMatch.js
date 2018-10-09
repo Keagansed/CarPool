@@ -15,6 +15,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import MapComponent from '../google/GeneralMapWrapper';
@@ -41,6 +42,7 @@ import ServerURL from '../../utils/server';
             token: '',
             offerDialog: false,
             hidden: false, // set to "display: none" to hide div after making an offer
+            redirect: false,
         }
 
         this.routeArr = [];
@@ -72,10 +74,24 @@ import ServerURL from '../../utils/server';
         this.setState({ offerDialog: false });
     };
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return (<Redirect to='/HomePage' />);
+        }
+    }
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true,
+        })
+    }
+
     /*
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
-    makeOffer = () => {
+    makeOffer = (event) => {
+        event.preventDefault();
+
         OffersStore.makeOffer(
             this.carpoolName,
             this.props.token,
@@ -85,9 +101,9 @@ import ServerURL from '../../utils/server';
             false
         );
         this.setState({
-            hidden: true
+            redirect: true,
         });
-        this.handleClose();
+    
     }
 
     /*
@@ -135,14 +151,21 @@ import ServerURL from '../../utils/server';
             this.carpoolName = this.routeStore1.routeObj.routeName;
 
             this.genRouteArr();
+        }
 
+        if(this.state.redirect){
+            return(
+                <React.Fragment>
+                    {this.renderRedirect()}
+                </React.Fragment>
+            )
         }
 
         if (this.state.hidden) {
             return (<div></div>)
         } else {
             return (
-                <div>
+                <div>                    
                     <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={userFullName} secondary='Click to Make Offer' />
@@ -164,7 +187,6 @@ import ServerURL from '../../utils/server';
                             <MapComponent routeArr={this.routeArr} />
                             <TextField
                                 onChange={this.handleCarpoolNameChange}
-                                autoFocus
                                 margin="dense"
                                 label="Proposed Carpool Name"
                                 fullWidth

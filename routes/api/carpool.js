@@ -46,14 +46,16 @@ router.get('/getAllOtherCarpools', function (req, res, next) {
 router.get('/leaveCarpool', function (req, res, next) {
     const { query } = req;
     const { _id, token } = query;
-    Carpool.find({ _id: _id },
-        (err, data) => {
+
+    Carpool.find({ _id: _id },        
+        (err, data) => {            
             if (err) {
                 return res.send({
                     success: false,
                     message: "Database error: " + err,
                 });
             } else {
+                console.log('TCL: data', data);
                 let routes = data[0].routes;
                 routes.forEach((route) => {
                     if (route.userId === token){
@@ -62,25 +64,38 @@ router.get('/leaveCarpool', function (req, res, next) {
                     }
                 });
 
-                Carpool.findOneAndUpdate({
-                        _id: _id
-                    },
-                    {$set:{
-                        routes : routes
-                    }
-                    },
-                    {upsert: true},
-                    (err) => {
+                console.log('TCL: routes.length', routes.length);
+                
+
+                if(routes.length < 2){         
+                    console.log('TCL: _id', _id);           
+                    Carpool.remove({ _id : _id }, (err) => {
                         if(err) {
                             return res.send({
-                                success:false,
-                                message:"Database error: " + err,
+                                success: false,
+                                message: "Database error: " + err,
                             });
-                        }else{
-                            return res.send({success:true});
                         }
-                    }
-                );
+                    });
+                } else {
+                    Carpool.findOneAndUpdate({ _id: _id },
+                        {$set:{
+                            routes : routes
+                        }
+                        },
+                        {upsert: true},
+                        (err) => {
+                            if(err) {
+                                return res.send({
+                                    success:false,
+                                    message:"Database error: " + err,
+                                });
+                            }else{
+                                return res.send({success:true});
+                            }
+                        }
+                    );
+                }
             }
         });
 });
@@ -170,8 +185,7 @@ router.post('/addCarpool', (req, res, next) => {
 router.get('/updateGroupChatID', function (req, res, next) {
     const { query } = req;
     const { _id, groupChatID } = query;
-    console.log(_id);
-    console.log(groupChatID);
+
     Carpool.findOneAndUpdate({
             _id: _id
         },

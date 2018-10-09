@@ -249,7 +249,7 @@ function validate(email, password) {
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={this.hideErrorDialog} color="primary" autoFocus>
+                                <Button onClick={this.hideErrorDialog} color="primary">
                                     OK
                                 </Button>
                             </DialogActions>

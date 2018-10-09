@@ -101,11 +101,11 @@ class CancelTripModal extends Component {
                         </DialogContent>
                         <DialogActions>
                             <Link to={`/HomePage`} onClick={this.cancelOrDelete} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                <Button color="primary" autoFocus>
+                                <Button color="primary">
                                     Yes
                                 </Button>
                             </Link>
-                            <Button onClick={this.closeCancelDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeCancelDialog} color="primary">
                                 No
                             </Button>
                         </DialogActions>

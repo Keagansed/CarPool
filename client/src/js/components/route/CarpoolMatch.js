@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { observer } from "mobx-react";
+import { Redirect } from 'react-router-dom';
 
 import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
@@ -42,7 +43,8 @@ import ServerURL from '../../utils/server';
             //carpoolMembers is used to store the members of any carpool match temporarily when accessed
             carpoolMembers: [],
             //routeArr is used to store the routes of any carpool match temporarily when accessed
-            routeArr: []
+            routeArr: [],
+            redirect: false,
         }
 
         this.routeArr = [];
@@ -100,6 +102,18 @@ import ServerURL from '../../utils/server';
         this.setState(prevState => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true,
+        })
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return (<Redirect to='/HomePage' />);
+        }
     }
 
     /*
@@ -180,8 +194,8 @@ import ServerURL from '../../utils/server';
                                 }
                             });
                         });
-
-                    this.handleClose();
+                    
+                    this.setRedirect();
                 } else {
                     console.log("error: " + route.message);
                 }
@@ -194,6 +208,14 @@ import ServerURL from '../../utils/server';
     */
     render() {
         this.generateUserProfileLinks();
+
+        if(this.state.redirect){
+            return(
+                <React.Fragment>
+                    {this.renderRedirect()}
+                </React.Fragment>
+            )
+        }
 
         //Return the CarpoolMatch
         return (
