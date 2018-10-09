@@ -46,14 +46,16 @@ router.get('/getAllOtherCarpools', function (req, res, next) {
 router.get('/leaveCarpool', function (req, res, next) {
     const { query } = req;
     const { _id, token } = query;
-    Carpool.find({ _id: _id },
-        (err, data) => {
+
+    Carpool.find({ _id: _id },        
+        (err, data) => {            
             if (err) {
                 return res.send({
                     success: false,
                     message: "Database error: " + err,
                 });
             } else {
+                console.log('TCL: data', data);
                 let routes = data[0].routes;
                 routes.forEach((route) => {
                     if (route.userId === token){
@@ -63,16 +65,18 @@ router.get('/leaveCarpool', function (req, res, next) {
                 });
 
                 console.log('TCL: routes.length', routes.length);
+                
 
-                if(routes.length < 2){                    
-                    Carpool.deleteOne({ _id: _id }), (err) => {
+                if(routes.length < 2){         
+                    console.log('TCL: _id', _id);           
+                    Carpool.remove({ _id : _id }, (err) => {
                         if(err) {
                             return res.send({
                                 success: false,
                                 message: "Database error: " + err,
                             });
                         }
-                    }
+                    });
                 } else {
                     Carpool.findOneAndUpdate({ _id: _id },
                         {$set:{

@@ -124,12 +124,13 @@ import ServerURL from '../../utils/server';
         .then(res=>res.json())
         .catch(error => console.error('Error:', error))
         .then(json=>{
-            if(json.success) {
+            if(json) {
+                if(json.success) {
 
-            }else{
-                alert(json.message);
+                }else{
+                    alert(json.message);
+                }
             }
-
         })
     }
 

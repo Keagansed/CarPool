@@ -89,7 +89,9 @@ import ServerURL from '../../utils/server';
     /*
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
-    makeOffer = () => {
+    makeOffer = (event) => {
+        event.preventDefault();
+
         OffersStore.makeOffer(
             this.carpoolName,
             this.props.token,
@@ -99,10 +101,9 @@ import ServerURL from '../../utils/server';
             false
         );
         this.setState({
-            hidden: true
+            redirect: true,
         });
-        this.setRedirect();
-        this.handleClose();        
+    
     }
 
     /*
@@ -150,14 +151,21 @@ import ServerURL from '../../utils/server';
             this.carpoolName = this.routeStore1.routeObj.routeName;
 
             this.genRouteArr();
+        }
 
+        if(this.state.redirect){
+            return(
+                <React.Fragment>
+                    {this.renderRedirect()}
+                </React.Fragment>
+            )
         }
 
         if (this.state.hidden) {
             return (<div></div>)
         } else {
             return (
-                <div>
+                <div>                    
                     <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={userFullName} secondary='Click to Make Offer' />
