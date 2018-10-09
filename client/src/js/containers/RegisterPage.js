@@ -286,7 +286,12 @@ function validate(fName, lName, idNum, email, password1, password2, checked) {
                                             color="primary"
                                             />
                                         }
-                                        label={<TermsDialog/>}
+                                        label={
+                                            <div style={{display:"flex"}}>
+                                                <Typography variant='caption'>I agree with the </Typography>
+                                                <TermsDialog/>
+                                            </div>
+                                        }
                                     />
                                 </FormControl>
                                 <Button
