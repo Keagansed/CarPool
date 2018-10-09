@@ -12,7 +12,7 @@ import { TextField } from '@material-ui/core';
 
 import LocationSearchInput from '../google/GoogleAuto';
 import MapWrapper from '../google/MapWrapper';
-
+import RoutesStore from '../../stores/RoutesStore';
 
 //Define specific styles for this page
 const styles = theme => ({
@@ -30,12 +30,12 @@ const styles = theme => ({
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
 */
-function validate(routeName, routeTime, startLoc, endLoc) {
+function validate(routeName, routeTime) {
     return {
         routeName: routeName.length === 0 || routeName.length > 50,
         routeTime: routeTime === "",
-        startLoc: startLoc.length === 0,
-        endLoc: endLoc.length === 0,
+        startLocation: RoutesStore.invalidRoutes1,
+        endLocation: RoutesStore.invalidRoutes2,
     };
 }
 
@@ -56,14 +56,10 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         this.state = {
             token: this.props.token,
             routeName: '',
-            startLocation: 'temporary - remove when location check figured out',
-            endLocation: 'temporary - remove when location check figured out',
             time: '',
 
             touched: {
                 routeName: false,
-                startLocation: false,
-                endLocation: false,
                 time: false,
             },
         }
@@ -83,28 +79,6 @@ function validate(routeName, routeTime, startLoc, endLoc) {
         })
     }
 
-    // /*
-    // * The purpose of the updateNameValue method is to change the value of the startLocation field.
-    // */
-    // updateStartValue = (event) => {
-    //     event.preventDefault();
-    //     console.log(event.target.value);
-    //     this.setState({
-    //         startLocation: event.target.value
-    //     })
-    // }
-
-    // /*
-    // * The purpose of the updateNameValue method is to change the value of the endLocation field.
-    // */
-    // updateEndValue = (event) => {
-    //     event.preventDefault();
-
-    //     this.setState({
-    //         endLocation: event.target.value
-    //     })
-    // }
-
     /*
     * The purpose of the updateTimeValue method is to change the value of the time field.
     */
@@ -119,7 +93,7 @@ function validate(routeName, routeTime, startLoc, endLoc) {
     * Purpose: Check whether all fields have been entered correctly
     */
     canBeSubmitted() {
-        const errors = validate(this.state.routeName, this.state.time, this.state.startLocation, this.state.endLocation);
+        const errors = validate(this.state.routeName, this.state.time);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         return !isDisabled;
     }
@@ -143,8 +117,6 @@ function validate(routeName, routeTime, startLoc, endLoc) {
 
         if(!this.props.store.invalidRoutes1 && !this.props.store.invalidRoutes2){
             this.props.store.newRoute(token, time, routeName);
-        }else{
-            alert("Invalid Routes")
         }
     }
 
@@ -171,7 +143,7 @@ function validate(routeName, routeTime, startLoc, endLoc) {
             const shouldShow = this.state.touched[field];
             return hasError ? shouldShow : false;
         };
-        const errors = validate(this.state.routeName, this.state.time, this.state.startLocation, this.state.endLocation);
+        const errors = validate(this.state.routeName, this.state.time);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
         const { classes } = this.props;
 

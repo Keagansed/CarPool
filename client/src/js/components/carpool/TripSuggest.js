@@ -351,7 +351,7 @@ import ServerURL from '../../utils/server';
         if (this.props.userID === getFromStorage('sessionKey').token) {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog} divider>
+                    <ListItem onClick={this.openTripDialog} divider button>
                         <ListItemText
                             primary={
                                 <div>
@@ -359,7 +359,7 @@ import ServerURL from '../../utils/server';
                                     <font style={{ float: 'right' }}>{dat}</font>
                                 </div>
                             }
-                            secondary='Suggested a trip.'
+                            secondary='Suggested a trip. Click for more info.'
                         />
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
@@ -379,7 +379,7 @@ import ServerURL from '../../utils/server';
         } else {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog} divider>
+                    <ListItem onClick={this.openTripDialog} divider button>
                         <ListItemText
                             primary={
                                 <div>

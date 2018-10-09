@@ -56,6 +56,7 @@ class OfferStore {
         .then(json => {            
             if (json.success){
                 this.userProfile = json.data[0];
+                
             }else{
                 console.log(json);
             }

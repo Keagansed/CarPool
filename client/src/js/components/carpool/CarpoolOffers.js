@@ -41,6 +41,7 @@ const styles = theme => ({
     * then returned unless there are no carpool offers.
     */
     renderOffers() {
+        
         const Offers = this.props.store.offers.map((offer) => {
             if (!offer.JoinRequest) {
                 return (

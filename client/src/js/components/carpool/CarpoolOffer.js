@@ -19,7 +19,6 @@ import { Typography } from '@material-ui/core';
 import CarpoolStore from '../../stores/CarpoolStore'
 import ServerURL from '../../utils/server';
 
-
 /*
  * Purpose: a modal interface that displays an offer to a carpool. It shows the user who sent the
  * invite and allows you to accept or decline the offer.
@@ -128,11 +127,11 @@ class CarpoolOffer extends Component {
 
         } else {
             let profilePicture, userFullName;
-            if (
-                typeof (this.props.store.userProfile) !== "undefined"
-            ) {
+            if (typeof (this.props.store.userProfile.lastName) !== "undefined") {
                 profilePicture = ServerURL + "/api/account/getImage?filename=" + this.props.store.userProfile.profilePic;
                 userFullName = this.props.store.userProfile.firstName + " " + this.props.store.userProfile.lastName;
+            }else{
+                this.props.store.getUserProfile(this.props.token);
             }
             return (
                 <div>

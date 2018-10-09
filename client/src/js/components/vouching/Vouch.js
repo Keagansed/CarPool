@@ -4,9 +4,7 @@ import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import InfoIcon from '@material-ui/icons/Info';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Avatar from '@material-ui/core/Avatar';
 import StarIcon from '@material-ui/icons/Star';
 import StarEmptyIcon from '@material-ui/icons/StarBorder';
@@ -48,12 +46,12 @@ import ServerURL from '../../utils/server';
 
         for (i = 0; i < n; i = i + 1) {
             starElements.push(
-                <StarIcon style={{ color: 'gold' }} />
+                <StarIcon style={{ color: 'gold' }} key={Math.random()}/>
             );
         }
         for (i = 0; i < 5 - n; i = i + 1) {
             starElements.push(
-                <StarEmptyIcon style={{ color: 'gold' }} />
+                <StarEmptyIcon style={{ color: 'gold' }}  key={Math.random()}/>
             );
         }
 
@@ -67,15 +65,10 @@ import ServerURL from '../../utils/server';
 
         return (
             <ExpansionPanel>
-                <ExpansionPanelSummary>
-                    <ListItem button divider>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <ListItem button>
                         <Avatar alt="Profile Picture" src={profilePicture} />
                         <ListItemText primary={this.printStars(this.props.vouch.rating)} secondary={userNameSurname} />
-                        <ListItemSecondaryAction>
-                            <IconButton aria-label="View Vouch Details">
-                                <InfoIcon />
-                            </IconButton>
-                        </ListItemSecondaryAction>
                     </ListItem>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
