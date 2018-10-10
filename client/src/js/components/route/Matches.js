@@ -109,7 +109,7 @@ const styles = theme => ({
             return Routes;
         }else{
             return(
-                <ListItem>
+                <ListItem divider>
                     <Avatar>
                         <SadIcon />
                     </Avatar>

@@ -15,12 +15,20 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import Dialog from '@material-ui/core/Dialog';
+import { DialogContent, DialogContentText } from '@material-ui/core';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 
-import logo from "../../css/images/logo-gif-no-loop.gif";
+import logo from "../../css/images/logo.png";
 import communityImage from "../../css/images/CommunityImage.jpeg";
 import moneyImage from "../../css/images/MoneyImage.jpeg";
 import commuteImage from "../../css/images/CommuteImage.jpeg";
 import roadImage from "../../css/images/RoadImage.jpeg";
+import ios1 from "../../css/images/ios1.JPG";
+import ios2 from "../../css/images/ios2.JPG";
+import android1 from "../../css/images/android1.jpg";
+import android2 from "../../css/images/android2.jpg";
 
 const styles = theme => ({
     appBar: {
@@ -74,6 +82,13 @@ const styles = theme => ({
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: theme.spacing.unit * 1,
+    },
+    dialogImg: {
+        width: "100%",
+        marginTop: 7,
+        marginBottom: 7,
+        border: "white solid 1px",
+        justify: "center"
     }
 });
 
@@ -81,10 +96,67 @@ const styles = theme => ({
 * Purpose: Landing page compenent is the first page the user sees when opening the app
 */
 class InfoPage extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            openDialog: false,
+        }
+    }
+
+    closeDialog = () => {
+        this.setState({
+            openDialog: false,
+        })
+    }
+
+    openDialog = () => {
+        this.setState({
+            openDialog: true,
+        })
+    }
+    
+    renderDownloadDialog = () => {
+        const { classes } = this.props;
+
+        return (
+            <Dialog
+                open={this.state.openDialog}
+                onClose={this.closeDialog}
+                maxWidth="lg"   
+                scroll='paper' 
+            >
+                <DialogTitle>Download App</DialogTitle>
+                <DialogContent style={{ justifyContent: "center" }}>
+                    <DialogContentText variant="title">
+                        Android
+                    </DialogContentText>
+
+                    <img src={android1} alt="" className={classes.dialogImg}/>
+                    <img src={android2} alt="" className={classes.dialogImg}/>
+
+                    <DialogContentText variant="title">
+                        iOS
+                    </DialogContentText>
+
+                    <img src={ios1} alt="" className={classes.dialogImg}/>
+                    <img src={ios2} alt="" className={classes.dialogImg}/>
+
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.closeDialog} color="primary">
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        )
+    }
+
     render() {
         const { classes } = this.props;
         return (
             <React.Fragment>
+                {this.renderDownloadDialog()}
                 <CssBaseline />
                 <AppBar position="static" className={classes.appBar}>
                     <Toolbar>
@@ -112,6 +184,13 @@ class InfoPage extends Component {
                                     <Grid item>
                                         <Button variant="outlined" color="primary" disabled>
                                             Watch Video
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={16} justify="center" style={{ marginTop: 16, marginBottom: -35 }} onClick={this.openDialog}>
+                                    <Grid item>
+                                        <Button variant="contained" color="primary">
+                                            Download
                                         </Button>
                                     </Grid>
                                 </Grid>

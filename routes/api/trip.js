@@ -1,6 +1,7 @@
 // File Type: API endpoint
 
 let express = require('express');
+let schedule = require('node-schedule');
 
 const Trip = require('../../models/Trip.js');
 const Carpool = require('../../models/Carpool.js');
@@ -68,6 +69,25 @@ router.get('/getAllTripInfo', function(req, res, next) {
                 });
         }
     });
+});
+
+
+// Adds recurring trips every night at 00:00
+schedule.scheduleJob('0 0 * * *', () => {
+    Trip.find({}, async (err,data) => {
+        if (!err) {
+            recurringTrips.updateTrips(data);
+        }
+    })
+});
+
+// Adds recurring trips every day at 12:00
+schedule.scheduleJob('0 12 * * *', () => {
+    Trip.find({}, async (err,data) => {
+        if (!err) {
+            recurringTrips.updateTrips(data);
+        }
+    })
 });
 
 // This method creates a document in the Trip collection.
@@ -185,7 +205,8 @@ router.post('/cancelTrip',(req,res,next)=>{
     let dateTime;
     let days;
     let users = [];
-
+    
+    
     Trip.find({
         _id:_id,
     },(err,data) => {
@@ -200,7 +221,7 @@ router.post('/cancelTrip',(req,res,next)=>{
             dateTime = data[0].dateTime;
             days = data[0].days;
             users = data[0].users;
-            users[userID] = false;
+            users[token] = false;
 
             Trip.findOneAndUpdate(
                 {"_id": _id},
@@ -369,20 +390,31 @@ router.get('/getFilteredTrips', (req, res, next) => {
 
     Trip.find({['users.' + token]:true}, async (err,data) => {            
         if(!err) {
-            let updatedTrips = await recurringTrips.updateTrips(data);  
-            if(typeof updatedTrips !== "undefined"){
-                return res.status(200).send({
-                    success:true,
-                    message:"Successfully retrieved filtered trips",
-                    data: updatedTrips                                            
-                });
-            }else {
-                return res.status(500).send({
-                    success:false,
-                    message:"Failed to retrieve filtered trips",
-                });
-            }
-        }            
+            let upcomingTripComponentsArr = [];
+            let previousTripComponentsArr = [];
+            data.forEach((trip) => {
+                if(new Date(trip.dateTime) > new Date()){
+                    upcomingTripComponentsArr.push(trip);
+                }else {
+                    previousTripComponentsArr.push(trip);
+                }
+            });
+
+            let obj = {
+                previousTripComponentsArr,
+                upcomingTripComponentsArr,
+            };
+            return res.status(200).send({
+                success:true,
+                message:"Successfully retrieved filtered trips",
+                data: obj
+            });
+        }  else {
+            return res.status(500).send({
+                success:false,
+                message:"Failed to retrieve filtered trips",
+            });
+        }
     });
 });
 

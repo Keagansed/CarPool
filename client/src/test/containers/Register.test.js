@@ -1,6 +1,7 @@
 import React from 'react';
 import Register from '../../js/containers/RegisterPage';
 import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import renderer from 'react-test-renderer'
 
 class MockStore {
@@ -56,7 +57,7 @@ describe('Register Component', () => {
     
     beforeAll(() => {
         mockStore = new MockStore();
-        container = shallow(<Register store={mockStore} />);
+        container = mount(<Register store={mockStore} />);
         instance = container.instance();
     });
     

@@ -14,6 +14,9 @@ class routesStore {
     @observable routeSuccess = false;
     @observable loadingRoutes = true;
     @observable addingRoute = false;
+
+    @observable invalidRoutes1 = true;
+    @observable invalidRoutes2 = true;
     
     @observable originResult = {};
     @observable destinationResult = {};
@@ -24,6 +27,18 @@ class routesStore {
     @observable origin = {};
     @observable destination = {};
     
+    @action reset = () =>{
+        this.origin = {};
+        this.destination = {};
+        this.originName = "";
+        this.destinationName = "";
+        this.originResult = {};
+        this.destinationResult = {};
+        this.invalidRoutes1 = true;
+        this.invalidRoutes2 = true;
+
+    }
+
     @action setGoogleOriginResult = (result) =>{
         this.originResult = result;
         this.originName = result.formatted_address;

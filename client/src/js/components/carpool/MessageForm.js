@@ -30,6 +30,7 @@ class MessageForm extends Component {
         if (e.key === 'Enter') {
             this.sendMessage();
         }
+        // this.props.updateScroll;
     }
 
     /*
@@ -59,7 +60,6 @@ class MessageForm extends Component {
         return (
             <Input
                 fullWidth
-                multiline
                 rowsMax="4"
                 value={this.state.newMessageContent}
                 onChange={this.handleUserInput}
@@ -73,6 +73,8 @@ class MessageForm extends Component {
                         bottom: 0,
                         borderTop: '1px solid lightgrey',
                         paddingLeft: 5,
+                        backgroundColor: 'white',
+                        color: 'black'
                 }}
             />
         );

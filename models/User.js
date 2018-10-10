@@ -69,6 +69,11 @@ var UserSchema = new mongoose.Schema({
 		default:'',
 		required:false
 	},
+	InitialLogin: {
+		type: Boolean,
+		default: true,
+		required: true,
+	}
 });
 
 UserSchema.methods.generateHash= function(password){

@@ -37,7 +37,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
             tripDialog: false,
             //current date time
             datetime: `${new Date().getFullYear()}-${`${new Date().getMonth() +
-                1}`.padStart(2, 0)}-${`${new Date().getDay() + 1}`.padStart(
+                1}`.padStart(2, 0)}-${`${new Date().getDate() + 1}`.padStart(
                 2,
                 0
               )}T${`${new Date().getHours()}`.padStart(
@@ -64,9 +64,13 @@ import { getFromStorage } from '../../utils/localStorage.js'
         let date = new Date(dateTime.split('T')[0]);
         let time = dateTime.split('T')[1];
 
+        if (date === 'Invalid Date' || time === undefined){
+            this.setState({datetime: dateTime})
+            return;
+        }
+
         let hours = time.split(":")[0];
         let minutes = time.split(":")[1];
-        hours = hours % 12 || 12;
         hours = hours < 10 ? "0" + hours : hours;
         TripsStore.dateTime.setHours(hours, minutes, 0, 0);
         TripsStore.tripName = this.props.carpoolName;
@@ -89,7 +93,6 @@ import { getFromStorage } from '../../utils/localStorage.js'
         TripsStore.days["fri"] = document.getElementById("weekday-fri").checked;
         TripsStore.days["sat"] = document.getElementById("weekday-sat").checked;
         TripsStore.days["sun"] = document.getElementById("weekday-sun").checked;
-        console.log(TripsStore.days);
     };
 
     /*
@@ -145,8 +148,6 @@ import { getFromStorage } from '../../utils/localStorage.js'
         let userNames = "";
         let users = [];
         for (let user in this.props.users) {
-            console.log(this.props.users[this.props.users.length - 1]);
-            console.log(user);
             if (user !== TripsStore.idBy) {
                 if (document.getElementById(user).checked) {
                     userNames = userNames + MessageStore.getUsername(user).substr(0, MessageStore.getUsername(user).indexOf(" ")) + ", ";
@@ -160,27 +161,37 @@ import { getFromStorage } from '../../utils/localStorage.js'
 
         userNames = userNames.substr(0, userNames.lastIndexOf(", "));
         let dateTime = document.getElementById("inputTripTime").value;
-        let date = dateTime.split('T')[0];
-        let time = dateTime.split('T')[1];
-        let messageContent = date + " @ " + time + "\r\nDays: " + days + "\r\nMembers: " + userNames;
 
-        document.getElementById("inputTripTime").value = "";
-        document.getElementById("weekday-mon").checked = false;
-        document.getElementById("weekday-tue").checked = false;
-        document.getElementById("weekday-wed").checked = false;
-        document.getElementById("weekday-thu").checked = false;
-        document.getElementById("weekday-fri").checked = false;
-        document.getElementById("weekday-sat").checked = false;
-        document.getElementById("weekday-sun").checked = false;
+        if(Date.parse(dateTime)){
+            if (new Date(dateTime) > new Date()){
+                let date = dateTime.split('T')[0];
+                let time = dateTime.split('T')[1];
+                let messageContent = date + " @ " + time + "\r\nDays: " + days + "\r\nMembers: " + userNames;
 
-        for (let user in this.props.users) {
-            if (user !== TripsStore.idBy)
-                document.getElementById(user).checked = false;
+                document.getElementById("inputTripTime").value = "";
+                document.getElementById("weekday-mon").checked = false;
+                document.getElementById("weekday-tue").checked = false;
+                document.getElementById("weekday-wed").checked = false;
+                document.getElementById("weekday-thu").checked = false;
+                document.getElementById("weekday-fri").checked = false;
+                document.getElementById("weekday-sat").checked = false;
+                document.getElementById("weekday-sun").checked = false;
+
+                for (let user in this.props.users) {
+                    if (user !== TripsStore.idBy)
+                        document.getElementById(user).checked = false;
+                }
+
+                this.closeTripDialog();
+                TripsStore.carpoolID = this.props.carpoolID;
+                TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
+            }else {
+                alert("The date can not be in the past.");
+            }
+        }else{
+            alert("Invalid date!");
         }
-
-        this.closeTripDialog();
-        TripsStore.carpoolID = this.props.carpoolID;
-        TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
+        
     }
 
     /*
@@ -193,14 +204,14 @@ import { getFromStorage } from '../../utils/localStorage.js'
             if (user !== TripsStore.idBy) {
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user).split(' ')[0]} />
+                        <FormControlLabel control={<Checkbox color="primary" id={user} onChange={this.updateUsers} />} label={MessageStore.getUsername(user)} />
                     </ExpansionPanelDetails>
                 );
             } else {
                 TripsStore.users[user] = true;
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user).split(' ')[0] + ' (Driver)'} />
+                        <FormControlLabel control={<Checkbox disabled checked />} label={MessageStore.getUsername(user) + ' (Driver)'} />
                     </ExpansionPanelDetails>
                 );
             }
@@ -260,7 +271,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
                         <Button onClick={this.closeTripDialog} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.suggestTrip} color="primary" autoFocus>
+                        <Button onClick={this.suggestTrip} color="primary">
                             Suggest
                         </Button>
                     </DialogActions>

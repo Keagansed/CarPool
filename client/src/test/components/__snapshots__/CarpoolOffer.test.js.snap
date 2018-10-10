@@ -2,145 +2,108 @@
 
 exports[`Carpool Offer Component captures snapshot 1`] = `
 <div>
-  <div
-    className="container-fluid bg-purple bordbot-2px-white"
-    onClick={[Function]}
+  <li
+    className="MuiListItem-container-2"
   >
     <div
-      className="row txt-white padver-10px"
+      className="MuiButtonBase-root-12 MuiListItem-root-1 MuiListItem-default-4 MuiListItem-gutters-8 MuiListItem-divider-7 MuiListItem-button-9 MuiListItem-secondaryAction-10"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="button"
+      tabIndex="0"
     >
       <div
-        className="col-9"
+        className="MuiAvatar-root-15 MuiAvatar-colorDefault-16"
       >
-        <div
-          className="col-12"
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root-18"
+          color={undefined}
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
         >
-          <h5>
-            Carpool
-          </h5>
-        </div>
-        <div
-          className="col-12"
-        >
-          Join an existing carpool
-        </div>
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M8 10H5V7H3v3H0v2h3v3h2v-3h3v-2zm10 1c1.66 0 2.99-1.34 2.99-3S19.66 5 18 5c-.32 0-.63.05-.91.14.57.81.9 1.79.9 2.86s-.34 2.04-.9 2.86c.28.09.59.14.91.14zm-5 0c1.66 0 2.99-1.34 2.99-3S14.66 5 13 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm6.62 2.16c.83.73 1.38 1.66 1.38 2.84v2h3v-2c0-1.54-2.37-2.49-4.38-2.84zM13 13c-2 0-6 1-6 3v2h12v-2c0-2-4-3-6-3z"
+          />
+        </svg>
       </div>
       <div
-        className="col-3 vertical-right"
+        className="MuiListItemText-root-27"
       >
-        <div
-          className="col-12"
+        <span
+          className="MuiTypography-root-33 MuiTypography-subheading-40 MuiListItemText-primary-30"
         >
-          <h5>
-            <i
-              className="fa fa-info-circle"
+          Carpool
+        </span>
+        <p
+          className="MuiTypography-root-33 MuiTypography-body1-42 MuiTypography-colorTextSecondary-57 MuiListItemText-secondary-31"
+        >
+          Request to join an existing carpool
+        </p>
+      </div>
+      <span
+        className="MuiTouchRipple-root-59"
+      />
+    </div>
+    <div
+      className="MuiListItemSecondaryAction-root-66"
+    >
+      <button
+        aria-label="View Route Matches"
+        className="MuiButtonBase-root-12 MuiIconButton-root-67"
+        disabled={false}
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex="0"
+        type="button"
+      >
+        <span
+          className="MuiIconButton-label-72"
+        >
+          <svg
+            aria-hidden="true"
+            className="MuiSvgIcon-root-18"
+            color={undefined}
+            focusable="false"
+            role="presentation"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
             />
-          </h5>
-        </div>
-        <div
-          className="col-12"
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+            />
+          </svg>
+        </span>
+        <span
+          className="MuiTouchRipple-root-59"
         />
-      </div>
+      </button>
     </div>
-  </div>
-  <div
-    className="modal"
-    id="myModal"
-    role="dialog"
-    style={
-      Object {
-        "display": "none",
-      }
-    }
-    tabIndex="-1"
-  >
-    <div
-      className="modal-dialog"
-      role="document"
-    >
-      <div
-        className="modal-content"
-      >
-        <div
-          className="modal-header bg-aqua"
-        >
-          <h5
-            className="modal-title fw-bold"
-          >
-            Carpool
-          </h5>
-          <button
-            aria-label="Close"
-            className="close"
-            onClick={[Function]}
-            type="button"
-          >
-            <span
-              aria-hidden="true"
-            >
-              ×
-            </span>
-          </button>
-        </div>
-        <div
-          className="modal-body"
-        >
-          <div
-            className="row bordbot-1px-dash-grey"
-          >
-            <h6
-              className="fw-bold mx-auto"
-            >
-              Offer Sent By
-            </h6>
-          </div>
-          <div
-            className="row bordbot-1px-dash-grey mbottom-10px"
-          >
-            <div
-              className="col-7 padright-0"
-            >
-              undefined undefined
-            </div>
-            <div
-              className="col-5 vertical-right"
-            >
-              <a
-                href="/ProfilePage/123"
-                onClick={[Function]}
-              >
-                View Profile
-              </a>
-            </div>
-          </div>
-          <div
-            className="row"
-          >
-            <p
-              className="mx-auto mbottom-0"
-            >
-              Asking to join your existing carpool
-            </p>
-          </div>
-          <div
-            className="row mtop-10px "
-          >
-            <button
-              className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-green txt-white fw-bold"
-              onClick={[Function]}
-            >
-              Accept
-            </button>
-            <button
-              className="col-5 btn btn-primary mx-auto width-15rem brad-2rem mbottom-0 bg-red txt-white fw-bold"
-              onClick={[Function]}
-            >
-              Decline
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </li>
 </div>
 `;

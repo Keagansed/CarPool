@@ -10,8 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import LoginStore from '../stores/LoginStore'
-import logo from './../../css/images/logo.png'
+import LoginStore from '../stores/LoginStore';
+import logo from "../../css/images/logo.png";
+import TermsDialog from './../components/terms/Terms';
 
 //Define the spefic styles for this page
 const styles = theme => ({
@@ -27,15 +28,18 @@ const styles = theme => ({
         },
     },
     paper: {
-        marginTop: theme.spacing.unit * 8,
+        paddingTop: theme.spacing.unit * 8,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
     },
     avatar: {
         margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
+        height: 128,
+        width: 128,
     },
     form: {
         width: '100%', // Fix IE11 issue.
@@ -61,8 +65,8 @@ class LandingPage extends Component {
                 <CssBaseline />
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Avatar alt="logo" src={logo} className={classes.avatar}/>
-                        <Typography variant="headline">Carpool</Typography>
+                        <Avatar src={logo} align='center' className={classes.avatar} />
+                        <Typography align='center' variant="headline">The Iminsys Carpool Platform</Typography>
                         <form className={classes.form}>
                             <Link to={`/Register`} style={{ textDecoration: 'none' }}>
                                 <Button
@@ -82,10 +86,12 @@ class LandingPage extends Component {
                                     variant="raised"
                                     color="primary"
                                     className={classes.submit}
+                                    style={{marginBottom: 15}}
                                 >
                                     Login
                                 </Button>
                             </Link>
+                            <TermsDialog/>
                         </form>
                     </Paper>
                 </main>

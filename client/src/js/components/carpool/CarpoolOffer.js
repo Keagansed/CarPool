@@ -19,7 +19,6 @@ import { Typography } from '@material-ui/core';
 import CarpoolStore from '../../stores/CarpoolStore'
 import ServerURL from '../../utils/server';
 
-
 /*
  * Purpose: a modal interface that displays an offer to a carpool. It shows the user who sent the
  * invite and allows you to accept or decline the offer.
@@ -127,17 +126,16 @@ class CarpoolOffer extends Component {
             return (<div></div>);
 
         } else {
-            let profilePicture, userFullName, userPartName;
-            if (
-                typeof (this.props.store.userProfile) !== "undefined"
-            ) {
+            let profilePicture, userFullName;
+            if (typeof (this.props.store.userProfile.lastName) !== "undefined") {
                 profilePicture = ServerURL + "/api/account/getImage?filename=" + this.props.store.userProfile.profilePic;
                 userFullName = this.props.store.userProfile.firstName + " " + this.props.store.userProfile.lastName;
-                userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
+            }else{
+                this.props.store.getUserProfile(this.props.token);
             }
             return (
                 <div>
-                    <ListItem button onClick={this.handleClickOpen}>
+                    <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar>
                             <OfferIcon />
                         </Avatar>
@@ -151,10 +149,10 @@ class CarpoolOffer extends Component {
                     <Dialog open={this.state.offerDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="alert-dialog-title">{this.props.store.CarpoolName}</DialogTitle>
                         <DialogContent>
-                            <Link to={"/ProfilePage/" + this.props.store.senderId} style={{ textDecoration: 'none', color: 'white' }}>
-                                <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                            <Link to={"/ProfilePage/" + this.props.store.senderId} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                                     <Avatar alt="Profile Picture" src={profilePicture} />
-                                    <ListItemText primary={userPartName} secondary='View Profile' />
+                                    <ListItemText primary={userFullName} secondary='View Profile' />
                                 </ListItem>
                             </Link>
                             <Typography>{this.renderOtherMembers()}</Typography>

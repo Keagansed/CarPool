@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 
 import MapComponent from '../google/GeneralMapWrapper';
 import MessageStore from '../../stores/MessagingStore.js';
@@ -59,7 +58,7 @@ import ServerURL from '../../utils/server';
             this.setState({
                 buttons: (
                     <div key={Math.random()}>
-                        <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        <Button onClick={this.closeTripDialog} color="primary">
                             Close
                         </Button>
                     </div>
@@ -70,7 +69,7 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -80,7 +79,7 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -92,10 +91,10 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.accept} color="primary" autoFocus>
+                            <Button onClick={this.accept} color="primary">
                                 Accept
                             </Button>
-                            <Button onClick={this.reject} color="primary" autoFocus>
+                            <Button onClick={this.reject} color="primary">
                                 Reject
                             </Button>
                         </div>
@@ -105,7 +104,7 @@ import ServerURL from '../../utils/server';
                 this.setState({
                     buttons: (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -197,7 +196,7 @@ import ServerURL from '../../utils/server';
         this.setState({
             buttons: (
                 <div key={Math.random()}>
-                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                    <Button onClick={this.closeTripDialog} color="primary">
                         Close
                     </Button>
                 </div>
@@ -246,7 +245,7 @@ import ServerURL from '../../utils/server';
         this.setState({
             buttons: (
                 <div key={Math.random()}>
-                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                    <Button onClick={this.closeTripDialog} color="primary">
                         Close
                     </Button>
                 </div>
@@ -297,7 +296,7 @@ import ServerURL from '../../utils/server';
         if (this.props.userID === getFromStorage('sessionKey').token) {
             this.buttons = (
                 <div key={Math.random()}>
-                    <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                    <Button onClick={this.closeTripDialog} color="primary">
                         Close
                     </Button>
                 </div>
@@ -309,7 +308,7 @@ import ServerURL from '../../utils/server';
                 } else if (this.props.usersResponded[getFromStorage('sessionKey').token]) {
                     this.buttons = (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -318,7 +317,7 @@ import ServerURL from '../../utils/server';
                 if (!this.props.usersResponded[getFromStorage('sessionKey').token]) {
                     this.buttons = (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -331,7 +330,7 @@ import ServerURL from '../../utils/server';
                     } else {
                         this.buttons = (
                             <div key={Math.random()}>
-                                <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                                <Button onClick={this.closeTripDialog} color="primary">
                                     Close
                                 </Button>
                             </div>
@@ -340,7 +339,7 @@ import ServerURL from '../../utils/server';
                 } catch (e) {
                     this.buttons = (
                         <div key={Math.random()}>
-                            <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeTripDialog} color="primary">
                                 Close
                             </Button>
                         </div>
@@ -352,14 +351,16 @@ import ServerURL from '../../utils/server';
         if (this.props.userID === getFromStorage('sessionKey').token) {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog}>
+                    <ListItem onClick={this.openTripDialog} divider button>
                         <ListItemText
-                            primary={<font style={{ color: this.props.userColour }}>You</font>}
-                            secondary='Suggested a trip.'
+                            primary={
+                                <div>
+                                    <font style={{ color: this.props.userColour }}>You</font>
+                                    <font style={{ float: 'right' }}>{dat}</font>
+                                </div>
+                            }
+                            secondary='Suggested a trip. Click for more info.'
                         />
-                        <ListItemSecondaryAction>
-                            <ListItemText primary={dat} />
-                        </ListItemSecondaryAction>
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
                         <DialogTitle>Trip Suggestion</DialogTitle>
@@ -378,14 +379,16 @@ import ServerURL from '../../utils/server';
         } else {
             return (
                 <div>
-                    <ListItem onClick={this.openTripDialog}>
+                    <ListItem onClick={this.openTripDialog} divider button>
                         <ListItemText
-                            primary={<font style={{ color: this.props.userColour }}>{MessageStore.getUsername(this.props.userID)}</font>}
+                            primary={
+                                <div>
+                                    <font style={{ color: this.props.userColour }}>{MessageStore.getUsername(this.props.userID)}</font>
+                                    <font style={{ float: 'right' }}>{dat}</font>
+                                </div>
+                            }
                             secondary='Suggested a trip. Click for more info.'
                         />
-                        <ListItemSecondaryAction>
-                            <ListItemText primary={dat} />
-                        </ListItemSecondaryAction>
                     </ListItem>
                     <Dialog open={this.state.tripDialog} onClose={this.closeTripDialog} scroll='paper'>
                         <DialogTitle>Trip Suggestion</DialogTitle>

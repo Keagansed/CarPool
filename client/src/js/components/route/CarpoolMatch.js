@@ -15,6 +15,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import { observer } from "mobx-react";
+import { Redirect } from 'react-router-dom';
 
 import app from '../../stores/FirebaseStore.js';
 import MapComponent from '../google/GeneralMapWrapper';
@@ -42,7 +43,8 @@ import ServerURL from '../../utils/server';
             //carpoolMembers is used to store the members of any carpool match temporarily when accessed
             carpoolMembers: [],
             //routeArr is used to store the routes of any carpool match temporarily when accessed
-            routeArr: []
+            routeArr: [],
+            redirect: false,
         }
 
         this.routeArr = [];
@@ -77,15 +79,14 @@ import ServerURL from '../../utils/server';
         this.carpoolMembers = [];
 
         this.carpoolMatchStore.carpoolMembers.forEach(userObj => {
-            let userFullName, userPartName, profilePicture;
+            let userFullName, profilePicture;
             userFullName = userObj.firstName + " " + userObj.lastName;
-            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
             profilePicture = ServerURL + "/api/account/getImage?filename=" + userObj.profilePic;
             const memberComponent = (
-                <Link to={"/ProfilePage/" + userObj._id} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <Link to={"/ProfilePage/" + userObj._id} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
+                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
-                        <ListItemText primary={userPartName} secondary='View Profile' />
+                        <ListItemText primary={userFullName} secondary='View Profile' />
                     </ListItem>
                 </Link>
             )
@@ -103,11 +104,23 @@ import ServerURL from '../../utils/server';
         }));
     }
 
+    setRedirect = () => {
+        this.setState({
+            redirect: true,
+        })
+    }
+
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return (<Redirect to='/HomePage' />);
+        }
+    }
+
     /*
      * The purpose of the makeOfferToJoin method is to send an offer to another user to join in an existing carpool.
      */
-    makeOfferToJoin() {
-
+    makeOfferToJoin = ()=> {
+        
         fetch(ServerURL + '/api/system/route/getRoute?routeId=' + this.props.routeArr[0].id + '&token=' + this.props.token, {
             method: 'GET',
             headers: {
@@ -181,8 +194,8 @@ import ServerURL from '../../utils/server';
                                 }
                             });
                         });
-
-                    this.handleClose();
+                    
+                    this.setRedirect();
                 } else {
                     console.log("error: " + route.message);
                 }
@@ -196,10 +209,18 @@ import ServerURL from '../../utils/server';
     render() {
         this.generateUserProfileLinks();
 
+        if(this.state.redirect){
+            return(
+                <React.Fragment>
+                    {this.renderRedirect()}
+                </React.Fragment>
+            )
+        }
+
         //Return the CarpoolMatch
         return (
             <div>
-                <ListItem button onClick={this.handleClickOpen}>
+                <ListItem button onClick={this.handleClickOpen} divider>
                     <Avatar>
                         <GroupIcon />
                     </Avatar>

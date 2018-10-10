@@ -1,22 +1,14 @@
 //Higher order component, used to wrap around components to redirect user if their session token is invalid
+import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { getFromStorage } from '../utils/localStorage.js';
 import LoginStore from '../stores/LoginStore';
-import ServerURL from '../utils/server';
+import VerifyStore from '../stores/VerifyStore';
 
-export default function VerifyWrapper(ComponentToProtect) {
-    return class extends Component {
-
-        constructor() {
-            super();
-
-            this.state = {
-                loading: true,
-                redirect: false,
-            };
-        }
+@observer export default function VerifyWrapper(ComponentToProtect) {
+    return  class extends Component {
 
         componentDidMount() {
             const obj = getFromStorage('sessionKey');
@@ -24,32 +16,17 @@ export default function VerifyWrapper(ComponentToProtect) {
             if (obj && obj.token) {
                 const { token } = obj;
 
-                fetch(ServerURL + '/api/account/verify?token=' + token)
-                .then(res => res.json())
-                .then(json => {
-                    if (json) {
-                        if(json.success) {
-                            this.setState({ loading: false });
-                        }else{
-                            this.setState({ loading: false, redirect: true });
-                        }
-                    } else {
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    this.setState({ loading: false, redirect: true });
-                });
+                VerifyStore.verify(token);
             }
         }
 
-        render() {
-            const { loading, redirect } = this.state;
+        render() {            
             let view;
-            if (!loading) {
-                if (redirect) {
+            if (!VerifyStore.loading) {
+                if (VerifyStore.redirect) {
                     LoginStore.logOut();
                     view = <Redirect to="/Landing" />
+                    VerifyStore.reset();
                 } else {
                     view = <ComponentToProtect {...this.props} />
                 }

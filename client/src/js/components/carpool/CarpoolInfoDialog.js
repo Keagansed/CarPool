@@ -29,6 +29,7 @@ import ServerURL from '../../utils/server';
     constructor(props) {
         super(props);
         this.users = app.database().ref().child('groupChats/'+this.props.carpoolID+"/users");
+        console.log('TCL: NewTripDialog -> constructor -> this.users', this.users);
 
         this.state = {
             tripDialog: false,
@@ -54,6 +55,7 @@ import ServerURL from '../../utils/server';
                 groupChatUsers: previousUsers
             });
         });
+
     }
 
     /*
@@ -62,6 +64,9 @@ import ServerURL from '../../utils/server';
      */
     leaveCarpool = () => {
         let tempUsers = {};
+
+        console.log('TCL: NewTripDialog -> leaveCarpool -> this.props.users', );
+
         for (let user in this.state.groupChatUsers) {
             if (user !== getFromStorage('sessionKey').token) {
                 tempUsers[user] = this.state.groupChatUsers[user];
@@ -70,21 +75,67 @@ import ServerURL from '../../utils/server';
 
         this.setState({
             groupChatUsers: tempUsers
-        }, function () {
-            app.database().ref().child('groupChats/' + this.props.carpoolID)
-                .update({users: this.state.groupChatUsers}).then(() => {
-                this.setState({
-                    redirect: true
-                });
-                return {};
-            }).catch(error => {
+        }, async () => {
 
-                return {
-                    errorCode: error.code,
-                    errorMessage: error.message
+            let numChildren = 0;
+
+            this.users.once("value")
+            .then(snap => {
+                numChildren = snap.numChildren();
+                console.log('TCL: NewTripDialog -> leaveCarpool -> numChildren', numChildren);
+
+                if(numChildren <= 1) {                
+                    app.database().ref().child('groupChats/' + this.props.carpoolID)
+                    .remove()
+                    .then(() => {
+                        console.log("Deleted carpool in firebase");
+                        this.setState({
+                            redirect: true
+                        });
+                        return {};
+                    })
+                    .catch(error => {
+                        console.error("Deletion failed: ", error);
+                    })
+                } else {
+
+                    fetch(ServerURL + '/api/account/profile?userId=' + this.props.token + '&token=' + this.props.token,{
+                        method:'GET',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                    })
+                        .then(res => res.json())
+                        .catch(error => console.error('Error:', error))
+                        .then(users => {
+                            let groupChatMessages = app.database().ref().child('groupChats/' + this.props.carpoolID + '/messages');
+
+                            groupChatMessages.push().set({
+                                userID: "Server",
+                                messageContent: (users.data[0].firstName + " " + users.data[0].lastName + " has left the carpool"),
+                                dateTime: JSON.stringify(new Date()),
+                                tripSuggest: false
+                            });
+
+                            app.database().ref().child('groupChats/' + this.props.carpoolID)
+                            .update({users: this.state.groupChatUsers})
+                            .then(() => {
+                                this.setState({
+                                    redirect: true
+                                });
+                                return {};
+                            })
+                            .catch(error => {
+                                return {
+                                    errorCode: error.code,
+                                    errorMessage: error.message
+                                }
+                            });
+                        });
                 }
-
-            });
+            })
+                
+                        
         });
 
         fetch(ServerURL + '/api/system/carpool/leaveCarpool?_id=' + this.props.mongoCarpoolID + '&token=' + getFromStorage('sessionKey').token,{
@@ -93,16 +144,17 @@ import ServerURL from '../../utils/server';
                 'Content-Type':'application/json'
             },
         })
-            .then(res=>res.json())
-            .catch(error => console.error('Error:', error))
-            .then(json=>{
+        .then(res=>res.json())
+        .catch(error => console.error('Error:', error))
+        .then(json=>{
+            if(json) {
                 if(json.success) {
 
                 }else{
                     alert(json.message);
                 }
-
-            })
+            }
+        })
     }
 
     /*
@@ -123,8 +175,8 @@ import ServerURL from '../../utils/server';
 
         for(let user in this.props.users) {
             users.push(
-                <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'white' }} key={Math.random()}>
-                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <Link to={"/ProfilePage/" + user} style={{ textDecoration: 'none', color: 'inherit' }} key={Math.random()}>
+                    <ListItem style={{ paddingLeft: 0, paddingRight: 0 }} divider>
                         <ListItemText primary={MessageStore.getUsername(user)} secondary='Click to View Profile' />
                     </ListItem>
                 </Link>
@@ -149,7 +201,7 @@ import ServerURL from '../../utils/server';
                         <Button onClick={this.leaveCarpool} color="primary">
                             Leave Carpool
                         </Button>
-                        <Button onClick={this.closeTripDialog} color="primary" autoFocus>
+                        <Button onClick={this.closeTripDialog} color="primary">
                             Close
                         </Button>
                     </DialogActions>

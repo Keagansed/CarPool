@@ -42,7 +42,7 @@ const styles = theme => ({
  * Purpose: container for the messages that are sent within a carpool chat
  */
 @observer class Messages extends Component {
-
+    messagesEnd = React.createRef();
     /*
      * Purpose: calls the constructor of the parent class and initializes the fields. 'carpoolID' contains the 
      * ID of the carpool chat. 'messages' contains all the messages that were/are sent in the chat. 'users' contains
@@ -62,10 +62,10 @@ const styles = theme => ({
         MessageStore.getAllUsers(getFromStorage('sessionKey').token);
         this.addMessage = this.addMessage.bind(this);
         this.suggestTrip = this.suggestTrip.bind(this);
-        this.updateLastRefresh = this.updateLastRefresh.bind(this);
         this.database = app.database().ref().child('groupChats/' + this.props.match.params.carpoolID);
         this.messages = app.database().ref().child('groupChats/' + this.props.match.params.carpoolID + "/messages");
         this.users = app.database().ref().child('groupChats/' + this.props.match.params.carpoolID + "/users");
+        this.listContainer = React.createRef();
     }
 
     //Open/close info dialog
@@ -138,6 +138,11 @@ const styles = theme => ({
 
             });
 
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate(){
+        this.scrollToBottom();
     }
 
     //Switch off event listeners for firebase
@@ -145,6 +150,15 @@ const styles = theme => ({
         this.database.off();
         this.messages.off();
         this.users.off();
+    }
+
+    scrollToBottom = () => {
+        
+        // this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
+        if(this.messagesEnd.current !== null){
+            this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' })
+        }
+
     }
     /*
      * Purpose: adds a new message to the current messages
@@ -224,11 +238,11 @@ const styles = theme => ({
 
         if (verify) {
             return (
-                <div className={classes.root}>
+                <div className={classes.root} >
                     {/* App Bar */}
                     <AppBar className={classes.topNav}>
                         <Toolbar className={classes.toolbar} variant='dense'>
-                            <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'white' }}>
+                            <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'inherit' }} onClick={this.updateLastRefresh.bind(this)}>
                                 <IconButton color="inherit" aria-label="Back">
                                     <BackIcon />
                                 </IconButton>
@@ -242,14 +256,14 @@ const styles = theme => ({
                             />
                             <NewTripDialog
                                 token={this.state.token}
-                                users={this.state.users} 
-                                suggestTrip={this.suggestTrip} 
+                                users={this.state.users}
+                                suggestTrip={this.suggestTrip}
                                 carpoolID={this.state.carpoolID}
                                 carpoolName={this.props.match.params.carpoolName}
                             />
                         </Toolbar>
                     </AppBar>
-                    <List style={{paddingTop: 48, paddingBottom: 33}} id="messageBody">
+                    <List style={{ paddingTop: 48, paddingBottom: 33 }} id="messageBody" ref={this.listContainer}>
                         {//Messages and trip suggestions
                             this.state.messages.map((message) => {
                                 let userColour;
@@ -309,106 +323,9 @@ const styles = theme => ({
                         }
                     </List>
                     {/* Input message */}
-                    <MessageForm addMessage={this.addMessage} />
+                    <MessageForm addMessage={this.addMessage} updateScroll={this.scrollToBottom}/>
+                    <div ref={this.messagesEnd}></div>
                 </div>
-
-                // <div className="size-100 bg-purple">
-                //     <div className="fixed-top container-fluid height-50px bg-aqua">
-                //         <div className="row height-100p">
-                //             <Link to={`/HomePage`} className="col-2 txt-center">
-                //                 <button className="p-0 btn height-100p bg-trans txt-purple fw-bold brad-0 font-20px" onClick={this.updateLastRefresh}>
-                //                     <i className="fa fa-chevron-circle-left txt-center"></i>
-                //                 </button>
-                //             </Link>
-                //             <CarpoolInfoModal 
-                //                 token={this.state.token}
-                //                 users={this.state.users} 
-                //                 carpoolName={this.props.match.params.carpoolName} 
-                //                 carpoolID={this.props.match.params.carpoolID}
-                //                 mongoCarpoolID={this.state.carpoolID}
-                //             />
-                //             <NewTripModal 
-                //                 token={this.state.token}
-                //                 users={this.state.users} 
-                //                 suggestTrip={this.suggestTrip} 
-                //                 carpoolID={this.state.carpoolID}  
-                //                 carpoolName={this.props.match.params.carpoolName}
-                //             />
-                //         </div>
-                //     </div>
-                //     {/* Padding is there for top and bottom navs*/}
-                //     <div className="padtop-50px padbot-50px">
-                //         {/*<Messages carpoolID={this.props.match.params.carpoolID} carpoolName={this.props.match.params.carpoolName}/>*/}
-                //         <div id="messageBody" className="autoScroll padtop-50px padbot-50px">
-                //             {
-                //                 this.state.messages.map((message) => {
-                //                     let userColour;
-                //                     let userName = MessageStore.getUsername(message.userID);
-
-                //                     try{
-                //                         userColour = this.state.users[message.userID].colour;
-                //                     }catch(e) {
-                //                         userColour = "black";
-                //                     }
-
-                //                     if(message.tripSuggest) {
-
-                //                         return(
-                //                             <TripSuggest
-                //                                 token={this.state.token}
-                //                                 messageContent={message.messageContent} 
-                //                                 messageID={message.id} 
-                //                                 users={message.users} 
-                //                                 carpoolID={this.props.match.params.carpoolID} 
-                //                                 tripID={message.tripID} 
-                //                                 usersResponded={message.usersResponded} 
-                //                                 userID={message.userID} 
-                //                                 userColour={userColour} 
-                //                                 dateTime={message.dateTime} 
-                //                                 key={message.id}
-                //                             />
-                //                         );
-
-                //                     }else{
-
-                //                         if (message.userID === "Server"){
-                //                             return(
-                //                                 <Message
-                //                                     token={this.state.token}
-                //                                     messageContent={message.messageContent}
-                //                                     messageID={message.id}
-                //                                     userID={message.userID}
-                //                                     userName={"Server"}
-                //                                     userColour={userColour}
-                //                                     dateTime={message.dateTime}
-                //                                     key={message.id}
-                //                                 />
-                //                             );
-                //                         } else {
-                //                             return(
-                //                                 <Message
-                //                                     token={this.state.token}
-                //                                     messageContent={message.messageContent}
-                //                                     messageID={message.id}
-                //                                     userID={message.userID}
-                //                                     userName={userName}
-                //                                     userColour={userColour}
-                //                                     dateTime={message.dateTime}
-                //                                     key={message.id}
-                //                                 />
-                //                             );
-                //                         }
-
-
-
-                //                     }
-
-                //                 })
-                //             }
-                //         </div>
-                //         <MessageForm addMessage={this.addMessage}/>
-                //     </div>
-                // </div>
             );
 
         } else {

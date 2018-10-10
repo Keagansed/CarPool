@@ -36,7 +36,7 @@ class CancelTripModal extends Component {
     };
 
     componentWillMount() {
-        const obj = getFromStorage('sessionKey').token;
+        const obj = getFromStorage('sessionKey');
         let { token } = obj;
 
         this.setState({
@@ -45,11 +45,11 @@ class CancelTripModal extends Component {
     }
 
     cancelOrDelete = () => {
-        if (this.props.trip.driver === this.state.token) {
-            this.deleteTrip();
-        } else {
+        // if (this.props.trip.driver === this.state.token) {
+        //     this.deleteTrip();
+        // } else {
             this.cancelTrip();
-        }
+        // }
     }
 
     cancelTrip = () => {
@@ -60,7 +60,7 @@ class CancelTripModal extends Component {
             },
             body: JSON.stringify({
                 _id: this.props.trip._id,
-                token: getFromStorage('sessionKey').token
+                token: this.state.token
             })
         })
             .then(res => res.json())
@@ -100,12 +100,12 @@ class CancelTripModal extends Component {
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Link to={`/HomePage`} onClick={this.cancelOrDelete} style={{ textDecoration: 'none', color: 'white' }}>
-                                <Button color="primary" autoFocus>
+                            <Link to={`/HomePage`} onClick={this.cancelOrDelete} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <Button color="primary">
                                     Yes
                                 </Button>
                             </Link>
-                            <Button onClick={this.closeCancelDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeCancelDialog} color="primary">
                                 No
                             </Button>
                         </DialogActions>

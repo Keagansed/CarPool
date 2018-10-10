@@ -8,6 +8,23 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import RoutesStore from '../../stores/RoutesStore';
 
 import './../../../css/components/Autocomplete.css';
+
+/*
+* Purpose: Validate whether all of the fields are valid - true if there are errors
+*/
+function validate(address, startOrEnd) {
+    if (startOrEnd === 'Start Location'){
+        return {
+            address: RoutesStore.invalidRoutes1,
+        };
+    }else{
+        return {
+            address: RoutesStore.invalidRoutes2,
+        };
+    }
+    
+}
+
 /*
  * Purpose: provides the google start and end location input boxes that autocomplete.
  */
@@ -19,7 +36,12 @@ import './../../../css/components/Autocomplete.css';
      */
     constructor(props) {
         super(props);
-        this.state = { address: '' }
+        this.state = {
+            address: '',
+            touched: {
+                address: false,
+            },
+        }
     }
 
     /*
@@ -27,6 +49,15 @@ import './../../../css/components/Autocomplete.css';
      */
     handleChange = (address) => {
         this.setState({ address })
+    }
+
+    /*
+    * Purpose: Give fields that have been entered incorrectly red borders
+    */
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: { ...this.state.touched, [field]: true },
+        });
     }
 
     /*
@@ -46,22 +77,37 @@ import './../../../css/components/Autocomplete.css';
 
                 getLatLng(results[0])
                     .then(latLng => {
-
                         if (this.props.placeholder === 'Start Location') {
+                            RoutesStore.invalidRoutes1 = false;
                             RoutesStore.setOrigin(latLng);
                         } else {
+                            RoutesStore.invalidRoutes2 = false;
                             RoutesStore.setdestination(latLng);
                         }
 
                     })
             })
-            .catch(error => console.error('Error', error))
+            .catch(error => {
+                RoutesStore.invalidRoutes2 = false;
+                RoutesStore.invalidRoutes1 = false;
+                console.error('Error', error)
+            })
     }
 
     /*
      * Purpose: renders the component in the DOM.
      */
     render() {
+        /*
+        * Purpose: Only give fields red borders if the user has changed/access them
+        * and they are still not valid.
+        */
+        const errors = validate(this.state.address, this.props.placeholder);
+        const shouldMarkError = (field) => {
+            const hasError = errors[field];
+            const shouldShow = this.state.touched[field];
+            return hasError ? shouldShow : false;
+        };
 
         return (
             <PlacesAutocomplete
@@ -74,8 +120,10 @@ import './../../../css/components/Autocomplete.css';
                         <div>
                             <TextField
                                 {...getInputProps({
-                                        label: this.props.placeholder,
+                                    label: this.props.placeholder,
                                 })}
+                                error={(shouldMarkError('address') ? true : false)}
+                                onBlur={this.handleBlur('address')}
                                 fullWidth
                             />
                             <div className="autocomplete-container"> {/* Class for the dropdown box that contains all the suggestions*/}

@@ -74,7 +74,7 @@ class UploadProfilePictureSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="profilePic-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <CameraIcon />
                         </ListItemIcon>
@@ -89,7 +89,7 @@ class UploadProfilePictureSetting extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                        <Button onClick={this.handleClose} color="primary">
                             Ok
                         </Button>
                     </DialogActions>

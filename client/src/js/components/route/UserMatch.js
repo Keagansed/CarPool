@@ -15,6 +15,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 
 //Just using temporarily for demonstration purposes
 import MapComponent from '../google/GeneralMapWrapper';
@@ -41,6 +42,7 @@ import ServerURL from '../../utils/server';
             token: '',
             offerDialog: false,
             hidden: false, // set to "display: none" to hide div after making an offer
+            redirect: false,
         }
 
         this.routeArr = [];
@@ -72,10 +74,24 @@ import ServerURL from '../../utils/server';
         this.setState({ offerDialog: false });
     };
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return (<Redirect to='/HomePage' />);
+        }
+    }
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true,
+        })
+    }
+
     /*
     * The purpose of the makeOffer method is to send an offer to another user to join in a carpool.
     */
-    makeOffer = () => {
+    makeOffer = (event) => {
+        event.preventDefault();
+
         OffersStore.makeOffer(
             this.carpoolName,
             this.props.token,
@@ -85,9 +101,9 @@ import ServerURL from '../../utils/server';
             false
         );
         this.setState({
-            hidden: true
+            redirect: true,
         });
-        this.handleClose();
+    
     }
 
     /*
@@ -120,7 +136,7 @@ import ServerURL from '../../utils/server';
     render() {
         // profilePicture stores the exact path of the matched user's profile picture 
         // let profilePicture = "default.jpg";
-        let profilePicture, userFullName, userPartName;
+        let profilePicture, userFullName;
         // console.log(this.props.userObj);
         if (
             typeof (this.props.userObj) !== "undefined" &&
@@ -129,24 +145,30 @@ import ServerURL from '../../utils/server';
         ) {
             profilePicture = ServerURL + "/api/account/getImage?filename=" + this.props.userObj.profilePic;
             userFullName = this.props.userObj.firstName + " " + this.props.userObj.lastName;
-            userPartName = userFullName.substr(0, userFullName.indexOf(' ') + 2);
         }
 
         if (typeof (this.routeStore1.routeObj.routeName) !== "undefined") {
             this.carpoolName = this.routeStore1.routeObj.routeName;
 
             this.genRouteArr();
+        }
 
+        if(this.state.redirect){
+            return(
+                <React.Fragment>
+                    {this.renderRedirect()}
+                </React.Fragment>
+            )
         }
 
         if (this.state.hidden) {
             return (<div></div>)
         } else {
             return (
-                <div>
-                    <ListItem button onClick={this.handleClickOpen}>
+                <div>                    
+                    <ListItem button onClick={this.handleClickOpen} divider>
                         <Avatar alt="Profile Picture" src={profilePicture} />
-                        <ListItemText primary={userPartName} secondary='Click to Make Offer' />
+                        <ListItemText primary={userFullName} secondary='Click to Make Offer' />
                         <ListItemSecondaryAction>
                             <IconButton aria-label="Offer to Carpool" onClick={this.handleClickOpen}>
                                 <AddIcon />
@@ -156,16 +178,15 @@ import ServerURL from '../../utils/server';
                     <Dialog open={this.state.offerDialog} onClose={this.handleClose} aria-labelledby="form-dialog-title">
                         <DialogTitle id="alert-dialog-title">Make Offer to Carpool</DialogTitle>
                         <DialogContent>
-                            <Link to={"/ProfilePage/"+this.props.userId} style={{ textDecoration: 'none', color: 'white' }}>
-                                <ListItem style={{paddingLeft: 0, paddingRight: 0}}>
+                            <Link to={"/ProfilePage/"+this.props.userId} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <ListItem style={{paddingLeft: 0, paddingRight: 0}} divider>
                                     <Avatar alt="Profile Picture" src={profilePicture} />
-                                    <ListItemText primary={userPartName} secondary='View Profile' />
+                                    <ListItemText primary={userFullName} secondary='View Profile' />
                                 </ListItem>
                             </Link>
                             <MapComponent routeArr={this.routeArr} />
                             <TextField
                                 onChange={this.handleCarpoolNameChange}
-                                autoFocus
                                 margin="dense"
                                 label="Proposed Carpool Name"
                                 fullWidth

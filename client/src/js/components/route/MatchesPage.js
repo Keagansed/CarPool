@@ -109,7 +109,7 @@ const styles = theme => ({
                                 let newUsers = {};
 
                                 for (let user in snapShot.val().users) {
-                                    if (user !== this.props.token)
+                                    if (user !== this.state.token)
                                         newUsers[user] = snapShot.val().users[user];
                                 }
                                 app.database().ref()
@@ -120,6 +120,15 @@ const styles = theme => ({
                                             errorCode: error.code,
                                             errorMessage: error.message
                                         }
+                                    });
+                                    
+                                app.database().ref()
+                                    .child('groupChats/' + groupChat + '/messages')
+                                    .push().set({
+                                        userID: "Server",
+                                        messageContent: (json.usersName + " has left the carpool"),
+                                        dateTime: JSON.stringify(new Date()),
+                                        tripSuggest: false
                                     });
                             });
                     });
@@ -172,7 +181,7 @@ const styles = theme => ({
                 {/* App Bar */}
                 <AppBar className={classes.topNav}>
                     <Toolbar className={classes.toolbar} variant='dense'>
-                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'white' }}>
+                        <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <IconButton color="inherit" aria-label="Back">
                                 <BackIcon />
                             </IconButton>
@@ -194,7 +203,7 @@ const styles = theme => ({
                             <MapComponent routeArr={this.routeArr} />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.closeInfoDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeInfoDialog} color="primary">
                                 Close
                             </Button>
                         </DialogActions>
@@ -208,10 +217,10 @@ const styles = theme => ({
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.delete} color="primary" autoFocus>
+                            <Button onClick={this.delete} color="primary">
                                 Yes
                             </Button>
-                            <Button onClick={this.closeDeleteDialog} color="primary" autoFocus>
+                            <Button onClick={this.closeDeleteDialog} color="primary">
                                 No
                             </Button>
                         </DialogActions>

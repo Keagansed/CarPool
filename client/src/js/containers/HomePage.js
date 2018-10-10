@@ -17,6 +17,7 @@ import UserIcon from '@material-ui/icons/Person';
 import { Link } from 'react-router-dom';
 
 import Carpools from '../components/carpool/Carpools';
+import Carousel from '../components/carousel/Carousel';
 import NewRoute from '../components/route/NewRoute';
 import OffersStore from '../stores/OffersStore';
 import Routes from '../components/route/Routes';
@@ -53,7 +54,7 @@ const styles = theme => ({
         width: '100%',
         position: 'fixed',
         bottom: 0,
-        borderTop: '1px solid lightgrey',
+        borderTop: '1px solid lightgrey'
     },
 });
 
@@ -78,7 +79,7 @@ const styles = theme => ({
         let { token } = obj;
 
         this.setState({
-            token,
+            token: token,
         })
 
         let { store } = this.props;
@@ -91,50 +92,69 @@ const styles = theme => ({
         store.setTab(value);
     };
 
+    renderCarousel = () => {
+        let { store } = this.props;
+
+        store.firstLoadCheck(this.state.token)
+
+        if(store.renderCarousel) {
+            return (
+                <React.Fragment>
+                    <Carousel />
+                </React.Fragment>
+            )
+        } else {
+            return (
+                <React.Fragment></React.Fragment>
+            )
+        }
+    }
+
     render() {
         const { classes } = this.props;
         const { token } = this.state;
         const { activeTab } = this.props.store;
 
         return (
-                <div className={classes.root}>
-                    <AppBar className={classes.topNav}>
-                        <Tabs value={activeTab} onChange={this.handleChange} fullWidth>
-                            <Tab label="Routes" />
-                            <Tab label="Carpools" />
-                            <Tab label="Trips" />
-                            <Tab icon={<AddIcon />} href="#basic-tabs" />
-                        </Tabs>
-                    </AppBar>
-                    {activeTab === 0 && <TabContainer><Routes store={RoutesStore} token={token} /></TabContainer>}
-                    {activeTab === 1 && <TabContainer><Carpools store={OffersStore} token={token} /></TabContainer>}
-                    {activeTab === 2 && <TabContainer><Trips /></TabContainer>}
-                    {activeTab === 3 && <TabContainer><NewRoute store={RoutesStore} token={this.props.store.token} /></TabContainer>}
-                    <BottomNavigation
-                        value={1}
-                        className={classes.bottomNav}
-                    >
-                        <BottomNavigationAction 
-                            component={Link}
-                            to={{pathname: "/ProfilePage/" + token}}
-                            label="Profile" 
-                            icon={<UserIcon />} 
-                            showLabel 
-                        />
-                        <BottomNavigationAction 
-                            label="Home" 
-                            icon={<HomeIcon />} 
-                            showLabel 
-                        />
-                        <BottomNavigationAction 
-                            component={Link}
-                            to={`/Settings`}
-                            label="Settings" 
-                            icon={<SettingsIcon />} 
-                            showLabel
-                        />
-                    </BottomNavigation>
-                </div>
+            <div className={classes.root}>
+                {this.renderCarousel()}
+                <AppBar className={classes.topNav}>
+                    <Tabs value={activeTab} onChange={this.handleChange} fullWidth>
+                        <Tab label="Routes" />
+                        <Tab label="Carpools" />
+                        <Tab label="Trips" />
+                        <Tab icon={<AddIcon />} href="#basic-tabs" />
+                    </Tabs>
+                </AppBar>
+                {activeTab === 0 && <TabContainer><Routes store={RoutesStore} token={token} /></TabContainer>}
+                {activeTab === 1 && <TabContainer><Carpools store={OffersStore} token={token} /></TabContainer>}
+                {activeTab === 2 && <TabContainer><Trips /></TabContainer>}
+                {activeTab === 3 && <TabContainer><NewRoute store={RoutesStore} token={this.props.store.token} /></TabContainer>}
+                <BottomNavigation
+                    value={1}
+                    className={classes.bottomNav}
+                >
+                    <BottomNavigationAction 
+                        component={Link}
+                        to={{pathname: "/ProfilePage/" + token}}
+                        label="Profile" 
+                        icon={<UserIcon />} 
+                        showLabel 
+                    />
+                    <BottomNavigationAction 
+                        label="Home" 
+                        icon={<HomeIcon />} 
+                        showLabel 
+                    />
+                    <BottomNavigationAction 
+                        component={Link}
+                        to={`/Settings`}
+                        label="Settings" 
+                        icon={<SettingsIcon />} 
+                        showLabel
+                    />
+                </BottomNavigation>
+            </div>
         );
     }
 }

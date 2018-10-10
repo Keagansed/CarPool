@@ -74,7 +74,7 @@ class UploadCarRegistrationSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="car-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <CarIcon />
                         </ListItemIcon>
@@ -89,7 +89,7 @@ class UploadCarRegistrationSetting extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                        <Button onClick={this.handleClose} color="primary">
                             Ok
                         </Button>
                     </DialogActions>

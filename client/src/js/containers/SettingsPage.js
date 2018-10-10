@@ -18,7 +18,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import VerifyWrapper from './VerifyWrapper';
 
 import { getFromStorage } from '../utils/localStorage.js';
-import ServerURL from '../utils/server';
 
 //Styling specific to this page
 const styles = theme => ({
@@ -55,21 +54,8 @@ const styles = theme => ({
     */
     componentWillMount() {
         const obj = getFromStorage('sessionKey');
-
-        if (obj && obj.token) {
-            const { token } = obj;
-            fetch(ServerURL + '/api/account/verify?token=' + token)
-                .then(res => res.json())
-                .then(json => {
-                    if (json.success) {
-                        this.props.store.token = token;
-
-                        this.setState({
-                            loading: false,
-                        })
-                    }
-                })
-        }
+        const { token } = obj;
+        this.props.store.token = token;
     }
 
     render() {

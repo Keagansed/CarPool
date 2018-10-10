@@ -74,7 +74,7 @@ class UploadIDSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="id-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <IdIcon />
                         </ListItemIcon>
@@ -89,7 +89,7 @@ class UploadIDSetting extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                        <Button onClick={this.handleClose} color="primary">
                             Ok
                         </Button>
                     </DialogActions>

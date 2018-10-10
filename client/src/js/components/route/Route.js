@@ -23,7 +23,7 @@ class Route extends Component {
     render() {
         return (
             <Link to={`/HomePage/RouteMatches/` + this.props.store._id} style={{ textDecoration: 'none' }}>
-                <ListItem button>
+                <ListItem button divider>
                     <Avatar>
                         <CarIcon />
                     </Avatar>

@@ -14,6 +14,7 @@ import UploadIDSetting from './UploadIDSetting';
 import UploadDriversSetting from './UploadDriversSetting';
 import UploadCarRegistrationSetting from './UploadCarRegistrationSetting';
 import UploadClearanceCertificateSetting from './UploadClearanceSetting';
+import ReportSetting from './ReportSetting';
 
 import { getFromStorage } from '../../utils/localStorage';
 
@@ -60,6 +61,8 @@ class ProfileSettings  extends Component {
                 <EditEmailSetting token={this.state.token}/>
                 <Divider/>
                 <EditPasswordSetting token={this.state.token}/>
+                <Divider />
+                <ReportSetting token={this.state.token}/>
                 <Divider />
                 <LogoutSetting token={this.state.token}/>
             </List>

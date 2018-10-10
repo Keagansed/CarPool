@@ -39,7 +39,7 @@ const styles = theme => ({
         },
     },
     paper: {
-        marginTop: theme.spacing.unit * 8,
+        paddingTop: theme.spacing.unit * 8,
         marginBottom: theme.spacing.unit * 8,
         display: 'flex',
         flexDirection: 'column',
@@ -246,7 +246,7 @@ function validate(password, password2) {
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={this.handleClose} color="primary" autoFocus>
+                                <Button onClick={this.handleClose} color="primary">
                                     OK
                                 </Button>
                             </DialogActions>

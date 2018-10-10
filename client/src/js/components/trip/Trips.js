@@ -51,7 +51,7 @@ const styles = theme => ({
             return prev;
         } else {
             return (
-                <ListItem>
+                <ListItem divider>
                     <Avatar>
                         <AddIcon />
                     </Avatar>
@@ -70,7 +70,7 @@ const styles = theme => ({
             return upcoming;
         } else {
             return (
-                <ListItem>
+                <ListItem divider>
                     <Avatar>
                         <AddIcon />
                     </Avatar>

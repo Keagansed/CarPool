@@ -135,7 +135,7 @@ import { getFromStorage } from '../../utils/localStorage'
                         <Button onClick={this.closeReviewDialog} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.submitReviews} color="primary" autoFocus>
+                        <Button onClick={this.submitReviews} color="primary">
                             Submit Review
                         </Button>
                     </DialogActions>

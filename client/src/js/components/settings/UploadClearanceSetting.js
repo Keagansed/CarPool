@@ -74,7 +74,7 @@ class UploadClearanceSetting extends Component {
                     onChange={this.handleFileChange.bind(this)}
                 />
                 <label htmlFor="clearance-file">
-                    <ListItem button>
+                    <ListItem button divider>
                         <ListItemIcon>
                             <GavelIcon />
                         </ListItemIcon>
@@ -89,7 +89,7 @@ class UploadClearanceSetting extends Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary" autoFocus>
+                        <Button onClick={this.handleClose} color="primary">
                             Ok
                         </Button>
                     </DialogActions>
