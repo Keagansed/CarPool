@@ -164,27 +164,31 @@ import { getFromStorage } from '../../utils/localStorage.js'
         let dateTime = document.getElementById("inputTripTime").value;
 
         if(Date.parse(dateTime)){
-            let date = dateTime.split('T')[0];
-            let time = dateTime.split('T')[1];
-            let messageContent = date + " @ " + time + "\r\nDays: " + days + "\r\nMembers: " + userNames;
-    
-            document.getElementById("inputTripTime").value = "";
-            document.getElementById("weekday-mon").checked = false;
-            document.getElementById("weekday-tue").checked = false;
-            document.getElementById("weekday-wed").checked = false;
-            document.getElementById("weekday-thu").checked = false;
-            document.getElementById("weekday-fri").checked = false;
-            document.getElementById("weekday-sat").checked = false;
-            document.getElementById("weekday-sun").checked = false;
-    
-            for (let user in this.props.users) {
-                if (user !== TripsStore.idBy)
-                    document.getElementById(user).checked = false;
+            if (new Date(dateTime) > new Date()){
+                let date = dateTime.split('T')[0];
+                let time = dateTime.split('T')[1];
+                let messageContent = date + " @ " + time + "\r\nDays: " + days + "\r\nMembers: " + userNames;
+
+                document.getElementById("inputTripTime").value = "";
+                document.getElementById("weekday-mon").checked = false;
+                document.getElementById("weekday-tue").checked = false;
+                document.getElementById("weekday-wed").checked = false;
+                document.getElementById("weekday-thu").checked = false;
+                document.getElementById("weekday-fri").checked = false;
+                document.getElementById("weekday-sat").checked = false;
+                document.getElementById("weekday-sun").checked = false;
+
+                for (let user in this.props.users) {
+                    if (user !== TripsStore.idBy)
+                        document.getElementById(user).checked = false;
+                }
+
+                this.closeTripDialog();
+                TripsStore.carpoolID = this.props.carpoolID;
+                TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
+            }else {
+                alert("The date can not be in the past.");
             }
-    
-            this.closeTripDialog();
-            TripsStore.carpoolID = this.props.carpoolID;
-            TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
         }else{
             alert("Invalid date!");
         }
