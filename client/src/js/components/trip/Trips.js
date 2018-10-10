@@ -46,7 +46,7 @@ const styles = theme => ({
         const prev = TripsStore.previousTrips.map((trip) =>
             <Trip trip={trip} key={Math.random()} />
         )
-
+        
         if (prev.length > 0) {
             return prev;
         } else {

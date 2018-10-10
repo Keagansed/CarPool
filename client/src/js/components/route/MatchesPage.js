@@ -109,7 +109,7 @@ const styles = theme => ({
                                 let newUsers = {};
 
                                 for (let user in snapShot.val().users) {
-                                    if (user !== this.props.token)
+                                    if (user !== this.state.token)
                                         newUsers[user] = snapShot.val().users[user];
                                 }
                                 app.database().ref()
@@ -120,6 +120,15 @@ const styles = theme => ({
                                             errorCode: error.code,
                                             errorMessage: error.message
                                         }
+                                    });
+                                    
+                                app.database().ref()
+                                    .child('groupChats/' + groupChat + '/messages')
+                                    .push().set({
+                                        userID: "Server",
+                                        messageContent: (json.usersName + " has left the carpool"),
+                                        dateTime: JSON.stringify(new Date()),
+                                        tripSuggest: false
                                     });
                             });
                     });

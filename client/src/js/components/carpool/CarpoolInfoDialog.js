@@ -84,7 +84,7 @@ import ServerURL from '../../utils/server';
                 numChildren = snap.numChildren();
                 console.log('TCL: NewTripDialog -> leaveCarpool -> numChildren', numChildren);
 
-                if(numChildren <= 2) {                
+                if(numChildren <= 1) {                
                     app.database().ref().child('groupChats/' + this.props.carpoolID)
                     .remove()
                     .then(() => {
