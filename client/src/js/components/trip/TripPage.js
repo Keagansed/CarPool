@@ -61,7 +61,7 @@ const styles = theme => ({
 
         this.routeArr = [];
         this.reviewModal = [];
-        this.startTripButton ;
+        this.startTripButton = [];
     }
 
     componentDidMount() {

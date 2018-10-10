@@ -182,14 +182,14 @@ class InfoPage extends Component {
                                         </Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button variant="outlined" color="primary" disabled>
+                                        <Button href={`https://www.youtube.com/watch?v=-Ew_PqmMwtM&feature=youtu.be`} target="_blank" variant="outlined" color="primary" >
                                             Watch Video
                                         </Button>
                                     </Grid>
                                 </Grid>
                                 <Grid container spacing={16} justify="center" style={{ marginTop: 16, marginBottom: -35 }} onClick={this.openDialog}>
                                     <Grid item>
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="outlined" color="primary">
                                             Download
                                         </Button>
                                     </Grid>
