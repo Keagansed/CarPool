@@ -37,7 +37,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
             tripDialog: false,
             //current date time
             datetime: `${new Date().getFullYear()}-${`${new Date().getMonth() +
-                1}`.padStart(2, 0)}-${`${new Date().getDay() + 1}`.padStart(
+                1}`.padStart(2, 0)}-${`${new Date().getDate() + 1}`.padStart(
                 2,
                 0
               )}T${`${new Date().getHours()}`.padStart(
@@ -71,7 +71,6 @@ import { getFromStorage } from '../../utils/localStorage.js'
 
         let hours = time.split(":")[0];
         let minutes = time.split(":")[1];
-        hours = hours % 12 || 12;
         hours = hours < 10 ? "0" + hours : hours;
         TripsStore.dateTime.setHours(hours, minutes, 0, 0);
         TripsStore.tripName = this.props.carpoolName;
@@ -212,7 +211,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
                 TripsStore.users[user] = true;
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user) + ' (Driver)'} />
+                        <FormControlLabel control={<Checkbox disabled checked />} label={MessageStore.getUsername(user) + ' (Driver)'} />
                     </ExpansionPanelDetails>
                 );
             }
