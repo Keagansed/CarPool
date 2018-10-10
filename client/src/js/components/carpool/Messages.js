@@ -62,7 +62,6 @@ const styles = theme => ({
         MessageStore.getAllUsers(getFromStorage('sessionKey').token);
         this.addMessage = this.addMessage.bind(this);
         this.suggestTrip = this.suggestTrip.bind(this);
-        this.updateLastRefresh = this.updateLastRefresh.bind(this);
         this.database = app.database().ref().child('groupChats/' + this.props.match.params.carpoolID);
         this.messages = app.database().ref().child('groupChats/' + this.props.match.params.carpoolID + "/messages");
         this.users = app.database().ref().child('groupChats/' + this.props.match.params.carpoolID + "/users");
@@ -243,7 +242,7 @@ const styles = theme => ({
                     {/* App Bar */}
                     <AppBar className={classes.topNav}>
                         <Toolbar className={classes.toolbar} variant='dense'>
-                            <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <Link to={`/HomePage`} style={{ textDecoration: 'none', color: 'inherit' }} onClick={this.updateLastRefresh.bind(this)}>
                                 <IconButton color="inherit" aria-label="Back">
                                     <BackIcon />
                                 </IconButton>
