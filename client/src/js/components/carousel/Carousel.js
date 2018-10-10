@@ -6,6 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 
 import Slide from './Slide';
+import HomePageStore from '../../stores/HomePageStore';
 
 import check_gif from "../../../css/images/animat-checkmark-color.gif"
 import pencil_gif from "../../../css/images/animat-pencil-color.gif"
@@ -29,6 +30,8 @@ class Carousel extends React.Component {
         this.setState({
             open: false,
         })
+
+        HomePageStore.renderCarousel = false;
     }
 
     handleChange = (oldIndex, newIndex) => {
