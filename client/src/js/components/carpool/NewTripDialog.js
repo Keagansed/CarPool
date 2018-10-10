@@ -211,7 +211,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
                 TripsStore.users[user] = true;
                 users.push(
                     <ExpansionPanelDetails style={{ paddingTop: 0, paddingBottom: 0 }} key={Math.random()}>
-                        <FormControlLabel control={<Checkbox disabled />} label={MessageStore.getUsername(user) + ' (Driver)'} />
+                        <FormControlLabel control={<Checkbox disabled checked />} label={MessageStore.getUsername(user) + ' (Driver)'} />
                     </ExpansionPanelDetails>
                 );
             }
