@@ -11,7 +11,7 @@ import check_gif from "../../../css/images/animat-checkmark-color.gif"
 import pencil_gif from "../../../css/images/animat-pencil-color.gif"
 import car_gif from "../../../css/images/animat-road-trip-color.gif"
 import signpost_gif from "../../../css/images/animat-sign-post-color.gif"
-import compass_gif from "../../../css/images/animat-compass-color.gif"
+// import compass_gif from "../../../css/images/animat-compass-color.gif"
 
 class Carousel extends React.Component {
     constructor(){
@@ -42,20 +42,20 @@ class Carousel extends React.Component {
     renderButton = () => {
         if(this.state.finished) {
             return (
-                <Button  onClick={this.closeCarousel} color="primary" variant="contained" autoFocus>
+                <Button style={{ margin: 7 }} onClick={this.closeCarousel} color="primary" variant="contained" autoFocus>
                     Let's Go
                 </Button>
             )
         } else {
             return (
-                <Button style={{ visibility: false }}></Button>
+                <Button style={{ margin: 7, visibility: false }}> </Button>
             )
         }
     }
 
     render() {          
         const settings = {
-            dots: false,
+            dots: true,
             arrows: false,
             infinite: false,
             speed: 500,
@@ -75,10 +75,10 @@ class Carousel extends React.Component {
                 <DialogTitle>Getting Started</DialogTitle>
                 <DialogContent>
                     <Slider {...settings} beforeChange={this.handleChange}>
-                        <Slide caption="Create a route" image={compass_gif}/>
-                        <Slide caption="Join a carpool" image={pencil_gif}/>
-                        <Slide caption="Go on a trip" image={car_gif}/>
-                        <Slide caption="You're all set!" image={check_gif}/>                                                            
+                        <Slide title="Create a Route" caption="Match with other users and send them requests" image={signpost_gif}/>
+                        <Slide title="Join a Carpool" caption="Get chatting and plan your trips" image={pencil_gif}/>
+                        <Slide title="Go on a Trip" caption="Save the earth and drive together" image={car_gif}/>
+                        <Slide title="You're all set!" image={check_gif}/>                                                            
                     </Slider>
                 </DialogContent>
                 <DialogActions style={{ justifyContent: "center" }} >

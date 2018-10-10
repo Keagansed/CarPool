@@ -49,7 +49,10 @@ class Slide extends React.Component {
                 <main className={classes.layout}> 
                     <Paper className={classes.paper} style={{ padding: 0 }}>
                         <img src={this.props.image} alt="" className={classes.img}/>
-                        <Typography variant="title">
+                        <Typography variant="title" style={{ paddingBottom: 5 }}>
+                            {this.props.title}
+                        </Typography>
+                        <Typography variant="subheading" style={{ paddingTop: 7 }} align="center">
                             {this.props.caption}
                         </Typography>
                     </Paper>
