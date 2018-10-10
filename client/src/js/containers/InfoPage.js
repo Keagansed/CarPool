@@ -177,20 +177,18 @@ class InfoPage extends Component {
                             <div className={classes.heroButtons}>
                                 <Grid container spacing={16} justify="center">
                                     <Grid item>
+                                        <Button href={`https://www.youtube.com/watch?v=-Ew_PqmMwtM&feature=youtu.be`} target="_blank" variant="contained" color="primary" >
+                                            Tutorial
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
                                         <Button href={`/Landing`} variant="contained" color="primary">
-                                            Get Started
+                                            Website
                                         </Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button href={`https://www.youtube.com/watch?v=-Ew_PqmMwtM&feature=youtu.be`} target="_blank" variant="outlined" color="primary" >
-                                            Watch Video
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={16} justify="center" style={{ marginTop: 16, marginBottom: -35 }} onClick={this.openDialog}>
-                                    <Grid item>
-                                        <Button variant="outlined" color="primary">
-                                            Download
+                                        <Button variant="contained" color="primary">
+                                            Application
                                         </Button>
                                     </Grid>
                                 </Grid>
