@@ -175,22 +175,22 @@ class InfoPage extends Component {
                                 Welcome to the ridesharing platform that helps you help eachother.
                             </Typography>
                             <div className={classes.heroButtons}>
-                            <Grid container spacing={16} justify="center">
-                                    <Grid item>
-                                        <Button href={`https://www.youtube.com/watch?v=-Ew_PqmMwtM&feature=youtu.be`} target="_blank" variant="contained" color="primary" >
-                                            Tutorial
-                                        </Button>
-                                    </Grid>
-                                </Grid>
                                 <Grid container spacing={16} justify="center">
                                     <Grid item>
-                                        <Button variant="outlined" color="primary">
+                                        <Button onClick={this.openDialog} variant="outlined" color="primary">
                                             Download App
                                         </Button>
                                     </Grid>
                                     <Grid item>
                                         <Button href={`/Landing`} variant="outlined" color="primary">
                                             Access Online
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid container spacing={16} justify="center">
+                                    <Grid item>
+                                        <Button href={`https://www.youtube.com/watch?v=-Ew_PqmMwtM&feature=youtu.be`} target="_blank" variant="contained" color="primary" >
+                                            Tutorial
                                         </Button>
                                     </Grid>
                                 </Grid>
