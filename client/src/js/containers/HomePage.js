@@ -54,7 +54,7 @@ const styles = theme => ({
         width: '100%',
         position: 'fixed',
         bottom: 0,
-        borderTop: '1px solid lightgrey',
+        borderTop: '1px solid lightgrey'
     },
 });
 

@@ -61,6 +61,7 @@ const styles = theme => ({
 
         this.routeArr = [];
         this.reviewModal = [];
+        this.startTripButton ;
     }
 
     componentDidMount() {
@@ -103,9 +104,46 @@ const styles = theme => ({
         }
         catch (e) { }
     }
+    //if driver and current date is start date, allow driver access to start trip button
+    renderStartTripButton = (googleURL) =>{
+        const token = getFromStorage('sessionKey').token;
+
+        if(token === TripsStore.tripObj.driver){
+            this.startTripButton = <Button
+                                        type="submit"
+                                        fullWidth
+                                        variant="raised"
+                                        color="primary"
+                                        href={googleURL}
+                                        disabled = {true}
+                                    >
+                                        Start Trip
+                                    </Button>
+            let dateTime = new Date(TripsStore.tripObj.dateTime);
+            let today  = new Date();
+    
+            let cmpdate = `${dateTime.getDate()}/${dateTime.getMonth()+1}/${dateTime.getFullYear()}`;
+            let currDate = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
+    
+            
+            if(cmpdate === currDate ){
+                this.startTripButton = <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="raised"
+                                            color="primary"
+                                            href={googleURL}
+                                        >
+                                            Start Trip
+                                        </Button>
+            }
+        }
+        
+        
+        
+    }
 
     render() {
-
         const { classes } = this.props;
         let tripName;
         let carpoolers = [];
@@ -116,6 +154,7 @@ const styles = theme => ({
         if (typeof (TripsStore.tripObj.optimalTrip) !== "undefined") {
             this.routeArr = TripsStore.tripObj.optimalTrip;
             googleURL = (generateURL(this.routeArr));
+            this.renderStartTripButton(googleURL);
         }
         if (typeof (TripsStore.routeObj.startLocation) !== "undefined" &&
             typeof (TripsStore.routeObj.endLocation) !== "undefined") {
@@ -206,15 +245,9 @@ const styles = theme => ({
                         <ListItemText primary='Other Carpoolers' style={{ textAlign: 'center' }} />
                     </ListItem>
                     {carpoolers}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="raised"
-                        color="primary"
-                        href={googleURL}
-                    >
-                        Start Trip
-                    </Button>
+
+                    {this.startTripButton}
+                    
                 </List>
             </div>
         );

@@ -71,7 +71,6 @@ import { getFromStorage } from '../../utils/localStorage.js'
 
         let hours = time.split(":")[0];
         let minutes = time.split(":")[1];
-        hours = hours % 12 || 12;
         hours = hours < 10 ? "0" + hours : hours;
         TripsStore.dateTime.setHours(hours, minutes, 0, 0);
         TripsStore.tripName = this.props.carpoolName;
