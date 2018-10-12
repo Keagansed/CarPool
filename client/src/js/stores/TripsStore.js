@@ -50,6 +50,21 @@ class tripsStore {
         }
     }
 
+    @action getUserProfilePic = (userId) => {
+
+        let found = false;
+        
+        for( let x = 0; x < this.allUsers.length && !found; x++){
+            if(this.allUsers[x]._id === userId){
+                found = true;
+
+                this.userProfilePicName = this.allUsers[x].profilePic;
+                return this.allUsers[x].profilePic;
+            }
+        }
+
+    }
+
     @action getUsernameSurname = (userId) => {
         let found = false;
         
@@ -113,7 +128,6 @@ class tripsStore {
             }
             i++;
         }
-        console.log('TCL: tripsStore -> @actionaddTrip -> this.idBy', this.idBy);
         
         fetch(ServerURL + '/api/system/trip/optimalTrip?token=' + token, {
             method: 'POST',
@@ -159,12 +173,12 @@ class tripsStore {
                         this.tripID = json._id;
                         suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
                     }else{
-                        alert(json.message);
+                        console.log(json.message);
                     }
                 })
 
             }else{
-                alert(json.message);
+                console.log(json.message);
             }
         })
             
@@ -192,7 +206,7 @@ class tripsStore {
             if(json.success){
 
             }else{
-                alert(json.message);
+                console.log(json.message);
             }
         })
     }

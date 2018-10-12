@@ -2,10 +2,29 @@
 
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Avatar from '@material-ui/core/Avatar';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import AddIcon from '@material-ui/icons/Navigation';
 
 import Trip from './Trip';
 import TripsStore from '../../stores/TripsStore'
 import { getFromStorage } from '../../utils/localStorage.js'
+import VerifyWrapper from '../../containers/VerifyWrapper';
+
+//Specific styles to this page
+const styles = theme => ({
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        paddingTop: 0,
+        paddingBottom: 0,
+    },
+});
 
 /**
  * Purpose: An container to store and display all the Trip components of the user
@@ -27,14 +46,17 @@ import { getFromStorage } from '../../utils/localStorage.js'
         const prev = TripsStore.previousTrips.map((trip) =>
             <Trip trip={trip} key={Math.random()} />
         )
-
+        
         if (prev.length > 0) {
             return prev;
         } else {
             return (
-                <h5 className="txt-center mtop-10px txt-white">
-                    No Previous Trips
-                </h5>
+                <ListItem divider>
+                    <Avatar>
+                        <AddIcon />
+                    </Avatar>
+                    <ListItemText primary="No Previous Trips" secondary="You have not been on any trips." />
+                </ListItem>
             );
         }
     }
@@ -48,35 +70,32 @@ import { getFromStorage } from '../../utils/localStorage.js'
             return upcoming;
         } else {
             return (
-                <h5 className="txt-center mtop-10px txt-white">
-                    No Upcoming Trips
-                </h5>
+                <ListItem divider>
+                    <Avatar>
+                        <AddIcon />
+                    </Avatar>
+                    <ListItemText primary="No Upcoming Trips" secondary="You do not have any trips scheduled." />
+                </ListItem>
             );
         }
     }
 
     render() {
+        const { classes } = this.props;
         return (
-            <div className="scroll-vert">
-                <div className="pad-10px bg-whitelight txt-white">
-                    <h4 className="mbottom-0">Upcoming Trips</h4>
-                </div>
-
-                <div className="txt-white">
-                    {this.renderUpcomingTrips()}
-                </div>
-
-                <div className="pad-10px bg-whitelight txt-white">
-                    <h4 className="mbottom-0">Past Trips</h4>
-                </div>
-
-                <div className="txt-white">
-                    {this.renderPreviousTrips()}
-                </div>
-
-            </div>
+            <List component="nav" className={classes.root}>
+                <ListSubheader>{`Upcoming Trips`}</ListSubheader>
+                {this.renderUpcomingTrips()}
+                <ListSubheader>{`Previous Trips`}</ListSubheader>
+                {this.renderPreviousTrips()}
+            </List>
         );
     }
 }
 
-export default Trips;
+
+Trips.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(VerifyWrapper(Trips));

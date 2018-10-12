@@ -3,6 +3,10 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
+import TextField from '@material-ui/core/TextField';
+import { Typography } from "@material-ui/core";
+import StarFullIcon from '@material-ui/icons/Star';
+import StarEmptyIcon from '@material-ui/icons/StarBorder';
 
 import TripsStore from './../../stores/TripsStore';
 
@@ -33,36 +37,31 @@ import TripsStore from './../../stores/TripsStore';
         const { rating } = this.state;
         
         return(
-            <form>
-                <div className="row">
-                    <h6 className="fw-bold mx-auto">{TripsStore.getUsernameSurname(this.props.id)}</h6>
-                </div>
-                {/* Static data will be replaced by dynamic data */}
-                <div className="row">
-                    <div className="col-12 txt-center">
-                        <textarea 
-                            type="text" 
-                            className="col-10 form-control mx-auto brad-20px" 
-                            onChange={this.updateReview.bind(this)} 
-                            placeholder={"Thoughts on " + TripsStore.getUsername(this.props.id)} 
-                            required="required" 
-                            name="UserReview" 
-                            id={this.props.id}
-                        />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-5 mleft-auto">Rating:</div>
-                    <div className="col-5 vertical-right mright-auto">
-                        <StarRatingComponent 
-                            name="rate1" 
-                            starCount={5}
-                            value={rating}
-                            onStarClick={this.onStarClick}
-                        />
-                    </div>
-                </div>
-            </form>
+            <div style={{textAlign: 'center'}}>
+                <Typography variant='subheading' align='center'>
+                    {TripsStore.getUsernameSurname(this.props.id)}
+                </Typography>
+                <StarRatingComponent 
+                    name="rate1" 
+                    starCount={5}
+                    value={rating}
+                    onStarClick={this.onStarClick}
+                    renderStarIcon={(index, value) => {
+                        if (index <= value)
+                            return <StarFullIcon />
+                        else
+                            return <StarEmptyIcon />
+                      }}
+                />
+                <TextField
+                    id={this.props.id}
+                    label={"Thoughts on " + TripsStore.getUsername(this.props.id)} 
+                    multiline
+                    onChange={this.updateReview.bind(this)} 
+                    rows="4"
+                    variant="outlined"
+                />
+            </div>
         );
     }
 }

@@ -33,9 +33,9 @@ class MockStore {
     signup = () => {
         
         if(this.sPass1 !== this.sPass2) {
-            alert("Passwords do not match");
+            console.log("Passwords do not match");
         }else{
-            alert("Successfully signed up");
+            console.log("Successfully signed up");
             this.setRegistered(true);
         }
     };

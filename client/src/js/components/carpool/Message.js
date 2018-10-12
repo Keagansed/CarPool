@@ -1,6 +1,8 @@
 // File Type: Component
 
 import React, { Component } from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import { getFromStorage } from '../../utils/localStorage'
 
@@ -23,15 +25,6 @@ class Message extends Component {
     }
 
     /*
-     * Purpose: gets all the users in order to obtain the name of the sender of the message.
-     */
-    componentDidMount(){
-
-        let objDiv = document.getElementById("messageBody");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    }
-
-    /*
      * Purpose: determines how many days have past since the message has been sent
      */
     getDaysAgo(dat) {
@@ -39,12 +32,12 @@ class Message extends Component {
         const createdOn = new Date(JSON.parse(dat));
         const msInDay = 24 * 60 * 60 * 1000;
 
-        createdOn.setHours(0,0,0,0);
-        today.setHours(0,0,0,0)
+        createdOn.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0)
 
-        let diff = (+today - +createdOn)/msInDay
+        let diff = (+today - +createdOn) / msInDay
 
-        if(diff === 1) {
+        if (diff === 1) {
             return diff + " day ago";
         }
 
@@ -59,13 +52,13 @@ class Message extends Component {
         let hours = createdOn.getHours();
         let mins = createdOn.getMinutes();
 
-        if(mins === 0) {
+        if (mins === 0) {
             mins = "00";
-        }else if(mins<10) {
-            mins = "0"+mins;
+        } else if (mins < 10) {
+            mins = "0" + mins;
         }
 
-        return hours+":"+mins;
+        return hours + ":" + mins;
     }
 
     /*
@@ -75,7 +68,7 @@ class Message extends Component {
         let dateObj = new Date(JSON.parse(dat));
         let todaysDate = new Date();
 
-        if(dateObj.toDateString() === todaysDate.toDateString()) {
+        if (dateObj.toDateString() === todaysDate.toDateString()) {
             return true;
         }
 
@@ -89,77 +82,44 @@ class Message extends Component {
     render() {
         let dat = "";
 
-        if(this.checkIfToday(this.props.dateTime)) {
+        if (this.checkIfToday(this.props.dateTime)) {
             dat = this.getTime(this.props.dateTime);
-        }else{
+        } else {
             dat = this.getDaysAgo(this.props.dateTime);
         }
 
-        if(this.props.userID === getFromStorage('sessionKey').token) {
-           
-            return(
-                <div className="container-fluid bg-purple bordbot-2px-white">
-                    {/* Maybe use different colours for different users? */}
-                    <div className="row padver-10px padbot-0">
-                        <div className="col-9">
-                            <div className={"col-12 "+this.props.userColour}>
-                                <h5>You</h5>
+        if (this.props.userID === getFromStorage('sessionKey').token) {
+            return (
+                <ListItem divider>
+                    <ListItemText
+                        primary={
+                            <div>
+                                <font style={{ color: this.props.userColour }}>You</font>
+                                <font style={{ float: 'right' }}>{dat}</font>
                             </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                        <div className="col-3 vertical-right txt-grey">
-                            <div className="col-12">
-                                <h6>{dat}</h6>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-12">
-                            <div className="col-12">
-                                { this.messageContent }
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        }
+                        secondary={this.messageContent}
+                        style={{ wordWrap: 'break-word', whiteSpace: 'normal', }}
+                    />
+                </ListItem>
             );
-        }else{
-            return(
-                <div className="container-fluid bg-purple bordbot-2px-white">
-                    {/* Maybe use different colours for different users? */}
-                    <div className="row padver-10px padbot-0">
-                        <div className="col-9">
-                            <div className={"col-12 "+this.props.userColour}>
-                                <h5>{this.props.userName}</h5>
+        } else {
+            return (
+                <ListItem divider>
+                    <ListItemText
+                        primary={
+                            <div>
+                                <font style={{ color: this.props.userColour }}>{this.props.userName}</font>
+                                <font style={{ float: 'right' }}>{dat}</font>
                             </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                        <div className="col-3 vertical-right txt-grey">
-                            <div className="col-12">
-                                <h6>{dat}</h6>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row txt-white padver-10px padtop-0">
-                        <div className="col-12">
-                            <div className="col-12">
-                            { this.messageContent }
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        }
+                        secondary={this.messageContent}
+                        style={{ wordWrap: 'break-word', whiteSpace: 'normal', }}
+                    />
+                </ListItem>
             );
         }
-        
+
     }
 }
 

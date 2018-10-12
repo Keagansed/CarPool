@@ -4,7 +4,6 @@ import { action, observable  } from 'mobx';
 
 import { waypointGenerator } from './../utils/waypointGenerator';
 import ServerURL from '../utils/server';
-
 import HomePageStore from './HomePageStore';
 
 class routesStore {
@@ -15,6 +14,9 @@ class routesStore {
     @observable routeSuccess = false;
     @observable loadingRoutes = true;
     @observable addingRoute = false;
+
+    @observable invalidRoutes1 = true;
+    @observable invalidRoutes2 = true;
     
     @observable originResult = {};
     @observable destinationResult = {};
@@ -25,6 +27,18 @@ class routesStore {
     @observable origin = {};
     @observable destination = {};
     
+    @action reset = () =>{
+        this.origin = {};
+        this.destination = {};
+        this.originName = "";
+        this.destinationName = "";
+        this.originResult = {};
+        this.destinationResult = {};
+        this.invalidRoutes1 = true;
+        this.invalidRoutes2 = true;
+
+    }
+
     @action setGoogleOriginResult = (result) =>{
         this.originResult = result;
         this.originName = result.formatted_address;
@@ -61,7 +75,7 @@ class routesStore {
 
     @action doneAddingRoute = () => {
         this.addingRoute = false;
-        HomePageStore.toggleToRoute();
+        HomePageStore.setTab(0);
     }
     
     @action getRoutes = (token) => {
@@ -90,7 +104,7 @@ Detailed description: https://stackoverflow.com/questions/14220321/how-do-i-retu
 General solution: https://stackoverflow.com/questions/6847697/how-to-return-value-from-an-asynchronous-callback-function 
 */
     
-    @action newRoute = (token/*, startLocation, endLocation, days*/, time, routeName/*, repeat*/, routeSuccess = this.routeSuccess, routes = this.routes, doneAddingRoute = this.doneAddingRoute) => {
+    @action newRoute = (token, time, routeName, routeSuccess = this.routeSuccess, routes = this.routes, doneAddingRoute = this.doneAddingRoute) => {
         this.addingRoute = true;
         waypointGenerator(this.originName, this.destinationName, this.origin, this.destination, time, routeName,
                 function(originName, destinationName, origin, destination, Rtime, RrouteName, waypoints,){
@@ -115,10 +129,8 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                             lng: destination.lng
                         },
                         waypoints: waypoints,
-                        // days: days,
                         time: Rtime,
                         routeName: RrouteName,
-                        // repeat: repeat
                     })
                 }) 
                 .then(res=>res.json())
@@ -147,7 +159,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                     }
                     else{
                         console.log(json)
-                        window.alert("Failed to create new route");
+                        console.log("Failed to create new route");
                     } 
                     doneAddingRoute();
                 }) 

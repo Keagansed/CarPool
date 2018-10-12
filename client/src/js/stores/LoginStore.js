@@ -2,7 +2,7 @@
 
 import { action, observable } from 'mobx';
 
-import { getFromStorage, setInStorage } from '../utils/localStorage.js'
+import { getFromStorage, setInStorage } from '../utils/localStorage.js';
 import ServerURL from '../utils/server';
 
 /*
@@ -29,7 +29,7 @@ class loginStore {
 
     // Stores error message to be displayed if email entered into forgotPasswordModal
     // is not recognized
-    @observable noEmailError = '';
+    @observable noEmailError = 'Enter your account email';
 
     // Stores message to be displayed when user tries to reset password
     @observable passwordChangeMessage = '';
@@ -99,7 +99,7 @@ class loginStore {
      */
     @action signUp = () => {
         if(this.sPassword1 !== this.sPassword2) {
-            alert("Passwords do not match");
+            console.log("Passwords do not match");
         }
         else{
             fetch(ServerURL + '/api/account/signup',{
@@ -121,7 +121,7 @@ class loginStore {
                 if(json.success) {
                     this.setRegistered(true);
                 }else{
-                    alert(json.message);
+                    console.log(json.message);
                 }
             })
         }

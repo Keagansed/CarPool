@@ -55,26 +55,6 @@ router.get('/deleteRoute',(req,res,next) =>{
                     data.forEach(pool => {
                         // save group chat ids
                         carpoolIds.push(pool.groupChatID);
-
-                        if (!e) {
-                            const q = {
-                                carpoolID: pool._id,
-                                //dateTime: { $gte: new Date() },
-                            };
-                            q['users.'+ token] = true;
-                            // console.log(JSON.stringify(q));
-                            // remove all upcoming trips the user is a part of
-                            Trip.remove(q,
-                            (err) => {
-                                if(err) {
-                                    e = true;
-                                    return res.send({
-                                        success: false,
-                                        message: "Database error: " + err,
-                                    });
-                                }
-                            });
-                        }
                     });
 
                     if (!e) {
@@ -130,10 +110,24 @@ router.get('/deleteRoute',(req,res,next) =>{
                                                                 message: "Database error: " + err,
                                                             });
                                                         }else{
-                                                            return res.send({
-                                                                success: true,
-                                                                message: "route deleted",
-                                                                groupChatIds: carpoolIds,
+                                                            User.find({
+                                                                _id: token
+                                                            },
+                                                            (err,data) => {
+                                                                if (err) {
+                                                                    return res.send({
+                                                                        success: false,
+                                                                        message: "Database error: " + err,
+                                                                    });
+                                                                } else {
+                                                                    let n = data[0].firstName + " " + data[0].lastName;
+                                                                    return res.send({
+                                                                        success: true,
+                                                                        message: "route deleted",
+                                                                        groupChatIds: carpoolIds,
+                                                                        usersName: n,
+                                                                    });
+                                                                }
                                                             });
                                                         }
                                                     }
@@ -181,10 +175,8 @@ router.post('/newRoute',(req,res,next) => {
     newRoute.startLocation = startLocation;
     newRoute.endLocation = endLocation;
     newRoute.waypoints = waypoints;
-    //newRoute.days = days;
     newRoute.time = time;
     newRoute.routeName = routeName;
-    //newRoute.repeat = repeat;
  
     newRoute.save((err) => {
         if(err) {  

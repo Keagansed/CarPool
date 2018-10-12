@@ -60,7 +60,7 @@ class offersStore {
         .then(json=>{
             //console.log(json);
             if(json.success !== true) {
-                window.alert("Failed to create new offer");
+                console.log("Failed to create new offer");
             }
             
         })  
@@ -94,7 +94,7 @@ class offersStore {
             .then(json=>{
                 console.log(json);
                 if(json.success !== true) {
-                    window.alert("Failed to create new offer");
+                    console.log("Failed to create new offer");
                 }
 
             })

@@ -2,131 +2,81 @@
 
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Avatar from '@material-ui/core/Avatar';
+import StarIcon from '@material-ui/icons/Star';
+import StarEmptyIcon from '@material-ui/icons/StarBorder';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
 
 import VouchStore from './../../stores/VouchStore';
 import ServerURL from '../../utils/server';
 
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
-
-
 /**
  * Purpose: Interface to display the various vouches/ ratings the user has received
  */
-@observer class Vouch  extends Component {
+@observer class Vouch extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             token: '',
-            toggle: false,
-            user:[]
+            user: [],
+            open: false,
         }
     }
 
+    //Open/close details dialog
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
 
-    toggle = (event)=> {
-        this.setState(prevState => ({
-            toggle: !prevState.toggle
-        }));
-    }
+    handleClose = () => {
+        this.setState({ open: false });
+    };
 
-    printStars = (numStars)=> {
+    printStars = (numStars) => {
         let starElements = [],
             n = numStars,
             i;
 
-        for(i = 0; i < n; i = i + 1) {
+        for (i = 0; i < n; i = i + 1) {
             starElements.push(
-                <i className="fa fa-star" key={Math.random()}></i>
+                <StarIcon style={{ color: 'gold' }} key={Math.random()}/>
             );
         }
-        for(i = 0; i < 5-n; i = i + 1) {
+        for (i = 0; i < 5 - n; i = i + 1) {
             starElements.push(
-                <i className="fa fa-star-o" key={Math.random()}></i>
+                <StarEmptyIcon style={{ color: 'gold' }}  key={Math.random()}/>
             );
         }
 
         return starElements;
     }
 
-    render(){
+    render() {
         let profilePic = VouchStore.getUserProfilePic(this.props.vouch.idBy);
         const profilePicture = ServerURL + "/api/account/getImage?filename=" + profilePic;
-
-        let userName = VouchStore.getUsername(this.props.vouch.idBy);
         let userNameSurname = VouchStore.getUsernameSurname(this.props.vouch.idBy);
 
-        let modal = [];
-        modal.push(
-            // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={this.state.toggle ? display : hide}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header bg-aqua">
-                            <h5 className="modal-title fw-bold">{userName}'s Review</h5>
-                            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <form>
-                                <div className="row">
-                                    <h6 className="fw-bold mx-auto">Rating</h6>
-                                </div>
-                                <div className="row padbot-10px">
-                                    <div className="col-12 txt-gold txt-center">
-                                        {this.printStars(this.props.vouch.rating)}
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <h6 className="fw-bold mx-auto">Review</h6>
-                                </div>
-                                <div className="row">
-                                    <div className="col-12">
-                                        <p className="txt-center mbottom-0">
-                                            {this.props.vouch.reviewBody}
-                                        </p>
-                                    </div>                                
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-
-        return(
-            <div>
-                <div className="container-fluid bg-white bordbot-2px-purple"  onClick={this.toggle}>
-                    <div className="row txt-purple padver-10px">
-                        <div className="col-2">
-                                <img src={profilePicture} className="mx-auto my-auto rounded-circle bord-2px-purple" height="60" width="60" alt="s" />
-                        </div>
-                        <div className="col-7">
-                            <div className="col-12 txt-gold">
-                                <h5>{this.printStars(this.props.vouch.rating)}</h5>
-                            </div>
-                            <div className="col-12">
-                                {userNameSurname}
-                            </div>
-                        </div>
-                        <div className="col-3 vertical-right">
-                            <div className="col-12">
-                                <h5><i className="fa fa-info-circle"></i></h5>
-                            </div>
-                            <div className="col-12">
-                                {/* Empty for now */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {modal}
-            </div>
+        return (
+            <ExpansionPanel>
+                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <ListItem button>
+                        <Avatar alt="Profile Picture" src={profilePicture} />
+                        <ListItemText primary={this.printStars(this.props.vouch.rating)} secondary={userNameSurname} />
+                    </ListItem>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails>
+                    <Typography>
+                        {this.props.vouch.reviewBody}
+                    </Typography>
+                </ExpansionPanelDetails>
+            </ExpansionPanel>
         );
     }
 }

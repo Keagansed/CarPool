@@ -52,7 +52,7 @@ export function waypointGenerator(oriName, destName, ori, dest, time, routeName,
 
             myFunc(oriName, destName, ori, dest, time, routeName, pointsArr);
         }else{ 
-            alert("directions response " + status);
+            console.log("directions response " + status);
         }
     })
 }

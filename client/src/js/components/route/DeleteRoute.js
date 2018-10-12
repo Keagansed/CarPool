@@ -34,19 +34,21 @@ class DeleteRoute extends Component{
     }
 
     delete = () => {
+        console.log('delete');
         fetch(ServerURL + '/api/system/route/deleteRoute?token=' + this.props.token + '&routeId=' + this.props.routeId, {
             method:'GET',
         })
             .then(res=>res.json())
             .catch(error => console.error('Error:', error))
             .then(json=> {
-
+                console.log(json);
                 if(json.success) {
                     json.groupChatIds.forEach(groupChat => {
                         app.database().ref()
                             .child('groupChats/'+ groupChat)
                             .once('value')
                             .then(snapShot => {
+                                console.log(snapShot);
                                 let newUsers = {};
 
                                 for(let user in snapShot.val().users) {
@@ -68,7 +70,7 @@ class DeleteRoute extends Component{
                     this.setRedirect();
                 }else{
                     this.toggle();
-                    alert(json.message);
+                    console.log(json.message);
                 }
                 
             });

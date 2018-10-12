@@ -26,7 +26,7 @@ router.post('/',(req,res,next)=>{
 	// res.setHeader('Access-Control-Allow-Methods', 'POST');
 	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 	// res.setHeader('Access-Control-Max-Age', 86400);
-
+	
 	if(!email) {
 		return res.send({ 
 			success:false,
@@ -40,7 +40,7 @@ router.post('/',(req,res,next)=>{
 		});
 	}
 	email = email.toLowerCase();
-
+	
 	User.find({
 		email:email
 	},(err, users) => {
@@ -49,14 +49,14 @@ router.post('/',(req,res,next)=>{
 				success:false,
 				message:"Database error: " + err,
 			});
-		}
+		}	
 		if(users.length != 1) {
 			return res.send({ 
 				success:false,
 				message:"Input error: Invalid email "
 			});
 		}
-
+		
 		const user = users[0];
 		if(!user.validPassword(password)) {
 			return res.send({ 
@@ -65,25 +65,50 @@ router.post('/',(req,res,next)=>{
 			});
 		}
 
-		//create user session
-		const userSession = new UserSession();
 		let date = new Date();
-		userSession.userId = user._id;
-		userSession.timestamp = date.toDateString();
-		userSession.save((err) => {
+    	let currentDate = date.toDateString();		
+		
+		UserSession.find({
+			userId: user._id,
+			timestamp: currentDate
+		}, (err,sessions) => {
 			if(err) {
-				return res.send({
+				return res.send({ 
 					success:false,
 					message:"Database error: " + err,
+				});
+			}
+			
+			if(sessions.length === 0) {
+				const userSession = new UserSession();
+				let date = new Date();
+				userSession.userId = user._id;
+				userSession.timestamp = date.toDateString();
+				userSession.save((err) => {
+					if(err) {
+						return res.send({
+							success:false,
+							message:"Database error: " + err,
+						});
+					}else{
+						return res.send({
+							success:true,
+							message:"Valid sign in",
+							token: userSession.userId 
+						});
+					}
 				});
 			}else{
 				return res.send({
 					success:true,
 					message:"Valid sign in",
-					token: userSession.userId 
+					token: user._id
 				});
 			}
 		});
+		
+		//create user session
+		
 	});
 });
 

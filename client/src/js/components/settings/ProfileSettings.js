@@ -1,19 +1,32 @@
 // File Type: Component
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 
-import EditNameModal from './EditNameModal';
-import EditEmailModal from './EditEmailModal';
-import EditPasswordModal from './EditPasswordModal';
-import EditProfilePictureSetting from './EditProfilePictureModal'
+import EditEmailSetting from './EditEmailSetting';
+import EditPasswordSetting from './EditPasswordSetting';
+import UploadProfilePictureSetting from './UploadProfilePictureSetting'
 import LogoutSetting from './LogoutSetting';
-import UploadIDSetting from './UploadIDModal';
-import UploadDriversSetting from './UploadDriversModal';
-import UploadCarPicatureSetting from './UploadCarPicture';
-import UploadCarRegistrationSetting from './UploadCarRegistration';
-import UploadClearanceCertificateSetting from './UploadClearanceCertificate';
+import UploadIDSetting from './UploadIDSetting';
+import UploadDriversSetting from './UploadDriversSetting';
+import UploadCarRegistrationSetting from './UploadCarRegistrationSetting';
+import UploadClearanceCertificateSetting from './UploadClearanceSetting';
+import ReportSetting from './ReportSetting';
 
 import { getFromStorage } from '../../utils/localStorage';
+
+//Specific styles to this page
+const styles = theme => ({
+    root: {
+        width: '100%',
+        backgroundColor: theme.palette.background.paper,
+        paddingTop: 48,
+        paddingBottom: 56,
+    },
+});
 
 /*
 * Purpose: This is a container component that holds all the relevant settings components
@@ -32,21 +45,33 @@ class ProfileSettings  extends Component {
     }
 
     render(){
+        const { classes } = this.props;
         return(
-            <div className="scroll-vert">
+            <List component="nav" className={classes.root}>
+                <UploadProfilePictureSetting token={this.state.token}/>
+                <Divider />
                 <UploadIDSetting token={this.state.token}/>
+                <Divider />
                 <UploadDriversSetting token={this.state.token}/>
+                <Divider />
                 <UploadClearanceCertificateSetting token={this.state.token}/>
-                <UploadCarPicatureSetting token={this.state.token}/>
+                <Divider />
                 <UploadCarRegistrationSetting token={this.state.token}/>
-                <EditProfilePictureSetting token={this.state.token}/>
-                <EditNameModal token={this.state.token}/>
-                <EditEmailModal token={this.state.token}/>
-                <EditPasswordModal token={this.state.token}/>
+                <Divider />
+                <EditEmailSetting token={this.state.token}/>
+                <Divider/>
+                <EditPasswordSetting token={this.state.token}/>
+                <Divider />
+                <ReportSetting token={this.state.token}/>
+                <Divider />
                 <LogoutSetting token={this.state.token}/>
-            </div>
+            </List>
         );
     }
 }
 
-export default ProfileSettings;
+ProfileSettings.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ProfileSettings);

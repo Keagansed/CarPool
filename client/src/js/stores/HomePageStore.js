@@ -1,68 +1,61 @@
 // File Type: Store
 
 import { action, observable } from 'mobx';
+import ServerURL from '../utils/server';
 
 /*
  Provides a store for variables and methods for the homepages's tabs
  */
 class homePageStore {
 
-    @observable routeTab = true;
-    @observable carpoolTab = false;
-    @observable tripTab = false;
-    @observable addTab = false;
+    @observable activeTab = 0;
+    @observable renderCarousel = false;
 
-    @observable routeTabActive = "active";
-    @observable carpoolTabActive = "";
-    @observable tripTabActive = ""; 
-    @observable addTabActive = "";  
-
-    @action toggleToRoute = () => {
-        this.carpoolTab = false;
-        this.tripTab = false;
-        this.routeTab = true;
-        this.addTab = false;
-
-        this.carpoolTabActive = "";
-        this.tripTabActive = "";
-        this.routeTabActive = "active";
-        this.addTabActive = "";
+    @action setTab = (tabNum) => {
+        this.activeTab = tabNum;
     }
 
-    @action toggleToCarpool = () => {
-        this.carpoolTab = true;
-        this.tripTab = false;
-        this.routeTab = false;
-        this.addTab = false;
+    @action firstLoadCheck = (token) => {
+        fetch(ServerURL + '/api/account/profile/firstLogin?token=' + token ,{
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .catch(err => console.error("Error: ", err))
+        .then(json => {
+            if (json) {
+                if (json.success) {
+                    if (json.InitialLogin) {
+                        this.renderCarousel = true;
 
-        this.carpoolTabActive = "active";
-        this.tripTabActive = "";
-        this.routeTabActive = "";
-        this.addTabActive = "";
-    }
+                        fetch(ServerURL + '/api/account/profile/updateFirstLogin?token=' + token, {                            
+                            method:'POST',
+                            headers:{
+                                'Content-Type':'application/json'
+                            },
+                            body:JSON.stringify({
+                                token: token
+                            })
+                        })
+                        .then(res2 => res2.json())
+                        .catch(err2 => console.error("Error: ", err2))
+                        .then(json2 => {
+                            if (json2) {
+                                if (!json2.success) {
+                                    console.log(json2.message);
+                                }
+                            }
+                        })
+                    }                
 
-    @action toggleToTrip = () => {
-        this.carpoolTab = false;
-        this.tripTab = true;
-        this.routeTab = false;
-        this.addTab = false;
-
-        this.carpoolTabActive = "";
-        this.tripTabActive = "active";
-        this.routeTabActive = "";
-        this.addTabActive = "";
-    }
-
-    @action toggleToAdd = () => {
-        this.carpoolTab = false;
-        this.tripTab = false;
-        this.routeTab = false;
-        this.addTab = true;
-
-        this.carpoolTabActive = "";
-        this.tripTabActive = "";
-        this.routeTabActive = "";
-        this.addTabActive = "active";
+                } else {
+                    this.renderCarousel = false;
+                    console.log(json.message);
+                }
+            }
+        })
     }
 
 }

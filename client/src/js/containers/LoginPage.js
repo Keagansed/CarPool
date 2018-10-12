@@ -3,20 +3,86 @@
 import { observer } from "mobx-react";
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 
-import Modal from '../components/login/PasswordModal';
+import PasswordModal from '../components/login/PasswordModal';
 import { getFromStorage } from '../utils/localStorage.js';
 import ServerURL from '../utils/server';
-
-import logo  from "../../css/images/logo.png";
+import logo from "../../css/images/logo.png";
 
 const util = require('./../utils/idCheck');
-const display = {
-    display: 'block'
-};
-const hide = {
-    display: 'none'
-};
+
+//Define specific styles for this page
+const styles = theme => ({
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    toolbar: {
+        paddingLeft: 0,
+        paddingRight: 0,
+    },
+    layout: {
+        width: 'auto',
+        display: 'block', // Fix IE11 issue.
+        alignItems: 'center',
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    paper: {
+        paddingTop: theme.spacing.unit * 8,
+        marginBottom: theme.spacing.unit * 8,
+        display: 'flex',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    },
+    modalPaper: {
+        position: 'absolute',
+        width: theme.spacing.unit * 50,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing.unit * 4,
+    },
+    avatar: {
+        margin: theme.spacing.unit,
+        height: 128,
+        width: 128,
+    },
+    form: {
+        width: '100%', // Fix IE11 issue.
+        marginTop: theme.spacing.unit,
+    },
+    submit: {
+        marginTop: theme.spacing.unit * 3,
+    },
+});
 
 /*
 * Purpose: Validate whether all of the fields are valid - true if there are errors
@@ -35,9 +101,9 @@ function validate(email, password) {
 @observer class Login extends Component {
     constructor(props) {
         super(props);
-        
-        this.state ={
-            token:'',
+
+        this.state = {
+            token: '',
             email: '',
             password: '',
 
@@ -45,7 +111,7 @@ function validate(email, password) {
                 email: false,
                 password: false,
             },
-        }; 
+        };
     }
 
     /*
@@ -53,17 +119,17 @@ function validate(email, password) {
     */
     componentWillMount() {
         const obj = getFromStorage('sessionKey');
-        if(obj && obj.token) {
+        if (obj && obj.token) {
             const { token } = obj;
 
-            fetch(ServerURL + '/api/account/verify?token='+token)
-            .then(res => res.json())
-            .then(json => {
-                if(json.success) {
-                    this.props.store.setToken(token);
-                    this.props.store.setLoggedIn(true);
-                }
-            })
+            fetch(ServerURL + '/api/account/verify?token=' + token)
+                .then(res => res.json())
+                .then(json => {
+                    if (json.success) {
+                        this.props.store.setToken(token);
+                        this.props.store.setLoggedIn(true);
+                    }
+                })
         }
     }
 
@@ -97,7 +163,7 @@ function validate(email, password) {
     /*
     * Purpose: hide the incorrect login modal
     */
-    hideModal = (event) => {
+    hideErrorDialog = (event) => {
         event.preventDefault();
         this.props.store.setToggleError(false);
     }
@@ -135,93 +201,101 @@ function validate(email, password) {
         const { toggleError } = this.props.store;
         const errors = validate(this.state.email, this.state.password);
         const isDisabled = Object.keys(errors).some(x => errors[x]);
+        const { classes } = this.props;
 
-        var modal = [];
-        modal.push(
-            // Modal
-            <div key="0" className="modal" tabIndex="-1" role="dialog" id="myModal" style={toggleError ? display : hide}>
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Login Failed</h5>
-                            <button type="button" className="close" onClick={this.hideModal} aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            You have entered an incorrect email or password.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    
-        if(!loggedIn) {
-            return(
-                <div className="vertical-center bg-purple">
-                    <div className="container-fluid">
-                        <div className="row">
-                            <img 
-                                className="img-fluid d-block mx-auto mbottom-2rem" 
-                                src={logo} 
-                                id="logo-256"
-                                alt="carpool_logo"
-                            /> 
-                        </div>
-                        <form>
-                            <div className="row">
-                                <input 
-                                    onChange={this.updateLoginEmailValue} 
-                                    type="email" 
-                                    className={(shouldMarkError('email') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                                    onBlur={this.handleBlur('email')}
-                                    placeholder="Email" 
-                                    id="inputEmail"
-                                    value={this.state.email}
-                                /> 
-                            </div>
-                            <div className="row">
-                                <input 
-                                    onChange={this.updateLoginPasswordValue} 
-                                    type="password" 
-                                    className={(shouldMarkError('password') ? "error" : "") + " form-control mx-auto width-15rem brad-2rem mbottom-1rem"}
-                                    onBlur={this.handleBlur('password')}
-                                    placeholder="Password"
-                                    id="inputPassword"
-                                    value={this.state.password}
-                                /> 
-                            </div>
-                            <div className="row">
-                                <button 
-                                    onClick={this.handleLogin} 
-                                    type="submit" 
-                                    className="btn btn-primary mx-auto width-15rem brad-2rem mbottom-1rem bg-aqua txt-purple fw-bold" 
-                                    id="btnLogin"
+        if (!loggedIn) {
+            return (
+                <React.Fragment>
+                    <CssBaseline />
+                    <AppBar position="static" className={classes.topNav}>
+                        <Toolbar className={classes.toolbar} variant='dense'>
+                            <Link to={`/Landing`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <IconButton color="inherit" aria-label="Back">
+                                    <BackIcon />
+                                </IconButton>
+                            </Link>
+                            <Typography variant="title" color="inherit" className={classes.grow}>
+                                The Iminsys Carpool Platform
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    <main className={classes.layout}>
+                        <Paper className={classes.paper}>
+                            <Avatar src={logo} align='center' className={classes.avatar} />
+                            <Typography variant="headline">Log In</Typography>
+                            <form className={classes.form}>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="email">Email Address</InputLabel>
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        autoComplete="on"
+                                        onChange={this.updateLoginEmailValue}
+                                        error={(shouldMarkError('email') ? true : false)}
+                                        onBlur={this.handleBlur('email')}
+                                        value={this.state.email}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="password">Password</InputLabel>
+                                    <Input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        onChange={this.updateLoginPasswordValue}
+                                        error={(shouldMarkError('password') ? true : false)}
+                                        onBlur={this.handleBlur('password')}
+                                        value={this.state.password}
+                                    />
+                                </FormControl>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="raised"
+                                    color="primary"
+                                    onClick={this.handleLogin}
+                                    className={classes.submit}
                                     disabled={isDisabled}
                                 >
-                                    Login
-                                </button>
-                            </div>
-                        </form>
-                        <div className="row">
-                            {/* forgot password modal */}
-                            <Modal store={this.props.store}/>
-                        </div>
-                        {/* login failed modal */}
-                        {modal}
-                    </div>
-                </div>
+                                    Log In
+                                </Button>
+                                <FormControl margin="normal" fullWidth>
+                                    {/* Forgot Password text */}
+                                    <PasswordModal store={this.props.store} />
+                                </FormControl>
+                            </form>
+                        </Paper>
+                        {/* Error Dialog if email/password incorrect */}
+                        <Dialog open={toggleError} onClose={this.hideErrorDialog} aria-labelledby="simple-dialog-title">
+                            <DialogTitle id="simple-dialog-title">Failed to Login</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    You have entered an incorrect email or password. Please try again.
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.hideErrorDialog} color="primary">
+                                    OK
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </main>
+                </React.Fragment>
             );
-        }else {
+        } else {
 
-            return(               
-                 <Redirect to={{
-                     pathname: "/HomePage", 
-                 }}/>
-             ); 
+            return (
+                <Redirect to={{
+                    pathname: "/HomePage",
+                }} />
+            );
         }
     }
 
 }
 
-export default Login;
+Login.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Login);

@@ -25,7 +25,7 @@ router.get('/',(req,res,next) => {
 
 	User.find({
 		_id : userId,
-	},(err,data) => {
+	}, 'firstName lastName email profilePic driversLicense ClearanceCertificate IdDocument CarPic CarRegistration InitialLogin' ,(err,data) => {
 		if(err) {
 			res.status(500).send({
 				success: false,
@@ -50,7 +50,7 @@ router.get('/',(req,res,next) => {
 router.get('/getAllUsers',(req,res,next)=>
 {
 	User.find({
-	},(err,data) => {
+	}, 'firstName lastName email profilePic driversLicense ClearanceCertificate IdDocument CarPic CarRegistration InitialLogin' ,(err,data) => {
 		if (err) {
 			return res.status(500).send({
 				success: false,
@@ -80,7 +80,7 @@ router.get('/getSelectUsers', (req,res) => {
 
 	User.find({
 		_id: { $in: JSON.parse(userIds)}
-	}, (err, data) => {
+	}, 'firstName lastName email profilePic driversLicense ClearanceCertificate IdDocument CarPic CarRegistration InitialLogin' , (err, data) => {
 
 		if(err) {
 			return res.status(500).send({
@@ -138,7 +138,7 @@ router.post('/getUserByName', (req,res,next) => {
 	User.find({ $or:[
 	{firstName:firstName},
 	{lastName:lastName}
-	]},(err, users) => {
+	]}, 'firstName lastName email profilePic driversLicense ClearanceCertificate IdDocument CarPic CarRegistration InitialLogin' ,(err, users) => {
 
 		if(err){
 			return res.status(500).send({ 
@@ -293,6 +293,55 @@ router.post('/updatePassword', (req,res,next) => {
 					}
 				}
 			);
+		}
+	});
+});
+
+router.post('/updateFirstLogin', (req, res) => {
+	const { body } = req;
+	let { token } = body;
+
+	User.findOneAndUpdate({ _id: token},		
+		{
+			$set: {
+				InitialLogin: false,
+			},
+		},
+		{
+			upsert: true
+		},
+		(err) => {
+			if (err) {
+				return res.status(500).send({
+					success:false,
+					message:"Database error: " + err,
+				});
+			} else {
+				return res.status(200).send({
+					success:true
+				});
+			}
+		}		
+	);
+})
+
+router.get('/firstLogin',(req,res,next) => {
+	const { query } = req;
+	const { token } = query;
+
+	User.findOne({
+		_id : token,
+	}, 'InitialLogin' ,(err,data) => {
+		if(err) {
+			return res.status(500).send({
+				success: false,
+				message: "Database error: " + err,
+			});
+		}else{
+			return res.status(200).send({
+				success: true,
+				InitialLogin: data.InitialLogin,
+			});
 		}
 	});
 });
