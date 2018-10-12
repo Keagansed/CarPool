@@ -110,7 +110,7 @@ class ReportSetting extends Component {
                     <ListItemIcon>
                         <BugIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Report a Problem" secondary="Report a problem anonymously." />
+                    <ListItemText primary="Report a Problem" secondary="Report a problem anonymously" />
                 </ListItem>
                 <Dialog open={this.state.reportErrorDialog} onClose={this.handleClose}>
                     <DialogTitle>{"Report a Problem"}</DialogTitle>

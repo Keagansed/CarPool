@@ -25,7 +25,7 @@ class LogoutSetting extends Component {
                         <ListItemIcon>
                             <ExitIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Log out" secondary="Log out of your account" />
+                        <ListItemText primary="Log Out" secondary="Log out of your account" />
                     </ListItem>
                 </Link>
             </div>

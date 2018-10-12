@@ -78,7 +78,7 @@ class UploadDriversSetting extends Component {
                         <ListItemIcon>
                             <DriversIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Driver's License"  secondary="A valid Driver's License" />
+                        <ListItemText primary="Driver's License"  secondary="A valid driver's license" />
                     </ListItem>
                 </label>
                 <Dialog open={this.state.successDialog} onClose={this.handleClose}>

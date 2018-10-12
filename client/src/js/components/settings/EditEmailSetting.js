@@ -120,7 +120,7 @@ class EditEmailModal extends Component {
                     <ListItemIcon>
                         <EmailIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Email Address" secondary="Edit your account Email Address" />
+                    <ListItemText primary="Email Address" secondary="Edit your account email address" />
                 </ListItem>
                 <Dialog open={this.state.changeEmailDialog} onClose={this.handleClose}>
                     <DialogTitle>{"Edit Account Email"}</DialogTitle>

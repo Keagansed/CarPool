@@ -78,7 +78,7 @@ class UploadClearanceSetting extends Component {
                         <ListItemIcon>
                             <GavelIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Clearance Certificate"  secondary="A police Clearance Certificate" />
+                        <ListItemText primary="Clearance Certificate"  secondary="A police clearance certificate" />
                     </ListItem>
                 </label>
                 <Dialog open={this.state.successDialog} onClose={this.handleClose}>

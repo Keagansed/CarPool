@@ -78,7 +78,7 @@ class UploadIDSetting extends Component {
                         <ListItemIcon>
                             <IdIcon />
                         </ListItemIcon>
-                        <ListItemText primary="ID Document" secondary="A valid Identification Document"/>
+                        <ListItemText primary="ID Document" secondary="A valid identification document"/>
                     </ListItem>
                 </label>
                 <Dialog open={this.state.successDialog} onClose={this.handleClose}>

@@ -133,7 +133,7 @@ class EditPasswordSetting extends Component {
                     <ListItemIcon>
                         <LockIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Account Password" secondary="Edit your account Password" />
+                    <ListItemText primary="Account Password" secondary="Edit your account password" />
                 </ListItem>
                 <Dialog open={this.state.changePasswordDialog} onClose={this.handleClose}>
                     <DialogTitle>{"Edit Account Password"}</DialogTitle>
