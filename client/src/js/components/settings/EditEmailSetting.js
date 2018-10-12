@@ -11,6 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 import ServerURL from '../../utils/server';
 
@@ -35,6 +36,7 @@ class EditEmailModal extends Component {
         this.state = {
             changeEmailDialog: false,
             email: this.props.token,
+            confirmDialog: false,
 
             touched: {
                 email: false,
@@ -49,6 +51,14 @@ class EditEmailModal extends Component {
 
     handleClose = () => {
         this.setState({ changeEmailDialog: false });
+    };
+
+    //Open/Close confirm dialpg
+    handleConfirmOpen = () => {
+        this.setState({ confirmDialog: true });
+    };
+    handleConfirmClose = () => {
+        this.setState({ confirmDialog: false });
     };
 
     /*
@@ -87,6 +97,7 @@ class EditEmailModal extends Component {
             .then(json => {
                 if (json.success) {
                     this.handleClose();
+                    this.handleConfirmOpen();
                 }
                 else {
                     this.setState({ email: "" });
@@ -131,6 +142,20 @@ class EditEmailModal extends Component {
                         </Button>
                         <Button onClick={this.changeEmail.bind(this)} color="primary" disabled={isDisabled}>
                             Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {/* Confirm dialog */}
+                <Dialog open={this.state.confirmDialog} onClose={this.handleConfirmClose}>
+                    <DialogTitle>{"Email Changed"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Your email has been successfully changed.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleConfirmClose} color="primary">
+                            Ok
                         </Button>
                     </DialogActions>
                 </Dialog>

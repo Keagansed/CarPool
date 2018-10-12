@@ -11,6 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 import ServerURL from '../../utils/server';
 
@@ -35,6 +36,7 @@ class EditPasswordSetting extends Component {
             changePasswordDialog: false,
             password: "",
             newPassword: "",
+            confirmDialog: false,
 
             touched: {
                 password: false,
@@ -50,6 +52,14 @@ class EditPasswordSetting extends Component {
 
     handleClose = () => {
         this.setState({ changePasswordDialog: false });
+    };
+
+    //Open/Close confirm dialpg
+    handleConfirmOpen = () => {
+        this.setState({ confirmDialog: true });
+    };
+    handleConfirmClose = () => {
+        this.setState({ confirmDialog: false });
     };
 
     /*
@@ -96,6 +106,7 @@ class EditPasswordSetting extends Component {
             .then(json => {
                 if (json.success) {
                     this.handleClose();
+                    this.handleConfirmOpen();
                 }
                 else {
                     this.setState({ password: "", newPassword: "" });
@@ -154,6 +165,20 @@ class EditPasswordSetting extends Component {
                     </Button>
                         <Button onClick={this.changePassword.bind(this)} color="primary" disabled={isDisabled}>
                             Confirm
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {/* Confirm dialog */}
+                <Dialog open={this.state.confirmDialog} onClose={this.handleConfirmClose}>
+                    <DialogTitle>{"Bug Reported"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Your password has been successfully changed.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleConfirmClose} color="primary">
+                            Ok
                         </Button>
                     </DialogActions>
                 </Dialog>
