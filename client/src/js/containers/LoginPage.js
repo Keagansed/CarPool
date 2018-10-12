@@ -18,6 +18,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 
 import PasswordModal from '../components/login/PasswordModal';
 import { getFromStorage } from '../utils/localStorage.js';
@@ -28,6 +33,14 @@ const util = require('./../utils/idCheck');
 
 //Define specific styles for this page
 const styles = theme => ({
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    toolbar: {
+        paddingLeft: 0,
+        paddingRight: 0,
+    },
     layout: {
         width: 'auto',
         display: 'block', // Fix IE11 issue.
@@ -194,6 +207,18 @@ function validate(email, password) {
             return (
                 <React.Fragment>
                     <CssBaseline />
+                    <AppBar position="static" className={classes.topNav}>
+                        <Toolbar className={classes.toolbar} variant='dense'>
+                            <Link to={`/Landing`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <IconButton color="inherit" aria-label="Back">
+                                    <BackIcon />
+                                </IconButton>
+                            </Link>
+                            <Typography variant="title" color="inherit" className={classes.grow}>
+                                The Iminsys Carpool Platform
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
                     <main className={classes.layout}>
                         <Paper className={classes.paper}>
                             <Avatar src={logo} align='center' className={classes.avatar} />
@@ -236,7 +261,7 @@ function validate(email, password) {
                                 </Button>
                                 <FormControl margin="normal" fullWidth>
                                     {/* Forgot Password text */}
-                                    <PasswordModal store={this.props.store}/>
+                                    <PasswordModal store={this.props.store} />
                                 </FormControl>
                             </form>
                         </Paper>

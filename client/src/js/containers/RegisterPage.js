@@ -15,6 +15,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 
 import logo from "../../css/images/logo.png";
 import TermsDialog from './../components/terms/Terms';
@@ -23,6 +28,14 @@ const util = require('./../utils/idCheck');
 
 //Define specific styles for this page
 const styles = theme => ({
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    toolbar: {
+        paddingLeft: 0,
+        paddingRight: 0,
+    },
     layout: {
         width: 'auto',
         display: 'block', // Fix IE11 issue.
@@ -202,6 +215,18 @@ function validate(fName, lName, idNum, email, password1, password2, checked) {
             return (
                 <React.Fragment>
                     <CssBaseline />
+                    <AppBar position="static" className={classes.topNav}>
+                        <Toolbar className={classes.toolbar} variant='dense'>
+                            <Link to={`/Landing`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <IconButton color="inherit" aria-label="Back">
+                                    <BackIcon />
+                                </IconButton>
+                            </Link>
+                            <Typography variant="title" color="inherit" className={classes.grow}>
+                                The Iminsys Carpool Platform
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
                     <main className={classes.layout}>
                         <Paper className={classes.paper}>
                             <Avatar src={logo} align='center' className={classes.avatar} />

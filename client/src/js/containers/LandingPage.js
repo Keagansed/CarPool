@@ -9,6 +9,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 
 import LoginStore from '../stores/LoginStore';
 import logo from "../../css/images/logo.png";
@@ -16,6 +20,14 @@ import TermsDialog from './../components/terms/Terms';
 
 //Define the spefic styles for this page
 const styles = theme => ({
+    topNav: {
+        position: 'fixed',
+        top: 0,
+    },
+    toolbar: {
+        paddingLeft: 0,
+        paddingRight: 0,
+    },
     layout: {
         width: 'auto',
         display: 'block', // Fix IE11 issue.
@@ -47,6 +59,9 @@ const styles = theme => ({
     submit: {
         marginTop: theme.spacing.unit * 3,
     },
+    grow: {
+        flexGrow: 1,
+    },
 });
 
 /*
@@ -63,10 +78,22 @@ class LandingPage extends Component {
         return (
             <React.Fragment>
                 <CssBaseline />
+                <AppBar position="static" className={classes.topNav}>
+                    <Toolbar className={classes.toolbar} variant='dense'>
+                        <Link to={`/`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <IconButton color="inherit" aria-label="Back">
+                                <BackIcon />
+                            </IconButton>
+                        </Link>
+                        <Typography variant="title" color="inherit" className={classes.grow}>
+                            The Iminsys Carpool Platform
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
                         <Avatar src={logo} align='center' className={classes.avatar} />
-                        <Typography align='center' variant="headline">The Iminsys Carpool Platform</Typography>
+                        <Typography align='center' variant="headline">Welcome to the Platform!</Typography>
                         <form className={classes.form}>
                             <Link to={`/Register`} style={{ textDecoration: 'none' }}>
                                 <Button
@@ -86,12 +113,12 @@ class LandingPage extends Component {
                                     variant="raised"
                                     color="primary"
                                     className={classes.submit}
-                                    style={{marginBottom: 15}}
+                                    style={{ marginBottom: 15 }}
                                 >
                                     Login
                                 </Button>
                             </Link>
-                            <TermsDialog/>
+                            <TermsDialog />
                         </form>
                     </Paper>
                 </main>
