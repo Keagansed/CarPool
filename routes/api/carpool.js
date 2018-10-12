@@ -47,7 +47,7 @@ router.get('/leaveCarpool', function (req, res, next) {
     const { query } = req;
     const { _id, token } = query;
 
-    Carpool.find({ _id: _id },        
+    Carpool.findOne({ _id: _id },        
         (err, data) => {            
             if (err) {
                 return res.send({
@@ -56,12 +56,20 @@ router.get('/leaveCarpool', function (req, res, next) {
                 });
             } else {
                 console.log('TCL: data', data);
-                let routes = data[0].routes;
-                routes.forEach((route) => {
-                    if (route.userId === token){
-                        let index = routes.indexOf(route);
-                        routes.splice(index,1);
-                    }
+
+                if(!data) {
+                    return res.status(500).send({
+                        success: false,
+                        message: "System could not find a Carpool with ID: " + _id,
+                    });
+                } else {
+
+                    let routes = data.routes;
+                    routes.forEach((route) => {
+                        if (route.userId === token){
+                            let index = routes.indexOf(route);
+                            routes.splice(index,1);
+                        }
                 });
 
                 console.log('TCL: routes.length', routes.length);
@@ -96,8 +104,9 @@ router.get('/leaveCarpool', function (req, res, next) {
                         }
                     );
                 }
-            }
-        });
+            }                
+        }
+    });
 });
 
 // This method gets a specific carpool document from the Carpool collection.
