@@ -11,6 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 import SettingsPageStore from './../../stores/SettingsPageStore';
 
@@ -32,6 +33,7 @@ class ReportSetting extends Component {
 
         this.state = {
             reportErrorDialog: false,
+            confirmDialog: false,
             problem: "",
 
             touched: {
@@ -44,9 +46,16 @@ class ReportSetting extends Component {
     handleClickOpen = () => {
         this.setState({ reportErrorDialog: true });
     };
-
     handleClose = () => {
         this.setState({ reportErrorDialog: false });
+    };
+
+    //Open/Close confirm dialpg
+    handleConfirmOpen = () => {
+        this.setState({ confirmDialog: true });
+    };
+    handleConfirmClose = () => {
+        this.setState({ confirmDialog: false });
     };
 
     /*
@@ -70,6 +79,7 @@ class ReportSetting extends Component {
             }
         });
         this.handleClose();
+        this.handleConfirmOpen();
     }
 
     /*
@@ -123,6 +133,20 @@ class ReportSetting extends Component {
                     </Button>
                         <Button onClick={this.sendProblem} color="primary" disabled={isDisabled}>
                             Report
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                {/* Confirm dialog */}
+                <Dialog open={this.state.confirmDialog} onClose={this.handleConfirmClose}>
+                    <DialogTitle>{"Bug Reported"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Thank you for your reporting the problem. We will get to it as soon as possible.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleConfirmClose} color="primary">
+                            Ok
                         </Button>
                     </DialogActions>
                 </Dialog>
