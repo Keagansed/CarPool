@@ -151,7 +151,7 @@ import ServerURL from '../../utils/server';
                 if(json.success) {
 
                 }else{
-                    alert(json.message);
+                    console.log(json.message);
                 }
             }
         })

@@ -77,7 +77,7 @@ class carpoolStore {
                         this.getCarpool(this.carpoolID, token);
                     }
                 }else{
-                    alert(json.message);
+                    console.log(json.message);
                 }
             });
     };
@@ -184,7 +184,7 @@ class carpoolStore {
                                     if (json.success) {
                                         }
                                         else {
-                                            window.alert(json.message);
+                                            console.log(json.message);
                                         }
                                     });
                         }

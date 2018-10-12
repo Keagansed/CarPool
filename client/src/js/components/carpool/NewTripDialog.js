@@ -72,8 +72,7 @@ import { getFromStorage } from '../../utils/localStorage.js'
         let hours = time.split(":")[0];
         let minutes = time.split(":")[1];
         hours = hours < 10 ? "0" + hours : hours;
-        TripsStore.dateTime.setHours(hours, minutes, 0, 0);
-        TripsStore.tripName = this.props.carpoolName;
+        TripsStore.dateTime.setHours(hours, minutes, 0, 0);        
 
         TripsStore.dateTime.setDate(date.getDate());
         TripsStore.dateTime.setMonth(date.getMonth());
@@ -122,6 +121,9 @@ import { getFromStorage } from '../../utils/localStorage.js'
      * renders the modal invisible.
      */
     suggestTrip = () => {
+
+        TripsStore.tripName = this.props.carpoolName;
+        
         let days = "";
         if (document.getElementById("weekday-mon").checked) {
             days = days + "Mon ";
@@ -186,10 +188,10 @@ import { getFromStorage } from '../../utils/localStorage.js'
                 TripsStore.carpoolID = this.props.carpoolID;
                 TripsStore.addTrip(this.props.suggestTrip, messageContent, users, this.props.token);
             }else {
-                alert("The date can not be in the past.");
+                console.log("The date can not be in the past.");
             }
         }else{
-            alert("Invalid date!");
+            console.log("Invalid date!");
         }
         
     }
