@@ -3,6 +3,16 @@
 A progressive web application with the purpose of bringing the community together
 by sharing the responsibilities of driving.
 
+## Access
+
+Access the live application by scanning the QR code below to view on your mobile device.
+
+![QR](https://i.postimg.cc/SQwRTH1F/Whats-App-Image-2018-10-16-at-19-37-25.jpg)
+
+Or simply click [here](http://carpool.iminsys.com).
+
+Help us by reporting any issues that you may encounter or if you have any suggestions then we welcome your feedback. This can be done through the 'Report a Problem' option in the settings tab of the application.
+
 ## Installation
 
 [Download and install Node.js](https://nodejs.org/en/download/).
@@ -16,16 +26,16 @@ $ npm install
 ```
 Once the installation is complete, navigate to the `\CarPool\client\` folder and run the [`npm install`] command again.  
 
-
 ## Features
 
 * User registration and login
 * View and edit profile
-* User vouching system
-* User search function
+* User vouching and trust rating system
+* Route creation and efficient matching
+* Create or join a carpool to arrange trips
+* Optimal trip calculation to determine the shortest route for the driver
 
 ## Documentation
-	
 	
 * <a href="https://drive.google.com/open?id=1Bm0DS6Q2ma_6LgFtqEvHb00QAVKw4pVi" target="_blank">User manual</a>
 * <a href="https://drive.google.com/open?id=1eM-7meF5puDQnJiRQuKKxiiulo7DSO4w" target="_blank">Requirements and design document </a>
@@ -54,7 +64,7 @@ Many of us have been in situations where we need to be somewhere but we simply d
 
 ## Tests
 
-To run the test suite, install the dependencies as described in [installation](#installation), once that is complete, run the [`npm test`] command:
+To run the test suite, install the dependencies as described in [installation](#installation), once that is complete, ensure that you are in the `\CarPool\client\` folder and run the [`npm test`] command:
 
 ```bash
 	$ npm test
@@ -67,5 +77,3 @@ CarPool is a project proposed and sponsored by [Iminsys][iminsys-url], developed
 [iminsys-url]: http://www.iminsys.com
 [package-diagram-url]: https://ibb.co/dbs9xH
 [up-url]: http://www.up.ac.za
-
-
