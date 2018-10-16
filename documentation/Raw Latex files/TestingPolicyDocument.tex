@@ -1,0 +1,76 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+
+\begin{document}
+\input{title_page.tex}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+  \subsection{Purpose of This Document}
+  The purpose of this document is to provide a comprehensive description of how and why testing will be done on the system being developed. It is to ensure that as the system progresses it maintains a desired level of functionality with minimal errors.
+  \newline
+  \newline
+  The requirements stated in this document will be applied system-wide throughout the development process. This ensures that each component of the system will be thoroughly tested before adding on to it.
+  	
+  \subsection{What is Testing?}
+  Testing refers to the process of verifying an validating that a software program:
+  \begin{itemize}
+  \item Fulfills all requirements set out in the description of the document.
+  \item Works as expected, without error
+  \item Has been implemented with the required non-functional software characteristics
+  \end{itemize}
+  	
+  \subsection{Why is Testing Required?}
+  Testing is essential to ensure the successful construction of a system. Due to complexity it is near impossible to implement it correctly first time around. It is therefore a necessity to verify each part of the system by testing it.
+  \newline
+  \newline
+  Potential problems and risks need to be identified early on in systems development in order to ensure they won't be a problem later on in the development process.
+  \newline
+  \newline
+  Along with detecting defects that exist, testing provides a way to prove to the client that the system is in fact in proper working order and fulfills the its requirements.
+
+\section{The Testing Process}
+Unit testing and end-to-end integration testing is performed to ensure that all components and containers function as intended.
+    	\subsection{Unit Testing}
+        Unit tests refer to the testing of individual components. This may be components that exist as user-visible components and the layouts of such, or to the individual testable modules and methods. Tests are also performed on the methods contained within the stores, which act as controllers for the components. Jest, our chosen testing platform, supports snapshot testing in which a shallow render of a component is captured. This shallow render, or snapshot, is used as a template for future tests where the component being tested is compared to the snapshot to ensure that it renders as expected.
+        
+        \subsection{Integration Testing}
+        All of the components of the system need to work efficiently together to ensure that the system as a whole operates as expected. Individual components are rendered inside container components. These container components are thoroughly tested to ensure that the integration of the individual components is performed correctly. The system is implemented as one single software application that will carry out all the tasks as described by the requirements document. It is a necessity that all components interact in a way that is predictable and expected.
+        
+    \newline
+  	\newline
+    
+\section{Test environment}
+	\subsection{Travis CI}
+Travis CI is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub. Travis CI automates testing by evoking the npm test script each time a new commit is pushed to GitHub. The results of these tests are readily available and are emailed to the user which issued the push to GitHub.
+
+	\subsection{Jest}
+The tests Travis CI will run will be designed using Jest. Jest is a zero configuration testing platform which is used to test React applications. Jest in conjunction with the node module, Enzyme, allows for the testing of individual components as well as container components. Jest will test all of the parts of the website such as whether or not the layout of a page is correct as well as whether or not the functional requirements are met, this includes the proper operation of all methods in the program.
+    
+\section{Test evaluation}
+This refers to how tests are evaluated to ensure the quality of the system is maintained. The system will have to succeed at all tests on Travis CI in order to be deemed as correct. This is because all tests using Jest that are run by Travis CI will be vital to the proper running of the system.
+\newline
+\newline
+If the system for some reason does not pass the test it will need to be evaluated in order to determine the effect it will have on operation of the system as a whole and the effect it will have on the business.
+
+\section{Approach to test improvement}
+During the regular meetings, the current testing methods will be evaluated and a way forward will be discussed.
+
+
+
+\end{document}
