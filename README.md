@@ -1,7 +1,16 @@
 ﻿# CarPool
 
-A progressive web application with the purpose of bringing the community together
-by sharing the responsibilities of driving.
+The Iminsys Carpool Platform. A progressive web application with the purpose of bringing the community together by sharing the responsibilities of driving.
+
+## Access
+
+Access the live application by scanning the QR code below to view on your mobile device.
+
+![QR](https://i.postimg.cc/SQwRTH1F/Whats-App-Image-2018-10-16-at-19-37-25.jpg)
+
+Or simply click [here](http://carpool.iminsys.com).
+
+Help us by reporting any issues that you may encounter or if you have any suggestions then we welcome your feedback. This can be done through the 'Report a Problem' option in the settings tab of the application.
 
 ## Installation
 
@@ -14,8 +23,8 @@ In your CarPool directory, run the [`npm install`] command to install the requir
 ```bash
 $ npm install
 ```
-Once the installation is complete, navigate to the `\CarPool\client\` folder and run the [`npm install`] command again.  
 
+Once the installation is complete, navigate to the `\CarPool\client\` folder and run the [`npm install`] command again.
 
 ## Features
 
@@ -23,14 +32,13 @@ Once the installation is complete, navigate to the `\CarPool\client\` folder and
 * View and edit profile
 * User vouching system
 * User search function
-
+* 
 ## Documentation
-	
-	
-* [User Manual](https://drive.google.com/open?id=15Xil4pbk8T1k4epE6ULfLF9PqgrSDMiq)
-* [Requirements and Design document](https://drive.google.com/open?id=16S4-24a4RshAfKx4Jjp4z7Z1VlNEXQ_c6AF8KU2pOpI)
-* [Coding Standards document](https://drive.google.com/open?id=1L5UCMJzX3bENWo_TjIH5aXFxkfkO-MV8)
-* [Testing Policy document](https://drive.google.com/open?id=1FGpuaxpYKhTKCvPZ8lSglqVc8Ma-UdZL)
+
+*  [User Manual](https://drive.google.com/open?id=15Xil4pbk8T1k4epE6ULfLF9PqgrSDMiq)
+*  [Requirements and Design document](https://drive.google.com/open?id=16S4-24a4RshAfKx4Jjp4z7Z1VlNEXQ_c6AF8KU2pOpI)
+*  [Coding Standards document](https://drive.google.com/open?id=1L5UCMJzX3bENWo_TjIH5aXFxkfkO-MV8)
+*  [Testing Policy document](https://drive.google.com/open?id=1FGpuaxpYKhTKCvPZ8lSglqVc8Ma-UdZL)
 
 ### Security Issues
 
@@ -40,10 +48,10 @@ As developers with the greatest concern for your safety, we understand the risks
 
 Please follow the [installation](#installation) instructions before proceeding.
 
-Once all the dependencies are installed,  ensure that your are in the `\CarPool\client\` directory then run the [`npm run local`] command:
+Once all the dependencies are installed, ensure that your are in the `\CarPool\client\` directory then run the [`npm run local`] command:
 
 ```bash
-$ npm start
+$ npm run local
 ```
 
 This will start the server, and automatically open the CarPool web application in your browser.
@@ -57,15 +65,17 @@ Many of us have been in situations where we need to be somewhere but we simply d
 To run the test suite, install the dependencies as described in [installation](#installation), once that is complete, run the [`npm test`] command:
 
 ```bash
-	$ npm test
+$ npm test
 ```
+
+Ensure that you are in the `\CarPool\client\` folder before running this command.
 
 ## People
 
 CarPool is a project proposed and sponsored by [Iminsys][iminsys-url], developed by the Brogrammers development team and owned by the [University of Pretoria][up-url].
 
 [iminsys-url]: http://www.iminsys.com
+
 [package-diagram-url]: https://ibb.co/dbs9xH
+
 [up-url]: http://www.up.ac.za
-
-
