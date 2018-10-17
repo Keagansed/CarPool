@@ -70,7 +70,7 @@ class DeleteRoute extends Component{
                     this.setRedirect();
                 }else{
                     this.toggle();
-                    alert(json.message);
+                    console.log(json.message);
                 }
                 
             });

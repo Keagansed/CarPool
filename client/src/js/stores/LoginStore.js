@@ -99,7 +99,7 @@ class loginStore {
      */
     @action signUp = () => {
         if(this.sPassword1 !== this.sPassword2) {
-            alert("Passwords do not match");
+            console.log("Passwords do not match");
         }
         else{
             fetch(ServerURL + '/api/account/signup',{
@@ -121,7 +121,7 @@ class loginStore {
                 if(json.success) {
                     this.setRegistered(true);
                 }else{
-                    alert(json.message);
+                    console.log(json.message);
                 }
             })
         }

@@ -173,12 +173,12 @@ class tripsStore {
                         this.tripID = json._id;
                         suggestTrip(messageContent, getFromStorage('sessionKey').token, users, this.tripID);
                     }else{
-                        alert(json.message);
+                        console.log(json.message);
                     }
                 })
 
             }else{
-                alert(json.message);
+                console.log(json.message);
             }
         })
             
@@ -206,7 +206,7 @@ class tripsStore {
             if(json.success){
 
             }else{
-                alert(json.message);
+                console.log(json.message);
             }
         })
     }

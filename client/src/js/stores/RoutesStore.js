@@ -159,7 +159,7 @@ General solution: https://stackoverflow.com/questions/6847697/how-to-return-valu
                     }
                     else{
                         console.log(json)
-                        window.alert("Failed to create new route");
+                        console.log("Failed to create new route");
                     } 
                     doneAddingRoute();
                 }) 
