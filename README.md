@@ -1,4 +1,5 @@
-﻿# CarPool
+﻿![Logo](https://i.postimg.cc/SNyCSXtF/Whats-App-Image-2018-10-17-at-20-47-15.jpg)
+# CarPool
 
 A progressive web application with the purpose of bringing the community together
 by sharing the responsibilities of driving.
@@ -7,7 +8,7 @@ by sharing the responsibilities of driving.
 
 Access the live application by scanning the QR code below to view on your mobile device.
 
-![QR](https://i.postimg.cc/SQwRTH1F/Whats-App-Image-2018-10-16-at-19-37-25.jpg)
+![QR](https://i.postimg.cc/pTWRhHNT/Whats-App-Image-2018-10-16-at-19-37-25.jpg)
 
 Or simply click [here](http://carpool.iminsys.com).
 
