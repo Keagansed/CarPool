@@ -1,4 +1,4 @@
-﻿![Logo](https://i.postimg.cc/SNyCSXtF/Whats-App-Image-2018-10-17-at-20-47-15.jpg)
+﻿![Logo](https://i.postimg.cc/9XB285CB/Carpool-Logo-Transparent.jpg)
 # CarPool
 
 A progressive web application with the purpose of bringing the community together
