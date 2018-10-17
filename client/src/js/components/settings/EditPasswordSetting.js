@@ -170,7 +170,7 @@ class EditPasswordSetting extends Component {
                 </Dialog>
                 {/* Confirm dialog */}
                 <Dialog open={this.state.confirmDialog} onClose={this.handleConfirmClose}>
-                    <DialogTitle>{"Bug Reported"}</DialogTitle>
+                    <DialogTitle>{"Password Changed"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             Your password has been successfully changed.
