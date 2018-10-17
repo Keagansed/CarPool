@@ -45,8 +45,9 @@ const styles = theme => ({
         margin: '0 auto',
         padding: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 4}px`,
     },
-    heroButtons: {
-        marginTop: theme.spacing.unit * 4,
+    helperText: {
+        marginTop: theme.spacing.unit * 3,
+        marginBottom: theme.spacing.unit * 1,
     },
     layout: {
         width: 'auto',
@@ -115,7 +116,7 @@ class InfoPage extends Component {
             openDialog: true,
         })
     }
-    
+
     renderDownloadDialog = () => {
         const { classes } = this.props;
 
@@ -123,8 +124,8 @@ class InfoPage extends Component {
             <Dialog
                 open={this.state.openDialog}
                 onClose={this.closeDialog}
-                maxWidth="lg"   
-                scroll='paper' 
+                maxWidth="lg"
+                scroll='paper'
             >
                 <DialogTitle>Download App</DialogTitle>
                 <DialogContent style={{ justifyContent: "center" }}>
@@ -132,15 +133,15 @@ class InfoPage extends Component {
                         Android
                     </DialogContentText>
 
-                    <img src={android1} alt="" className={classes.dialogImg}/>
-                    <img src={android2} alt="" className={classes.dialogImg}/>
+                    <img src={android1} alt="" className={classes.dialogImg} />
+                    <img src={android2} alt="" className={classes.dialogImg} />
 
                     <DialogContentText variant="title">
                         iOS
                     </DialogContentText>
 
-                    <img src={ios1} alt="" className={classes.dialogImg}/>
-                    <img src={ios2} alt="" className={classes.dialogImg}/>
+                    <img src={ios1} alt="" className={classes.dialogImg} />
+                    <img src={ios2} alt="" className={classes.dialogImg} />
 
                 </DialogContent>
                 <DialogActions>
@@ -173,6 +174,9 @@ class InfoPage extends Component {
                             <Avatar src={logo} align='center' className={classes.carpoolLogo} />
                             <Typography variant="title" align="center" color="textSecondary">
                                 Welcome to the ridesharing platform that helps you help eachother.
+                            </Typography>
+                            <Typography variant="subheading" align="center" color="primary" className={classes.helperText}>
+                                Watch the tutorial before getting started!
                             </Typography>
                             <div className={classes.heroButtons}>
                                 <Grid container spacing={16} justify="center">
@@ -272,7 +276,7 @@ class InfoPage extends Component {
                                             Clean our Roads
                                         </Typography>
                                         <Typography>
-                                            If you've ever had to sit in peak hour traffic you'll know what a pain it can be. A big reason 
+                                            If you've ever had to sit in peak hour traffic you'll know what a pain it can be. A big reason
                                             for unnecessary traffic is that there are too many cars with one driver and
                                             a host of empty seats. By driving together, we are reducing the number cars on our roads, not only
                                             minimizing traffic, but minimizing the environmental impact our vehicles have.
