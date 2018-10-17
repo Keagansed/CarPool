@@ -1,4 +1,4 @@
-﻿![Logo](https://i.postimg.cc/9XB285CB/Carpool-Logo-Transparent.jpg)
+﻿![Logo](https://i.postimg.cc/7hvnJjcF/Group-3-1.png)
 # CarPool
 
 A progressive web application with the purpose of bringing the community together
