@@ -9,7 +9,7 @@ class MockStore {
     createCarpoolOffer = false;
     joinCarpoolOffer = false;
 
-    getOffers = () => {
+    getOffers = (token) => {
         this.offers.push({
             CarpoolName : "TestCarpool",
             SenderID : "sender123",
@@ -35,7 +35,6 @@ describe('Carpool Offers Component', () => {
     beforeEach(() => {
         mockStore = new MockStore();
         token = "testtoken123";
-        
         container = shallow(<CarpoolOffers store={mockStore} token={token}/>);
         instance = container.instance();
     });
@@ -50,6 +49,7 @@ describe('Carpool Offers Component', () => {
     });
 
     it('populates the offers', () => {
+        mockStore.getOffers(token);
         expect(instance.props.store.offers.length).toEqual(1);
     });
 
