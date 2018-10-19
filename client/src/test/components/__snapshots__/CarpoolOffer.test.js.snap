@@ -67,6 +67,7 @@ exports[`Carpool Offer Component captures snapshot 1`] = `
         className="MuiButtonBase-root-12 MuiIconButton-root-67"
         disabled={false}
         onBlur={[Function]}
+        onClick={[Function]}
         onFocus={[Function]}
         onKeyDown={[Function]}
         onKeyUp={[Function]}

@@ -1,12 +1,14 @@
 import React from 'react';
-import LoginPage from '../../js/containers/LoginPage';
+import Login from '../../js/containers/LoginPage';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
+import { MemoryRouter } from 'react-router-dom';
 
 class MockStore {
     token = null; 
     loggedIn = false; 
     registered = false; 
+    toggleError = false;
     lemail = ''; 
     lpassword = '';
     sFName = '';
@@ -56,15 +58,14 @@ class MockStore {
 describe('Login Page Component', () => {
     let container, instance;
     const mockStore = new MockStore();
-    const loginPage = new LoginPage();
 
     beforeAll(() => {
-        container = shallow(<LoginPage store={mockStore} />);
-        instance = container.instance();
+        container = shallow(<Login store={mockStore} />);
+        instance = container.dive().instance();
     });
 
     it('captures snapshot', () => {
-        const renderedValue = renderer.create(<LoginPage store={mockStore} />).toJSON();
+        const renderedValue = renderer.create(<MemoryRouter><Login store={mockStore} /></MemoryRouter>).toJSON();
         expect(renderedValue).toMatchSnapshot();
     });
 

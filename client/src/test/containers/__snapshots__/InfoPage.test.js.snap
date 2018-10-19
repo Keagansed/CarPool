@@ -3,14 +3,14 @@
 exports[`InfoPage Component captures snapshot 1`] = `
 Array [
   <header
-    className="MuiPaper-root-22 MuiPaper-elevation4-28 MuiAppBar-root-13 MuiAppBar-positionStatic-17 MuiAppBar-colorPrimary-20 InfoPage-appBar-1"
+    className="MuiPaper-root-37 MuiPaper-elevation4-43 MuiAppBar-root-28 MuiAppBar-positionStatic-32 MuiAppBar-colorPrimary-35 InfoPage-appBar-1"
   >
     <div
-      className="MuiToolbar-root-49 MuiToolbar-regular-51 MuiToolbar-gutters-50"
+      className="MuiToolbar-root-64 MuiToolbar-regular-66 MuiToolbar-gutters-65"
     >
       <svg
         aria-hidden="true"
-        className="MuiSvgIcon-root-53 InfoPage-icon-2"
+        className="MuiSvgIcon-root-68 InfoPage-icon-2"
         color={undefined}
         focusable="false"
         role="presentation"
@@ -25,7 +25,7 @@ Array [
         />
       </svg>
       <h2
-        className="MuiTypography-root-62 MuiTypography-title-68 MuiTypography-colorInherit-82 MuiTypography-noWrap-79"
+        className="MuiTypography-root-77 MuiTypography-title-83 MuiTypography-colorInherit-97 MuiTypography-noWrap-94"
       >
         The Iminsys Carpool Platform
       </h2>
@@ -40,32 +40,67 @@ Array [
       >
         <div
           align="center"
-          className="MuiAvatar-root-88 InfoPage-carpoolLogo-12"
+          className="MuiAvatar-root-103 InfoPage-carpoolLogo-12"
         >
           <img
             alt={undefined}
-            className="MuiAvatar-img-90"
+            className="MuiAvatar-img-105"
             sizes={undefined}
             src="logo.png"
             srcSet={undefined}
           />
         </div>
         <h2
-          className="MuiTypography-root-62 MuiTypography-title-68 MuiTypography-colorTextSecondary-86 MuiTypography-alignCenter-76"
+          className="MuiTypography-root-77 MuiTypography-title-83 MuiTypography-colorTextSecondary-101 MuiTypography-alignCenter-91"
         >
           Welcome to the ridesharing platform that helps you help eachother.
         </h2>
+        <h3
+          className="MuiTypography-root-77 MuiTypography-subheading-84 MuiTypography-colorPrimary-98 MuiTypography-alignCenter-91 InfoPage-helperText-5"
+        >
+          Watch the tutorial before getting started!
+        </h3>
         <div
-          className="InfoPage-heroButtons-5"
+          className={undefined}
         >
           <div
-            className="MuiGrid-container-91 MuiGrid-spacing-xs-16-114 MuiGrid-justify-xs-center-108"
+            className="MuiGrid-container-106 MuiGrid-spacing-xs-16-129 MuiGrid-justify-xs-center-123"
           >
             <div
-              className="MuiGrid-item-92"
+              className="MuiGrid-item-107"
+            >
+              <button
+                className="MuiButtonBase-root-229 MuiButton-root-203 MuiButton-text-205 MuiButton-textPrimary-206 MuiButton-outlined-211 MuiButton-outlinedPrimary-212"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiButton-label-204"
+                >
+                  Download App
+                </span>
+                <span
+                  className="MuiTouchRipple-root-232"
+                />
+              </button>
+            </div>
+            <div
+              className="MuiGrid-item-107"
             >
               <a
-                className="MuiButtonBase-root-214 MuiButton-root-188 MuiButton-contained-199 MuiButton-containedPrimary-200 MuiButton-raised-202 MuiButton-raisedPrimary-203"
+                className="MuiButtonBase-root-229 MuiButton-root-203 MuiButton-text-205 MuiButton-textPrimary-206 MuiButton-outlined-211 MuiButton-outlinedPrimary-212"
                 href="/Landing"
                 onBlur={[Function]}
                 onFocus={[Function]}
@@ -81,21 +116,25 @@ Array [
                 tabIndex="0"
               >
                 <span
-                  className="MuiButton-label-189"
+                  className="MuiButton-label-204"
                 >
-                  Get Started
+                  Access Online
                 </span>
                 <span
-                  className="MuiTouchRipple-root-217"
+                  className="MuiTouchRipple-root-232"
                 />
               </a>
             </div>
+          </div>
+          <div
+            className="MuiGrid-container-106 MuiGrid-spacing-xs-16-129 MuiGrid-justify-xs-center-123"
+          >
             <div
-              className="MuiGrid-item-92"
+              className="MuiGrid-item-107"
             >
-              <button
-                className="MuiButtonBase-root-214 MuiButtonBase-disabled-215 MuiButton-root-188 MuiButton-text-190 MuiButton-textPrimary-191 MuiButton-outlined-196 MuiButton-outlinedPrimary-197 MuiButton-disabled-208"
-                disabled={true}
+              <a
+                className="MuiButtonBase-root-229 MuiButton-root-203 MuiButton-contained-214 MuiButton-containedPrimary-215 MuiButton-raised-217 MuiButton-raisedPrimary-218"
+                href="https://www.youtube.com/watch?v=-Ew_PqmMwtM&feature=youtu.be"
                 onBlur={[Function]}
                 onFocus={[Function]}
                 onKeyDown={[Function]}
@@ -106,15 +145,19 @@ Array [
                 onTouchEnd={[Function]}
                 onTouchMove={[Function]}
                 onTouchStart={[Function]}
-                tabIndex="-1"
-                type="button"
+                role="button"
+                tabIndex="0"
+                target="_blank"
               >
                 <span
-                  className="MuiButton-label-189"
+                  className="MuiButton-label-204"
                 >
-                  Watch Video
+                  Tutorial
                 </span>
-              </button>
+                <span
+                  className="MuiTouchRipple-root-232"
+                />
+              </a>
             </div>
           </div>
         </div>
@@ -124,16 +167,16 @@ Array [
       className="InfoPage-layout-6 InfoPage-cardGrid-7"
     >
       <div
-        className="MuiGrid-container-91 MuiGrid-spacing-xs-40-117"
+        className="MuiGrid-container-106 MuiGrid-spacing-xs-40-132"
       >
         <div
-          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+          className="MuiGrid-item-107 MuiGrid-grid-sm-6-154 MuiGrid-grid-md-4-166 MuiGrid-grid-lg-3-179"
         >
           <div
-            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+            className="MuiPaper-root-37 MuiPaper-elevation1-40 MuiPaper-rounded-38 MuiCard-root-239 InfoPage-card-8"
           >
             <div
-              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              className="MuiCardMedia-root-240 InfoPage-cardMedia-9"
               src={undefined}
               style={
                 Object {
@@ -143,15 +186,15 @@ Array [
               title="Community"
             />
             <div
-              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+              className="MuiCardContent-root-242 InfoPage-cardContent-10"
             >
               <h2
-                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+                className="MuiTypography-root-77 MuiTypography-headline-82 MuiTypography-gutterBottom-95"
               >
                 Join a Community
               </h2>
               <p
-                className="MuiTypography-root-62 MuiTypography-body1-71"
+                className="MuiTypography-root-77 MuiTypography-body1-86"
               >
                 The intention of the Iminsys Carpool Platform is to bring commuters together and to help them help eachother. By giving users the tools to find others who travel along similar routes, interact with them, and share driving responsibilities with no costs involved, the platform exposes the good in people and creates a network out of which everyone benefits.
               </p>
@@ -159,13 +202,13 @@ Array [
           </div>
         </div>
         <div
-          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+          className="MuiGrid-item-107 MuiGrid-grid-sm-6-154 MuiGrid-grid-md-4-166 MuiGrid-grid-lg-3-179"
         >
           <div
-            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+            className="MuiPaper-root-37 MuiPaper-elevation1-40 MuiPaper-rounded-38 MuiCard-root-239 InfoPage-card-8"
           >
             <div
-              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              className="MuiCardMedia-root-240 InfoPage-cardMedia-9"
               src={undefined}
               style={
                 Object {
@@ -175,15 +218,15 @@ Array [
               title="Money"
             />
             <div
-              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+              className="MuiCardContent-root-242 InfoPage-cardContent-10"
             >
               <h2
-                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+                className="MuiTypography-root-77 MuiTypography-headline-82 MuiTypography-gutterBottom-95"
               >
                 Save on Travel
               </h2>
               <p
-                className="MuiTypography-root-62 MuiTypography-body1-71"
+                className="MuiTypography-root-77 MuiTypography-body1-86"
               >
                 Unfortunately, travel is expensive. This is something that we are all familiar with and it is not a problem that is going away anytime soon. Our Carpool Platform does not provide for the exchange of money; however, it does allow people to alternate driving responsibilities so the costs involved in driving are reduced for everyone.
               </p>
@@ -191,13 +234,13 @@ Array [
           </div>
         </div>
         <div
-          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+          className="MuiGrid-item-107 MuiGrid-grid-sm-6-154 MuiGrid-grid-md-4-166 MuiGrid-grid-lg-3-179"
         >
           <div
-            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+            className="MuiPaper-root-37 MuiPaper-elevation1-40 MuiPaper-rounded-38 MuiCard-root-239 InfoPage-card-8"
           >
             <div
-              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              className="MuiCardMedia-root-240 InfoPage-cardMedia-9"
               src={undefined}
               style={
                 Object {
@@ -207,15 +250,15 @@ Array [
               title="Commute"
             />
             <div
-              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+              className="MuiCardContent-root-242 InfoPage-cardContent-10"
             >
               <h2
-                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+                className="MuiTypography-root-77 MuiTypography-headline-82 MuiTypography-gutterBottom-95"
               >
                 Enjoy Commuting
               </h2>
               <p
-                className="MuiTypography-root-62 MuiTypography-body1-71"
+                className="MuiTypography-root-77 MuiTypography-body1-86"
               >
                 Driving the same route on a daily basis is a tedious task but when you're driving with new friends it will become something you look forward to. Our Carpool Platform makes numerous provisions to ensure you only travel with people you feel comfortable around, so the only question that remains is - why drive alone when you can drive together?
               </p>
@@ -223,13 +266,13 @@ Array [
           </div>
         </div>
         <div
-          className="MuiGrid-item-92 MuiGrid-grid-sm-6-139 MuiGrid-grid-md-4-151 MuiGrid-grid-lg-3-164"
+          className="MuiGrid-item-107 MuiGrid-grid-sm-6-154 MuiGrid-grid-md-4-166 MuiGrid-grid-lg-3-179"
         >
           <div
-            className="MuiPaper-root-22 MuiPaper-elevation1-25 MuiPaper-rounded-23 MuiCard-root-224 InfoPage-card-8"
+            className="MuiPaper-root-37 MuiPaper-elevation1-40 MuiPaper-rounded-38 MuiCard-root-239 InfoPage-card-8"
           >
             <div
-              className="MuiCardMedia-root-225 InfoPage-cardMedia-9"
+              className="MuiCardMedia-root-240 InfoPage-cardMedia-9"
               src={undefined}
               style={
                 Object {
@@ -239,15 +282,15 @@ Array [
               title="Image title"
             />
             <div
-              className="MuiCardContent-root-227 InfoPage-cardContent-10"
+              className="MuiCardContent-root-242 InfoPage-cardContent-10"
             >
               <h2
-                className="MuiTypography-root-62 MuiTypography-headline-67 MuiTypography-gutterBottom-80"
+                className="MuiTypography-root-77 MuiTypography-headline-82 MuiTypography-gutterBottom-95"
               >
                 Clean our Roads
               </h2>
               <p
-                className="MuiTypography-root-62 MuiTypography-body1-71"
+                className="MuiTypography-root-77 MuiTypography-body1-86"
               >
                 If you've ever had to sit in peak hour traffic you'll know what a pain it can be. A big reason for unnecessary traffic is that there are too many cars with one driver and a host of empty seats. By driving together, we are reducing the number cars on our roads, not only minimizing traffic, but minimizing the environmental impact our vehicles have.
               </p>
@@ -261,12 +304,12 @@ Array [
     className="InfoPage-footer-11"
   >
     <h2
-      className="MuiTypography-root-62 MuiTypography-title-68 MuiTypography-gutterBottom-80 MuiTypography-alignCenter-76"
+      className="MuiTypography-root-77 MuiTypography-title-83 MuiTypography-gutterBottom-95 MuiTypography-alignCenter-91"
     >
       Created By
     </h2>
     <p
-      className="MuiTypography-root-62 MuiTypography-subheading-69 MuiTypography-colorTextSecondary-86 MuiTypography-alignCenter-76"
+      className="MuiTypography-root-77 MuiTypography-subheading-84 MuiTypography-colorTextSecondary-101 MuiTypography-alignCenter-91"
     >
       The Brogrammers Development Team
     </p>

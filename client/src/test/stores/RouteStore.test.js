@@ -12,7 +12,7 @@ describe ('Route Store test functions', () => {
             routeName : '',
             startLocation : '',
             endLocation : '',
-            time : '',
+            time : {},
         };
         data = {
             routeName : routes.routeName,

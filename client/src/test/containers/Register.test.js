@@ -1,8 +1,8 @@
 import React from 'react';
 import Register from '../../js/containers/RegisterPage';
-import { shallow } from 'enzyme';
-import { mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer'
+import { MemoryRouter } from 'react-router-dom';
 
 class MockStore {
     token = null; 
@@ -13,8 +13,8 @@ class MockStore {
     sFName = '';
     sLName = '';
     semail = '';
-    sPass1 = '';
-    sPass2 = '';
+    sPassword1 = '';
+    sPassword2 = '';
     sId = '';
 
     setToken = (token) => {
@@ -33,7 +33,7 @@ class MockStore {
 
     signUp = () => {
         
-        if(this.sPass1 === this.sPass2) {
+        if(this.sPassword1 === this.sPassword2) {
             this.setRegistered(true);
         }
 
@@ -57,12 +57,12 @@ describe('Register Component', () => {
     
     beforeAll(() => {
         mockStore = new MockStore();
-        container = mount(<Register store={mockStore} />);
-        instance = container.instance();
+        container = shallow(<MemoryRouter><Register store={mockStore} /></MemoryRouter>);
+        instance = container.dive().dive().dive().instance();
     });
     
     it('captures snapshot', () => {
-        const renderedValue = renderer.create(<Register store={mockStore} />).toJSON();
+        const renderedValue = renderer.create(<MemoryRouter><Register store={mockStore} /></MemoryRouter>).toJSON();
         expect(renderedValue).toMatchSnapshot();
     });
   
@@ -92,10 +92,10 @@ describe('Register Component', () => {
     });
 
     it('updates sign up ID correctly', () => {
-        const event = {target: {value: "9311179351087"}};
+        const event = {target: {value: "9806237941084"}};
         expect(instance.state.idNum).toEqual('');
         instance.updateSignUpIDValue(event);
-        expect(instance.state.idNum).toEqual("9311179351087");
+        expect(instance.state.idNum).toEqual("9806237941084");
     });
 
     it('updates first sign up password correctly', () => {
@@ -115,6 +115,7 @@ describe('Register Component', () => {
     it('handles sign up correctly', () => {
         const event = {preventDefault: function() {}};
         expect(instance.props.store.registered).toEqual(false);
+        instance.state.checked = true;
         instance.handleSignup(event);
         expect(instance.props.store.registered).toEqual(true);
     });

@@ -1,308 +1,464 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Register Component captures snapshot 1`] = `
-<main
-  className="Register-layout-1"
->
-  <div
-    className="MuiPaper-root-6 MuiPaper-elevation2-10 MuiPaper-rounded-7 Register-paper-2"
+Array [
+  <header
+    className="MuiPaper-root-17 MuiPaper-elevation4-23 MuiAppBar-root-8 MuiAppBar-positionStatic-12 MuiAppBar-colorPrimary-15 Register-topNav-1"
   >
     <div
-      align="center"
-      className="MuiAvatar-root-33 Register-avatar-3"
+      className="MuiToolbar-root-44 MuiToolbar-dense-47 MuiToolbar-gutters-45 Register-toolbar-2"
     >
-      <img
-        alt={undefined}
-        className="MuiAvatar-img-35"
-        sizes={undefined}
-        src="logo.png"
-        srcSet={undefined}
-      />
-    </div>
-    <h1
-      className="MuiTypography-root-36 MuiTypography-headline-41"
-    >
-      Register
-    </h1>
-    <form
-      className="Register-form-4"
-    >
-      <div
-        className="MuiFormControl-root-62 MuiFormControl-marginNormal-63 MuiFormControl-fullWidth-65"
-      >
-        <label
-          className="MuiFormLabel-root-73 MuiFormLabel-required-78 MuiInputLabel-root-66 MuiInputLabel-formControl-67 MuiInputLabel-animated-70"
-          data-shrink={false}
-          htmlFor="fname"
-        >
-          First Name
-          <span
-            className="MuiFormLabel-asterisk-79"
-          >
-             *
-          </span>
-        </label>
-        <div
-          className="MuiInputBase-root-93 MuiInput-root-80 MuiInput-underline-84 MuiInputBase-formControl-94 MuiInput-formControl-81"
-          onClick={[Function]}
-        >
-          <input
-            aria-invalid={false}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            className="MuiInputBase-input-103 MuiInput-input-88"
-            defaultValue={undefined}
-            disabled={false}
-            id="fname"
-            name="fname"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={true}
-            rows={undefined}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <div
-        className="MuiFormControl-root-62 MuiFormControl-marginNormal-63 MuiFormControl-fullWidth-65"
-      >
-        <label
-          className="MuiFormLabel-root-73 MuiFormLabel-required-78 MuiInputLabel-root-66 MuiInputLabel-formControl-67 MuiInputLabel-animated-70"
-          data-shrink={false}
-          htmlFor="lname"
-        >
-          Last Name
-          <span
-            className="MuiFormLabel-asterisk-79"
-          >
-             *
-          </span>
-        </label>
-        <div
-          className="MuiInputBase-root-93 MuiInput-root-80 MuiInput-underline-84 MuiInputBase-formControl-94 MuiInput-formControl-81"
-          onClick={[Function]}
-        >
-          <input
-            aria-invalid={false}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            className="MuiInputBase-input-103 MuiInput-input-88"
-            defaultValue={undefined}
-            disabled={false}
-            id="lname"
-            name="lname"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={true}
-            rows={undefined}
-            type="text"
-            value={undefined}
-          />
-        </div>
-      </div>
-      <div
-        className="MuiFormControl-root-62 MuiFormControl-marginNormal-63 MuiFormControl-fullWidth-65"
-      >
-        <label
-          className="MuiFormLabel-root-73 MuiFormLabel-required-78 MuiInputLabel-root-66 MuiInputLabel-formControl-67 MuiInputLabel-animated-70"
-          data-shrink={false}
-          htmlFor="email"
-        >
-          Email Address
-          <span
-            className="MuiFormLabel-asterisk-79"
-          >
-             *
-          </span>
-        </label>
-        <div
-          className="MuiInputBase-root-93 MuiInput-root-80 MuiInput-underline-84 MuiInputBase-formControl-94 MuiInput-formControl-81"
-          onClick={[Function]}
-        >
-          <input
-            aria-invalid={false}
-            autoComplete="on"
-            autoFocus={undefined}
-            className="MuiInputBase-input-103 MuiInput-input-88"
-            defaultValue={undefined}
-            disabled={false}
-            id="email"
-            name="email"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={true}
-            rows={undefined}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <div
-        className="MuiFormControl-root-62 MuiFormControl-marginNormal-63 MuiFormControl-fullWidth-65"
-      >
-        <label
-          className="MuiFormLabel-root-73 MuiFormLabel-required-78 MuiInputLabel-root-66 MuiInputLabel-formControl-67 MuiInputLabel-animated-70"
-          data-shrink={false}
-          htmlFor="idNum"
-        >
-          ID Number
-          <span
-            className="MuiFormLabel-asterisk-79"
-          >
-             *
-          </span>
-        </label>
-        <div
-          className="MuiInputBase-root-93 MuiInput-root-80 MuiInput-underline-84 MuiInputBase-formControl-94 MuiInput-formControl-81"
-          onClick={[Function]}
-        >
-          <input
-            aria-invalid={false}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            className="MuiInputBase-input-103 MuiInput-input-88"
-            defaultValue={undefined}
-            disabled={false}
-            id="idNum"
-            name="idNum"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={true}
-            rows={undefined}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
-      <div
-        className="MuiFormControl-root-62 MuiFormControl-marginNormal-63 MuiFormControl-fullWidth-65"
-      >
-        <label
-          className="MuiFormLabel-root-73 MuiFormLabel-required-78 MuiInputLabel-root-66 MuiInputLabel-formControl-67 MuiInputLabel-animated-70"
-          data-shrink={false}
-          htmlFor="password1"
-        >
-          Password
-          <span
-            className="MuiFormLabel-asterisk-79"
-          >
-             *
-          </span>
-        </label>
-        <div
-          className="MuiInputBase-root-93 MuiInput-root-80 MuiInput-underline-84 MuiInputBase-formControl-94 MuiInput-formControl-81"
-          onClick={[Function]}
-        >
-          <input
-            aria-invalid={false}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            className="MuiInputBase-input-103 MuiInput-input-88 MuiInputBase-inputType-106 MuiInput-inputType-91"
-            defaultValue={undefined}
-            disabled={false}
-            id="password1"
-            name="password1"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={true}
-            rows={undefined}
-            type="password"
-            value=""
-          />
-        </div>
-      </div>
-      <div
-        className="MuiFormControl-root-62 MuiFormControl-marginNormal-63 MuiFormControl-fullWidth-65"
-      >
-        <label
-          className="MuiFormLabel-root-73 MuiFormLabel-required-78 MuiInputLabel-root-66 MuiInputLabel-formControl-67 MuiInputLabel-animated-70"
-          data-shrink={false}
-          htmlFor="password2"
-        >
-          Confirm Password
-          <span
-            className="MuiFormLabel-asterisk-79"
-          >
-             *
-          </span>
-        </label>
-        <div
-          className="MuiInputBase-root-93 MuiInput-root-80 MuiInput-underline-84 MuiInputBase-formControl-94 MuiInput-formControl-81"
-          onClick={[Function]}
-        >
-          <input
-            aria-invalid={false}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            className="MuiInputBase-input-103 MuiInput-input-88 MuiInputBase-inputType-106 MuiInput-inputType-91"
-            defaultValue={undefined}
-            disabled={false}
-            id="password2"
-            name="password2"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={true}
-            rows={undefined}
-            type="password"
-            value=""
-          />
-        </div>
-      </div>
-      <button
-        className="MuiButtonBase-root-136 MuiButtonBase-disabled-137 MuiButton-root-110 MuiButton-contained-121 MuiButton-containedPrimary-122 MuiButton-raised-124 MuiButton-raisedPrimary-125 MuiButton-disabled-130 MuiButton-fullWidth-135 Register-submit-5"
-        disabled={true}
-        onBlur={[Function]}
+      <a
+        href="/Landing"
         onClick={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex="-1"
-        type="submit"
+        style={
+          Object {
+            "color": "inherit",
+            "textDecoration": "none",
+          }
+        }
       >
-        <span
-          className="MuiButton-label-111"
+        <button
+          aria-label="Back"
+          className="MuiButtonBase-root-54 MuiIconButton-root-48 MuiIconButton-colorInherit-49"
+          disabled={false}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex="0"
+          type="button"
         >
-          Register
-        </span>
-      </button>
-    </form>
-  </div>
-</main>
+          <span
+            className="MuiIconButton-label-53"
+          >
+            <svg
+              aria-hidden="true"
+              className="MuiSvgIcon-root-57"
+              color={undefined}
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+          </span>
+          <span
+            className="MuiTouchRipple-root-66"
+          />
+        </button>
+      </a>
+      <h2
+        className="MuiTypography-root-73 MuiTypography-title-79 MuiTypography-colorInherit-93"
+      >
+        The Iminsys Carpool Platform
+      </h2>
+    </div>
+  </header>,
+  <main
+    className="Register-layout-3"
+  >
+    <div
+      className="MuiPaper-root-17 MuiPaper-elevation2-21 MuiPaper-rounded-18 Register-paper-4"
+    >
+      <div
+        align="center"
+        className="MuiAvatar-root-99 Register-avatar-5"
+      >
+        <img
+          alt={undefined}
+          className="MuiAvatar-img-101"
+          sizes={undefined}
+          src="logo.png"
+          srcSet={undefined}
+        />
+      </div>
+      <h1
+        className="MuiTypography-root-73 MuiTypography-headline-78"
+      >
+        Register
+      </h1>
+      <form
+        className="Register-form-6"
+      >
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormLabel-root-113 MuiFormLabel-required-118 MuiInputLabel-root-106 MuiInputLabel-formControl-107 MuiInputLabel-animated-110"
+            data-shrink={false}
+            htmlFor="fname"
+          >
+            First Name
+            <span
+              className="MuiFormLabel-asterisk-119"
+            >
+               *
+            </span>
+          </label>
+          <div
+            className="MuiInputBase-root-133 MuiInput-root-120 MuiInput-underline-124 MuiInputBase-formControl-134 MuiInput-formControl-121"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoComplete={undefined}
+              autoFocus={undefined}
+              className="MuiInputBase-input-143 MuiInput-input-128"
+              defaultValue={undefined}
+              disabled={false}
+              id="fname"
+              name="fname"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={undefined}
+              onKeyUp={undefined}
+              placeholder={undefined}
+              readOnly={undefined}
+              required={true}
+              rows={undefined}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormLabel-root-113 MuiFormLabel-required-118 MuiInputLabel-root-106 MuiInputLabel-formControl-107 MuiInputLabel-animated-110"
+            data-shrink={false}
+            htmlFor="lname"
+          >
+            Last Name
+            <span
+              className="MuiFormLabel-asterisk-119"
+            >
+               *
+            </span>
+          </label>
+          <div
+            className="MuiInputBase-root-133 MuiInput-root-120 MuiInput-underline-124 MuiInputBase-formControl-134 MuiInput-formControl-121"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoComplete={undefined}
+              autoFocus={undefined}
+              className="MuiInputBase-input-143 MuiInput-input-128"
+              defaultValue={undefined}
+              disabled={false}
+              id="lname"
+              name="lname"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={undefined}
+              onKeyUp={undefined}
+              placeholder={undefined}
+              readOnly={undefined}
+              required={true}
+              rows={undefined}
+              type="text"
+              value={undefined}
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormLabel-root-113 MuiFormLabel-required-118 MuiInputLabel-root-106 MuiInputLabel-formControl-107 MuiInputLabel-animated-110"
+            data-shrink={false}
+            htmlFor="email"
+          >
+            Email Address
+            <span
+              className="MuiFormLabel-asterisk-119"
+            >
+               *
+            </span>
+          </label>
+          <div
+            className="MuiInputBase-root-133 MuiInput-root-120 MuiInput-underline-124 MuiInputBase-formControl-134 MuiInput-formControl-121"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoComplete="on"
+              autoFocus={undefined}
+              className="MuiInputBase-input-143 MuiInput-input-128"
+              defaultValue={undefined}
+              disabled={false}
+              id="email"
+              name="email"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={undefined}
+              onKeyUp={undefined}
+              placeholder={undefined}
+              readOnly={undefined}
+              required={true}
+              rows={undefined}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormLabel-root-113 MuiFormLabel-required-118 MuiInputLabel-root-106 MuiInputLabel-formControl-107 MuiInputLabel-animated-110"
+            data-shrink={false}
+            htmlFor="idNum"
+          >
+            ID Number
+            <span
+              className="MuiFormLabel-asterisk-119"
+            >
+               *
+            </span>
+          </label>
+          <div
+            className="MuiInputBase-root-133 MuiInput-root-120 MuiInput-underline-124 MuiInputBase-formControl-134 MuiInput-formControl-121"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoComplete={undefined}
+              autoFocus={undefined}
+              className="MuiInputBase-input-143 MuiInput-input-128"
+              defaultValue={undefined}
+              disabled={false}
+              id="idNum"
+              name="idNum"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={undefined}
+              onKeyUp={undefined}
+              placeholder={undefined}
+              readOnly={undefined}
+              required={true}
+              rows={undefined}
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormLabel-root-113 MuiFormLabel-required-118 MuiInputLabel-root-106 MuiInputLabel-formControl-107 MuiInputLabel-animated-110"
+            data-shrink={false}
+            htmlFor="password1"
+          >
+            Password
+            <span
+              className="MuiFormLabel-asterisk-119"
+            >
+               *
+            </span>
+          </label>
+          <div
+            className="MuiInputBase-root-133 MuiInput-root-120 MuiInput-underline-124 MuiInputBase-formControl-134 MuiInput-formControl-121"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoComplete={undefined}
+              autoFocus={undefined}
+              className="MuiInputBase-input-143 MuiInput-input-128 MuiInputBase-inputType-146 MuiInput-inputType-131"
+              defaultValue={undefined}
+              disabled={false}
+              id="password1"
+              name="password1"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={undefined}
+              onKeyUp={undefined}
+              placeholder={undefined}
+              readOnly={undefined}
+              required={true}
+              rows={undefined}
+              type="password"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormLabel-root-113 MuiFormLabel-required-118 MuiInputLabel-root-106 MuiInputLabel-formControl-107 MuiInputLabel-animated-110"
+            data-shrink={false}
+            htmlFor="password2"
+          >
+            Confirm Password
+            <span
+              className="MuiFormLabel-asterisk-119"
+            >
+               *
+            </span>
+          </label>
+          <div
+            className="MuiInputBase-root-133 MuiInput-root-120 MuiInput-underline-124 MuiInputBase-formControl-134 MuiInput-formControl-121"
+            onClick={[Function]}
+          >
+            <input
+              aria-invalid={false}
+              autoComplete={undefined}
+              autoFocus={undefined}
+              className="MuiInputBase-input-143 MuiInput-input-128 MuiInputBase-inputType-146 MuiInput-inputType-131"
+              defaultValue={undefined}
+              disabled={false}
+              id="password2"
+              name="password2"
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={undefined}
+              onKeyUp={undefined}
+              placeholder={undefined}
+              readOnly={undefined}
+              required={true}
+              rows={undefined}
+              type="password"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="MuiFormControl-root-102 MuiFormControl-marginNormal-103 MuiFormControl-fullWidth-105"
+        >
+          <label
+            className="MuiFormControlLabel-root-150"
+            style={
+              Object {
+                "marginRight": 0,
+              }
+            }
+          >
+            <span
+              className="MuiButtonBase-root-54 MuiIconButton-root-48 MuiSwitchBase-root-160 MuiCheckbox-root-154 MuiCheckbox-colorPrimary-158"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              role={undefined}
+              tabIndex={null}
+            >
+              <span
+                className="MuiIconButton-label-53"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root-57"
+                  color={undefined}
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                  />
+                </svg>
+                <input
+                  autoFocus={undefined}
+                  checked={false}
+                  className="MuiSwitchBase-input-163"
+                  data-indeterminate={false}
+                  disabled={false}
+                  id={undefined}
+                  name={undefined}
+                  onChange={[Function]}
+                  readOnly={undefined}
+                  required={undefined}
+                  tabIndex={undefined}
+                  type="checkbox"
+                  value="checkedB"
+                />
+              </span>
+              <span
+                className="MuiTouchRipple-root-66"
+              />
+            </span>
+            <span
+              className="MuiTypography-root-73 MuiTypography-body1-82 MuiFormControlLabel-label-153"
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                  }
+                }
+              >
+                <span
+                  className="MuiTypography-root-73 MuiTypography-caption-83"
+                >
+                  I agree with the
+                   
+                </span>
+                <div>
+                  <span
+                    className="MuiTypography-root-73 MuiTypography-caption-83 MuiTypography-colorPrimary-94 MuiTypography-alignCenter-87"
+                    onClick={[Function]}
+                  >
+                    Terms of Service
+                  </span>
+                </div>
+              </div>
+            </span>
+          </label>
+        </div>
+        <button
+          className="MuiButtonBase-root-54 MuiButtonBase-disabled-55 MuiButton-root-178 MuiButton-contained-189 MuiButton-containedPrimary-190 MuiButton-raised-192 MuiButton-raisedPrimary-193 MuiButton-disabled-198 MuiButton-fullWidth-203 Register-submit-7"
+          disabled={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex="-1"
+          type="submit"
+        >
+          <span
+            className="MuiButton-label-179"
+          >
+            Register
+          </span>
+        </button>
+      </form>
+    </div>
+  </main>,
+]
 `;

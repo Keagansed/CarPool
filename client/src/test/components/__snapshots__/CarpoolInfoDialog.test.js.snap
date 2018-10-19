@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CarpoolInfoDialog Component captures snapshot 1`] = `
+<div
+  style={
+    Object {
+      "flexGrow": 1,
+    }
+  }
+>
+  <h2
+    className="MuiTypography-root-1 MuiTypography-title-7 MuiTypography-colorInherit-21"
+    onClick={[Function]}
+  />
+</div>
+`;

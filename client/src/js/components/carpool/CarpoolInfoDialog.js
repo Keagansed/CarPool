@@ -29,7 +29,6 @@ import ServerURL from '../../utils/server';
     constructor(props) {
         super(props);
         this.users = app.database().ref().child('groupChats/'+this.props.carpoolID+"/users");
-        console.log('TCL: NewTripDialog -> constructor -> this.users', this.users);
 
         this.state = {
             tripDialog: false,

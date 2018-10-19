@@ -5,65 +5,28 @@ describe ('HomePage Store test functions', () => {
 
     it('sets defaults correctly', () => {
         data = {
-            carpool: HomePageStore.carpoolTab,
-            tripTab: HomePageStore.tripTab,
-            routeTab: HomePageStore.routeTab
+            activeTab: HomePageStore.activeTab,
+            renderCarousel: HomePageStore.renderCarousel
         };
 
         values = {
-            carpool: false,
-            tripTab: false,
-            routeTab: true
+            activeTab: 0,
+            renderCarousel: false
         };
 
         expect(data).toEqual(values);
     });
 
-    it('toggles to carpool correctly', () => {
-        HomePageStore.toggleToCarpool();
+    it('toggles to tab correctly', () => {
+        HomePageStore.setTab(1);
         data = {
-            carpool: HomePageStore.carpoolTab,
-            tripTab: HomePageStore.tripTab,
-            routeTab: HomePageStore.routeTab
+            activeTab: HomePageStore.activeTab,
         };
         values = {
-            carpool: true,
-            tripTab: false,
-            routeTab: false
+            activeTab: 1,
         };  
 
         expect(data).toEqual(values);
     });
 
-    it('toggles to trip correctly', () => {
-        HomePageStore.toggleToTrip();
-        data = {
-            carpool: HomePageStore.carpoolTab,
-            tripTab: HomePageStore.tripTab,
-            routeTab: HomePageStore.routeTab
-        };
-        values = {
-            carpool: false,
-            tripTab: true,
-            routeTab: false
-        };  
-
-        expect(data).toEqual(values);
-    });
-
-    it('toggles to route correctly', () => {
-        HomePageStore.toggleToRoute();
-        data = {
-            carpool: HomePageStore.carpoolTab,
-            tripTab: HomePageStore.tripTab,
-            routeTab: HomePageStore.routeTab
-        };
-        values = {
-            carpool: false,
-            tripTab: false,
-            routeTab: true
-        };  
-
-        expect(data).toEqual(values);
-    });
 });
